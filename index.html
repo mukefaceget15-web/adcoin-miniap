@@ -2,399 +2,1270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#07100d">
-<title>NOT REWARD</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#07110e" />
+  <title>NOT REWARD</title>
 
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 
-<style>
-:root {
-  --bg:#07100d;
-  --panel:#101c17;
-  --green:#43ff9b;
-  --muted:#9aafa4;
-  --border:#254332;
-}
-* {box-sizing:border-box}
-body {
-  margin:0;
-  background:radial-gradient(ellipse at top,#153b27,var(--bg) 55%);
-  color:#f2fff7;
-  font-family:Arial,sans-serif;
-}
-button,input {font:inherit}
-button {cursor:pointer}
-.app {max-width:480px;min-height:100vh;margin:auto;padding:22px 17px 100px}
-header {display:flex;justify-content:space-between;align-items:center;gap:10px}
-.brand {display:flex;align-items:center;gap:11px}
-.robot {
-  width:50px;height:50px;border:2px solid var(--green);
-  border-radius:16px;display:grid;place-items:center;font-size:27px;
-  box-shadow:0 0 22px #43ff9b30;
-}
-h1 {margin:0;font-size:19px;letter-spacing:1.5px}
-.subtitle {margin-top:5px;color:var(--muted);font-size:10px;letter-spacing:1px}
-.lang {
-  background:var(--panel);color:var(--green);
-  border:1px solid var(--border);border-radius:10px;padding:9px 12px
-}
-.online {margin-top:24px;color:var(--green);font-size:11px;letter-spacing:2px}
-.hero {text-align:center;padding:34px 8px 25px}
-.orb {
-  width:140px;height:140px;border:2px solid var(--green);
-  border-radius:50%;margin:0 auto 26px;display:grid;place-items:center;
-  position:relative;box-shadow:0 0 35px #43ff9b22,inset 0 0 25px #43ff9b15
-}
-.orb:after {
-  content:"";position:absolute;inset:-8px;border:2px dashed #43ff9b65;
-  border-radius:50%;animation:spin 14s linear infinite
-}
-@keyframes spin {to{transform:rotate(360deg)}}
-.orb span {font-size:65px}
-.hero h2 {font-size:27px;margin:0 0 12px}
-.hero p {color:var(--muted);font-size:13px;line-height:1.8;margin:0 auto 23px;max-width:330px}
-.primary {
-  width:100%;padding:15px;border:0;border-radius:13px;
-  background:var(--green);color:#06130b;font-weight:bold
-}
-.section-title {font-size:17px;margin:20px 0 13px}
-.grid {display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.card,.panel {
-  background:linear-gradient(145deg,#14251c,#0c1711);
-  border:1px solid var(--border);border-radius:18px;padding:17px
-}
-.card {cursor:pointer}
-.card-icon {font-size:27px;margin-bottom:12px}
-.card h3 {font-size:15px;margin:0 0 8px}
-.card p,.muted {color:var(--muted);font-size:12px;line-height:1.8}
-.card p {margin:0}
-.page {display:none}
-.page.active {display:block}
-.panel {margin-top:17px;padding:20px}
-.panel h2 {font-size:21px;margin:0 0 10px}
-.wallet-status {
-  background:#07100d;border:1px solid var(--border);
-  border-radius:12px;padding:12px;margin:15px 0;
-  color:var(--green);font-size:12px;overflow-wrap:anywhere
-}
-#ton-connect {min-height:45px;margin-top:12px}
-.field {
-  width:100%;padding:14px;background:#07100d;color:white;
-  border:1px solid var(--border);border-radius:12px;margin:12px 0
-}
-.secondary {
-  width:100%;padding:13px;border-radius:12px;
-  border:1px solid var(--border);background:#15251b;color:white;margin-top:10px
-}
-.notice {font-size:11px;line-height:1.8;color:var(--muted);margin-top:13px}
-nav {
-  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
-  width:100%;max-width:480px;display:grid;grid-template-columns:repeat(4,1fr);
-  background:#09120ef5;border-top:1px solid var(--border);
-  padding:10px 8px calc(10px + env(safe-area-inset-bottom));z-index:5
-}
-nav button {background:transparent;border:0;color:var(--muted);font-size:11px;padding:7px 1px}
-nav button span {display:block;font-size:20px;margin-bottom:5px}
-nav button.active {color:var(--green)}
-.profile-panel {padding:21px;background:linear-gradient(145deg,#14271c,#09130e)}
-.profile-top {display:flex;align-items:center;gap:15px;min-width:0}
-.profile-avatar {
-  width:76px;height:76px;flex-shrink:0;border-radius:23px;
-  border:2px solid var(--green);background:#0a1710;
-  display:grid;place-items:center;font-size:32px;overflow:hidden
-}
-.profile-avatar img {width:100%;height:100%;object-fit:cover}
-.profile-heading {min-width:0}
-.profile-tag {font-size:9px;letter-spacing:1.2px;color:var(--green);margin-bottom:8px}
-.profile-heading h2 {font-size:19px;overflow-wrap:anywhere;margin:0 0 6px}
-.profile-username {font-size:12px;color:var(--muted);overflow-wrap:anywhere}
-.profile-divider {height:1px;background:var(--border);margin:20px 0 8px}
-.profile-info-row {
-  display:flex;justify-content:space-between;align-items:flex-start;
-  gap:10px;padding:14px 0;border-bottom:1px solid #20382b;font-size:12px
-}
-.profile-info-row span {color:var(--muted);flex-shrink:0}
-.profile-info-row strong {text-align:right;overflow-wrap:anywhere;max-width:58%}
-.profile-badge {
-  color:var(--green);text-align:center;font-size:10px;
-  letter-spacing:1px;border:1px solid var(--border);
-  border-radius:12px;padding:12px;margin-top:20px
-}
-.rtl {direction:rtl;text-align:right}
-.rtl .profile-info-row strong {text-align:left}
-@media(max-width:350px) {
-  .hero h2 {font-size:23px}
-  .profile-avatar {width:62px;height:62px}
-}
-</style>
+  <style>
+    :root {
+      --bg: #07110e;
+      --panel: #101d18;
+      --green: #61ffad;
+      --green2: #19d981;
+      --text: #f1fff7;
+      --muted: #8ba69a;
+      --line: rgba(97, 255, 173, .14);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(24, 126, 78, .20), transparent 42%),
+        radial-gradient(ellipse at 100% 60%, rgba(20, 91, 65, .10), transparent 40%),
+        var(--bg);
+      font-family: Inter, Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 460px;
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 20px 17px 108px;
+      position: relative;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      display: grid;
+      place-items: center;
+      width: 43px;
+      height: 43px;
+      border-radius: 15px;
+      color: var(--green);
+      font-size: 23px;
+      background: linear-gradient(145deg, #17392a, #0b1a13);
+      border: 1px solid rgba(97,255,173,.28);
+      box-shadow: 0 0 22px rgba(48,255,153,.09);
+    }
+
+    .brand-name {
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+    }
+
+    .brand-sub {
+      margin-top: 4px;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 2px;
+    }
+
+    .lang-button {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #11221a;
+      color: var(--green);
+      padding: 10px 12px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .page {
+      display: none;
+      animation: pageIn .35s ease;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes pageIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* HOME HERO */
+    .hero {
+      text-align: center;
+      padding-top: 5px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 13px;
+      border-radius: 30px;
+      border: 1px solid rgba(97,255,173,.2);
+      background: rgba(26, 75, 51, .28);
+      color: #b9ffda;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.3px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--green);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      50% { opacity: .4; transform: scale(.75); }
+    }
+
+    .robot-scene {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      max-width: 100%;
+      margin: 9px auto 0;
+      display: grid;
+      place-items: center;
+      isolation: isolate;
+    }
+
+    .scene-glow {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: rgba(35,255,146,.17);
+      filter: blur(35px);
+      z-index: -2;
+      animation: glowPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+      50% { transform: scale(1.3); opacity: .6; }
+    }
+
+    .orbit {
+      position: absolute;
+      border: 1px solid rgba(97,255,173,.32);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .orbit-one {
+      width: 248px;
+      height: 104px;
+      transform: rotate(-29deg);
+      animation: orbitSpin 7s linear infinite;
+    }
+
+    .orbit-two {
+      width: 250px;
+      height: 124px;
+      transform: rotate(57deg);
+      border-color: rgba(71,225,255,.3);
+      animation: orbitSpinReverse 9s linear infinite;
+    }
+
+    .orbit-three {
+      width: 215px;
+      height: 215px;
+      border-style: dashed;
+      border-color: rgba(97,255,173,.15);
+      animation: orbitSpin 24s linear infinite;
+    }
+
+    @keyframes orbitSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes orbitSpinReverse {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+
+    .orbit-dot {
+      position: absolute;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 9px var(--green), 0 0 20px rgba(97,255,173,.7);
+      top: 16px;
+      left: 38px;
+    }
+
+    .orbit-dot.blue {
+      width: 8px;
+      height: 8px;
+      background: #53e7ff;
+      box-shadow: 0 0 12px #53e7ff;
+      top: auto;
+      bottom: 17px;
+      left: 43px;
+    }
+
+    .orbit-dot.purple {
+      width: 7px;
+      height: 7px;
+      background: #bd8bff;
+      box-shadow: 0 0 12px #bd8bff;
+      top: 50px;
+      left: auto;
+      right: 24px;
+    }
+
+    .robot {
+      position: relative;
+      width: 124px;
+      height: 156px;
+      margin-top: 12px;
+      animation: robotFloat 3.2s ease-in-out infinite;
+      filter: drop-shadow(0 13px 22px rgba(0,255,139,.13));
+    }
+
+    @keyframes robotFloat {
+      0%, 100% { transform: translateY(0) rotate(-1deg); }
+      50% { transform: translateY(-10px) rotate(1deg); }
+    }
+
+    .antenna {
+      position: absolute;
+      top: 0;
+      left: 58px;
+      width: 8px;
+      height: 22px;
+      border-radius: 6px;
+      background: linear-gradient(#b5ffdb, #27d986);
+    }
+
+    .antenna::before {
+      content: "";
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: var(--green);
+      top: -9px;
+      left: -3.5px;
+      box-shadow: 0 0 13px var(--green);
+    }
+
+    .robot-head {
+      position: absolute;
+      width: 112px;
+      height: 79px;
+      left: 6px;
+      top: 21px;
+      border: 2px solid #86ffc1;
+      border-radius: 28px 28px 23px 23px;
+      background: linear-gradient(145deg, #c8ffe3 0%, #48d991 28%, #0e4930 75%, #09291d 100%);
+      box-shadow:
+        inset 0 3px 8px rgba(255,255,255,.55),
+        inset 0 -8px 15px rgba(0,0,0,.35),
+        0 0 23px rgba(50,255,151,.22);
+    }
+
+    .robot-head::before,
+    .robot-head::after {
+      content: "";
+      position: absolute;
+      top: 26px;
+      width: 8px;
+      height: 23px;
+      border-radius: 5px;
+      background: #36cb86;
+      border: 1px solid #8affc4;
+    }
+
+    .robot-head::before { left: -9px; }
+    .robot-head::after { right: -9px; }
+
+    .face-screen {
+      position: absolute;
+      inset: 11px;
+      border-radius: 18px;
+      background: linear-gradient(150deg, #09291d, #071710);
+      border: 1px solid rgba(174,255,215,.5);
+      box-shadow: inset 0 0 15px rgba(0,0,0,.8);
+    }
+
+    .robot-eye {
+      position: absolute;
+      top: 17px;
+      width: 14px;
+      height: 19px;
+      border-radius: 8px;
+      background: #8effc4;
+      box-shadow: 0 0 9px #43ffa1, 0 0 19px rgba(67,255,161,.6);
+      animation: blink 4s infinite;
+    }
+
+    .robot-eye.left { left: 15px; }
+    .robot-eye.right { right: 15px; }
+
+    @keyframes blink {
+      0%, 43%, 47%, 100% { transform: scaleY(1); }
+      45% { transform: scaleY(.12); }
+    }
+
+    .robot-mouth {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      width: 25px;
+      height: 4px;
+      transform: translateX(-50%);
+      border-radius: 5px;
+      background: #42e99a;
+      box-shadow: 0 0 7px #42e99a;
+    }
+
+    .robot-neck {
+      position: absolute;
+      top: 98px;
+      left: 47px;
+      width: 30px;
+      height: 13px;
+      background: linear-gradient(90deg, #14764b, #8dffc3, #14764b);
+      border-radius: 3px;
+    }
+
+    .robot-body {
+      position: absolute;
+      top: 107px;
+      left: 19px;
+      width: 86px;
+      height: 43px;
+      border: 2px solid #66f8ae;
+      border-radius: 16px 16px 22px 22px;
+      background: linear-gradient(145deg, #2bbd78, #0a3423 72%);
+      box-shadow: inset 0 2px 6px rgba(255,255,255,.25);
+    }
+
+    .robot-core {
+      position: absolute;
+      top: 11px;
+      left: 32px;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #b4ffd8;
+      border-radius: 50%;
+      background: #39ff9b;
+      box-shadow: 0 0 13px #39ff9b, inset 0 0 5px #fff;
+    }
+
+    .robot-arm {
+      position: absolute;
+      top: 111px;
+      width: 12px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(#74ffb6, #167448);
+      border: 1px solid #71ffb6;
+    }
+
+    .robot-arm.left { left: 4px; transform: rotate(14deg); }
+    .robot-arm.right { right: 4px; transform: rotate(-14deg); }
+
+    .float-label {
+      position: absolute;
+      padding: 7px 10px;
+      border-radius: 9px;
+      color: #b8ffda;
+      background: rgba(10, 31, 21, .85);
+      border: 1px solid rgba(97,255,173,.22);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 18px rgba(0,0,0,.2);
+      animation: labelFloat 3s ease-in-out infinite;
+    }
+
+    .float-label.left {
+      left: -2px;
+      top: 69px;
+    }
+
+    .float-label.right {
+      right: -1px;
+      bottom: 62px;
+      animation-delay: -1.5s;
+    }
+
+    @keyframes labelFloat {
+      50% { transform: translateY(-6px); }
+    }
+
+    .hero h1 {
+      margin-top: 3px;
+      font-size: clamp(29px, 8vw, 39px);
+      line-height: 1.15;
+      letter-spacing: 1px;
+      font-weight: 950;
+    }
+
+    .hero h1 span {
+      color: var(--green);
+      text-shadow: 0 0 22px rgba(97,255,173,.2);
+    }
+
+    .hero-description {
+      max-width: 310px;
+      margin: 13px auto 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .primary-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 9px;
+      width: 100%;
+      min-height: 53px;
+      margin-top: 24px;
+      padding: 14px 18px;
+      border: 0;
+      border-radius: 16px;
+      color: #062015;
+      font-weight: 900;
+      font-size: 14px;
+      background: linear-gradient(100deg, #7affb9, #2be68d);
+      box-shadow: 0 7px 25px rgba(39,232,137,.17);
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .primary-button:active {
+      transform: scale(.98);
+    }
+
+    .secondary-button {
+      width: 100%;
+      min-height: 48px;
+      margin-top: 10px;
+      border-radius: 15px;
+      border: 1px solid var(--line);
+      color: var(--green);
+      background: rgba(16, 36, 25, .8);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 900;
+      margin: 24px 0 13px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 11px;
+      margin-top: 25px;
+    }
+
+    .stat-card, .panel {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 17px;
+      background: linear-gradient(145deg, rgba(19,39,29,.95), rgba(11,24,17,.95));
+      box-shadow: inset 0 1px rgba(255,255,255,.025);
+    }
+
+    .stat-icon {
+      font-size: 21px;
+      margin-bottom: 11px;
+    }
+
+    .stat-value {
+      font-size: 19px;
+      font-weight: 900;
+      color: var(--green);
+    }
+
+    .stat-label {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .feature-row {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 15px;
+      margin-top: 10px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(15,32,23,.75);
+    }
+
+    .feature-icon {
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      width: 43px;
+      height: 43px;
+      border-radius: 13px;
+      background: rgba(67,255,161,.09);
+      font-size: 20px;
+    }
+
+    .feature-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .feature-text strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .feature-text span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .small-tag {
+      color: var(--green);
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .field-label {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin: 17px 0 8px;
+    }
+
+    .text-input {
+      display: block;
+      width: 100%;
+      height: 49px;
+      border-radius: 13px;
+      border: 1px solid rgba(97,255,173,.18);
+      background: #091710;
+      color: var(--text);
+      outline: none;
+      padding: 0 14px;
+    }
+
+    .text-input:focus {
+      border-color: var(--green);
+    }
+
+    .notice {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(255,190,70,.07);
+      border: 1px solid rgba(255,190,70,.16);
+      color: #e9d4a5;
+      font-size: 11px;
+      line-height: 1.7;
+    }
+
+    .wallet-address {
+      overflow-wrap: anywhere;
+      color: var(--green);
+      font-size: 12px;
+      line-height: 1.7;
+      margin-top: 10px;
+    }
+
+    .profile-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 18px 0;
+    }
+
+    .avatar {
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      flex-shrink: 0;
+      width: 70px;
+      height: 70px;
+      border-radius: 23px;
+      background: linear-gradient(145deg, #1e714a, #102b1e);
+      border: 1px solid rgba(97,255,173,.35);
+      color: var(--green);
+      font-size: 27px;
+      font-weight: 900;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-name {
+      font-size: 17px;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+
+    .profile-username {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--green);
+      overflow-wrap: anywhere;
+    }
+
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(97,255,173,.09);
+      font-size: 12px;
+    }
+
+    .info-row:last-child { border-bottom: 0; }
+
+    .info-label { color: var(--muted); }
+
+    .info-value {
+      max-width: 60%;
+      text-align: right;
+      overflow-wrap: anywhere;
+      font-weight: 700;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      z-index: 10;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: min(100%, 460px);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      padding: 10px 13px calc(10px + env(safe-area-inset-bottom));
+      border-top: 1px solid rgba(97,255,173,.12);
+      background: rgba(6, 17, 12, .94);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      min-height: 54px;
+      border: 0;
+      border-radius: 13px;
+      background: transparent;
+      color: #71877a;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .nav-button .nav-icon {
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .nav-button.active {
+      background: rgba(65,255,157,.09);
+      color: var(--green);
+    }
+
+    .footer-note {
+      text-align: center;
+      color: #5f796a;
+      font-size: 10px;
+      margin-top: 25px;
+      line-height: 1.7;
+    }
+
+    [dir="rtl"] .info-value {
+      text-align: left;
+    }
+
+    [dir="rtl"] .hero h1 {
+      letter-spacing: 0;
+    }
+
+    @media (max-width: 360px) {
+      .app { padding-left: 13px; padding-right: 13px; }
+      .robot-scene { transform: scale(.92); margin-top: -2px; margin-bottom: -4px; }
+      .hero h1 { font-size: 29px; }
+      .float-label.left { left: 0; }
+      .float-label.right { right: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
-<div class="app" id="app">
-<header>
-  <div class="brand">
-    <div class="robot">🤖</div>
-    <div>
-      <h1>NOT REWARD</h1>
-      <div class="subtitle" data-en="REWARD ECOSYSTEM" data-fa="اکوسیستم پاداش">REWARD ECOSYSTEM</div>
-    </div>
-  </div>
-  <button class="lang" id="langButton">فارسی</button>
-</header>
-
-<div class="online">● ONLINE</div>
-
-<main>
-<section class="page active" id="homePage">
-  <div class="hero">
-    <div class="orb"><span>🤖</span></div>
-    <h2 data-en="Welcome to NOT REWARD" data-fa="به NOT REWARD خوش آمدید">Welcome to NOT REWARD</h2>
-    <p data-en="Explore rewards, manage your wallet and discover our ecosystem."
-       data-fa="پاداش‌ها را بررسی کنید، کیف پولتان را مدیریت کنید و دنیای ما را کشف کنید.">
-      Explore rewards, manage your wallet and discover our ecosystem.
-    </p>
-    <button class="primary" id="startButton" data-en="GET STARTED" data-fa="شروع کنید">GET STARTED</button>
-  </div>
-
-  <h2 class="section-title" data-en="Explore" data-fa="امکانات">Explore</h2>
-  <div class="grid">
-    <div class="card" onclick="showPage('earn')">
-      <div class="card-icon">⚡</div>
-      <h3 data-en="Earn Points" data-fa="کسب امتیاز">Earn Points</h3>
-      <p data-en="Explore reward activities." data-fa="فعالیت‌های کسب پاداش را ببینید.">Explore reward activities.</p>
-    </div>
-    <div class="card" onclick="showPage('wallet')">
-      <div class="card-icon">👛</div>
-      <h3 data-en="Wallet" data-fa="کیف پول">Wallet</h3>
-      <p data-en="Connect your TON wallet." data-fa="کیف پول TON خود را وصل کنید.">Connect your TON wallet.</p>
-    </div>
-  </div>
-</section>
-
-<section class="page" id="earnPage">
-  <div class="panel">
-    <h2 data-en="Earn Points" data-fa="کسب امتیاز">Earn Points</h2>
-    <p class="muted" data-en="Reward activities will appear here when configured."
-       data-fa="پس از تنظیم فعالیت‌های پاداش، آن‌ها اینجا نمایش داده می‌شوند.">
-      Reward activities will appear here when configured.
-    </p>
-  </div>
-</section>
-
-<section class="page" id="walletPage">
-  <div class="panel">
-    <h2 data-en="Your Wallet" data-fa="کیف پول شما">Your Wallet</h2>
-    <p class="muted" data-en="Connect Tonkeeper or another compatible TON wallet."
-       data-fa="Tonkeeper یا کیف پول سازگار دیگری را وصل کنید.">
-      Connect Tonkeeper or another compatible TON wallet.
-    </p>
-    <div class="wallet-status" id="walletStatus">Wallet not connected</div>
-    <div id="ton-connect"></div>
-    <button class="secondary" id="disconnectButton" style="display:none"
-      data-en="Disconnect wallet" data-fa="قطع اتصال کیف پول">Disconnect wallet</button>
-    <p class="notice" data-en="Never share your recovery phrase or private key."
-       data-fa="عبارت بازیابی یا کلید خصوصی خود را هرگز به کسی ندهید.">
-      Never share your recovery phrase or private key.
-    </p>
-  </div>
-
-  <div class="panel">
-    <h2 data-en="Withdraw" data-fa="برداشت">Withdraw</h2>
-    <p class="muted" data-en="Withdrawal requests are not active yet."
-       data-fa="درخواست برداشت هنوز فعال نیست.">
-      Withdrawal requests are not active yet.
-    </p>
-    <input class="field" id="withdrawAmount" type="number" min="1" placeholder="Amount">
-    <button class="primary" id="withdrawButton" data-en="Request withdrawal"
-      data-fa="درخواست برداشت">Request withdrawal</button>
-    <div class="notice" id="withdrawMessage"></div>
-  </div>
-</section>
-
-<section class="page" id="profilePage">
-  <div class="panel profile-panel">
-    <div class="profile-top">
-      <div class="profile-avatar" id="profileAvatar">👤</div>
-      <div class="profile-heading">
-        <div class="profile-tag">NOT REWARD MEMBER</div>
-        <h2 id="profileName">Telegram User</h2>
-        <div class="profile-username" id="profileUsername">No username</div>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon">✦</div>
+        <div>
+          <div class="brand-name">NOT REWARD</div>
+          <div class="brand-sub">WEB3 REWARDS</div>
+        </div>
       </div>
-    </div>
+      <button class="lang-button" id="languageButton" type="button">فارسی</button>
+    </header>
 
-    <div class="profile-divider"></div>
+    <main>
+      <!-- HOME -->
+      <section class="page active" id="homePage">
+        <div class="hero">
+          <div class="status-pill">
+            <span class="status-dot"></span>
+            <span data-en="YOUR REWARD JOURNEY STARTS" data-fa="سفر دریافت پاداش تو شروع می‌شود">YOUR REWARD JOURNEY STARTS</span>
+          </div>
 
-    <div class="profile-info-row">
-      <span data-en="👤 Account name" data-fa="👤 نام حساب">👤 Account name</span>
-      <strong id="profileFullName">—</strong>
-    </div>
-    <div class="profile-info-row">
-      <span data-en="🆔 Telegram ID" data-fa="🆔 آیدی تلگرام">🆔 Telegram ID</span>
-      <strong id="profileId">—</strong>
-    </div>
-    <div class="profile-info-row">
-      <span data-en="🌐 Language" data-fa="🌐 زبان">🌐 Language</span>
-      <strong id="profileLanguage">—</strong>
-    </div>
-    <div class="profile-badge">✦ NOT REWARD PROFILE ✦</div>
-    <p class="notice" id="profileNotice"></p>
+          <div class="robot-scene" aria-label="Animated robot">
+            <div class="scene-glow"></div>
+
+            <div class="orbit orbit-one">
+              <span class="orbit-dot"></span>
+            </div>
+
+            <div class="orbit orbit-two">
+              <span class="orbit-dot blue"></span>
+            </div>
+
+            <div class="orbit orbit-three">
+              <span class="orbit-dot purple"></span>
+            </div>
+
+            <div class="float-label left">TON ✦</div>
+            <div class="float-label right">REWARD +</div>
+
+            <div class="robot">
+              <div class="antenna"></div>
+              <div class="robot-head">
+                <div class="face-screen">
+                  <span class="robot-eye left"></span>
+                  <span class="robot-eye right"></span>
+                  <span class="robot-mouth"></span>
+                </div>
+              </div>
+              <div class="robot-neck"></div>
+              <div class="robot-body">
+                <div class="robot-core"></div>
+              </div>
+              <div class="robot-arm left"></div>
+              <div class="robot-arm right"></div>
+            </div>
+          </div>
+
+          <h1><span>NOT</span> REWARD</h1>
+
+          <p class="hero-description"
+             data-en="Welcome to your reward station. Connect your TON wallet and explore the app."
+             data-fa="به ایستگاه پاداش خودت خوش آمدی. کیف پول TON را وصل کن و بخش‌های برنامه را ببین.">
+            Welcome to your reward station. Connect your TON wallet and explore the app.
+          </p>
+
+          <button class="primary-button" id="homeConnectButton" type="button">
+            <span>◈</span>
+            <span data-en="Connect TON Wallet" data-fa="اتصال کیف پول TON">Connect TON Wallet</span>
+          </button>
+
+          <button class="secondary-button" type="button" data-go="earnPage">
+            <span data-en="Explore the app  →" data-fa="مشاهده بخش‌های برنامه ←">Explore the app →</span>
+          </button>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">⚡</div>
+            <div class="stat-value">NOT</div>
+            <div class="stat-label" data-en="Reward project" data-fa="پروژه پاداش">Reward project</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">◈</div>
+            <div class="stat-value">TON</div>
+            <div class="stat-label" data-en="Wallet network" data-fa="شبکه کیف پول">Wallet network</div>
+          </div>
+        </div>
+
+        <h2 class="section-title" data-en="Quick access" data-fa="دسترسی سریع">Quick access</h2>
+
+        <div class="feature-row" data-go="earnPage" role="button" tabindex="0">
+          <div class="feature-icon">🎁</div>
+          <div class="feature-text">
+            <strong data-en="Earn rewards" data-fa="دریافت پاداش">Earn rewards</strong>
+            <span data-en="Explore available reward features" data-fa="بخش‌های دریافت پاداش را ببین">Explore available reward features</span>
+          </div>
+          <span class="small-tag">OPEN ↗</span>
+        </div>
+
+        <div class="feature-row" data-go="walletPage" role="button" tabindex="0">
+          <div class="feature-icon">👛</div>
+          <div class="feature-text">
+            <strong data-en="My wallet" data-fa="کیف پول من">My wallet</strong>
+            <span data-en="Connect or manage your TON wallet" data-fa="کیف پول TON خودت را مدیریت کن">Connect or manage your TON wallet</span>
+          </div>
+          <span class="small-tag">OPEN ↗</span>
+        </div>
+
+        <div class="footer-note"
+             data-en="NOT REWARD · Your Web3 reward station"
+             data-fa="NOT REWARD · ایستگاه پاداش وب۳ شما">
+          NOT REWARD · Your Web3 reward station
+        </div>
+      </section>
+
+      <!-- EARN -->
+      <section class="page" id="earnPage">
+        <h1 class="section-title" data-en="Earn rewards" data-fa="دریافت پاداش">Earn rewards</h1>
+
+        <div class="panel">
+          <div class="feature-icon">🎁</div>
+          <h2 style="font-size:18px; margin:12px 0 8px"
+              data-en="Reward center"
+              data-fa="مرکز پاداش">Reward center</h2>
+          <p style="font-size:13px; color:var(--muted); line-height:1.8"
+             data-en="Your reward tasks and balance system can be added here. They are not connected yet."
+             data-fa="بخش مأموریت‌ها و سیستم موجودی را می‌توان اینجا اضافه کرد. این بخش‌ها هنوز به سیستم واقعی وصل نیستند.">
+            Your reward tasks and balance system can be added here. They are not connected yet.
+          </p>
+        </div>
+
+        <div class="feature-row">
+          <div class="feature-icon">🚀</div>
+          <div class="feature-text">
+            <strong data-en="Daily tasks" data-fa="وظایف روزانه">Daily tasks</strong>
+            <span data-en="Task system coming soon" data-fa="سیستم وظایف در آینده اضافه می‌شود">Task system coming soon</span>
+          </div>
+          <span class="small-tag">SOON</span>
+        </div>
+
+        <div class="feature-row">
+          <div class="feature-icon">⭐</div>
+          <div class="feature-text">
+            <strong data-en="Bonus rewards" data-fa="پاداش‌های ویژه">Bonus rewards</strong>
+            <span data-en="Bonus system coming soon" data-fa="سیستم پاداش ویژه در آینده اضافه می‌شود">Bonus system coming soon</span>
+          </div>
+          <span class="small-tag">SOON</span>
+        </div>
+      </section>
+
+      <!-- WALLET -->
+      <section class="page" id="walletPage">
+        <h1 class="section-title" data-en="My wallet" data-fa="کیف پول من">My wallet</h1>
+
+        <div class="panel">
+          <div class="feature-icon">◈</div>
+          <h2 style="font-size:17px; margin:12px 0 6px"
+              data-en="TON wallet"
+              data-fa="کیف پول TON">TON wallet</h2>
+
+          <p id="walletStatus"
+             style="font-size:12px; color:var(--muted); line-height:1.8"
+             data-en="Your wallet is not connected."
+             data-fa="کیف پول شما متصل نیست.">
+            Your wallet is not connected.
+          </p>
+
+          <div class="wallet-address" id="walletAddress"></div>
+
+          <button class="primary-button" id="walletConnectButton" type="button">
+            <span data-en="Connect wallet" data-fa="اتصال کیف پول">Connect wallet</span>
+          </button>
+
+          <button class="secondary-button" id="disconnectButton" type="button" style="display:none">
+            <span data-en="Disconnect wallet" data-fa="قطع اتصال کیف پول">Disconnect wallet</span>
+          </button>
+        </div>
+
+        <h2 class="section-title" data-en="Withdraw" data-fa="برداشت">Withdraw</h2>
+
+        <div class="panel">
+          <label class="field-label" for="withdrawAmount"
+                 data-en="Amount in TON"
+                 data-fa="مقدار به TON">Amount in TON</label>
+
+          <input class="text-input" id="withdrawAmount" type="number"
+                 min="0.1" step="0.1" placeholder="e.g. 1.5" inputmode="decimal" />
+
+          <button class="primary-button" id="withdrawButton" type="button">
+            <span data-en="Request withdrawal" data-fa="درخواست برداشت">Request withdrawal</span>
+          </button>
+
+          <div class="notice"
+               data-en="Demo only: withdrawal requests are not sent or processed. A secure backend is required before real withdrawals can work."
+               data-fa="فقط نمایشی: درخواست برداشت ارسال یا پردازش نمی‌شود. برای برداشت واقعی، بک‌اند امن لازم است.">
+            Demo only: withdrawal requests are not sent or processed. A secure backend is required before real withdrawals can work.
+          </div>
+
+          <p id="withdrawMessage" style="margin-top:12px; font-size:12px; line-height:1.7"></p>
+        </div>
+      </section>
+
+      <!-- PROFILE -->
+      <section class="page" id="profilePage">
+        <h1 class="section-title" data-en="My profile" data-fa="پروفایل من">My profile</h1>
+
+        <div class="panel">
+          <div class="profile-head">
+            <div class="avatar" id="profileAvatar">N</div>
+            <div>
+              <div class="profile-name" id="profileName">Telegram User</div>
+              <div class="profile-username" id="profileUsername">@username</div>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <span class="info-label" data-en="Telegram ID" data-fa="شناسه تلگرام">Telegram ID</span>
+            <span class="info-value" id="profileId">—</span>
+          </div>
+
+          <div class="info-row">
+            <span class="info-label" data-en="First name" data-fa="نام">First name</span>
+            <span class="info-value" id="profileFirstName">—</span>
+          </div>
+
+          <div class="info-row">
+            <span class="info-label" data-en="Last name" data-fa="نام خانوادگی">Last name</span>
+            <span class="info-value" id="profileLastName">—</span>
+          </div>
+
+          <div class="info-row">
+            <span class="info-label" data-en="Language" data-fa="زبان تلگرام">Language</span>
+            <span class="info-value" id="profileLanguage">—</span>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:12px">
+          <div class="info-row">
+            <span class="info-label" data-en="TON wallet" data-fa="کیف پول TON">TON wallet</span>
+            <span class="info-value" id="profileWalletStatus">Not connected</span>
+          </div>
+          <button class="secondary-button" type="button" data-go="walletPage"
+                  data-en="Manage wallet" data-fa="مدیریت کیف پول">Manage wallet</button>
+        </div>
+
+        <div class="footer-note"
+             data-en="Profile details are displayed from Telegram Web App data."
+             data-fa="اطلاعات پروفایل از داده‌های تلگرام نمایش داده می‌شود.">
+          Profile details are displayed from Telegram Web App data.
+        </div>
+      </section>
+    </main>
   </div>
-</section>
-</main>
-</div>
 
-<nav>
-  <button class="active" data-page="home" onclick="showPage('home')"><span>⌂</span><span data-en="Home" data-fa="خانه">Home</span></button>
-  <button data-page="earn" onclick="showPage('earn')"><span>⚡</span><span data-en="Earn" data-fa="کسب">Earn</span></button>
-  <button data-page="wallet" onclick="showPage('wallet')"><span>👛</span><span data-en="Wallet" data-fa="کیف پول">Wallet</span></button>
-  <button data-page="profile" onclick="showPage('profile')"><span>👤</span><span data-en="Profile" data-fa="پروفایل">Profile</span></button>
-</nav>
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <button class="nav-button active" data-page="homePage" type="button">
+      <span class="nav-icon">⌂</span>
+      <span data-en="Home" data-fa="خانه">Home</span>
+    </button>
+    <button class="nav-button" data-page="earnPage" type="button">
+      <span class="nav-icon">✦</span>
+      <span data-en="Earn" data-fa="پاداش">Earn</span>
+    </button>
+    <button class="nav-button" data-page="walletPage" type="button">
+      <span class="nav-icon">◈</span>
+      <span data-en="Wallet" data-fa="کیف پول">Wallet</span>
+    </button>
+    <button class="nav-button" data-page="profilePage" type="button">
+      <span class="nav-icon">◎</span>
+      <span data-en="Profile" data-fa="پروفایل">Profile</span>
+    </button>
+  </nav>
 
-<script>
-const tg = window.Telegram?.WebApp;
-let currentLanguage = 'en';
-let tonConnectUI = null;
+  <script>
+    (() => {
+      const MANIFEST_URL =
+        "https://mukefaceget15-web.github.io/adcoin-miniap/tonconnect-manifest.json";
 
-if (tg) {
-  tg.ready();
-  tg.expand();
-  const user = tg.initDataUnsafe?.user;
+      const tg = window.Telegram?.WebApp;
+      if (tg) {
+        tg.ready();
+        tg.expand();
+      }
 
-  if (user) {
-    const fullName = [user.first_name, user.last_name].filter(Boolean).join(' ');
+      let currentLanguage = "en";
+      let tonConnectUI = null;
+      let walletAddress = "";
 
-    document.getElementById('profileName').textContent = fullName || 'Telegram User';
-    document.getElementById('profileFullName').textContent = fullName || 'Not available';
-    document.getElementById('profileUsername').textContent =
-      user.username ? '@' + user.username : 'No username';
-    document.getElementById('profileId').textContent = String(user.id);
-    document.getElementById('profileLanguage').textContent = user.language_code || 'Unknown';
+      const byId = (id) => document.getElementById(id);
 
-    if (user.photo_url) {
-      const img = document.createElement('img');
-      img.src = user.photo_url;
-      img.alt = 'Profile photo';
-      img.onerror = () => {
-        document.getElementById('profileAvatar').textContent = '👤';
-      };
-      const avatar = document.getElementById('profileAvatar');
-      avatar.textContent = '';
-      avatar.appendChild(img);
-    }
-  } else {
-    document.getElementById('profileNotice').textContent =
-      'Open this Mini App from Telegram to see your account details.';
-  }
-} else {
-  document.getElementById('profileNotice').textContent =
-    'Open this Mini App from Telegram to see your account details.';
-}
+      function setLanguage(language) {
+        currentLanguage = language;
+        document.documentElement.lang = language;
+        document.documentElement.dir = language === "fa" ? "rtl" : "ltr";
 
-function setLanguage(language) {
-  currentLanguage = language;
-  document.documentElement.lang = language;
-  document.getElementById('app').classList.toggle('rtl', language === 'fa');
-  document.getElementById('langButton').textContent = language === 'en' ? 'فارسی' : 'English';
+        document.querySelectorAll("[data-en][data-fa]").forEach((element) => {
+          const value = element.dataset[language];
+          if (value !== undefined) {
+            element.textContent = value;
+          }
+        });
 
-  document.querySelectorAll('[data-en][data-fa]').forEach(el => {
-    el.textContent = el.dataset[language];
-  });
+        byId("languageButton").textContent =
+          language === "en" ? "فارسی" : "English";
 
-  if (tonConnectUI) {
-    updateWalletStatus(tonConnectUI.wallet);
-  } else {
-    document.getElementById('walletStatus').textContent =
-      language === 'fa' ? 'کیف پول متصل نیست' : 'Wallet not connected';
-  }
-}
+        if (tg) {
+          tg.setHeaderColor("#07110e");
+          tg.setBackgroundColor("#07110e");
+        }
 
-document.getElementById('langButton').addEventListener('click', () => {
-  setLanguage(currentLanguage === 'en' ? 'fa' : 'en');
-});
+        updateWalletUI();
+      }
 
-function showPage(page) {
-  document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
-  document.getElementById(page + 'Page').classList.add('active');
-  document.querySelectorAll('nav button').forEach(el => {
-    el.classList.toggle('active', el.dataset.page === page);
-  });
-}
+      byId("languageButton").addEventListener("click", () => {
+        setLanguage(currentLanguage === "en" ? "fa" : "en");
+      });
 
-document.getElementById('startButton').addEventListener('click', () => showPage('wallet'));
+      function showPage(pageId) {
+        document.querySelectorAll(".page").forEach((page) => {
+          page.classList.toggle("active", page.id === pageId);
+        });
 
-function updateWalletStatus(wallet) {
-  const status = document.getElementById('walletStatus');
-  const disconnect = document.getElementById('disconnectButton');
+        document.querySelectorAll(".nav-button").forEach((button) => {
+          button.classList.toggle("active", button.dataset.page === pageId);
+        });
 
-  if (!wallet) {
-    status.textContent = currentLanguage === 'fa' ? 'کیف پول متصل نیست' : 'Wallet not connected';
-    disconnect.style.display = 'none';
-    return;
-  }
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
 
-  status.textContent = (currentLanguage === 'fa' ? 'متصل شد: ' : 'Connected: ') +
-    wallet.account.address;
-  disconnect.style.display = 'block';
-}
+      document.querySelectorAll(".nav-button").forEach((button) => {
+        button.addEventListener("click", () => showPage(button.dataset.page));
+      });
 
-window.addEventListener('load', () => {
-  if (!window.TON_CONNECT_UI) {
-    document.getElementById('walletStatus').textContent =
-      'TON Connect did not load. Check your connection and refresh.';
-    return;
-  }
+      document.querySelectorAll("[data-go]").forEach((element) => {
+        const openTarget = () => showPage(element.dataset.go);
 
-  try {
-    tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-      manifestUrl: 'https://mukefaceget15-web.github.io/adcoin-miniap/tonconnect-manifest.json',
-      buttonRootId: 'ton-connect'
-    });
+        element.addEventListener("click", openTarget);
+        element.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openTarget();
+          }
+        });
+      });
 
-    tonConnectUI.onStatusChange(wallet => updateWalletStatus(wallet));
-  } catch (error) {
-    console.error(error);
-    document.getElementById('walletStatus').textContent =
-      'Wallet setup failed. Please check the manifest URL.';
-  }
-});
+      function getTelegramUser() {
+        return tg?.initDataUnsafe?.user || null;
+      }
 
-document.getElementById('disconnectButton').addEventListener('click', async () => {
-  if (!tonConnectUI) return;
-  try {
-    await tonConnectUI.disconnect();
-    updateWalletStatus(null);
-  } catch (error) {
-    console.error(error);
-  }
-});
+      function loadProfile() {
+        const user = getTelegramUser();
 
-document.getElementById('withdrawButton').addEventListener('click', () => {
-  const amount = Number(document.getElementById('withdrawAmount').value);
-  const message = document.getElementById('withdrawMessage');
+        if (!user) {
+          byId("profileName").textContent = "Telegram User";
+          byId("profileUsername").textContent =
+            currentLanguage === "fa"
+              ? "برنامه را از داخل تلگرام باز کن"
+              : "Open this app inside Telegram";
 
-  if (!tonConnectUI || !tonConnectUI.wallet) {
-    message.textContent = currentLanguage === 'fa'
-      ? 'ابتدا کیف پول را وصل کنید.'
-      : 'Connect your wallet first.';
-    return;
-  }
+          byId("profileId").textContent = "—";
+          byId("profileFirstName").textContent = "—";
+          byId("profileLastName").textContent = "—";
+          byId("profileLanguage").textContent = "—";
+          byId("profileAvatar").textContent = "N";
+          return;
+        }
 
-  if (!Number.isFinite(amount) || amount <= 0) {
-    message.textContent = currentLanguage === 'fa'
-      ? 'مقدار معتبر وارد کنید.'
-      : 'Enter a valid amount.';
-    return;
-  }
+        const firstName = user.first_name || "";
+        const lastName = user.last_name || "";
+        const fullName = `${firstName} ${lastName}`.trim();
 
-  message.textContent = currentLanguage === 'fa'
-    ? 'اتصال انجام شده، اما سیستم برداشت هنوز فعال نیست.'
-    : 'Wallet connected, but withdrawal processing is not configured yet.';
-});
+        byId("profileName").textContent = fullName || "Telegram User";
+        byId("profileUsername").textContent = user.username
+          ? "@" + user.username
+          : (currentLanguage === "fa" ? "نام کاربری ثبت نشده" : "No username");
 
-setLanguage('en');
-</script>
+        byId("profileId").textContent = user.id ?? "—";
+        byId("profileFirstName").textContent = firstName || "—";
+        byId("profileLastName").textContent = lastName || "—";
+        byId("profileLanguage").textContent = user.language_code || "—";
+
+        const avatar = byId("profileAvatar");
+        avatar.replaceChildren();
+
+        if (user.photo_url) {
+          const img = document.createElement("img");
+          img.src = user.photo_url;
+          img.alt = "Telegram profile photo";
+          img.referrerPolicy = "no-referrer";
+          img.onerror = () => {
+            avatar.replaceChildren();
+            avatar.textContent = (firstName.charAt(0) || "N").toUpperCase();
+          };
+          avatar.appendChild(img);
+        } else {
+          avatar.textContent = (firstName.charAt(0) || "N").toUpperCase();
+        }
+      }
+
+      function updateWalletUI() {
+        const connected = Boolean(walletAddress);
+
+        byId("walletStatus").textContent = connected
+          ? (currentLanguage === "fa" ? "کیف پول متصل است." : "Wallet connected.")
+          : (currentLanguage === "fa" ? "کیف پول شما متصل نیست." : "Your wallet is not connected.");
+
+        byId("walletAddress").textContent = walletAddress
+          ? walletAddress
+          : "";
+
+        byId("walletConnectButton").style.display = connected ? "none" : "flex";
+        byId("disconnectButton").style.display = connected ? "block" : "none";
+
+        byId("profileWalletStatus").textContent = connected
+          ? (currentLanguage === "fa" ? "متصل" : "Connected")
+          : (currentLanguage === "fa" ? "متصل نیست" : "Not connected");
+
+        const connectText = byId("homeConnectButton").querySelector("span:last-child");
+        if (connectText) {
+          connectText.textContent = connected
+            ? (currentLanguage === "fa" ? "کیف پول متصل است" : "Wallet Connected")
+            : (currentLanguage === "fa" ? "اتصال کیف پول TON" : "Connect TON Wallet");
+        }
+      }
+
+      function setupTonConnect() {
+        if (!window.TON_CONNECT_UI?.TonConnectUI) {
+          console.warn("TON Connect UI did not load.");
+          return;
+        }
+
+        try {
+          tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+            manifestUrl: MANIFEST_URL
+          });
+
+          tonConnectUI.onStatusChange((wallet) => {
+            walletAddress = wallet?.account?.address || "";
+            updateWalletUI();
+          });
+        } catch (error) {
+          console.error("TON Connect initialization failed:", error);
+        }
+      }
+
+      async function connectWallet() {
+        if (!tonConnectUI) {
+          alert(currentLanguage === "fa"
+            ? "اتصال کیف پول بارگذاری نشد. صفحه را دوباره باز کن."
+            : "Wallet connection could not load. Please reopen the app.");
+          return;
+        }
+
+        try {
+          await tonConnectUI.openModal();
+        } catch (error) {
+          console.error("Wallet connection error:", error);
+          alert(currentLanguage === "fa"
+            ? "اتصال کیف پول انجام نشد. دوباره تلاش کن."
+            : "Could not open wallet connection. Please try again.");
+        }
+      }
+
+      byId("homeConnectButton").addEventListener("click", connectWallet);
+      byId("walletConnectButton").addEventListener("click", connectWallet);
+
+      byId("disconnectButton").addEventListener("click", async () => {
+        if (!tonConnectUI) return;
+
+        try {
+          await tonConnectUI.disconnect();
+          walletAddress = "";
+          updateWalletUI();
+        } catch (error) {
+          console.error("Wallet disconnect error:", error);
+        }
+      });
+
+      byId("withdrawButton").addEventListener("click", () => {
+        const amount = Number(byId("withdrawAmount").value);
+        const message = byId("withdrawMessage");
+
+        if (!walletAddress) {
+          message.style.color = "#ffbd72";
+          message.textContent = currentLanguage === "fa"
+            ? "ابتدا کیف پول TON خود را وصل کن."
+            : "Please connect your TON wallet first.";
+          return;
+        }
+
+        if (!Number.isFinite(amount) || amount <= 0) {
+          message.style.color = "#ffbd72";
+          message.textContent = currentLanguage === "fa"
+            ? "مقدار معتبر وارد کن."
+            : "Please enter a valid amount.";
+          return;
+        }
+
+        message.style.color = "#ffbd72";
+        message.textContent = currentLanguage === "fa"
+          ? "این بخش هنوز نمایشی است؛ درخواست برداشت ارسال نشده است."
+          : "This is still a demo. No withdrawal request has been sent.";
+      });
+
+      loadProfile();
+      setupTonConnect();
+      updateWalletUI();
+
+      if (tg?.initDataUnsafe?.user?.language_code === "fa") {
+        setLanguage("fa");
+      } else {
+        setLanguage("en");
+      }
+    })();
+  </script>
 </body>
 </html>
