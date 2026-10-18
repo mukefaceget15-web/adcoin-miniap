@@ -2,159 +2,612 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#050a0e">
-<title>NOT REWARD</title>
-<style>
-:root{--green:#00f59b;--bg:#050a0e;--panel:#0b131d;--muted:#9badc6}
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(ellipse at 50% 35%,#06251d 0%,#050a0e 55%);color:#fff;font-family:Arial,sans-serif;min-height:100vh}
-button{font:inherit;cursor:pointer}
-.app{max-width:520px;margin:auto;padding:20px 17px 100px;min-height:100vh}
-header{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.brand{display:flex;align-items:center;gap:10px}
-.mini-logo{width:45px;height:45px;border:2px solid var(--green);border-radius:15px;display:grid;place-items:center;background:#09251e;font-size:24px;box-shadow:0 0 20px #00f59b33}
-.brand-name{font-size:19px;font-weight:900;letter-spacing:.3px}
-.brand-name span{color:var(--green)}
-.sub{font-size:11px;color:var(--muted);margin-top:4px}
-.header-right{display:flex;align-items:center;gap:8px}
-.online{font-size:11px;color:var(--green);white-space:nowrap}
-.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);margin-right:4px}
-.lang{border:1px solid #243447;background:#101a26;color:white;border-radius:20px;padding:9px 10px;font-size:12px}
-.status{margin:24px 0 8px;text-align:center;font-size:11px;color:var(--muted);letter-spacing:2px}
-.hero{text-align:center;padding-top:4px}
-.orbit-wrap{height:290px;display:grid;place-items:center;position:relative}
-.orbit{position:absolute;width:260px;height:260px;border-radius:50%;border:2px solid #00f59b25;box-shadow:0 0 45px #00f59b0b}
-.orbit:before{content:"";position:absolute;inset:-3px;border-radius:50%;border:5px solid transparent;border-top-color:var(--green);border-left-color:#00f59b66;animation:spin 3s linear infinite;filter:drop-shadow(0 0 8px var(--green))}
-.orbit:after{content:"";position:absolute;inset:17px;border-radius:50%;border:1px solid #00f59b48;animation:spin 6s linear infinite reverse}
-.orbit2{position:absolute;width:220px;height:220px;border-radius:50%;border:1px dashed #00f59b66;animation:spin 12s linear infinite}
-.robot{z-index:2;width:155px;height:145px;border-radius:43px;background:linear-gradient(145deg,#f7ffff,#8ea8bb 45%,#26394d 75%,#dcecff);padding:10px;box-shadow:0 0 35px #00f59b38;position:relative}
-.robot:before{content:"";position:absolute;top:-17px;left:69px;width:12px;height:19px;background:#b9d3e4;border-radius:8px}
-.robot:after{content:"";position:absolute;top:-27px;left:65px;width:20px;height:20px;border-radius:50%;background:var(--green);box-shadow:0 0 18px var(--green)}
-.face{height:100%;border-radius:34px;background:linear-gradient(145deg,#091421,#02070c);display:flex;justify-content:center;align-items:center;gap:20px;border:2px solid #344c60}
-.eye{width:28px;height:17px;border-top:7px solid var(--green);border-radius:50%;filter:drop-shadow(0 0 7px var(--green))}
-.chest{position:absolute;bottom:-20px;left:48px;background:#10251f;border:2px solid var(--green);border-radius:50%;width:58px;height:38px;display:grid;place-items:center;color:var(--green);font-size:17px}
-@keyframes spin{to{transform:rotate(360deg)}}
-h1{font-size:35px;letter-spacing:-1px;margin:7px 0 4px}
-h1 span{color:var(--green)}
-.tagline{color:var(--muted);font-size:14px;margin-bottom:24px}
-.start{width:100%;border:0;border-radius:18px;padding:17px;background:linear-gradient(100deg,#00bd78,#00f59b);font-weight:900;font-size:17px;color:#03130e;box-shadow:0 5px 28px #00f59b20}
-.features{margin-top:27px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.feature{background:linear-gradient(145deg,#0e1926,#080f17);border:1px solid #1a2a3c;border-radius:17px;padding:19px 12px;text-align:center}
-.feature-icon{font-size:25px;color:var(--green)}
-.feature-title{font-weight:bold;margin-top:9px;font-size:14px}
-.feature-desc{color:var(--muted);font-size:12px;margin-top:6px}
-footer{position:fixed;bottom:0;left:0;right:0;background:#080f17f5;border-top:1px solid #1b2a3b;padding:12px max(16px,calc((100vw - 490px)/2));display:flex;justify-content:space-around;z-index:5}
-.nav-item{background:none;border:0;color:#8fa3bd;font-size:11px;display:grid;gap:5px;justify-items:center}
-.nav-item b{font-size:20px}
-.nav-item.active{color:var(--green)}
-[dir=rtl] .brand-name,[dir=rtl] .sub{direction:rtl}
-@media(max-width:370px){.brand-name{font-size:16px}.orbit{width:235px;height:235px}.orbit2{width:200px;height:200px}.orbit-wrap{height:265px}.robot{transform:scale(.9)}h1{font-size:30px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07100d">
+  <title>NOT REWARD</title>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #07100d;
+      --panel: #101c17;
+      --green: #43ff9b;
+      --muted: #9aafa4;
+      --border: #20382b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at top, #123222 0%, var(--bg) 48%);
+      color: #f3fff8;
+      font-family: Arial, sans-serif;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      max-width: 480px;
+      min-height: 100vh;
+      margin: auto;
+      padding: 22px 17px 100px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .robot {
+      width: 49px;
+      height: 49px;
+      border: 2px solid var(--green);
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      font-size: 27px;
+      box-shadow: 0 0 20px #43ff9b30;
+      animation: float 2.8s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      50% { transform: translateY(-4px); }
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 19px;
+      letter-spacing: 1.5px;
+    }
+
+    .subtitle {
+      margin-top: 5px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .lang {
+      color: var(--green);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 9px 12px;
+    }
+
+    .online {
+      margin-top: 25px;
+      color: var(--green);
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 35px 8px 25px;
+    }
+
+    .orb {
+      width: 142px;
+      height: 142px;
+      margin: 0 auto 25px;
+      border: 2px solid #43ff9b;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      position: relative;
+      box-shadow: 0 0 35px #43ff9b25,
+                  inset 0 0 25px #43ff9b13;
+    }
+
+    .orb::before {
+      content: "";
+      position: absolute;
+      inset: -8px;
+      border: 2px dashed #43ff9b65;
+      border-radius: 50%;
+      animation: spin 12s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .orb span {
+      font-size: 68px;
+    }
+
+    .hero h2 {
+      font-size: 28px;
+      margin: 0 0 12px;
+    }
+
+    .hero p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--muted);
+      margin: 0 auto 23px;
+      max-width: 320px;
+    }
+
+    .primary {
+      width: 100%;
+      border: 0;
+      border-radius: 14px;
+      padding: 15px;
+      color: #06130b;
+      background: var(--green);
+      font-weight: bold;
+      box-shadow: 0 5px 22px #43ff9b20;
+    }
+
+    .section-title {
+      margin: 23px 0 13px;
+      font-size: 17px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .card {
+      background: linear-gradient(145deg, #14251c, #0d1712);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 17px;
+    }
+
+    .card-icon {
+      font-size: 27px;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 19px;
+      margin-top: 18px;
+    }
+
+    .panel h2 {
+      margin: 0 0 10px;
+      font-size: 21px;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .wallet-status {
+      overflow-wrap: anywhere;
+      padding: 12px;
+      border-radius: 11px;
+      margin: 15px 0;
+      background: #07100d;
+      border: 1px solid var(--border);
+      color: var(--green);
+      font-size: 12px;
+    }
+
+    #ton-connect {
+      margin-top: 14px;
+      min-height: 44px;
+    }
+
+    .field {
+      display: block;
+      width: 100%;
+      background: #07100d;
+      color: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin: 12px 0;
+      outline: none;
+    }
+
+    .field:focus {
+      border-color: var(--green);
+    }
+
+    .secondary {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 13px;
+      color: white;
+      background: #15251b;
+      margin-top: 10px;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      padding: 12px 9px calc(12px + env(safe-area-inset-bottom));
+      background: #09120ef2;
+      border-top: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      z-index: 5;
+    }
+
+    nav button {
+      color: var(--muted);
+      background: transparent;
+      border: 0;
+      padding: 8px 2px;
+      font-size: 11px;
+    }
+
+    nav button span {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+
+    nav button.active {
+      color: var(--green);
+    }
+
+    .notice {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-top: 13px;
+    }
+
+    .rtl {
+      direction: rtl;
+      text-align: right;
+    }
+
+    .rtl .brand {
+      flex-direction: row;
+    }
+
+    .rtl .online {
+      letter-spacing: 0;
+    }
+
+    @media (max-width: 350px) {
+      .hero h2 { font-size: 24px; }
+      .grid { gap: 8px; }
+      .card { padding: 12px; }
+    }
+  </style>
 </head>
+
 <body>
-<div class="app">
-<header>
-  <div class="brand">
-    <div class="mini-logo" aria-label="NOT REWARD robot">🤖</div>
-    <div>
-      <div class="brand-name">NOT <span>REWARD</span></div>
-      <div class="sub" id="subtitle">Play • Earn • Withdraw</div>
-    </div>
+  <div class="app" id="app">
+
+    <header>
+      <div class="brand">
+        <div class="robot">🤖</div>
+        <div>
+          <h1>NOT REWARD</h1>
+          <div class="subtitle" data-en="REWARD ECOSYSTEM"
+               data-fa="اکوسیستم پاداش">REWARD ECOSYSTEM</div>
+        </div>
+      </div>
+      <button class="lang" id="langButton">فارسی</button>
+    </header>
+
+    <div class="online">● ONLINE</div>
+
+    <main>
+      <section class="page active" id="homePage">
+        <div class="hero">
+          <div class="orb"><span>🤖</span></div>
+          <h2 data-en="Welcome to NOT REWARD"
+              data-fa="به NOT REWARD خوش آمدید">
+            Welcome to NOT REWARD
+          </h2>
+          <p data-en="Explore rewards, manage your wallet and discover the NOT REWARD ecosystem."
+             data-fa="پاداش‌ها را بررسی کنید، کیف پولتان را مدیریت کنید و دنیای NOT REWARD را کشف کنید.">
+            Explore rewards, manage your wallet and discover the NOT REWARD ecosystem.
+          </p>
+          <button class="primary" id="startButton"
+                  data-en="GET STARTED"
+                  data-fa="شروع کنید">GET STARTED</button>
+        </div>
+
+        <h2 class="section-title" data-en="Explore"
+            data-fa="امکانات">Explore</h2>
+
+        <div class="grid">
+          <div class="card" onclick="showPage('earn')">
+            <div class="card-icon">⚡</div>
+            <h3 data-en="Earn Points" data-fa="کسب امتیاز">Earn Points</h3>
+            <p data-en="Explore available reward activities."
+               data-fa="فعالیت‌های موجود برای کسب پاداش را ببینید.">
+              Explore available reward activities.
+            </p>
+          </div>
+
+          <div class="card" onclick="showPage('wallet')">
+            <div class="card-icon">👛</div>
+            <h3 data-en="Wallet" data-fa="کیف پول">Wallet</h3>
+            <p data-en="Connect your TON wallet."
+               data-fa="کیف پول TON خود را متصل کنید.">
+              Connect your TON wallet.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="earnPage">
+        <div class="panel">
+          <h2 data-en="Earn Points" data-fa="کسب امتیاز">Earn Points</h2>
+          <p class="muted"
+             data-en="Reward activities will appear here when enabled."
+             data-fa="پس از فعال شدن فعالیت‌های پاداش، آن‌ها را اینجا خواهید دید.">
+            Reward activities will appear here when enabled.
+          </p>
+        </div>
+      </section>
+
+      <section class="page" id="walletPage">
+        <div class="panel">
+          <h2 data-en="Your Wallet" data-fa="کیف پول شما">Your Wallet</h2>
+          <p class="muted"
+             data-en="Connect Tonkeeper or another compatible TON wallet."
+             data-fa="Tonkeeper یا کیف پول سازگار دیگری از شبکه TON را متصل کنید.">
+            Connect Tonkeeper or another compatible TON wallet.
+          </p>
+
+          <div class="wallet-status" id="walletStatus"
+               data-en="Wallet not connected"
+               data-fa="کیف پول متصل نیست">
+            Wallet not connected
+          </div>
+
+          <div id="ton-connect"></div>
+
+          <button class="secondary" id="disconnectButton"
+                  style="display:none"
+                  data-en="Disconnect wallet"
+                  data-fa="قطع اتصال کیف پول">
+            Disconnect wallet
+          </button>
+
+          <div class="notice"
+               data-en="Connecting only shares your public wallet address. Never share your recovery phrase or private key."
+               data-fa="اتصال فقط آدرس عمومی کیف پول را در اختیار برنامه می‌گذارد. عبارت بازیابی یا کلید خصوصی را هرگز به کسی ندهید.">
+            Connecting only shares your public wallet address. Never share your recovery phrase or private key.
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2 data-en="Withdraw" data-fa="برداشت">Withdraw</h2>
+          <p class="muted"
+             data-en="Withdrawal requests are not active yet. The request system must be configured separately."
+             data-fa="درخواست برداشت هنوز فعال نیست. سیستم ثبت و ارسال درخواست باید جداگانه تنظیم شود.">
+            Withdrawal requests are not active yet. The request system must be configured separately.
+          </p>
+          <input class="field" id="withdrawAmount" type="number"
+                 min="1" placeholder="Amount">
+          <button class="primary" id="withdrawButton"
+                  data-en="Request withdrawal"
+                  data-fa="درخواست برداشت">
+            Request withdrawal
+          </button>
+          <div class="notice" id="withdrawMessage"></div>
+        </div>
+      </section>
+
+      <section class="page" id="profilePage">
+        <div class="panel">
+          <h2 data-en="Profile" data-fa="پروفایل">Profile</h2>
+          <p class="muted" id="profileUser"
+             data-en="Telegram profile"
+             data-fa="پروفایل تلگرام">Telegram profile</p>
+          <p class="muted"
+             data-en="Your reward history and account details can be added here."
+             data-fa="تاریخچه پاداش و اطلاعات حساب را می‌توان در این بخش اضافه کرد.">
+            Your reward history and account details can be added here.
+          </p>
+        </div>
+      </section>
+    </main>
   </div>
-  <div class="header-right">
-    <div class="online"><span class="dot"></span>ONLINE</div>
-    <button class="lang" id="langBtn" onclick="toggleLang()">فارسی</button>
-  </div>
-</header>
 
-<div class="status" id="status">WELCOME TO YOUR REWARD SPACE</div>
-<section class="hero">
-  <div class="orbit-wrap">
-    <div class="orbit"></div><div class="orbit2"></div>
-    <div class="robot">
-      <div class="face"><div class="eye"></div><div class="eye"></div></div>
-      <div class="chest">NR</div>
-    </div>
-  </div>
-  <h1>NOT <span>REWARD</span></h1>
-  <div class="tagline" id="tagline">Play • Earn • Withdraw</div>
-  <button class="start" id="startBtn" onclick="startApp()">▶ &nbsp; START</button>
-</section>
+  <nav>
+    <button class="active" data-page="home" onclick="showPage('home')">
+      <span>⌂</span><span data-en="Home" data-fa="خانه">Home</span>
+    </button>
+    <button data-page="earn" onclick="showPage('earn')">
+      <span>⚡</span><span data-en="Earn" data-fa="کسب">Earn</span>
+    </button>
+    <button data-page="wallet" onclick="showPage('wallet')">
+      <span>👛</span><span data-en="Wallet" data-fa="کیف پول">Wallet</span>
+    </button>
+    <button data-page="profile" onclick="showPage('profile')">
+      <span>👤</span><span data-en="Profile" data-fa="پروفایل">Profile</span>
+    </button>
+  </nav>
 
-<section class="features">
-  <div class="feature">
-    <div class="feature-icon">◈</div>
-    <div class="feature-title" id="earnTitle">Earn Points</div>
-    <div class="feature-desc" id="earnDesc">Collect reward points</div>
-  </div>
-  <div class="feature">
-    <div class="feature-icon">▣</div>
-    <div class="feature-title" id="walletTitle">Wallet</div>
-    <div class="feature-desc" id="walletDesc">Manage your balance</div>
-  </div>
-</section>
-</div>
+  <script>
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.ready();
+      tg.expand();
 
-<footer>
-  <button class="nav-item active" onclick="setTab(this,'home')"><b>⌂</b><span id="navHome">Home</span></button>
-  <button class="nav-item" onclick="setTab(this,'earn')"><b>✧</b><span id="navEarn">Earn</span></button>
-  <button class="nav-item" onclick="setTab(this,'wallet')"><b>▣</b><span id="navWallet">Wallet</span></button>
-  <button class="nav-item" onclick="setTab(this,'profile')"><b>♙</b><span id="navProfile">Profile</span></button>
-</footer>
+      const user = tg.initDataUnsafe?.user;
+      if (user) {
+        document.getElementById('profileUser').textContent =
+          user.username ? '@' + user.username : (user.first_name || 'Telegram user');
+      }
+    }
 
-<script>
-let lang = 'en';
+    let currentLanguage = 'en';
 
-const translations = {
- en:{
-  subtitle:'Play • Earn • Withdraw',status:'WELCOME TO YOUR REWARD SPACE',
-  tagline:'Play • Earn • Withdraw',start:'▶  START',
-  earnTitle:'Earn Points',earnDesc:'Collect reward points',
-  walletTitle:'Wallet',walletDesc:'Manage your balance',
-  home:'Home',earn:'Earn',wallet:'Wallet',profile:'Profile',
-  alert:'Welcome to NOT REWARD!'
- },
- fa:{
-  subtitle:'بازی • امتیاز • برداشت',status:'به دنیای پاداش خوش آمدید',
-  tagline:'بازی کن • امتیاز بگیر • برداشت کن',start:'▶  شروع',
-  earnTitle:'کسب امتیاز',earnDesc:'امتیاز جمع‌آوری کن',
-  walletTitle:'کیف پول',walletDesc:'موجودی خود را مدیریت کن',
-  home:'خانه',earn:'کسب امتیاز',wallet:'کیف پول',profile:'پروفایل',
-  alert:'به NOT REWARD خوش آمدی!'
- }
-};
+    function setLanguage(language) {
+      currentLanguage = language;
+      document.documentElement.lang = language;
+      document.getElementById('app').classList.toggle('rtl', language === 'fa');
+      document.getElementById('langButton').textContent =
+        language === 'en' ? 'فارسی' : 'English';
 
-function toggleLang(){
- lang = lang === 'en' ? 'fa' : 'en';
- const t = translations[lang];
- document.documentElement.lang = lang;
- document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
- document.getElementById('subtitle').textContent=t.subtitle;
- document.getElementById('status').textContent=t.status;
- document.getElementById('tagline').textContent=t.tagline;
- document.getElementById('startBtn').textContent=t.start;
- document.getElementById('earnTitle').textContent=t.earnTitle;
- document.getElementById('earnDesc').textContent=t.earnDesc;
- document.getElementById('walletTitle').textContent=t.walletTitle;
- document.getElementById('walletDesc').textContent=t.walletDesc;
- document.getElementById('navHome').textContent=t.home;
- document.getElementById('navEarn').textContent=t.earn;
- document.getElementById('navWallet').textContent=t.wallet;
- document.getElementById('navProfile').textContent=t.profile;
- document.getElementById('langBtn').textContent=lang==='en'?'فارسی':'English';
-}
+      document.querySelectorAll('[data-en][data-fa]').forEach(element => {
+        if (element.tagName === 'INPUT') {
+          element.placeholder = element.dataset[language] || '';
+        } else {
+          element.textContent = element.dataset[language];
+        }
+      });
+    }
 
-function startApp(){
- document.getElementById('status').textContent =
- lang==='fa'?'آماده‌ای!':'YOU ARE READY!';
-}
+    document.getElementById('langButton').addEventListener('click', () => {
+      setLanguage(currentLanguage === 'en' ? 'fa' : 'en');
+    });
 
-function setTab(button,tab){
- document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
- button.classList.add('active');
-}
-</script>
+    function showPage(page) {
+      document.querySelectorAll('.page').forEach(section => {
+        section.classList.remove('active');
+      });
+
+      const selected = document.getElementById(page + 'Page');
+      if (selected) selected.classList.add('active');
+
+      document.querySelectorAll('nav button').forEach(button => {
+        button.classList.toggle('active', button.dataset.page === page);
+      });
+    }
+
+    document.getElementById('startButton').addEventListener('click', () => {
+      showPage('wallet');
+    });
+
+    const statusElement = document.getElementById('walletStatus');
+    const disconnectButton = document.getElementById('disconnectButton');
+    const withdrawButton = document.getElementById('withdrawButton');
+    const withdrawMessage = document.getElementById('withdrawMessage');
+
+    let tonConnectUI = null;
+
+    function showWalletStatus(wallet) {
+      if (!wallet) {
+        statusElement.textContent =
+          currentLanguage === 'fa' ? 'کیف پول متصل نیست' : 'Wallet not connected';
+        disconnectButton.style.display = 'none';
+        return;
+      }
+
+      const address = wallet.account.address;
+      statusElement.textContent =
+        (currentLanguage === 'fa' ? 'متصل شد: ' : 'Connected: ') + address;
+      disconnectButton.style.display = 'block';
+    }
+
+    window.addEventListener('load', () => {
+      if (!window.TON_CONNECT_UI) {
+        statusElement.textContent =
+          'TON Connect could not load. Please refresh and try again.';
+        return;
+      }
+
+      try {
+        tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+          manifestUrl: 'https://mukefaceget15-web.github.io/adcoin-miniap/tonconnect-manifest.json',
+          buttonRootId: 'ton-connect'
+        });
+
+        tonConnectUI.onStatusChange(wallet => {
+          showWalletStatus(wallet);
+        });
+      } catch (error) {
+        console.error('TON Connect initialization failed:', error);
+        statusElement.textContent =
+          'Connection setup failed. Check the manifest URL.';
+      }
+    });
+
+    disconnectButton.addEventListener('click', async () => {
+      if (!tonConnectUI) return;
+
+      try {
+        await tonConnectUI.disconnect();
+        showWalletStatus(null);
+      } catch (error) {
+        console.error(error);
+      }
+    });
+
+    withdrawButton.addEventListener('click', () => {
+      const amount = Number(document.getElementById('withdrawAmount').value);
+
+      if (!tonConnectUI || !tonConnectUI.wallet) {
+        withdrawMessage.textContent = currentLanguage === 'fa'
+          ? 'ابتدا کیف پول را متصل کنید.'
+          : 'Connect your wallet first.';
+        return;
+      }
+
+      if (!Number.isFinite(amount) || amount <= 0) {
+        withdrawMessage.textContent = currentLanguage === 'fa'
+          ? 'مقدار معتبر وارد کنید.'
+          : 'Enter a valid amount.';
+        return;
+      }
+
+      withdrawMessage.textContent = currentLanguage === 'fa'
+        ? 'اتصال کیف پول انجام شده، اما ثبت درخواست برداشت هنوز به ربات وصل نشده است.'
+        : 'Wallet connected, but withdrawal requests are not yet linked to the bot.';
+    });
+
+    setLanguage('en');
+  </script>
 </body>
 </html>
