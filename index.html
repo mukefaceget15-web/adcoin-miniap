@@ -2,752 +2,1016 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#07110e">
-<title>NOT REWARD</title>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07100c">
+  <title>NOT REWARD</title>
 
-<style>
-:root{--bg:#07110e;--panel:#102019;--green:#61ffad;--muted:#8ba69a;--line:#61ffad28}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:radial-gradient(ellipse at 50% 0%,#17432c,transparent 43%),var(--bg);color:#f1fff7;font-family:Arial,sans-serif;min-height:100vh}
-button,input{font:inherit}button{cursor:pointer}
-.app{max-width:460px;margin:auto;padding:18px 15px 105px}
-.topbar,.brand,.row,.token-head,.profile-head{display:flex;align-items:center}
-.topbar{justify-content:space-between;margin-bottom:22px}
-.brand{gap:10px}.brand-icon{width:43px;height:43px;border-radius:14px;display:grid;place-items:center;background:#163c29;color:var(--green);font-size:24px;border:1px solid var(--line)}
-.brand-name{font-size:15px;font-weight:900;letter-spacing:1.5px}.brand-sub{font-size:10px;color:var(--muted);margin-top:4px;letter-spacing:2px}
-.lang-button,.secondary{border:1px solid var(--line);border-radius:13px;background:#11251a;color:var(--green);padding:11px;font-weight:bold}
-.page{display:none;animation:appear .25s ease}.page.active{display:block}
-@keyframes appear{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.hero{text-align:center}
-.status{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:30px;border:1px solid var(--line);background:#10271b;color:#b9ffda;font-size:10px;font-weight:bold}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:pulse 1.5s infinite}
-@keyframes pulse{50%{opacity:.4;transform:scale(.7)}}
-.robot-scene{position:relative;width:280px;height:270px;max-width:100%;margin:8px auto 0;display:grid;place-items:center;cursor:pointer;touch-action:manipulation;user-select:none;-webkit-tap-highlight-color:transparent}
-.robot-scene:active .robot{transform:scale(.92)}
-.glow{position:absolute;width:145px;height:145px;border-radius:50%;background:#19e981;opacity:.18;filter:blur(36px);animation:glow 3s infinite}
-@keyframes glow{50%{transform:scale(1.3);opacity:.35}}
-.orbit{position:absolute;border:1px solid #61ffad45;border-radius:50%;pointer-events:none}
-.orbit.one{width:248px;height:105px;animation:spin 7s linear infinite}
-.orbit.two{width:248px;height:125px;border-color:#53e7ff55;animation:spinback 9s linear infinite}
-.orbit.three{width:215px;height:215px;border-style:dashed;border-color:#61ffad24;animation:spin 24s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}@keyframes spinback{to{transform:rotate(-360deg)}}
-.orbit-dot{position:absolute;top:12px;left:36px;width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 15px var(--green)}
-.orbit-dot.blue{top:auto;bottom:15px;left:40px;width:8px;height:8px;background:#53e7ff;box-shadow:0 0 12px #53e7ff}
-.orbit-dot.purple{top:48px;left:auto;right:23px;width:7px;height:7px;background:#bd8bff;box-shadow:0 0 12px #bd8bff}
-.float-label{position:absolute;padding:7px 10px;border-radius:9px;color:#b8ffda;background:#0a1f15;border:1px solid var(--line);font-size:10px;font-weight:900;animation:float 3s infinite}
-.float-label.left{left:0;top:70px}.float-label.right{right:0;bottom:58px;animation-delay:-1.5s}
-@keyframes float{50%{transform:translateY(-6px)}}
-.robot{position:relative;width:124px;height:156px;margin-top:10px;animation:robotfloat 3s ease-in-out infinite;filter:drop-shadow(0 12px 20px #00ff8925);transition:transform .12s}
-@keyframes robotfloat{0%,100%{translate:0 0;rotate:-1deg}50%{translate:0 -9px;rotate:1deg}}
-.antenna{position:absolute;top:0;left:58px;width:8px;height:22px;border-radius:6px;background:linear-gradient(#b5ffdb,#27d986)}
-.antenna:before{content:"";position:absolute;top:-9px;left:-3px;width:14px;height:14px;border-radius:50%;background:var(--green);box-shadow:0 0 13px var(--green)}
-.robot-head{position:absolute;top:21px;left:6px;width:112px;height:79px;border-radius:28px 28px 23px 23px;border:2px solid #86ffc1;background:linear-gradient(145deg,#c8ffe3,#48d991 30%,#0e4930 75%,#09291d);box-shadow:inset 0 3px 8px #ffffff66,0 0 23px #32ff9738}
-.robot-head:before,.robot-head:after{content:"";position:absolute;top:26px;width:8px;height:23px;border-radius:5px;background:#36cb86;border:1px solid #8affc4}
-.robot-head:before{left:-9px}.robot-head:after{right:-9px}
-.face{position:absolute;inset:11px;border-radius:18px;background:linear-gradient(150deg,#09291d,#071710);border:1px solid #aeffd780}
-.eye{position:absolute;top:17px;width:14px;height:19px;border-radius:8px;background:#8effc4;box-shadow:0 0 9px #43ffa1;animation:blink 4s infinite}
-.eye.left{left:15px}.eye.right{right:15px}
-@keyframes blink{0%,43%,47%,100%{transform:scaleY(1)}45%{transform:scaleY(.12)}}
-.mouth{position:absolute;bottom:10px;left:50%;width:25px;height:4px;transform:translateX(-50%);border-radius:5px;background:#42e99a;box-shadow:0 0 7px #42e99a}
-.neck{position:absolute;top:98px;left:47px;width:30px;height:13px;background:linear-gradient(90deg,#14764b,#8dffc3,#14764b)}
-.robot-body{position:absolute;top:107px;left:19px;width:86px;height:43px;border:2px solid #66f8ae;border-radius:16px 16px 22px 22px;background:linear-gradient(145deg,#2bbd78,#0a3423 72%)}
-.core{position:absolute;top:11px;left:32px;width:18px;height:18px;border:2px solid #b4ffd8;border-radius:50%;background:#39ff9b;box-shadow:0 0 13px #39ff9b}
-.arm{position:absolute;top:111px;width:12px;height:32px;border-radius:8px;background:linear-gradient(#74ffb6,#167448);border:1px solid #71ffb6}
-.arm.left{left:4px;transform:rotate(14deg)}.arm.right{right:4px;transform:rotate(-14deg)}
-.hero h1{margin-top:2px;font-size:34px;font-weight:950}.hero h1 span{color:var(--green);text-shadow:0 0 22px #61ffad44}
-.desc{max-width:320px;margin:10px auto;color:var(--muted);font-size:13px;line-height:1.8}
-.click-hint{color:var(--green);font-size:12px;font-weight:bold;margin:9px auto}
-.balance{margin-top:17px;padding:17px;text-align:left;direction:ltr;border:1px solid #61ffad50;border-radius:21px;background:radial-gradient(ellipse at 100% 0%,#1b5036,transparent 55%),linear-gradient(145deg,#13281d,#0b1711);position:relative;overflow:hidden}
-.token-head{gap:11px}.coin{display:grid;place-items:center;flex-shrink:0;width:48px;height:48px;border-radius:50%;background:linear-gradient(145deg,#fff49b,#f3d842 65%,#b59b20);color:#07110e;font-size:28px;font-weight:900;box-shadow:0 0 18px #f6dc4640}
-.token-name{font-weight:900;font-size:16px}.token-ticker{color:#b3cbbd;font-size:11px;margin-top:5px}
-.demo{margin-left:auto;padding:5px 7px;border:1px solid #ffdb8c38;border-radius:8px;color:#ffdb8c;font-size:9px;white-space:nowrap}
-.balance-label{color:#a9c5b5;font-size:11px;margin-top:18px;font-weight:bold}
-.balance-number{margin-top:7px;color:var(--green);font-size:clamp(27px,8vw,35px);font-weight:950;overflow-wrap:anywhere}
-.balance-foot{display:flex;justify-content:space-between;gap:8px;margin-top:13px;color:#8ba69a;font-size:10px}
-.primary{display:flex;justify-content:center;align-items:center;gap:8px;width:100%;min-height:51px;margin-top:13px;padding:13px;border:0;border-radius:15px;color:#062015;font-size:14px;font-weight:900;background:linear-gradient(100deg,#7affb9,#2be68d);box-shadow:0 7px 25px #27e88925}
-.primary:active{transform:scale(.985)}
-.secondary{width:100%;min-height:47px;margin-top:10px}
-.progress-wrap{margin-top:13px}
-.progress-info{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:11px;margin-bottom:8px}
-.progress{height:7px;background:#21382b;border-radius:10px;overflow:hidden}
-.progress-bar{height:100%;width:0;background:linear-gradient(90deg,#20d982,#a0ffca);border-radius:10px;transition:width .2s}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
-.stat,.panel{border:1px solid var(--line);border-radius:17px;padding:15px;background:linear-gradient(145deg,#13271d,#0b1811)}
-.stat-icon{font-size:21px;margin-bottom:8px}.stat-value{font-size:18px;font-weight:900;color:var(--green);overflow-wrap:anywhere}.stat-label{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6}
-.section-title{font-size:18px;font-weight:900;margin:23px 0 12px}
-.feature{display:flex;align-items:center;gap:12px;padding:14px;margin-top:10px;border:1px solid var(--line);border-radius:16px;background:#0f2017;cursor:pointer}
-.feature-icon{width:43px;height:43px;flex-shrink:0;border-radius:13px;display:grid;place-items:center;background:#43ffa117;font-size:20px}
-.feature-text{flex:1;min-width:0}.feature-text strong{display:block;font-size:13px;margin-bottom:5px}.feature-text span{display:block;color:var(--muted);font-size:11px;line-height:1.6}
-.small-tag{color:var(--green);font-size:10px;font-weight:bold;white-space:nowrap}
-.field-label{display:block;color:var(--muted);font-size:12px;margin:16px 0 8px}
-.input{width:100%;height:48px;border-radius:13px;border:1px solid var(--line);background:#091710;color:white;padding:0 13px;outline:none}
-.input:focus{border-color:var(--green)}
-.notice{margin-top:13px;padding:12px;border-radius:12px;background:#ffbe460c;border:1px solid #ffbe4628;color:#e9d4a5;font-size:11px;line-height:1.8}
-.address{overflow-wrap:anywhere;color:var(--green);font-size:12px;line-height:1.7;margin-top:10px}
-.profile-head{gap:13px;margin:15px 0}
-.avatar{width:67px;height:67px;display:grid;place-items:center;overflow:hidden;flex-shrink:0;border-radius:22px;background:#1e714a;border:1px solid #61ffad55;color:var(--green);font-size:26px}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.profile-name{font-size:17px;font-weight:900;overflow-wrap:anywhere}.username{margin-top:6px;color:var(--green);font-size:12px;overflow-wrap:anywhere}
-.info-row{display:flex;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid #61ffad17;font-size:12px}
-.info-row:last-child{border-bottom:0}.info-label{color:var(--muted)}.info-value{max-width:60%;text-align:right;overflow-wrap:anywhere;font-weight:bold}
-.ref-link{direction:ltr;text-align:left;overflow-wrap:anywhere;font-size:12px;line-height:1.8;color:var(--green);background:#091710;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px}
-.footer{text-align:center;color:#5f796a;font-size:10px;line-height:1.8;margin-top:22px}
-.nav{position:fixed;z-index:10;left:50%;bottom:0;transform:translateX(-50%);width:min(100%,460px);display:grid;grid-template-columns:repeat(4,1fr);gap:5px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));border-top:1px solid #61ffad20;background:#06110cf5;backdrop-filter:blur(18px)}
-.nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:53px;border:0;border-radius:13px;background:transparent;color:#71877a;font-size:10px;font-weight:bold}
-.nav button.active{background:#41ff9d17;color:var(--green)}.nav-icon{font-size:20px}
-[dir="rtl"] .balance{text-align:right}[dir="rtl"] .info-value{text-align:left}
-.reward-card{border:1px solid var(--line);border-radius:14px;background:#0f2017;padding:12px;text-align:center}
-.reward-card.claimed{opacity:.55}.reward-card.today{border-color:var(--green);box-shadow:0 0 14px #61ffad18}
-.reward-day{font-size:11px;color:var(--muted);margin-bottom:8px}.reward-amount{font-size:17px;font-weight:900;color:var(--green)}
-@media(max-width:360px){.app{padding-left:12px;padding-right:12px}.robot-scene{transform:scale(.93);margin-top:-2px;margin-bottom:-3px}.hero h1{font-size:30px}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important}}
-</style>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #07100c;
+      --panel: #101b15;
+      --panel2: #15241b;
+      --green: #42ff91;
+      --green2: #17c964;
+      --text: #f3fff6;
+      --muted: #91a99a;
+      --border: rgba(66,255,145,.18);
+      --red: #ff6464;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at top, #143c25 0%, transparent 42%),
+        var(--bg);
+      font-family: Arial, Tahoma, sans-serif;
+    }
+
+    button, input, textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 16px 15px 100px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .brand-icon {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      color: #06140b;
+      background: var(--green);
+      box-shadow: 0 0 24px #42ff9144;
+      font-size: 21px;
+    }
+
+    .small-btn {
+      padding: 9px 12px;
+      color: var(--green);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .card {
+      background: linear-gradient(145deg, #13231a, #0d1711);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 18px;
+      margin-bottom: 15px;
+      box-shadow: 0 10px 30px #00000020;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .balance-label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .balance {
+      color: var(--green);
+      font-size: 36px;
+      font-weight: 900;
+      margin: 8px 0;
+      direction: ltr;
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+
+    .balance small {
+      font-size: 15px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .stat {
+      padding: 13px;
+      background: #ffffff06;
+      border: 1px solid #ffffff0c;
+      border-radius: 15px;
+    }
+
+    .stat strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 18px;
+      color: var(--green);
+    }
+
+    .robot-area {
+      position: relative;
+      min-height: 300px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+
+    .orbit {
+      position: absolute;
+      width: 255px;
+      height: 255px;
+      border: 1px solid #42ff9128;
+      border-radius: 50%;
+      animation: spin 18s linear infinite;
+    }
+
+    .orbit::before,
+    .orbit::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 15px var(--green);
+    }
+
+    .orbit::before {
+      top: 25px;
+      left: 35px;
+    }
+
+    .orbit::after {
+      bottom: 30px;
+      right: 20px;
+      width: 6px;
+      height: 6px;
+    }
+
+    .orbit.two {
+      width: 205px;
+      height: 285px;
+      transform: rotate(50deg);
+      animation-duration: 12s;
+      border-color: #42ff911b;
+    }
+
+    .robot-button {
+      position: relative;
+      z-index: 2;
+      width: 210px;
+      height: 230px;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      -webkit-tap-highlight-color: transparent;
+      filter: drop-shadow(0 0 18px #42ff9130);
+      transition: transform .12s ease;
+    }
+
+    .robot-button:active {
+      transform: scale(.93);
+    }
+
+    .robot {
+      width: 100%;
+      height: 100%;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .robot-head {
+      fill: #b8ffd0;
+      stroke: #42ff91;
+      stroke-width: 4;
+    }
+
+    .robot-dark {
+      fill: #10291a;
+      stroke: #42ff91;
+      stroke-width: 3;
+    }
+
+    .robot-eye {
+      fill: #42ff91;
+      filter: drop-shadow(0 0 5px #42ff91);
+    }
+
+    .robot-body {
+      fill: #193c27;
+      stroke: #42ff91;
+      stroke-width: 4;
+    }
+
+    .robot-detail {
+      fill: #42ff91;
+    }
+
+    .tap-hint {
+      text-align: center;
+      margin-top: -8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .progress-track {
+      height: 9px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #ffffff12;
+      margin: 12px 0 6px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--green2), var(--green));
+      border-radius: inherit;
+      transition: width .2s;
+    }
+
+    .primary, .secondary, .danger {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 0;
+      font-weight: 800;
+      margin-top: 10px;
+    }
+
+    .primary {
+      color: #06140b;
+      background: linear-gradient(100deg, #42ff91, #17c964);
+      box-shadow: 0 5px 18px #17c96420;
+    }
+
+    .secondary {
+      color: var(--green);
+      background: #42ff9110;
+      border: 1px solid var(--border);
+    }
+
+    .danger {
+      color: #fff;
+      background: #ff64641a;
+      border: 1px solid #ff646444;
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+      animation: appear .2s ease;
+    }
+
+    .section-title {
+      font-size: 21px;
+      font-weight: 900;
+      margin: 5px 0 16px;
+    }
+
+    .reward-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+      padding: 13px;
+      border-radius: 15px;
+      background: #ffffff06;
+      border: 1px solid #ffffff0b;
+    }
+
+    .reward-icon {
+      display: grid;
+      place-items: center;
+      width: 43px;
+      height: 43px;
+      flex-shrink: 0;
+      border-radius: 13px;
+      background: #42ff9112;
+      font-size: 21px;
+    }
+
+    .reward-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .reward-info strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .reward-info span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .reward-amount {
+      color: var(--green);
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .field-label {
+      display: block;
+      margin: 14px 0 7px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .field {
+      width: 100%;
+      padding: 13px;
+      color: var(--text);
+      background: #07100c;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      outline: none;
+    }
+
+    .field:focus {
+      border-color: var(--green);
+    }
+
+    .notice {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.9;
+      overflow-wrap: anywhere;
+    }
+
+    .status {
+      margin-top: 12px;
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--green);
+      overflow-wrap: anywhere;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      z-index: 10;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 520px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      padding: 10px 8px calc(10px + env(safe-area-inset-bottom));
+      background: #08120ded;
+      border-top: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      padding: 8px 3px;
+      color: var(--muted);
+      background: transparent;
+      border: 0;
+      border-radius: 12px;
+      font-size: 11px;
+    }
+
+    .nav-btn .nav-icon {
+      font-size: 20px;
+    }
+
+    .nav-btn.active {
+      color: var(--green);
+      background: #42ff9110;
+    }
+
+    .ltr {
+      direction: ltr;
+      text-align: left;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 360px) {
+      .balance { font-size: 30px; }
+      .robot-button { width: 185px; height: 210px; }
+      .robot-area { min-height: 270px; }
+    }
+  </style>
 </head>
+
 <body>
-<div class="app">
-<header class="topbar">
-  <div class="brand"><div class="brand-icon">✦</div><div><div class="brand-name">NOT REWARD</div><div class="brand-sub">WEB3 REWARDS</div></div></div>
-  <button class="lang-button" id="languageButton">English</button>
-</header>
-
-<main>
-<section class="page active" id="homePage">
-  <div class="hero">
-    <div class="status"><span class="dot"></span><span data-en="YOUR REWARD JOURNEY STARTS" data-fa="سفر پاداش تو شروع می‌شود">سفر پاداش تو شروع می‌شود</span></div>
-    <div class="robot-scene" id="robotClick" role="button" tabindex="0" aria-label="Collect NOT">
-      <div class="glow"></div>
-      <div class="orbit one"><span class="orbit-dot"></span></div>
-      <div class="orbit two"><span class="orbit-dot blue"></span></div>
-      <div class="orbit three"><span class="orbit-dot purple"></span></div>
-      <div class="float-label left">TON ✦</div><div class="float-label right">NOT +</div>
-      <div class="robot">
-        <div class="antenna"></div>
-        <div class="robot-head"><div class="face"><span class="eye left"></span><span class="eye right"></span><span class="mouth"></span></div></div>
-        <div class="neck"></div><div class="robot-body"><div class="core"></div></div>
-        <div class="arm left"></div><div class="arm right"></div>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon">N</div>
+        <div>
+          <div>NOT REWARD</div>
+          <div class="muted" style="font-size:10px">TAP • EARN • REPEAT</div>
+        </div>
       </div>
-    </div>
-    <h1><span>NOT</span> REWARD</h1>
-    <p class="desc" data-en="Tap the robot to collect demo NOT tokens." data-fa="برای جمع‌کردن نات آزمایشی، روی ربات کلیک کن.">برای جمع‌کردن نات آزمایشی، روی ربات کلیک کن.</p>
-    <p class="click-hint" data-en="TAP ROBOT · +0.02 NOT" data-fa="روی ربات بزن · ۰٫۰۲ نات">روی ربات بزن · ۰٫۰۲ نات</p>
-  </div>
+      <button class="small-btn" id="languageButton" type="button">EN / FA</button>
+    </header>
 
-  <div class="balance">
-    <div class="token-head"><div class="coin">₦</div><div><div class="token-name">Notcoin</div><div class="token-ticker">NOT · Reward balance</div></div><span class="demo" data-en="DEMO" data-fa="آزمایشی">آزمایشی</span></div>
-    <div class="balance-label" data-en="YOUR COLLECTED TOKENS" data-fa="توکن‌های جمع‌شده">توکن‌های جمع‌شده</div>
-    <div class="balance-number" id="tokenBalance">0 NOT</div>
-    <div class="balance-foot"><span data-en="24-hour tap limit" data-fa="محدودیت دوره ۲۴ ساعته">محدودیت دوره ۲۴ ساعته</span><span id="tapCount">0 / 500</span></div>
-    <div class="progress-wrap"><div class="progress"><div class="progress-bar" id="progressBar"></div></div></div>
-    <div class="balance-foot"><span data-en="Next reset" data-fa="زمان شروع دوباره">زمان شروع دوباره</span><span id="resetCountdown">—</span></div>
-  </div>
+    <!-- HOME -->
+    <section class="page active" id="homePage">
+      <div class="card">
+        <div class="balance-label" data-fa="موجودی شما" data-en="Your balance">موجودی شما</div>
+        <div class="balance"><span id="balance">0.00</span> <small>NOT</small></div>
 
-  <p id="tapMessage" style="text-align:center;font-size:12px;color:var(--muted);line-height:1.8;margin-top:10px"></p>
-  <button class="secondary" id="homeWalletButton"><span data-en="Connect TON Wallet" data-fa="اتصال کیف پول TON">اتصال کیف پول TON</span></button>
-  <button class="secondary" data-go="walletPage"><span data-en="Withdraw NOT →" data-fa="برداشت نات ←">برداشت نات ←</span></button>
+        <div class="stats">
+          <div class="stat">
+            <span class="muted" data-fa="لمس‌های امروز" data-en="Today's taps">لمس‌های امروز</span>
+            <strong><span id="tapCount">0</span> / 500</strong>
+          </div>
+          <div class="stat">
+            <span class="muted" data-fa="پاداش هر لمس" data-en="Reward per tap">پاداش هر لمس</span>
+            <strong>0.02 NOT</strong>
+          </div>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="tapProgress"></div>
+        </div>
+        <div class="muted" id="tapStatus">ربات را لمس کن و NOT جمع کن.</div>
+      </div>
 
-  <div class="stats">
-    <div class="stat"><div class="stat-icon">🪙</div><div class="stat-value" id="smallBalance">0</div><div class="stat-label" data-en="Collected NOT" data-fa="موجودی NOT">موجودی NOT</div></div>
-    <div class="stat"><div class="stat-icon">⚡</div><div class="stat-value" id="remainingTaps">500</div><div class="stat-label" data-en="Taps remaining" data-fa="کلیک باقی‌مانده">کلیک باقی‌مانده</div></div>
-  </div>
+      <div class="robot-area">
+        <div class="orbit"></div>
+        <div class="orbit two"></div>
 
-  <h2 class="section-title" data-en="Quick access" data-fa="دسترسی سریع">دسترسی سریع</h2>
-  <div class="feature" data-go="earnPage" role="button" tabindex="0"><div class="feature-icon">🎁</div><div class="feature-text"><strong data-en="Daily rewards" data-fa="پاداش روزانه">پاداش روزانه</strong><span data-en="Claim your 7-day rewards" data-fa="جایزه ۷ روزه‌ات را بگیر">جایزه ۷ روزه‌ات را بگیر</span></div><span class="small-tag">↗</span></div>
-  <div class="feature" data-go="referralPage" role="button" tabindex="0"><div class="feature-icon">👥</div><div class="feature-text"><strong data-en="Invite friends" data-fa="دعوت دوستان">دعوت دوستان</strong><span data-en="Earn 5 demo NOT per verified referral" data-fa="برای هر رفرال تأییدشده ۵ نات آزمایشی">برای هر رفرال تأییدشده ۵ نات آزمایشی</span></div><span class="small-tag">↗</span></div>
-  <div class="footer" data-en="Demo version · Real rewards require a secure server." data-fa="نسخه آزمایشی · پاداش واقعی به سرور امن نیاز دارد.">نسخه آزمایشی · پاداش واقعی به سرور امن نیاز دارد.</div>
-</section>
+        <button class="robot-button" id="robotButton" type="button"
+          aria-label="Tap robot to earn NOT">
+          <svg class="robot" viewBox="0 0 220 250" xmlns="http://www.w3.org/2000/svg">
+            <path d="M110 18V35" stroke="#42ff91" stroke-width="5" stroke-linecap="round"/>
+            <circle cx="110" cy="13" r="7" class="robot-detail"/>
+            <rect x="43" y="39" width="134" height="105" rx="32" class="robot-head"/>
+            <rect x="56" y="55" width="108" height="72" rx="22" class="robot-dark"/>
+            <ellipse cx="83" cy="88" rx="10" ry="13" class="robot-eye"/>
+            <ellipse cx="137" cy="88" rx="10" ry="13" class="robot-eye"/>
+            <path d="M91 111 Q110 124 129 111" fill="none" stroke="#42ff91" stroke-width="4" stroke-linecap="round"/>
+            <path d="M43 77 H28 M177 77 H192" stroke="#42ff91" stroke-width="7" stroke-linecap="round"/>
+            <rect x="66" y="148" width="88" height="65" rx="20" class="robot-body"/>
+            <rect x="88" y="163" width="44" height="28" rx="8" fill="#07100c" stroke="#42ff91" stroke-width="3"/>
+            <path d="M96 177 H124" stroke="#42ff91" stroke-width="4" stroke-linecap="round"/>
+            <path d="M66 165 L48 183 V201" fill="none" stroke="#42ff91" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M154 165 L172 183 V201" fill="none" stroke="#42ff91" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="48" cy="207" r="9" class="robot-head"/>
+            <circle cx="172" cy="207" r="9" class="robot-head"/>
+            <path d="M89 215 V230 M131 215 V230" stroke="#42ff91" stroke-width="11" stroke-linecap="round"/>
+            <path d="M75 237 H99 M121 237 H145" stroke="#42ff91" stroke-width="8" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
 
-<section class="page" id="earnPage">
-  <h2 class="section-title" data-en="Your rewards" data-fa="پاداش‌های شما">پاداش‌های شما</h2>
-  <div class="panel">
-    <div class="token-head"><div class="coin">₦</div><div><div class="token-name">Notcoin</div><div class="token-ticker">NOT</div></div></div>
-    <div class="balance-number" id="earnBalance">0 NOT</div>
-    <p class="desc" data-en="Tap the robot to collect 0.02 demo NOT per tap, up to 500 taps in each 24-hour period." data-fa="روی ربات بزن؛ هر کلیک ۰٫۰۲ نات آزمایشی می‌دهد، حداکثر ۵۰۰ کلیک در هر دوره ۲۴ ساعته.">روی ربات بزن؛ هر کلیک ۰٫۰۲ نات آزمایشی می‌دهد، حداکثر ۵۰۰ کلیک در هر دوره ۲۴ ساعته.</p>
-    <button class="primary" data-go="homePage"><span data-en="Go to robot" data-fa="رفتن به ربات">رفتن به ربات</span></button>
-  </div>
+      <div class="tap-hint" data-fa="برای دریافت ۰٫۰۲ NOT فقط روی ربات بزن" data-en="Tap the robot to earn 0.02 NOT">برای دریافت ۰٫۰۲ NOT فقط روی ربات بزن</div>
 
-  <h2 class="section-title" data-en="7-day daily rewards" data-fa="پاداش روزانه ۷ روزه">پاداش روزانه ۷ روزه</h2>
-  <div class="panel">
-    <p class="desc" data-en="Claim once every 24 hours. Keep your streak to reach the 7 NOT reward on day seven." data-fa="هر ۲۴ ساعت یک بار جایزه بگیر. ادامه بده تا روز هفتم به جایزه ۷ نات برسی.">هر ۲۴ ساعت یک بار جایزه بگیر. ادامه بده تا روز هفتم به جایزه ۷ نات برسی.</p>
-    <div class="stats" id="dailyRewardsGrid">
-      <div class="reward-card"><div class="reward-day">روز ۱</div><div class="reward-amount">1 NOT</div></div>
-      <div class="reward-card"><div class="reward-day">روز ۲</div><div class="reward-amount">2 NOT</div></div>
-      <div class="reward-card"><div class="reward-day">روز ۳</div><div class="reward-amount">3 NOT</div></div>
-      <div class="reward-card"><div class="reward-day">روز ۴</div><div class="reward-amount">4 NOT</div></div>
-      <div class="reward-card"><div class="reward-day">روز ۵</div><div class="reward-amount">5 NOT</div></div>
-      <div class="reward-card"><div class="reward-day">روز ۶</div><div class="reward-amount">6 NOT</div></div>
-      <div class="reward-card"><div class="reward-day">روز ۷</div><div class="reward-amount">7 NOT</div></div>
-    </div>
-    <div class="info-row"><span class="info-label" data-en="Next reward" data-fa="جایزه بعدی">جایزه بعدی</span><span class="info-value" id="nextDailyReward">1 NOT</span></div>
-    <div class="info-row"><span class="info-label" data-en="Streak" data-fa="روزهای پیوسته">روزهای پیوسته</span><span class="info-value" id="dailyStreak">0 / 7</span></div>
-    <button class="primary" id="dailyRewardButton"><span data-en="Claim daily reward" data-fa="دریافت جایزه روزانه">دریافت جایزه روزانه</span></button>
-    <p id="dailyRewardMessage" class="desc"></p>
-    <p id="dailyCountdown" class="desc"></p>
-  </div>
+      <div class="card" style="margin-top:20px">
+        <div class="section-title" style="font-size:17px" data-fa="وضعیت استخراج" data-en="Mining status">وضعیت استخراج</div>
+        <div class="muted" id="cooldownMessage">هنوز می‌توانی لمس کنی.</div>
+        <button class="secondary" type="button" data-go="earnPage"
+          data-fa="مشاهده پاداش‌ها" data-en="View rewards">مشاهده پاداش‌ها</button>
+      </div>
+    </section>
 
-  <div class="notice" data-en="This demo stores rewards in your browser. It is not a real token balance and is not secure against tampering." data-fa="این نسخه آزمایشی پاداش‌ها را در مرورگر ذخیره می‌کند؛ موجودی واقعی نیست و در برابر دست‌کاری امن نیست.">این نسخه آزمایشی پاداش‌ها را در مرورگر ذخیره می‌کند؛ موجودی واقعی نیست و در برابر دست‌کاری امن نیست.</div>
-</section>
+    <!-- EARN -->
+    <section class="page" id="earnPage">
+      <h2 class="section-title" data-fa="🎁 پاداش‌ها" data-en="🎁 Rewards">🎁 پاداش‌ها</h2>
 
-<section class="page" id="walletPage">
-  <h2 class="section-title" data-en="Wallet & withdrawal" data-fa="کیف پول و برداشت">کیف پول و برداشت</h2>
-  <div class="panel"><div class="token-head"><div class="coin">◈</div><div><div class="token-name">TON Wallet</div><div class="token-ticker" data-en="Connect your wallet" data-fa="کیف پولت را وصل کن">کیف پولت را وصل کن</div></div></div><p id="walletStatus" style="font-size:12px;color:var(--muted);line-height:1.8;margin-top:12px">کیف پول متصل نیست.</p><div class="address" id="walletAddress"></div><button class="primary" id="connectWallet"><span data-en="Connect wallet" data-fa="اتصال کیف پول">اتصال کیف پول</span></button><button class="secondary" id="disconnectWallet" style="display:none"><span data-en="Disconnect" data-fa="قطع اتصال">قطع اتصال</span></button></div>
+      <div class="card">
+        <div class="section-title" style="font-size:17px" data-fa="پاداش ورود روزانه" data-en="Daily reward">پاداش ورود روزانه</div>
+        <p class="muted" data-fa="هر روز یک پاداش دریافت کن. روز اول ۱ NOT و تا روز هفتم ۷ NOT." data-en="Claim a reward each day: 1 NOT on day one, up to 7 NOT on day seven.">هر روز یک پاداش دریافت کن. روز اول ۱ NOT و تا روز هفتم ۷ NOT.</p>
+        <div class="stats">
+          <div class="stat">
+            <span class="muted" data-fa="روز فعلی" data-en="Current day">روز فعلی</span>
+            <strong><span id="streakDay">1</span> / 7</strong>
+          </div>
+          <div class="stat">
+            <span class="muted" data-fa="پاداش امروز" data-en="Today's reward">پاداش امروز</span>
+            <strong><span id="dailyAmount">1</span> NOT</strong>
+          </div>
+        </div>
+        <button class="primary" id="dailyButton" type="button" data-fa="دریافت پاداش روزانه" data-en="Claim daily reward">دریافت پاداش روزانه</button>
+        <div class="status" id="dailyMessage" aria-live="polite"></div>
+      </div>
 
-  <h2 class="section-title" data-en="Withdraw NOT" data-fa="برداشت NOT">برداشت NOT</h2>
-  <div class="panel"><div class="token-head"><div class="coin">₦</div><div><div class="token-name">Notcoin</div><div class="token-ticker">NOT</div></div></div>
-    <div class="info-row"><span class="info-label" data-en="Your demo balance" data-fa="موجودی آزمایشی">موجودی آزمایشی</span><span class="info-value" id="withdrawBalance">0 NOT</span></div>
-    <div class="info-row"><span class="info-label" data-en="Minimum withdrawal" data-fa="حداقل برداشت">حداقل برداشت</span><span class="info-value">100 NOT</span></div>
-    <label class="field-label" for="withdrawAmount" data-en="Withdrawal amount (NOT)" data-fa="مقدار برداشت (NOT)">مقدار برداشت (NOT)</label>
-    <input class="input" id="withdrawAmount" type="number" min="100" step="1" placeholder="100" inputmode="decimal">
-    <button class="primary" id="withdrawButton"><span data-en="Submit withdrawal request" data-fa="ثبت درخواست برداشت">ثبت درخواست برداشت</span></button>
-    <p id="withdrawMessage" style="margin-top:12px;font-size:12px;line-height:1.8"></p>
-    <div class="notice" data-en="This form does not send tokens or submit a real request. A secure backend and token transfer integration are required." data-fa="این فرم توکن ارسال نمی‌کند و درخواست واقعی ثبت نمی‌کند. بک‌اند امن و اتصال انتقال توکن لازم است.">این فرم توکن ارسال نمی‌کند و درخواست واقعی ثبت نمی‌کند. بک‌اند امن و اتصال انتقال توکن لازم است.</div>
-  </div>
-</section>
+      <div class="card">
+        <div class="section-title" style="font-size:17px" data-fa="👥 دعوت از دوستان" data-en="👥 Invite friends">👥 دعوت از دوستان</div>
+        <div class="reward-row">
+          <div class="reward-icon">🎉</div>
+          <div class="reward-info">
+            <strong data-fa="پاداش هر دعوت تأییدشده" data-en="Reward per verified referral">پاداش هر دعوت تأییدشده</strong>
+            <span data-fa="برای هر دوست جدید واجد شرایط" data-en="For each eligible new user">برای هر دوست جدید واجد شرایط</span>
+          </div>
+          <div class="reward-amount">5 NOT</div>
+        </div>
+        <label class="field-label" for="referralLink" data-fa="لینک دعوت شما" data-en="Your referral link">لینک دعوت شما</label>
+        <input class="field ltr" id="referralLink" readonly value="">
+        <button class="secondary" id="copyReferral" type="button" data-fa="کپی لینک دعوت" data-en="Copy referral link">کپی لینک دعوت</button>
+        <div class="status" id="referralMessage" aria-live="polite"></div>
+        <p class="notice" data-fa="پاداش ۵ NOT فقط پس از تأیید دعوت واقعی قابل پرداخت است. تأیید دعوت و جلوگیری از دعوت تکراری باید در سرور انجام شود." data-en="The 5 NOT referral reward requires server-side verification of genuine new users and duplicate prevention.">پاداش ۵ NOT فقط پس از تأیید دعوت واقعی قابل پرداخت است. تأیید دعوت و جلوگیری از دعوت تکراری باید در سرور انجام شود.</p>
+      </div>
 
-<section class="page" id="referralPage">
-  <h2 class="section-title" data-en="Invite friends" data-fa="دعوت دوستان">دعوت دوستان</h2>
-  <div class="panel"><div class="feature-icon">👥</div><h3 style="margin:12px 0 8px" data-en="Grow your community" data-fa="جامعه‌ات را بزرگ‌تر کن">جامعه‌ات را بزرگ‌تر کن</h3><p style="font-size:12px;line-height:1.8;color:var(--muted)" data-en="Share your personal link. Each verified referral is worth 5 demo NOT." data-fa="لینک اختصاصی‌ات را به اشتراک بگذار. هر رفرال تأییدشده ۵ نات آزمایشی ارزش دارد.">لینک اختصاصی‌ات را به اشتراک بگذار. هر رفرال تأییدشده ۵ نات آزمایشی ارزش دارد.</p>
-    <label class="field-label" data-en="Your referral link" data-fa="لینک دعوت شما">لینک دعوت شما</label><div class="ref-link" id="referralLink">Open in Telegram to generate your link</div>
-    <button class="primary" id="copyReferral"><span data-en="Copy referral link" data-fa="کپی لینک دعوت">کپی لینک دعوت</span></button>
-    <button class="secondary" id="shareReferral"><span data-en="Share with friends" data-fa="اشتراک‌گذاری با دوستان">اشتراک‌گذاری با دوستان</span></button>
-    <div class="stats" style="margin-top:15px">
-      <div class="stat"><div class="stat-icon">👥</div><div class="stat-value" id="referralCount">0</div><div class="stat-label" data-en="Verified referrals" data-fa="رفرال‌های تأییدشده">رفرال‌های تأییدشده</div></div>
-      <div class="stat"><div class="stat-icon">🎁</div><div class="stat-value">5 NOT</div><div class="stat-label" data-en="Per verified referral" data-fa="برای هر رفرال تأییدشده">برای هر رفرال تأییدشده</div></div>
-    </div>
-    <div class="notice" data-en="Referral rewards shown here are demo-only. The bot backend must verify new users, prevent self-referrals and duplicate rewards, and credit valid bonuses." data-fa="پاداش رفرال در این نسخه نمایشی است. بک‌اند ربات باید کاربران جدید را تأیید کند، از تقلب جلوگیری کند و پاداش معتبر را ثبت کند.">پاداش رفرال در این نسخه نمایشی است. بک‌اند ربات باید کاربران جدید را تأیید کند، از تقلب جلوگیری کند و پاداش معتبر را ثبت کند.</div>
-  </div>
-</section>
+      <div class="card">
+        <div class="section-title" style="font-size:17px" data-fa="📺 تبلیغات" data-en="📺 Advertisements">📺 تبلیغات</div>
+        <p class="muted" data-fa="این بخش برای اتصال سرویس تبلیغات آماده است." data-en="This section is ready for an ad provider integration.">این بخش برای اتصال سرویس تبلیغات آماده است.</p>
+        <button class="secondary" id="adsButton" type="button" data-fa="📺 تبلیغات و دریافت پاداش" data-en="📺 Watch Ads & Earn">📺 تبلیغات و دریافت پاداش</button>
+        <div class="status" id="adsMessage" aria-live="polite"></div>
+        <p class="notice" data-fa="فعلاً تبلیغ واقعی نمایش داده نمی‌شود و از این دکمه پاداشی پرداخت نمی‌شود. برای فعال‌سازی باید سرویس تبلیغات معتبر متصل شود." data-en="No real ad is shown and no reward is paid by this button yet. A supported ad provider must be integrated first.">فعلاً تبلیغ واقعی نمایش داده نمی‌شود و از این دکمه پاداشی پرداخت نمی‌شود. برای فعال‌سازی باید سرویس تبلیغات معتبر متصل شود.</p>
+      </div>
+    </section>
 
-<section class="page" id="profilePage">
-  <h2 class="section-title" data-en="My profile" data-fa="پروفایل من">پروفایل من</h2>
-  <div class="panel">
-    <div class="profile-head"><div class="avatar" id="avatar">N</div><div><div class="profile-name" id="profileName">Telegram User</div><div class="username" id="username">—</div></div></div>
-    <div class="info-row"><span class="info-label" data-en="Telegram ID" data-fa="شناسه تلگرام">شناسه تلگرام</span><span class="info-value" id="telegramId">—</span></div>
-    <div class="info-row"><span class="info-label" data-en="First name" data-fa="نام">نام</span><span class="info-value" id="firstName">—</span></div>
-    <div class="info-row"><span class="info-label" data-en="Last name" data-fa="نام خانوادگی">نام خانوادگی</span><span class="info-value" id="lastName">—</span></div>
-    <div class="info-row"><span class="info-label" data-en="Language" data-fa="زبان">زبان</span><span class="info-value" id="userLanguage">—</span></div>
-    <div class="info-row"><span class="info-label" data-en="Collected NOT" data-fa="موجودی NOT">موجودی NOT</span><span class="info-value" id="profileBalance">0 NOT</span></div>
-    <div class="info-row"><span class="info-label" data-en="TON wallet" data-fa="کیف پول TON">کیف پول TON</span><span class="info-value" id="profileWallet">متصل نیست</span></div>
-  </div>
-  <button class="secondary" data-go="referralPage"><span data-en="Invite friends" data-fa="دعوت دوستان">دعوت دوستان</span></button>
-</section>
-</main>
-</div>
+    <!-- WALLET -->
+    <section class="page" id="walletPage">
+      <h2 class="section-title" data-fa="💎 کیف پول" data-en="💎 Wallet">💎 کیف پول</h2>
 
-<nav class="nav">
-<button class="active" data-page="homePage"><span class="nav-icon">⌂</span><span data-en="Home" data-fa="خانه">خانه</span></button>
-<button data-page="earnPage"><span class="nav-icon">✦</span><span data-en="Earn" data-fa="پاداش">پاداش</span></button>
-<button data-page="walletPage"><span class="nav-icon">◈</span><span data-en="Wallet" data-fa="کیف پول">کیف پول</span></button>
-<button data-page="profilePage"><span class="nav-icon">◎</span><span data-en="Profile" data-fa="پروفایل">پروفایل</span></button>
-</nav>
+      <div class="card">
+        <div class="balance-label" data-fa="موجودی فعلی" data-en="Current balance">موجودی فعلی</div>
+        <div class="balance"><span id="walletBalance">0.00</span> <small>NOT</small></div>
+        <p class="muted" data-fa="کیف پول TON خود را با دکمه زیر متصل کن." data-en="Connect your TON wallet below.">کیف پول TON خود را با دکمه زیر متصل کن.</p>
+        <div id="ton-connect" style="margin-top:12px"></div>
+        <div class="status" id="walletStatus" aria-live="polite"></div>
+      </div>
 
-<script>
-(() => {
-  "use strict";
+      <div class="card">
+        <div class="section-title" style="font-size:17px" data-fa="درخواست برداشت" data-en="Withdrawal request">درخواست برداشت</div>
+        <label class="field-label" for="withdrawAddress" data-fa="آدرس کیف پول TON" data-en="TON wallet address">آدرس کیف پول TON</label>
+        <input class="field ltr" id="withdrawAddress" placeholder="UQ... / EQ...">
+        <label class="field-label" for="withdrawAmount" data-fa="مقدار برداشت (NOT)" data-en="Withdrawal amount (NOT)">مقدار برداشت (NOT)</label>
+        <input class="field" id="withdrawAmount" type="number" min="1" step="0.01" placeholder="مثلاً 10">
+        <button class="primary" id="withdrawButton" type="button" data-fa="ثبت درخواست" data-en="Submit request">ثبت درخواست</button>
+        <div class="status" id="withdrawMessage" aria-live="polite"></div>
+        <p class="notice" data-fa="این فرم فقط نمایشی است؛ درخواست برداشت واقعی ارسال نمی‌کند و هیچ توکنی منتقل نمی‌شود." data-en="This is a demo form. It does not submit a real withdrawal or transfer tokens.">این فرم فقط نمایشی است؛ درخواست برداشت واقعی ارسال نمی‌کند و هیچ توکنی منتقل نمی‌شود.</p>
+      </div>
+    </section>
 
-  const MANIFEST_URL = "https://mukefaceget15-web.github.io/adcoin-miniap/tonconnect-manifest.json";
-  const BOT_USERNAME = "notrewardbot";
-  const TAP_REWARD = 0.02;
-  const MAX_TAPS = 500;
-  const PERIOD_MS = 24 * 60 * 60 * 1000;
-  const DAILY_REWARDS = [1, 2, 3, 4, 5, 6, 7];
-  const tg = window.Telegram?.WebApp;
+    <!-- PROFILE -->
+    <section class="page" id="profilePage">
+      <h2 class="section-title" data-fa="👤 پروفایل" data-en="👤 Profile">👤 پروفایل</h2>
 
-  if (tg) {
-    tg.ready();
-    tg.expand();
-    tg.setHeaderColor("#07110e");
-    tg.setBackgroundColor("#07110e");
-  }
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:13px">
+          <div class="brand-icon" style="width:56px;height:56px;border-radius:50%">👤</div>
+          <div style="min-width:0">
+            <strong id="profileName">Guest</strong>
+            <div class="muted" id="profileId">Telegram user</div>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <span class="muted" data-fa="موجودی" data-en="Balance">موجودی</span>
+            <strong><span id="profileBalance">0.00</span> NOT</strong>
+          </div>
+          <div class="stat">
+            <span class="muted" data-fa="کل لمس‌ها" data-en="Total taps">کل لمس‌ها</span>
+            <strong id="profileTaps">0</strong>
+          </div>
+        </div>
+      </div>
 
-  const $ = id => document.getElementById(id);
-  const user = tg?.initDataUnsafe?.user || null;
-  const userKey = user?.id || "browser";
-  const balanceKey = "not_reward_balance_" + userKey;
-  const dailyKey = "not_reward_taps_" + userKey;
-  const rewardKey = "not_reward_daily_reward_" + userKey;
+      <div class="card">
+        <div class="section-title" style="font-size:17px" data-fa="درباره پروژه" data-en="About">درباره پروژه</div>
+        <p class="muted" data-fa="به NOT REWARD خوش آمدی. ربات را لمس کن، پاداش روزانه بگیر و دوستانت را دعوت کن." data-en="Welcome to NOT REWARD. Tap the robot, claim daily rewards, and invite friends.">به NOT REWARD خوش آمدی. ربات را لمس کن، پاداش روزانه بگیر و دوستانت را دعوت کن.</p>
+        <button class="secondary" type="button" data-go="homePage" data-fa="بازگشت به خانه" data-en="Back to Home">بازگشت به خانه</button>
+      </div>
+    </section>
+  </main>
 
-  let language = "fa";
-  let walletUI = null;
-  let walletAddress = "";
+  <nav class="bottom-nav">
+    <button class="nav-btn active" type="button" data-go="homePage">
+      <span class="nav-icon">🏠</span>
+      <span data-fa="خانه" data-en="Home">خانه</span>
+    </button>
+    <button class="nav-btn" type="button" data-go="earnPage">
+      <span class="nav-icon">🎁</span>
+      <span data-fa="پاداش‌ها" data-en="Earn">پاداش‌ها</span>
+    </button>
+    <button class="nav-btn" type="button" data-go="walletPage">
+      <span class="nav-icon">💎</span>
+      <span data-fa="کیف پول" data-en="Wallet">کیف پول</span>
+    </button>
+    <button class="nav-btn" type="button" data-go="profilePage">
+      <span class="nav-icon">👤</span>
+      <span data-fa="پروفایل" data-en="Profile">پروفایل</span>
+    </button>
+  </nav>
 
-  function readJSON(key, fallback) {
-    try {
-      const value = localStorage.getItem(key);
-      return value ? JSON.parse(value) : fallback;
-    } catch {
-      return fallback;
-    }
-  }
+  <script>
+    (() => {
+      "use strict";
 
-  function loadBalance() {
-    const n = Number(localStorage.getItem(balanceKey) || 0);
-    return Number.isFinite(n) && n >= 0 ? n : 0;
-  }
+      const $ = (id) => document.getElementById(id);
+      const STORAGE_KEY = "not_reward_demo_v1";
+      const TAP_REWARD = 0.02;
+      const MAX_TAPS = 500;
+      const LOCK_MS = 24 * 60 * 60 * 1000;
 
-  function loadTapPeriod() {
-    const saved = readJSON(dailyKey, {});
-    const now = Date.now();
+      let language = localStorage.getItem("not_reward_language") || "fa";
+      let state = loadState();
+      let tonUI = null;
 
-    if (!saved.startedAt || now - Number(saved.startedAt) >= PERIOD_MS) {
-      return { startedAt: 0, count: 0 };
-    }
-
-    return {
-      startedAt: Number(saved.startedAt),
-      count: Math.min(MAX_TAPS, Math.max(0, Number(saved.count) || 0))
-    };
-  }
-
-  let balance = loadBalance();
-  let daily = loadTapPeriod();
-
-  let rewardState = readJSON(rewardKey, {
-    streak: 0,
-    lastClaim: 0,
-    lastClaimDay: 0
-  });
-
-  function number(n) {
-    return new Intl.NumberFormat(
-      language === "fa" ? "fa-IR" : "en-US",
-      { maximumFractionDigits: 2 }
-    ).format(n);
-  }
-
-  function saveState() {
-    try {
-      localStorage.setItem(balanceKey, String(balance));
-      localStorage.setItem(dailyKey, JSON.stringify(daily));
-    } catch (e) {
-      console.warn("Local storage unavailable", e);
-    }
-  }
-
-  function saveRewardState() {
-    try {
-      localStorage.setItem(rewardKey, JSON.stringify(rewardState));
-    } catch (e) {
-      console.warn("Could not save daily reward", e);
-    }
-  }
-
-  function resetTapPeriodIfNeeded() {
-    if (
-      daily.startedAt &&
-      Date.now() - daily.startedAt >= PERIOD_MS
-    ) {
-      daily = { startedAt: 0, count: 0 };
-      saveState();
-    }
-  }
-
-  function remainingTapTime() {
-    if (!daily.startedAt || daily.count < MAX_TAPS) return 0;
-    return Math.max(0, PERIOD_MS - (Date.now() - daily.startedAt));
-  }
-
-  function formatTime(ms) {
-    const totalSeconds = Math.ceil(ms / 1000);
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-
-    if (language === "fa") {
-      return `${number(hours)} ساعت و ${number(minutes)} دقیقه`;
-    }
-    return `${hours}h ${minutes}m ${seconds}s`;
-  }
-
-  function renderDailyRewards() {
-    const streak = Math.max(0, Math.min(7, Number(rewardState.streak) || 0));
-    const lastClaim = Number(rewardState.lastClaim) || 0;
-    const elapsed = Date.now() - lastClaim;
-    const canClaim = !lastClaim || elapsed >= PERIOD_MS;
-    const grid = $("dailyRewardsGrid");
-
-    grid.innerHTML = DAILY_REWARDS.map((amount, index) => {
-      const day = index + 1;
-      const claimed = day <= streak;
-      const current = day === Math.min(7, streak + 1) && canClaim;
-
-      let dayText = language === "fa" ? `روز ${number(day)}` : `Day ${day}`;
-      if (claimed) {
-        dayText = language === "fa" ? `روز ${number(day)} ✓` : `Day ${day} ✓`;
+      function defaultState() {
+        return {
+          balance: 0,
+          taps: 0,
+          totalTaps: 0,
+          tapResetAt: 0,
+          dailyDate: "",
+          dailyStreak: 0,
+          lastDailyReward: 0
+        };
       }
 
-      return `<div class="reward-card ${claimed ? "claimed" : ""} ${current ? "today" : ""}">
-        <div class="reward-day">${dayText}</div>
-        <div class="reward-amount">${number(amount)} NOT</div>
-      </div>`;
-    }).join("");
+      function loadState() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+          return { ...defaultState(), ...saved };
+        } catch (_) {
+          return defaultState();
+        }
+      }
 
-    $("dailyStreak").textContent = `${number(streak)} / 7`;
+      function saveState() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
 
-    const nextIndex = streak >= 7 ? 6 : streak;
-    $("nextDailyReward").textContent = `${number(DAILY_REWARDS[nextIndex])} NOT`;
+      function addBalance(amount) {
+        state.balance = Math.round((Number(state.balance) + amount) * 100) / 100;
+        saveState();
+        render();
+      }
 
-    const button = $("dailyRewardButton");
-    button.disabled = !canClaim;
-    button.style.opacity = canClaim ? "1" : ".55";
+      function formatNumber(number) {
+        return Number(number || 0).toLocaleString(
+          language === "fa" ? "fa-IR" : "en-US",
+          { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+        );
+      }
 
-    const buttonText = button.querySelector("span");
-    if (buttonText) {
-      buttonText.textContent = canClaim
-        ? (language === "fa" ? "دریافت جایزه روزانه" : "Claim daily reward")
-        : (language === "fa" ? "جایزه دریافت شد" : "Reward claimed");
-    }
+      function getTodayKey() {
+        const now = new Date();
+        return now.getFullYear() + "-" +
+          String(now.getMonth() + 1).padStart(2, "0") + "-" +
+          String(now.getDate()).padStart(2, "0");
+      }
 
-    $("dailyCountdown").textContent = canClaim
-      ? (language === "fa" ? "جایزه روزانه آماده دریافت است." : "Your daily reward is ready.")
-      : (language === "fa"
-          ? `جایزه بعدی تا ${formatTime(PERIOD_MS - elapsed)}`
-          : `Next reward in ${formatTime(PERIOD_MS - elapsed)}`);
-  }
+      function shiftDate(dateKey, days) {
+        const date = new Date(dateKey + "T12:00:00");
+        date.setDate(date.getDate() + days);
+        return date.getFullYear() + "-" +
+          String(date.getMonth() + 1).padStart(2, "0") + "-" +
+          String(date.getDate()).padStart(2, "0");
+      }
 
-  function render() {
-    resetTapPeriodIfNeeded();
+      function refreshTapLock() {
+        if (state.tapResetAt && Date.now() >= state.tapResetAt) {
+          state.taps = 0;
+          state.tapResetAt = 0;
+          saveState();
+        }
+      }
 
-    const left = Math.max(0, MAX_TAPS - daily.count);
+      function render() {
+        refreshTapLock();
 
-    $("tokenBalance").textContent = number(balance) + " NOT";
-    $("smallBalance").textContent = number(balance);
-    $("earnBalance").textContent = number(balance) + " NOT";
-    $("withdrawBalance").textContent = number(balance) + " NOT";
-    $("profileBalance").textContent = number(balance) + " NOT";
-    $("tapCount").textContent = `${number(daily.count)} / ${number(MAX_TAPS)}`;
-    $("remainingTaps").textContent = number(left);
-    $("progressBar").style.width = (daily.count / MAX_TAPS * 100) + "%";
+        $("balance").textContent = formatNumber(state.balance);
+        $("walletBalance").textContent = formatNumber(state.balance);
+        $("profileBalance").textContent = formatNumber(state.balance);
+        $("tapCount").textContent = state.taps;
+        $("profileTaps").textContent = state.totalTaps;
+        $("tapProgress").style.width = Math.min(100, state.taps / MAX_TAPS * 100) + "%";
 
-    const remaining = remainingTapTime();
-    $("resetCountdown").textContent = remaining > 0
-      ? formatTime(remaining)
-      : (language === "fa" ? "آماده" : "Ready");
+        const locked = state.tapResetAt > Date.now();
+        $("robotButton").disabled = locked;
+        $("cooldownMessage").textContent = locked
+          ? (language === "fa"
+              ? "سقف ۵۰۰ لمس تکمیل شده است. زمان باقی‌مانده: " + remainingTime(state.tapResetAt - Date.now())
+              : "500 taps reached. Time remaining: " + remainingTime(state.tapResetAt - Date.now()))
+          : (language === "fa"
+              ? "هنوز " + (MAX_TAPS - state.taps) + " لمس باقی مانده است."
+              : (MAX_TAPS - state.taps) + " taps remaining.");
 
-    renderDailyRewards();
-  }
+        $("tapStatus").textContent = locked
+          ? (language === "fa" ? "پس از پایان ۲۴ ساعت دوباره فعال می‌شود." : "Tapping unlocks after the 24-hour cooldown.")
+          : (language === "fa"
+              ? "هر لمس ۰٫۰۲ NOT؛ مجموع امروز " + state.taps + " از ۵۰۰"
+              : "0.02 NOT per tap; " + state.taps + " of 500 used today.");
 
-  function tapRobot() {
-    resetTapPeriodIfNeeded();
+        const today = getTodayKey();
+        const alreadyClaimed = state.dailyDate === today;
+        const nextDay = alreadyClaimed
+          ? Math.max(1, state.dailyStreak)
+          : (state.dailyDate === shiftDate(today, -1)
+              ? (state.dailyStreak % 7) + 1
+              : 1);
 
-    if (daily.count >= MAX_TAPS) {
-      $("tapMessage").style.color = "#ffbd72";
-      $("tapMessage").textContent = language === "fa"
-        ? `۵۰۰ کلیک تمام شده؛ ${formatTime(remainingTapTime())} دیگر برگرد.`
-        : `500 taps used. Come back in ${formatTime(remainingTapTime())}.`;
+        $("streakDay").textContent = nextDay;
+        $("dailyAmount").textContent = nextDay;
+        $("dailyButton").disabled = alreadyClaimed;
+        $("dailyButton").textContent = alreadyClaimed
+          ? (language === "fa" ? "پاداش امروز دریافت شده" : "Today's reward claimed")
+          : (language === "fa" ? "دریافت " + nextDay + " NOT" : "Claim " + nextDay + " NOT");
+
+        if (alreadyClaimed && !$("dailyMessage").textContent) {
+          $("dailyMessage").textContent = language === "fa"
+            ? "پاداش امروز را دریافت کرده‌ای."
+            : "You have already claimed today's reward.";
+        }
+
+        updateProfile();
+      }
+
+      function remainingTime(milliseconds) {
+        const totalSeconds = Math.max(0, Math.ceil(milliseconds / 1000));
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        if (language === "fa") {
+          return hours + " ساعت، " + minutes + " دقیقه، " + seconds + " ثانیه";
+        }
+        return hours + "h " + minutes + "m " + seconds + "s";
+      }
+
+      function updateProfile() {
+        const tgUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
+        const name = tgUser
+          ? [tgUser.first_name, tgUser.last_name].filter(Boolean).join(" ")
+          : "Guest";
+
+        $("profileName").textContent = name || "Guest";
+        $("profileId").textContent = tgUser
+          ? "Telegram ID: " + tgUser.id
+          : (language === "fa" ? "کاربر مهمان" : "Guest user");
+      }
+
+      function setLanguage(nextLanguage) {
+        language = nextLanguage;
+        localStorage.setItem("not_reward_language", language);
+        document.documentElement.lang = language;
+        document.documentElement.dir = language === "fa" ? "rtl" : "ltr";
+
+        document.querySelectorAll("[data-fa][data-en]").forEach((element) => {
+          const value = element.dataset[language];
+          if (value !== undefined) element.textContent = value;
+        });
+
+        $("languageButton").textContent = language === "fa" ? "EN / FA" : "FA / EN";
+        $("dailyMessage").textContent = "";
+        $("adsMessage").textContent = "";
+        $("referralMessage").textContent = "";
+        render();
+      }
+
+      function showPage(pageId) {
+        document.querySelectorAll(".page").forEach((page) => {
+          page.classList.toggle("active", page.id === pageId);
+        });
+
+        document.querySelectorAll(".nav-btn").forEach((button) => {
+          button.classList.toggle("active", button.dataset.go === pageId);
+        });
+
+        if (pageId === "walletPage") initTonConnect();
+        if (pageId === "profilePage") updateProfile();
+        render();
+      }
+
+      document.querySelectorAll("[data-go]").forEach((button) => {
+        button.addEventListener("click", () => showPage(button.dataset.go));
+      });
+
+      $("languageButton").addEventListener("click", () => {
+        setLanguage(language === "fa" ? "en" : "fa");
+      });
+
+      $("robotButton").addEventListener("click", () => {
+        refreshTapLock();
+
+        if (state.tapResetAt > Date.now() || state.taps >= MAX_TAPS) {
+          render();
+          return;
+        }
+
+        state.taps += 1;
+        state.totalTaps += 1;
+        state.balance = Math.round((state.balance + TAP_REWARD) * 100) / 100;
+
+        if (state.taps >= MAX_TAPS) {
+          state.tapResetAt = Date.now() + LOCK_MS;
+        }
+
+        saveState();
+        render();
+
+        if (window.Telegram?.WebApp?.HapticFeedback) {
+          window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
+        }
+      });
+
+      $("dailyButton").addEventListener("click", () => {
+        const today = getTodayKey();
+
+        if (state.dailyDate === today) {
+          $("dailyMessage").textContent = language === "fa"
+            ? "پاداش امروز را قبلاً دریافت کرده‌ای."
+            : "Today's reward has already been claimed.";
+          return;
+        }
+
+        const yesterday = shiftDate(today, -1);
+        const nextStreak = state.dailyDate === yesterday
+          ? (state.dailyStreak % 7) + 1
+          : 1;
+
+        state.dailyStreak = nextStreak;
+        state.dailyDate = today;
+        state.lastDailyReward = nextStreak;
+        state.balance = Math.round((state.balance + nextStreak) * 100) / 100;
+
+        saveState();
+
+        $("dailyMessage").textContent = language === "fa"
+          ? "تبریک! " + nextStreak + " NOT به موجودی نمایشی اضافه شد."
+          : "Success! " + nextStreak + " NOT added to your demo balance.";
+
+        render();
+      });
+
+      $("adsButton").addEventListener("click", () => {
+        $("adsMessage").textContent = language === "fa"
+          ? "بخش تبلیغات آماده اتصال است؛ هنوز تبلیغ واقعی یا پاداش تبلیغاتی فعال نیست."
+          : "The ads section is ready for integration. Real ads and ad rewards are not active yet.";
+      });
+
+      function getBotUsername() {
+        return "notrewardbot";
+      }
+
+      function getReferralLink() {
+        const tgUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
+        const refId = tgUser?.id;
+
+        if (refId) {
+          return "https://t.me/" + getBotUsername() + "?start=ref_" + refId;
+        }
+
+        return "https://t.me/" + getBotUsername();
+      }
+
+      $("referralLink").value = getReferralLink();
+
+      $("copyReferral").addEventListener("click", async () => {
+        const link = $("referralLink").value;
+
+        try {
+          await navigator.clipboard.writeText(link);
+          $("referralMessage").textContent = language === "fa"
+            ? "لینک دعوت کپی شد."
+            : "Referral link copied.";
+        } catch (_) {
+          $("referralLink").focus();
+          $("referralLink").select();
+
+          try {
+            document.execCommand("copy");
+            $("referralMessage").textContent = language === "fa"
+              ? "لینک دعوت کپی شد."
+              : "Referral link copied.";
+          } catch (__) {
+            $("referralMessage").textContent = language === "fa"
+              ? "لینک را دستی کپی کن."
+              : "Please copy the link manually.";
+          }
+        }
+      });
+
+      function initTonConnect() {
+        if (tonUI) return;
+
+        if (!window.TON_CONNECT_UI?.TonConnectUI) {
+          $("walletStatus").textContent = language === "fa"
+            ? "اتصال کیف پول بارگذاری نشد. صفحه را دوباره باز کن."
+            : "Wallet connection did not load. Please reopen the page.";
+          return;
+        }
+
+        try {
+          tonUI = new window.TON_CONNECT_UI.TonConnectUI({
+            manifestUrl: "https://mukefaceget15-web.github.io/adcoin-miniap/tonconnect-manifest.json",
+            buttonRootId: "ton-connect"
+          });
+
+          tonUI.onStatusChange((wallet) => {
+            $("walletStatus").textContent = wallet
+              ? (language === "fa"
+                  ? "کیف پول متصل شد: " + wallet.account.address
+                  : "Wallet connected: " + wallet.account.address)
+              : (language === "fa" ? "کیف پول متصل نیست." : "Wallet is not connected.");
+          });
+        } catch (error) {
+          $("walletStatus").textContent = language === "fa"
+            ? "خطا در راه‌اندازی اتصال کیف پول."
+            : "Could not initialize wallet connection.";
+        }
+      }
+
+      $("withdrawButton").addEventListener("click", () => {
+        const address = $("withdrawAddress").value.trim();
+        const amount = Number($("withdrawAmount").value);
+
+        if (!address || !Number.isFinite(amount) || amount <= 0) {
+          $("withdrawMessage").textContent = language === "fa"
+            ? "آدرس کیف پول و مقدار معتبر را وارد کن."
+            : "Enter a wallet address and a valid amount.";
+          return;
+        }
+
+        if (amount > Number(state.balance)) {
+          $("withdrawMessage").textContent = language === "fa"
+            ? "موجودی نمایشی کافی نیست."
+            : "Insufficient demo balance.";
+          return;
+        }
+
+        $("withdrawMessage").textContent = language === "fa"
+          ? "این فرم نمایشی است؛ درخواست ثبت یا پرداخت واقعی انجام نشد."
+          : "Demo only: no real withdrawal request or payment was made.";
+      });
+
+      if (window.Telegram?.WebApp) {
+        window.Telegram.WebApp.ready();
+        window.Telegram.WebApp.expand();
+      }
+
+      setLanguage(language);
       render();
-      return;
-    }
 
-    if (!daily.startedAt) {
-      daily.startedAt = Date.now();
-    }
-
-    daily.count += 1;
-    balance = Math.round((balance + TAP_REWARD) * 100) / 100;
-
-    saveState();
-    render();
-
-    $("tapMessage").style.color = "var(--green)";
-    $("tapMessage").textContent = language === "fa"
-      ? "+۰٫۰۲ NOT آزمایشی اضافه شد!"
-      : "+0.02 demo NOT added!";
-  }
-
-  $("robotClick").addEventListener("click", tapRobot);
-  $("robotClick").addEventListener("keydown", e => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      tapRobot();
-    }
-  });
-
-  function claimDailyReward() {
-    const now = Date.now();
-    const lastClaim = Number(rewardState.lastClaim) || 0;
-    const elapsed = now - lastClaim;
-
-    if (lastClaim && elapsed < PERIOD_MS) {
-      $("dailyRewardMessage").textContent = language === "fa"
-        ? `جایزه امروز را گرفته‌ای؛ ${formatTime(PERIOD_MS - elapsed)} دیگر برگرد.`
-        : `Already claimed. Come back in ${formatTime(PERIOD_MS - elapsed)}.`;
-      renderDailyRewards();
-      return;
-    }
-
-    // اگر بیش از ۴۸ ساعت از جایزه قبلی بگذرد، زنجیره از روز اول شروع می‌شود.
-    if (lastClaim && elapsed >= PERIOD_MS * 2) {
-      rewardState.streak = 0;
-    }
-
-    const nextDay = Math.min(
-      7,
-      Math.max(0, Number(rewardState.streak) || 0) + 1
-    );
-    const reward = DAILY_REWARDS[nextDay - 1];
-
-    rewardState.streak = nextDay;
-    rewardState.lastClaim = now;
-    rewardState.lastClaimDay = nextDay;
-
-    balance = Math.round((balance + reward) * 100) / 100;
-
-    saveRewardState();
-    saveState();
-    render();
-
-    $("dailyRewardMessage").style.color = "var(--green)";
-    $("dailyRewardMessage").textContent = language === "fa"
-      ? `${number(reward)} نات آزمایشی برای روز ${number(nextDay)} اضافه شد!`
-      : `${reward} demo NOT added for day ${nextDay}!`;
-  }
-
-  $("dailyRewardButton").addEventListener("click", claimDailyReward);
-
-  function setLanguage(lang) {
-    language = lang;
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === "fa" ? "rtl" : "ltr";
-
-    document.querySelectorAll("[data-en][data-fa]").forEach(el => {
-      el.textContent = el.dataset[lang];
-    });
-
-    $("languageButton").textContent = lang === "fa" ? "English" : "فارسی";
-    updateWallet();
-    render();
-  }
-
-  $("languageButton").addEventListener("click", () => {
-    setLanguage(language === "fa" ? "en" : "fa");
-  });
-
-  function showPage(id) {
-    document.querySelectorAll(".page").forEach(p => {
-      p.classList.toggle("active", p.id === id);
-    });
-
-    document.querySelectorAll(".nav button").forEach(b => {
-      b.classList.toggle("active", b.dataset.page === id);
-    });
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    render();
-  }
-
-  document.querySelectorAll(".nav button").forEach(b => {
-    b.addEventListener("click", () => showPage(b.dataset.page));
-  });
-
-  document.querySelectorAll("[data-go]").forEach(el => {
-    const go = () => showPage(el.dataset.go);
-    el.addEventListener("click", go);
-    el.addEventListener("keydown", e => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        go();
-      }
-    });
-  });
-
-  function loadProfile() {
-    if (!user) {
-      $("profileName").textContent = language === "fa" ? "کاربر تلگرام" : "Telegram User";
-      $("username").textContent = language === "fa"
-        ? "برنامه را از داخل تلگرام باز کن"
-        : "Open inside Telegram";
-      $("telegramId").textContent = "—";
-      $("firstName").textContent = "—";
-      $("lastName").textContent = "—";
-      $("userLanguage").textContent = "—";
-      $("avatar").textContent = "N";
-      return;
-    }
-
-    const first = user.first_name || "";
-    $("profileName").textContent = (first + " " + (user.last_name || "")).trim() || "Telegram User";
-    $("username").textContent = user.username ? "@" + user.username : "—";
-    $("telegramId").textContent = user.id ?? "—";
-    $("firstName").textContent = first || "—";
-    $("lastName").textContent = user.last_name || "—";
-    $("userLanguage").textContent = user.language_code || "—";
-
-    const avatar = $("avatar");
-    avatar.replaceChildren();
-
-    if (user.photo_url) {
-      const img = document.createElement("img");
-      img.src = user.photo_url;
-      img.alt = "Telegram profile photo";
-      img.onerror = () => {
-        avatar.replaceChildren();
-        avatar.textContent = (first.charAt(0) || "N").toUpperCase();
-      };
-      avatar.appendChild(img);
-    } else {
-      avatar.textContent = (first.charAt(0) || "N").toUpperCase();
-    }
-  }
-
-  function setupWallet() {
-    if (!window.TON_CONNECT_UI?.TonConnectUI) return;
-
-    try {
-      walletUI = new TON_CONNECT_UI.TonConnectUI({
-        manifestUrl: MANIFEST_URL
-      });
-
-      walletUI.onStatusChange(wallet => {
-        walletAddress = wallet?.account?.address || "";
-        updateWallet();
-      });
-    } catch (e) {
-      console.error("TON Connect setup failed", e);
-    }
-  }
-
-  function updateWallet() {
-    $("walletStatus").textContent = walletAddress
-      ? (language === "fa" ? "کیف پول متصل است." : "Wallet connected.")
-      : (language === "fa" ? "کیف پول متصل نیست." : "Wallet not connected.");
-
-    $("walletAddress").textContent = walletAddress;
-    $("connectWallet").style.display = walletAddress ? "none" : "flex";
-    $("disconnectWallet").style.display = walletAddress ? "block" : "none";
-
-    $("profileWallet").textContent = walletAddress
-      ? (language === "fa" ? "متصل" : "Connected")
-      : (language === "fa" ? "متصل نیست" : "Not connected");
-
-    const home = $("homeWalletButton").querySelector("span");
-    home.textContent = walletAddress
-      ? (language === "fa" ? "کیف پول متصل است" : "Wallet connected")
-      : (language === "fa" ? "اتصال کیف پول TON" : "Connect TON Wallet");
-  }
-
-  async function connectWallet() {
-    if (!walletUI) {
-      alert(language === "fa"
-        ? "اتصال کیف پول بارگذاری نشد. آدرس manifest را بررسی کن."
-        : "Wallet connection did not load. Check the manifest URL.");
-      return;
-    }
-
-    try {
-      await walletUI.openModal();
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  $("homeWalletButton").addEventListener("click", connectWallet);
-  $("connectWallet").addEventListener("click", connectWallet);
-
-  $("disconnectWallet").addEventListener("click", async () => {
-    if (!walletUI) return;
-
-    try {
-      await walletUI.disconnect();
-      walletAddress = "";
-      updateWallet();
-    } catch (e) {
-      console.error(e);
-    }
-  });
-
-  $("withdrawButton").addEventListener("click", () => {
-    const amount = Number($("withdrawAmount").value);
-    const msg = $("withdrawMessage");
-    msg.style.color = "#ffbd72";
-
-    if (!walletAddress) {
-      msg.textContent = language === "fa"
-        ? "ابتدا کیف پول TON را وصل کن."
-        : "Connect your TON wallet first.";
-      return;
-    }
-
-    if (!Number.isFinite(amount) || amount < 100) {
-      msg.textContent = language === "fa"
-        ? "حداقل برداشت ۱۰۰ NOT است."
-        : "Minimum withdrawal is 100 NOT.";
-      return;
-    }
-
-    if (amount > balance) {
-      msg.textContent = language === "fa"
-        ? "موجودی آزمایشی کافی نیست."
-        : "Insufficient demo balance.";
-      return;
-    }
-
-    msg.textContent = language === "fa"
-      ? "مبلغ از نظر فرم معتبر است؛ اما برداشت واقعی هنوز راه‌اندازی نشده و توکنی ارسال نشده است."
-      : "The amount passes the form check, but real withdrawals are not configured and no tokens were sent.";
-  });
-
-  const referralLink = user?.id
-    ? "https://t.me/" + BOT_USERNAME + "?start=ref_" + user.id
-    : "برای ساخت لینک اختصاصی، مینی‌اپ را از داخل تلگرام باز کن.";
-
-  $("referralLink").textContent = referralLink;
-
-  async function copyReferral() {
-    if (!user?.id) {
-      alert(language === "fa"
-        ? "برای ساخت لینک دعوت، برنامه را از داخل تلگرام باز کن."
-        : "Open the app inside Telegram to generate your referral link.");
-      return;
-    }
-
-    try {
-      await navigator.clipboard.writeText(referralLink);
-      alert(language === "fa" ? "لینک دعوت کپی شد." : "Referral link copied.");
-    } catch {
-      const range = document.createRange();
-      range.selectNodeContents($("referralLink"));
-      const selection = window.getSelection();
-      selection.removeAllRanges();
-      selection.addRange(range);
-      alert(language === "fa" ? "لینک را انتخاب کن و کپی کن." : "Select and copy the link.");
-    }
-  }
-
-  $("copyReferral").addEventListener("click", copyReferral);
-
-  $("shareReferral").addEventListener("click", () => {
-    if (!user?.id) {
-      alert(language === "fa"
-        ? "برنامه را از داخل تلگرام باز کن."
-        : "Open the app inside Telegram first.");
-      return;
-    }
-
-    const shareUrl = "https://t.me/share/url?url=" +
-      encodeURIComponent(referralLink) +
-      "&text=" +
-      encodeURIComponent(language === "fa" ? "به NOT REWARD بپیوند!" : "Join NOT REWARD!");
-
-    if (tg?.openTelegramLink) tg.openTelegramLink(shareUrl);
-    else window.open(shareUrl, "_blank", "noopener");
-  });
-
-  loadProfile();
-  setupWallet();
-  render();
-  updateWallet();
-  setLanguage(user?.language_code === "fa" ? "fa" : "en");
-
-  // به‌روزرسانی شمارش معکوس و وضعیت دورهٔ ۲۴ ساعته
-  setInterval(() => {
-    resetTapPeriodIfNeeded();
-    render();
-  }, 1000);
-})();
-</script>
+      // Refresh the remaining cooldown time while the page is open.
+      setInterval(() => {
+        if (state.tapResetAt) render();
+      }, 1000);
+    })();
+  </script>
 </body>
 </html>
