@@ -1,208 +1,160 @@
 
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#090f1d">
-  <title>NOT REWARD</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <style>
-    :root {
-      --bg:#080e1b; --panel:#111d31; --text:#f3f7ff;
-      --muted:#94a5bd; --green:#5cf0b5; --line:rgba(160,190,225,.13);
-    }
-    * { box-sizing:border-box }
-    body {
-      margin:0; min-height:100vh; color:var(--text);
-      background:radial-gradient(ellipse at 50% -15%,#193a46,#0b1425 42%,var(--bg) 75%);
-      font-family:Tahoma,Arial,sans-serif;
-    }
-    button { font:inherit; cursor:pointer }
-    .app { max-width:560px; margin:auto; padding:18px 16px 100px }
-    .top { display:flex; align-items:center; justify-content:space-between; padding:8px 2px 22px }
-    .brand { display:flex; align-items:center; gap:11px }
-    .logo { width:45px;height:45px;border-radius:15px;background:linear-gradient(145deg,#a0ffd9,#23c990);color:#05291d;display:grid;place-items:center;font-weight:900;font-size:24px }
-    h1 { font-size:18px; margin:0 0 4px }
-    .muted { color:var(--muted);font-size:12px }
-    .panel { background:linear-gradient(145deg,#142239,#101a2c);border:1px solid var(--line);border-radius:22px;padding:20px;margin-bottom:14px }
-    .hero { background:linear-gradient(135deg,#183c3d,#14243a 52%,#151c31);border:1px solid #31504f;border-radius:28px;padding:25px 22px;margin-bottom:16px }
-    .hero h2 { font-size:25px;line-height:1.7 }
-    .green { color:var(--green) }
-    .balance { margin-top:22px;padding:16px;border-radius:18px;background:#07131c60 }
-    .points { font-size:35px;font-weight:800;color:var(--green);margin-top:8px }
-    .grid { display:grid;grid-template-columns:1fr 1fr;gap:12px }
-    .tile { background:linear-gradient(145deg,#142239,#101a2c);border:1px solid var(--line);border-radius:21px;padding:16px;min-height:140px }
-    .tile h3 { font-size:14px }
-    .tile p { font-size:11px;line-height:1.9;color:var(--muted) }
-    .wide { grid-column:1/-1 }
-    .tag { display:inline-block;background:#15382f;color:var(--green);padding:6px 8px;border-radius:8px;font-size:10px }
-    .primary,.secondary { width:100%;border:0;border-radius:15px;padding:14px;margin-top:12px;font-weight:bold }
-    .primary { background:linear-gradient(100deg,var(--green),#31dba0);color:#06251b }
-    .secondary { background:#22324b;color:#e8f0ff;border:1px solid #344764 }
-    .notice { font-size:11px;line-height:2;padding:14px;color:#b8b3d6;background:#201d35;border-radius:16px;margin-top:18px }
-    .bottom { position:fixed;bottom:0;left:0;right:0;background:#0a1120f2;border-top:1px solid var(--line);padding:10px;display:flex;justify-content:center }
-    .nav { width:100%;max-width:530px;display:grid;grid-template-columns:repeat(4,1fr);gap:5px }
-    .nav button { border:0;background:transparent;color:#94a5bd;padding:8px 2px;font-size:10px;border-radius:12px }
-    .nav button.active { color:var(--green);background:#16352f }
-    .nav b { display:block;font-size:20px;margin-bottom:4px }
-    .toast { display:none;position:fixed;bottom:85px;left:16px;right:16px;background:#e9fff6;color:#102b23;padding:12px;border-radius:13px;text-align:center;font-size:12px }
-    .hidden { display:none!important }
-    .center { text-align:center;padding-top:35px }
-    .channel { display:block;text-decoration:none;color:#e8f0ff;background:#22324b;border:1px solid #344764;border-radius:14px;padding:14px;margin-top:12px }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#050a0e">
+<title>NOT REWARD</title>
+<style>
+:root{--green:#00f59b;--bg:#050a0e;--panel:#0b131d;--muted:#9badc6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 50% 35%,#06251d 0%,#050a0e 55%);color:#fff;font-family:Arial,sans-serif;min-height:100vh}
+button{font:inherit;cursor:pointer}
+.app{max-width:520px;margin:auto;padding:20px 17px 100px;min-height:100vh}
+header{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:10px}
+.mini-logo{width:45px;height:45px;border:2px solid var(--green);border-radius:15px;display:grid;place-items:center;background:#09251e;font-size:24px;box-shadow:0 0 20px #00f59b33}
+.brand-name{font-size:19px;font-weight:900;letter-spacing:.3px}
+.brand-name span{color:var(--green)}
+.sub{font-size:11px;color:var(--muted);margin-top:4px}
+.header-right{display:flex;align-items:center;gap:8px}
+.online{font-size:11px;color:var(--green);white-space:nowrap}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);margin-right:4px}
+.lang{border:1px solid #243447;background:#101a26;color:white;border-radius:20px;padding:9px 10px;font-size:12px}
+.status{margin:24px 0 8px;text-align:center;font-size:11px;color:var(--muted);letter-spacing:2px}
+.hero{text-align:center;padding-top:4px}
+.orbit-wrap{height:290px;display:grid;place-items:center;position:relative}
+.orbit{position:absolute;width:260px;height:260px;border-radius:50%;border:2px solid #00f59b25;box-shadow:0 0 45px #00f59b0b}
+.orbit:before{content:"";position:absolute;inset:-3px;border-radius:50%;border:5px solid transparent;border-top-color:var(--green);border-left-color:#00f59b66;animation:spin 3s linear infinite;filter:drop-shadow(0 0 8px var(--green))}
+.orbit:after{content:"";position:absolute;inset:17px;border-radius:50%;border:1px solid #00f59b48;animation:spin 6s linear infinite reverse}
+.orbit2{position:absolute;width:220px;height:220px;border-radius:50%;border:1px dashed #00f59b66;animation:spin 12s linear infinite}
+.robot{z-index:2;width:155px;height:145px;border-radius:43px;background:linear-gradient(145deg,#f7ffff,#8ea8bb 45%,#26394d 75%,#dcecff);padding:10px;box-shadow:0 0 35px #00f59b38;position:relative}
+.robot:before{content:"";position:absolute;top:-17px;left:69px;width:12px;height:19px;background:#b9d3e4;border-radius:8px}
+.robot:after{content:"";position:absolute;top:-27px;left:65px;width:20px;height:20px;border-radius:50%;background:var(--green);box-shadow:0 0 18px var(--green)}
+.face{height:100%;border-radius:34px;background:linear-gradient(145deg,#091421,#02070c);display:flex;justify-content:center;align-items:center;gap:20px;border:2px solid #344c60}
+.eye{width:28px;height:17px;border-top:7px solid var(--green);border-radius:50%;filter:drop-shadow(0 0 7px var(--green))}
+.chest{position:absolute;bottom:-20px;left:48px;background:#10251f;border:2px solid var(--green);border-radius:50%;width:58px;height:38px;display:grid;place-items:center;color:var(--green);font-size:17px}
+@keyframes spin{to{transform:rotate(360deg)}}
+h1{font-size:35px;letter-spacing:-1px;margin:7px 0 4px}
+h1 span{color:var(--green)}
+.tagline{color:var(--muted);font-size:14px;margin-bottom:24px}
+.start{width:100%;border:0;border-radius:18px;padding:17px;background:linear-gradient(100deg,#00bd78,#00f59b);font-weight:900;font-size:17px;color:#03130e;box-shadow:0 5px 28px #00f59b20}
+.features{margin-top:27px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.feature{background:linear-gradient(145deg,#0e1926,#080f17);border:1px solid #1a2a3c;border-radius:17px;padding:19px 12px;text-align:center}
+.feature-icon{font-size:25px;color:var(--green)}
+.feature-title{font-weight:bold;margin-top:9px;font-size:14px}
+.feature-desc{color:var(--muted);font-size:12px;margin-top:6px}
+footer{position:fixed;bottom:0;left:0;right:0;background:#080f17f5;border-top:1px solid #1b2a3b;padding:12px max(16px,calc((100vw - 490px)/2));display:flex;justify-content:space-around;z-index:5}
+.nav-item{background:none;border:0;color:#8fa3bd;font-size:11px;display:grid;gap:5px;justify-items:center}
+.nav-item b{font-size:20px}
+.nav-item.active{color:var(--green)}
+[dir=rtl] .brand-name,[dir=rtl] .sub{direction:rtl}
+@media(max-width:370px){.brand-name{font-size:16px}.orbit{width:235px;height:235px}.orbit2{width:200px;height:200px}.orbit-wrap{height:265px}.robot{transform:scale(.9)}h1{font-size:30px}}
+</style>
 </head>
 <body>
-  <main id="membership" class="app hidden">
-    <header class="top">
-      <div class="brand">
-        <div class="logo">N</div>
-        <div><h1>NOT REWARD</h1><div class="muted">تأیید عضویت</div></div>
-      </div>
-    </header>
-    <section class="panel center">
-      <div style="font-size:42px">🔐</div>
-      <h2>قبل از ورود عضو کانال‌ها شو</h2>
-      <p class="muted">در هر دو کانال عضو شو، سپس دکمهٔ تأیید را بزن.</p>
-      <a class="channel" href="https://t.me/NOTREWARR" target="_blank">📢 عضویت در کانال اول</a>
-      <a class="channel" href="https://t.me/WithdrawNott" target="_blank">📢 عضویت در کانال دوم</a>
-      <button id="verify" class="primary" onclick="verifyMembership()">تأیید عضویت (Verify)</button>
-      <p id="status" class="muted" role="status"></p>
-    </section>
-  </main>
-
-  <main id="home" class="app hidden">
-    <header class="top">
-      <div class="brand">
-        <div class="logo">N</div>
-        <div><h1>NOT REWARD</h1><div class="muted">مرکز پاداش و مأموریت‌ها</div></div>
-      </div>
-      <div class="tag">نسخه آزمایشی</div>
-    </header>
-
-    <section class="hero">
-      <div class="muted">خوش اومدی 👋</div>
-      <h2>هر روز بیشتر <span class="green">پاداش بگیر</span></h2>
-      <div class="muted">مأموریت انجام بده و مسیر دریافت پاداش رو دنبال کن.</div>
-      <div class="balance">
-        <div class="muted">موجودی امتیاز آزمایشی شما</div>
-        <div class="points" id="points">0</div>
-        <div class="muted">این امتیاز نمایشی است و ارزش مالی ندارد.</div>
-      </div>
-    </section>
-
-    <h3>🚀 شروع کن</h3>
-    <section class="grid">
-      <article class="tile">
-        <div style="font-size:28px">📺</div><h3>تماشای تبلیغ</h3>
-        <p>با تکمیل تبلیغات تأییدشده، امتیاز آزمایشی بگیر.</p>
-        <span class="tag">به‌زودی فعال می‌شود</span>
-      </article>
-      <article class="tile">
-        <div style="font-size:28px">👛</div><h3>کیف پول TON</h3>
-        <p>برای دریافت پاداش، کیف پول سازگار با TON لازم است.</p>
-        <button class="secondary" onclick="notify('اتصال کیف پول در مرحله بعد اضافه می‌شود.')">اتصال کیف پول</button>
-      </article>
-      <article class="tile">
-        <div style="font-size:28px">🎯</div><h3>مأموریت روزانه</h3>
-        <p>فعالیت‌های روزانه را انجام بده و پیشرفتت را دنبال کن.</p>
-        <span class="tag">به‌زودی</span>
-      </article>
-      <article class="tile">
-        <div style="font-size:28px">🎁</div><h3>دعوت دوستان</h3>
-        <p>لینک دعوت اختصاصی بعداً اضافه می‌شود.</p>
-        <span class="tag">به‌زودی</span>
-      </article>
-      <article class="tile wide">
-        <div style="font-size:28px">💎</div><h3>دریافت نات‌کوین (NOT)</h3>
-        <p>برداشت واقعی هنوز فعال نیست.</p>
-        <span class="tag">پرداخت واقعی هنوز فعال نیست</span>
-      </article>
-    </section>
-    <div class="notice">🔒 هیچ‌وقت عبارت بازیابی یا کلید خصوصی کیف پولت را وارد نکن. تبلیغات، امتیازدهی و پرداخت واقعی هنوز به سرویس‌های مربوط متصل نشده‌اند.</div>
-  </main>
-
-  <nav id="bottom" class="bottom hidden">
-    <div class="nav">
-      <button class="active" onclick="setTab(this,'صفحه اصلی')"><b>⌂</b>خانه</button>
-      <button onclick="setTab(this,'مأموریت‌ها')"><b>◎</b>مأموریت‌ها</button>
-      <button onclick="setTab(this,'دعوت دوستان')"><b>♧</b>دعوت دوستان</button>
-      <button onclick="setTab(this,'پروفایل')"><b>◉</b>پروفایل</button>
+<div class="app">
+<header>
+  <div class="brand">
+    <div class="mini-logo" aria-label="NOT REWARD robot">🤖</div>
+    <div>
+      <div class="brand-name">NOT <span>REWARD</span></div>
+      <div class="sub" id="subtitle">Play • Earn • Withdraw</div>
     </div>
-  </nav>
-  <div id="toast" class="toast" role="status"></div>
+  </div>
+  <div class="header-right">
+    <div class="online"><span class="dot"></span>ONLINE</div>
+    <button class="lang" id="langBtn" onclick="toggleLang()">فارسی</button>
+  </div>
+</header>
+
+<div class="status" id="status">WELCOME TO YOUR REWARD SPACE</div>
+<section class="hero">
+  <div class="orbit-wrap">
+    <div class="orbit"></div><div class="orbit2"></div>
+    <div class="robot">
+      <div class="face"><div class="eye"></div><div class="eye"></div></div>
+      <div class="chest">NR</div>
+    </div>
+  </div>
+  <h1>NOT <span>REWARD</span></h1>
+  <div class="tagline" id="tagline">Play • Earn • Withdraw</div>
+  <button class="start" id="startBtn" onclick="startApp()">▶ &nbsp; START</button>
+</section>
+
+<section class="features">
+  <div class="feature">
+    <div class="feature-icon">◈</div>
+    <div class="feature-title" id="earnTitle">Earn Points</div>
+    <div class="feature-desc" id="earnDesc">Collect reward points</div>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">▣</div>
+    <div class="feature-title" id="walletTitle">Wallet</div>
+    <div class="feature-desc" id="walletDesc">Manage your balance</div>
+  </div>
+</section>
+</div>
+
+<footer>
+  <button class="nav-item active" onclick="setTab(this,'home')"><b>⌂</b><span id="navHome">Home</span></button>
+  <button class="nav-item" onclick="setTab(this,'earn')"><b>✧</b><span id="navEarn">Earn</span></button>
+  <button class="nav-item" onclick="setTab(this,'wallet')"><b>▣</b><span id="navWallet">Wallet</span></button>
+  <button class="nav-item" onclick="setTab(this,'profile')"><b>♙</b><span id="navProfile">Profile</span></button>
+</footer>
 
 <script>
-const WORKER_URL = "https://not-reward-checker.mukefaceget15.workers.dev/";
-const tg = window.Telegram.WebApp;
-tg.ready();
-tg.expand();
+let lang = 'en';
 
-function showHome() {
-  document.getElementById("membership").classList.add("hidden");
-  document.getElementById("home").classList.remove("hidden");
-  document.getElementById("bottom").classList.remove("hidden");
+const translations = {
+ en:{
+  subtitle:'Play • Earn • Withdraw',status:'WELCOME TO YOUR REWARD SPACE',
+  tagline:'Play • Earn • Withdraw',start:'▶  START',
+  earnTitle:'Earn Points',earnDesc:'Collect reward points',
+  walletTitle:'Wallet',walletDesc:'Manage your balance',
+  home:'Home',earn:'Earn',wallet:'Wallet',profile:'Profile',
+  alert:'Welcome to NOT REWARD!'
+ },
+ fa:{
+  subtitle:'بازی • امتیاز • برداشت',status:'به دنیای پاداش خوش آمدید',
+  tagline:'بازی کن • امتیاز بگیر • برداشت کن',start:'▶  شروع',
+  earnTitle:'کسب امتیاز',earnDesc:'امتیاز جمع‌آوری کن',
+  walletTitle:'کیف پول',walletDesc:'موجودی خود را مدیریت کن',
+  home:'خانه',earn:'کسب امتیاز',wallet:'کیف پول',profile:'پروفایل',
+  alert:'به NOT REWARD خوش آمدی!'
+ }
+};
+
+function toggleLang(){
+ lang = lang === 'en' ? 'fa' : 'en';
+ const t = translations[lang];
+ document.documentElement.lang = lang;
+ document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
+ document.getElementById('subtitle').textContent=t.subtitle;
+ document.getElementById('status').textContent=t.status;
+ document.getElementById('tagline').textContent=t.tagline;
+ document.getElementById('startBtn').textContent=t.start;
+ document.getElementById('earnTitle').textContent=t.earnTitle;
+ document.getElementById('earnDesc').textContent=t.earnDesc;
+ document.getElementById('walletTitle').textContent=t.walletTitle;
+ document.getElementById('walletDesc').textContent=t.walletDesc;
+ document.getElementById('navHome').textContent=t.home;
+ document.getElementById('navEarn').textContent=t.earn;
+ document.getElementById('navWallet').textContent=t.wallet;
+ document.getElementById('navProfile').textContent=t.profile;
+ document.getElementById('langBtn').textContent=lang==='en'?'فارسی':'English';
 }
 
-function showMembership() {
-  document.getElementById("home").classList.add("hidden");
-  document.getElementById("bottom").classList.add("hidden");
-  document.getElementById("membership").classList.remove("hidden");
+function startApp(){
+ document.getElementById('status').textContent =
+ lang==='fa'?'آماده‌ای!':'YOU ARE READY!';
 }
 
-async function verifyMembership() {
-  const button = document.getElementById("verify");
-  const status = document.getElementById("status");
-
-  if (!tg.initData) {
-    status.textContent = "لطفاً این برنامه را از داخل تلگرام باز کن.";
-    return;
-  }
-
-  button.disabled = true;
-  button.textContent = "در حال بررسی…";
-  status.textContent = "";
-
-  try {
-    const response = await fetch(WORKER_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ initData: tg.initData })
-    });
-
-    const result = await response.json();
-
-    if (response.ok && result.ok === true) {
-      sessionStorage.setItem("not_reward_verified", "yes");
-      showHome();
-    } else {
-      status.textContent = "عضویت هر دو کانال تأیید نشد. عضو شو و دوباره امتحان کن.";
-    }
-  } catch (error) {
-    status.textContent = "خطا در بررسی. اینترنت را بررسی کن و دوباره بزن.";
-  } finally {
-    button.disabled = false;
-    button.textContent = "تأیید عضویت (Verify)";
-  }
+function setTab(button,tab){
+ document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+ button.classList.add('active');
 }
-
-function notify(message) {
-  const el = document.getElementById("toast");
-  el.textContent = message;
-  el.style.display = "block";
-  setTimeout(() => el.style.display = "none", 3000);
-}
-
-function setTab(button, name) {
-  document.querySelectorAll(".nav button").forEach(b => b.classList.remove("active"));
-  button.classList.add("active");
-  if (name !== "صفحه اصلی") notify("بخش «" + name + "» در مرحله بعد فعال می‌شود.");
-}
-
-(async function startApp() {
-  // تأیید قبلی به‌تنهایی مجوز ورود دائمی نیست؛ هر بار از Worker بررسی می‌شود.
-  showMembership();
-})();
 </script>
 </body>
 </html>
