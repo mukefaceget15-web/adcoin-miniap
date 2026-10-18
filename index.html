@@ -3,137 +3,137 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#090d18">
   <title>NOT REWARD</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
   <style>
     :root {
       color-scheme: dark;
       --bg: #090d18;
-      --panel: #121a2b;
-      --panel2: #18233a;
+      --panel: #121b2e;
       --text: #f4f7ff;
-      --muted: #a0aec7;
-      --blue: #6d7cff;
+      --muted: #a4b0c8;
+      --blue: #7785ff;
       --cyan: #50e5d0;
-      --border: rgba(255,255,255,.09);
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       min-height: 100vh;
-      background: radial-gradient(ellipse at top, #192548 0, var(--bg) 55%);
+      background: radial-gradient(ellipse at top, #1b2a50, var(--bg) 60%);
       color: var(--text);
-      font-family: Inter, Vazirmatn, sans-serif;
+      font-family: Inter, sans-serif;
     }
-    body.fa { font-family: Vazirmatn, Inter, sans-serif; }
+
+    body.fa { font-family: Vazirmatn, sans-serif; }
+
     button, a { font: inherit; }
-    .app { width: min(100% - 28px, 480px); margin: auto; padding: 20px 0 36px; }
-    header { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+
+    .app { width: min(100% - 28px, 470px); margin: auto; padding: 20px 0 35px; }
+
+    header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: 1px; }
+
     .logo {
-      display: grid; place-items: center; width: 42px; height: 42px;
-      border-radius: 14px; background: linear-gradient(135deg, var(--blue), var(--cyan));
-      color: #08111e; font-size: 21px; font-weight: 800;
-      box-shadow: 0 8px 28px #596bff40;
+      width: 46px; height: 46px; border-radius: 14px;
+      object-fit: cover; background: #101a30;
+      box-shadow: 0 0 22px #437bff40;
     }
-    .lang {
-      display: flex; gap: 3px; padding: 4px; border: 1px solid var(--border);
-      background: #11182a; border-radius: 12px;
+
+    .lang { display: flex; gap: 4px; padding: 4px; background: #11192a; border: 1px solid #ffffff16; border-radius: 12px; }
+
+    .lang button { border: 0; padding: 8px 10px; border-radius: 8px; background: transparent; color: var(--muted); cursor: pointer; }
+
+    .lang button.active { background: #253453; color: white; }
+
+    .hero { text-align: center; padding: 36px 0 22px; }
+
+    .hero-logo {
+      width: 150px; height: 150px; object-fit: contain;
+      display: block; margin: 0 auto 20px;
+      border-radius: 28px;
+      filter: drop-shadow(0 0 24px #286fff45);
     }
-    .lang button {
-      border: 0; border-radius: 8px; padding: 8px 10px;
-      color: var(--muted); background: transparent; cursor: pointer;
-    }
-    .lang button.active { background: var(--panel2); color: white; }
-    .hero { text-align: center; padding: 38px 0 25px; }
-    .coin {
-      width: 94px; height: 94px; margin: 0 auto 20px; border-radius: 30px;
-      display: grid; place-items: center; font-size: 42px; font-weight: 800;
-      color: #0b1523; background: linear-gradient(135deg, #7e8aff, #5df0d1);
-      box-shadow: 0 12px 50px #5b7bff30;
-    }
-    h1 { font-size: clamp(29px, 8vw, 38px); margin: 0 0 10px; letter-spacing: 1px; }
-    .subtitle { margin: 0 auto; max-width: 340px; color: var(--muted); line-height: 1.8; font-size: 14px; }
-    .panel {
-      padding: 20px; background: linear-gradient(150deg, #17223a, #101726);
-      border: 1px solid var(--border); border-radius: 22px; margin-top: 16px;
-    }
-    .panel h2 { font-size: 17px; margin: 0 0 7px; }
-    .hint { font-size: 13px; color: var(--muted); line-height: 1.8; margin: 0 0 16px; }
-    .channel {
-      display: flex; align-items: center; gap: 12px; padding: 13px;
-      border: 1px solid var(--border); background: #0d1423; border-radius: 15px;
-      margin-top: 10px;
-    }
-    .channel-icon {
-      flex: 0 0 42px; height: 42px; border-radius: 13px; display: grid;
-      place-items: center; background: #20335a; font-size: 21px;
-    }
-    .channel-info { min-width: 0; flex: 1; }
+
+    h1 { font-size: clamp(26px, 7vw, 36px); margin: 0 0 12px; }
+
+    .subtitle { color: var(--muted); font-size: 14px; line-height: 1.9; max-width: 350px; margin: auto; }
+
+    .panel { padding: 20px; margin-top: 14px; background: linear-gradient(145deg, #19243b, #101726); border: 1px solid #ffffff12; border-radius: 22px; }
+
+    h2 { font-size: 17px; margin: 0 0 8px; }
+
+    .hint { color: var(--muted); font-size: 13px; line-height: 1.9; margin: 0 0 15px; }
+
+    .channel { display: flex; align-items: center; gap: 11px; padding: 12px; margin-top: 10px; background: #0c1423; border: 1px solid #ffffff12; border-radius: 15px; }
+
+    .channel-icon { flex: 0 0 40px; height: 40px; display: grid; place-items: center; background: #203458; border-radius: 12px; font-size: 20px; }
+
+    .channel-info { flex: 1; min-width: 0; }
+
     .channel-info strong { display: block; font-size: 13px; }
-    .channel-info small { display: block; color: var(--muted); margin-top: 5px; font-size: 11px; }
-    .join {
-      text-decoration: none; color: #08111e; background: var(--cyan);
-      font-size: 12px; font-weight: 800; padding: 10px 12px; border-radius: 10px;
-      white-space: nowrap;
-    }
-    .primary {
-      width: 100%; border: 0; border-radius: 14px; padding: 16px;
-      margin-top: 16px; background: linear-gradient(100deg, var(--blue), #8b75ff);
-      color: white; font-weight: 800; cursor: pointer;
-      box-shadow: 0 8px 25px #6575ff2c;
-    }
-    .primary:disabled { opacity: .6; cursor: wait; }
-    .status { display: none; padding: 13px; border-radius: 12px; margin-top: 12px; font-size: 13px; line-height: 1.7; }
+
+    .channel-info small { display: block; color: var(--muted); font-size: 11px; margin-top: 5px; }
+
+    .join { background: var(--cyan); color: #08131f; text-decoration: none; padding: 10px 12px; border-radius: 10px; font-size: 12px; font-weight: 800; white-space: nowrap; }
+
+    .primary { width: 100%; padding: 16px; margin-top: 16px; border: 0; border-radius: 14px; background: linear-gradient(100deg, var(--blue), #8d76ff); color: white; font-weight: 800; cursor: pointer; }
+
+    .primary:disabled { opacity: .65; cursor: wait; }
+
+    .status { display: none; padding: 13px; border-radius: 12px; margin-top: 12px; font-size: 13px; line-height: 1.8; }
+
     .status.show { display: block; }
-    .status.good { background: #10372f; color: #8ff4d9; }
-    .status.bad { background: #40222c; color: #ffb5c0; }
-    .status.neutral { background: #202d47; color: #d6e0ff; }
-    .note { color: var(--muted); text-align: center; font-size: 11px; line-height: 1.8; margin: 22px 8px 0; }
-    .fa .hero, .fa .panel, .fa .channel-info { text-align: right; }
-    .fa .hero { text-align: center; }
-    .fa .channel { direction: rtl; }
+    .good { background: #10372f; color: #94f3d8; }
+    .bad { background: #40222c; color: #ffbdc6; }
+    .neutral { background: #202d47; color: #d6e0ff; }
+
+    .note { color: var(--muted); font-size: 11px; text-align: center; line-height: 1.9; margin: 22px 8px 0; }
+
+    body.fa { direction: rtl; }
     .fa .brand { letter-spacing: 0; }
+    .fa .channel { direction: rtl; }
+    .fa .channel-info { text-align: right; }
+
     @media (max-width: 360px) {
-      .app { width: min(100% - 20px, 480px); }
-      .panel { padding: 15px; }
-      .channel { gap: 8px; padding: 10px; }
+      .panel { padding: 14px; }
+      .channel { gap: 7px; padding: 9px; }
       .join { padding: 9px; }
     }
   </style>
 </head>
+
 <body>
-  <main class="app" id="app">
+  <main class="app">
     <header>
-      <div class="brand"><div class="logo">N</div><span>NOT REWARD</span></div>
-      <div class="lang" aria-label="Language">
+      <div class="brand">
+        <img class="logo" src="not-reward-logo.png" alt="NOT REWARD">
+        <span>NOT REWARD</span>
+      </div>
+      <div class="lang">
         <button id="enBtn" class="active" type="button">🇬🇧 EN</button>
         <button id="faBtn" type="button">🇮🇷 فا</button>
       </div>
     </header>
 
     <section class="hero">
-      <div class="coin">N</div>
+      <img class="hero-logo" src="not-reward-logo.png" alt="NOT REWARD logo">
       <h1 data-en="Welcome to NOT REWARD" data-fa="به نات ریوارد خوش آمدید">Welcome to NOT REWARD</h1>
-      <p class="subtitle"
-         data-en="Join our official channels and verify your membership to continue."
-         data-fa="برای ادامه، در کانال‌های رسمی ما عضو شوید و عضویت خود را بررسی کنید.">
-        Join our official channels and verify your membership to continue.
-      </p>
+      <p class="subtitle" data-en="Join our official channels and verify your membership to continue." data-fa="برای ادامه در کانال‌های رسمی عضو شوید و عضویت خود را بررسی کنید.">Join our official channels and verify your membership to continue.</p>
     </section>
 
     <section class="panel">
       <h2 data-en="Complete the steps" data-fa="مراحل را کامل کنید">Complete the steps</h2>
-      <p class="hint"
-         data-en="Join both channels below, then return here and tap Verify Membership."
-         data-fa="در هر دو کانال زیر عضو شوید، سپس به اینجا برگردید و روی بررسی عضویت بزنید.">
-        Join both channels below, then return here and tap Verify Membership.
-      </p>
+      <p class="hint" data-en="Join both channels, then return here and verify your membership." data-fa="در هر دو کانال عضو شوید، سپس به اینجا برگردید و عضویت خود را بررسی کنید.">Join both channels, then return here and verify your membership.</p>
 
       <div class="channel">
         <div class="channel-icon">✈️</div>
@@ -141,8 +141,7 @@
           <strong>NOT REWARD</strong>
           <small>@NOTREWARR</small>
         </div>
-        <a class="join" href="https://t.me/NOTREWARR" target="_blank" rel="noopener"
-           data-en="Join" data-fa="عضویت">Join</a>
+        <a class="join" href="https://t.me/NOTREWARR" target="_blank" rel="noopener" data-en="Join" data-fa="عضویت">Join</a>
       </div>
 
       <div class="channel">
@@ -151,20 +150,14 @@
           <strong data-en="Withdraw Updates" data-fa="اخبار برداشت">Withdraw Updates</strong>
           <small>@WithdrawNott</small>
         </div>
-        <a class="join" href="https://t.me/WithdrawNott" target="_blank" rel="noopener"
-           data-en="Join" data-fa="عضویت">Join</a>
+        <a class="join" href="https://t.me/WithdrawNott" target="_blank" rel="noopener" data-en="Join" data-fa="عضویت">Join</a>
       </div>
 
-      <button class="primary" id="verifyBtn" type="button"
-        data-en="✓ Verify Membership" data-fa="✓ بررسی عضویت">✓ Verify Membership</button>
+      <button class="primary" id="verifyBtn" type="button" data-en="✓ Verify Membership" data-fa="✓ بررسی عضویت">✓ Verify Membership</button>
       <div class="status" id="status" role="status" aria-live="polite"></div>
     </section>
 
-    <p class="note"
-       data-en="Membership is checked through Telegram. This page does not promise or automatically send token rewards."
-       data-fa="عضویت از طریق تلگرام بررسی می‌شود. این صفحه پرداخت یا ارسال خودکار توکن را تضمین نمی‌کند.">
-      Membership is checked through Telegram. This page does not promise or automatically send token rewards.
-    </p>
+    <p class="note" data-en="Membership is checked through Telegram. Token rewards are not sent automatically by this page." data-fa="عضویت از طریق تلگرام بررسی می‌شود. این صفحه توکن را به‌صورت خودکار پرداخت نمی‌کند.">Membership is checked through Telegram. Token rewards are not sent automatically by this page.</p>
   </main>
 
   <script>
@@ -175,42 +168,40 @@
       const verifyBtn = document.getElementById("verifyBtn");
       let language = "en";
 
-      const messages = {
+      const msg = {
         en: {
-          missing: "Please open this mini app from Telegram, not from a regular browser.",
-          loading: "Checking your channel membership…",
-          success: "Success! You are a member of both required channels.",
-          notJoined: "You still need to join both channels. Join the missing channel, then try again.",
-          failed: "Could not verify membership right now. Please try again in a moment.",
-          error: "Something went wrong. Please try again."
+          missing: "Open this mini app from inside Telegram.",
+          loading: "Checking membership…",
+          success: "Membership confirmed! Returning to the bot…",
+          notJoined: "Please join both required channels, then try again.",
+          failed: "Verification failed. Please try again shortly.",
+          error: "Connection error. Please try again."
         },
         fa: {
-          missing: "لطفاً مینی‌اپ را از داخل تلگرام باز کنید، نه مرورگر معمولی.",
-          loading: "در حال بررسی عضویت شما…",
-          success: "عالی! شما در هر دو کانال عضو هستید.",
-          notJoined: "هنوز در هر دو کانال عضو نشده‌اید. عضو شوید و دوباره امتحان کنید.",
-          failed: "فعلاً بررسی عضویت انجام نشد. کمی بعد دوباره تلاش کنید.",
-          error: "مشکلی پیش آمد. دوباره تلاش کنید."
+          missing: "لطفاً مینی‌اپ را از داخل تلگرام باز کنید.",
+          loading: "در حال بررسی عضویت…",
+          success: "عضویت تأیید شد! در حال بازگشت به ربات…",
+          notJoined: "لطفاً در هر دو کانال عضو شوید و دوباره امتحان کنید.",
+          failed: "بررسی عضویت ناموفق بود. کمی بعد دوباره تلاش کنید.",
+          error: "خطای اتصال؛ دوباره تلاش کنید."
         }
       };
 
-      function showStatus(message, kind) {
-        statusBox.textContent = message;
+      function show(text, kind) {
+        statusBox.textContent = text;
         statusBox.className = "status show " + kind;
       }
 
-      function setLanguage(next) {
-        language = next;
-        document.documentElement.lang = next;
-        document.documentElement.dir = next === "fa" ? "rtl" : "ltr";
-        document.body.classList.toggle("fa", next === "fa");
+      function setLanguage(lang) {
+        language = lang;
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === "fa" ? "rtl" : "ltr";
+        document.body.classList.toggle("fa", lang === "fa");
         document.querySelectorAll("[data-en][data-fa]").forEach(el => {
-          el.textContent = el.dataset[next];
+          el.textContent = el.dataset[lang];
         });
-        document.getElementById("enBtn").classList.toggle("active", next === "en");
-        document.getElementById("faBtn").classList.toggle("active", next === "fa");
-        document.getElementById("enBtn").setAttribute("aria-pressed", String(next === "en"));
-        document.getElementById("faBtn").setAttribute("aria-pressed", String(next === "fa"));
+        document.getElementById("enBtn").classList.toggle("active", lang === "en");
+        document.getElementById("faBtn").classList.toggle("active", lang === "fa");
       }
 
       document.getElementById("enBtn").addEventListener("click", () => setLanguage("en"));
@@ -223,13 +214,12 @@
 
       verifyBtn.addEventListener("click", async () => {
         if (!tg || !tg.initData) {
-          showStatus(messages[language].missing, "bad");
+          show(msg[language].missing, "bad");
           return;
         }
 
         verifyBtn.disabled = true;
-        verifyBtn.textContent = language === "fa" ? "در حال بررسی…" : "Checking…";
-        showStatus(messages[language].loading, "neutral");
+        show(msg[language].loading, "neutral");
 
         try {
           const response = await fetch(WORKER_URL, {
@@ -237,23 +227,25 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ initData: tg.initData })
           });
-
           const result = await response.json();
 
-          if (!response.ok && response.status === 401) {
-            showStatus(messages[language].missing, "bad");
-          } else if (result.ok && result.joined === true) {
-            showStatus(messages[language].success, "good");
+          if (response.ok && result.ok && result.joined === true) {
+            show(msg[language].success, "good");
+            setTimeout(() => {
+              if (tg && typeof tg.close === "function") {
+                tg.close();
+              }
+            }, 900);
           } else if (result.ok && result.joined === false) {
-            showStatus(messages[language].notJoined, "bad");
+            show(msg[language].notJoined, "bad");
+            verifyBtn.disabled = false;
           } else {
-            showStatus(messages[language].failed, "bad");
+            show(response.status === 401 ? msg[language].missing : msg[language].failed, "bad");
+            verifyBtn.disabled = false;
           }
-        } catch (error) {
-          showStatus(messages[language].error, "bad");
-        } finally {
+        } catch {
+          show(msg[language].error, "bad");
           verifyBtn.disabled = false;
-          verifyBtn.textContent = language === "fa" ? "✓ بررسی عضویت" : "✓ Verify Membership";
         }
       });
 
