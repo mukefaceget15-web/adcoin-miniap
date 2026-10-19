@@ -4,86 +4,232 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#050914">
+<meta name="theme-color" content="#070b18">
 <title>NOT REWARD</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+
 <style>
-:root{--bg:#050914;--panel:#0b1222;--blue:#38b6ff;--cyan:#70e5ff;--text:#f1f7ff;--muted:#8ea4c3;--border:rgba(76,151,255,.18);--green:#48e8a2;--danger:#ff6b8a}
+:root{
+  --bg:#070b18;
+  --panel:#10182b;
+  --panel2:#0c1324;
+  --blue:#4d9fff;
+  --cyan:#70f0ff;
+  --text:#f4f7ff;
+  --muted:#8999b8;
+  --border:rgba(125,169,255,.15);
+  --green:#4de6b0;
+  --danger:#ff819c;
+  --radius:23px;
+}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;padding:0 15px 100px;color:var(--text);background:radial-gradient(ellipse at 50% -10%,#1164dc38,transparent 48%),var(--bg);font-family:Arial,Tahoma,sans-serif}
-button,input{font:inherit}button{cursor:pointer}
-.app{width:100%;max-width:480px;margin:auto}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:22px 2px}
-.brand{display:flex;align-items:center;gap:11px}
-.brand-mark{width:45px;height:45px;border-radius:15px;display:grid;place-items:center;font-size:24px;font-weight:900;background:linear-gradient(145deg,#32baff,#1256e9)}
-.brand-name{font-size:18px;font-weight:900;letter-spacing:1px}
-.brand-sub{font-size:10px;color:var(--muted);margin-top:4px}
-.language{border:1px solid var(--border);border-radius:12px;padding:9px 12px;background:#0c1628;color:var(--cyan)}
-.page{display:none}.page.active{display:block}
-.balance-card,.card,.mini-card{border:1px solid var(--border);border-radius:20px;background:linear-gradient(145deg,#101a2c,#0a1120);padding:19px;margin-top:14px}
-.balance-card{padding:23px 21px;background:linear-gradient(140deg,#14396ad9,#091122)}
+html{scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;padding:0 15px 105px;
+  color:var(--text);
+  background:
+    radial-gradient(ellipse at 10% 0%,#1765d528,transparent 38%),
+    radial-gradient(ellipse at 100% 35%,#4e28bb17,transparent 35%),
+    var(--bg);
+  font-family:Arial,Tahoma,sans-serif;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.app{width:100%;max-width:470px;margin:auto}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:23px 2px 17px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{
+  width:49px;height:49px;border-radius:17px;
+  display:grid;place-items:center;font-size:25px;font-weight:900;
+  color:#fff;background:linear-gradient(145deg,#70efff,#3988ff 55%,#5646e9);
+  box-shadow:0 6px 25px #2388ff36;
+}
+.brand-name{font-size:17px;font-weight:900;letter-spacing:1.2px}
+.brand-sub{font-size:9px;color:var(--muted);margin-top:5px;letter-spacing:1.1px}
+.language{
+  border:1px solid var(--border);border-radius:13px;padding:10px 12px;
+  background:#111a2c;color:var(--cyan);font-size:11px;font-weight:bold
+}
+.page{display:none;animation:pageIn .25s ease}
+.page.active{display:block}
+@keyframes pageIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.card,.mini-card,.balance-card{
+  border:1px solid var(--border);border-radius:var(--radius);
+  background:linear-gradient(145deg,rgba(20,31,53,.96),rgba(11,17,32,.97));
+  box-shadow:0 12px 32px #00000012;
+}
+.card{padding:19px;margin-top:14px}
+.balance-card{
+  margin-top:12px;padding:22px 20px;overflow:hidden;position:relative;
+  background:
+    radial-gradient(ellipse at 100% 0%,#67e9ff20,transparent 52%),
+    linear-gradient(135deg,#163665,#11182d 75%);
+  border-color:#67bdff29;
+}
+.balance-card:after{
+  content:"";position:absolute;width:145px;height:145px;border-radius:50%;
+  left:-55px;top:-65px;border:1px solid #72dfff12;
+  box-shadow:0 0 0 20px #72dfff05,0 0 0 40px #72dfff03;
+  pointer-events:none
+}
+.balance-top,.balance-bottom,.card-head,.reward-head,.stat-row{
+  display:flex;justify-content:space-between;align-items:center;gap:10px
+}
 .balance-label,.muted{color:var(--muted);font-size:12px}
-.balance-number{font-size:36px;font-weight:900;margin:14px 0}
-.unit{font-size:16px;color:var(--cyan)}
-.balance-top,.balance-bottom,.card-head,.reward-head,.stat-row{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.balance-bottom{border-top:1px solid #ffffff12;padding-top:15px;margin-top:15px;font-size:12px}
-.tap-section{text-align:center;padding:20px 0}
-.eyebrow{color:var(--blue);font-size:11px;font-weight:bold}
-.tap-title,.section-heading{font-size:18px;font-weight:850}
-.robot-stage{height:210px;display:grid;place-items:center;position:relative}
-#robot{width:170px;height:170px;border:1px solid #38b6ff66;border-radius:50%;color:white;background:radial-gradient(circle,#1677ff55,#050914);font-size:70px;box-shadow:0 0 40px #1677ff44}
-#robot:active{transform:scale(.96)}
-.tap-progress{width:72%;height:5px;background:#17253b;border-radius:10px;margin:13px auto;overflow:hidden}
-.tap-progress-fill{height:100%;background:linear-gradient(90deg,#1677ff,#70e5ff);width:0}
-.grid-two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
-.mini-card{margin:0;padding:15px 13px}
-.mini-value{font-size:20px;font-weight:850;margin-top:6px;overflow-wrap:anywhere}
+.online-label{font-size:10px;color:var(--green)}
+.online-label:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-left:6px}
+.balance-number{font-size:36px;font-weight:900;margin:17px 0;letter-spacing:.3px}
+.unit{font-size:15px;color:var(--cyan);font-weight:bold}
+.balance-bottom{
+  border-top:1px solid #ffffff13;padding-top:15px;margin-top:16px;
+  font-size:11px;color:#b8c8e2
+}
+.eyebrow{color:var(--cyan);font-size:10px;font-weight:bold;letter-spacing:1px}
+.tap-section{text-align:center;padding:25px 0 5px}
+.tap-title,.section-heading{font-size:19px;font-weight:850;margin:9px 0}
+.tap-section .muted{line-height:1.9}
+.robot-stage{height:215px;display:grid;place-items:center;position:relative}
+.robot-stage:before{
+  content:"";position:absolute;width:176px;height:176px;border-radius:50%;
+  border:1px solid #4a9eff1b;box-shadow:0 0 0 17px #4a9eff08,0 0 0 35px #4a9eff05
+}
+#robot{
+  width:151px;height:151px;position:relative;z-index:1;
+  border:1px solid #6bcfff66;border-radius:50%;color:white;font-size:62px;
+  background:radial-gradient(circle at 40% 30%,#347be8,#14284e 65%,#0b1326);
+  box-shadow:0 0 35px #1677ff30,inset 0 0 25px #80dfff13;
+  transition:transform .15s,box-shadow .2s
+}
+#robot:active{transform:scale(.94);box-shadow:0 0 48px #168aff60}
+#robot:disabled{opacity:.55}
+.tap-progress{width:75%;height:5px;background:#1a2841;border-radius:20px;margin:15px auto;overflow:hidden}
+.tap-progress-fill{height:100%;background:linear-gradient(90deg,#3984ff,#70f0ff);width:0;transition:width .2s}
+#tapMessage{color:#bdcce4;line-height:1.8}
+.grid-two{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:14px}
+.mini-card{padding:15px 14px;min-width:0}
+.mini-value{font-size:20px;font-weight:850;margin-top:8px;overflow-wrap:anywhere}
 .card-title{font-size:15px;font-weight:850;margin:0}
-.card-description{font-size:12px;color:var(--muted);line-height:1.9}
-.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:47px;padding:12px 15px;margin-top:12px;border:0;border-radius:14px;color:white;background:linear-gradient(110deg,#1685ff,#2363ed);font-weight:800}
-.btn.secondary,.btn.ghost{background:#111e33;color:#c9e5ff;border:1px solid #28476d}
-.btn.success{background:linear-gradient(110deg,#48e8a2,#1dc5ad);color:#04150f}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin:18px 0}
-.day{text-align:center;padding:10px 0;border:1px solid #243650;border-radius:10px;background:#0a1322;font-size:10px}
-.day-reward{font-size:11px;font-weight:bold;margin-top:7px}
-.day.current{border-color:#319dff;background:#10264a}
-.day.claimed{border-color:#237d6a;color:var(--green)}
-.input-label{display:block;color:#bfd0e9;font-size:12px;margin-top:15px}
-.input{width:100%;min-height:48px;padding:13px 14px;margin-top:8px;border:1px solid #263d5e;border-radius:13px;background:#070e1b;color:white;direction:ltr;text-align:left}
-.notice{padding:12px 13px;margin-top:14px;border-radius:13px;background:#0c1d32;border:1px solid #22436a;color:#a6bfdf;font-size:11px;line-height:1.9;overflow-wrap:anywhere}
-.notice.warning{background:#261b12;border-color:#624423;color:#f3cb8a}
+.card-description{font-size:12px;color:var(--muted);line-height:2;margin:10px 0}
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  width:100%;min-height:47px;padding:12px 15px;margin-top:12px;
+  border:1px solid transparent;border-radius:15px;color:#fff;
+  background:linear-gradient(110deg,#258bff,#4a64ed);
+  box-shadow:0 5px 17px #276ff01b;font-weight:800;font-size:13px;
+  transition:filter .2s,transform .2s
+}
+.btn:active{transform:scale(.985)}
+.btn:hover{filter:brightness(1.08)}
+.btn.secondary,.btn.ghost{
+  background:#111d32;color:#d1e6ff;border-color:#2a4161;box-shadow:none
+}
+.btn.success{background:linear-gradient(110deg,#54e7b1,#20bda6);color:#061a16}
+.btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
+.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin:17px 0}
+.day{
+  text-align:center;padding:10px 0;border:1px solid #283954;
+  border-radius:11px;background:#0b1424;font-size:10px
+}
+.day-reward{font-size:10px;font-weight:bold;margin-top:7px;color:#b9d8ff}
+.day.current{border-color:#419cff;background:#10284b}
+.day.claimed{border-color:#237d6a;color:var(--green);background:#0d2827}
+.input-label{display:block;color:#c3d4ed;font-size:12px;margin-top:15px}
+.input{
+  width:100%;min-height:49px;padding:13px 14px;margin-top:8px;
+  border:1px solid #2a4060;border-radius:14px;background:#080f1e;
+  color:white;direction:ltr;text-align:left
+}
+.notice{
+  padding:13px 14px;margin-top:14px;border-radius:14px;
+  background:#102039;border:1px solid #29466b;color:#b5cce9;
+  font-size:11px;line-height:2;overflow-wrap:anywhere
+}
+.notice.warning{background:#211d18;border-color:#5d4a2c;color:#f2d3a0}
 .notice.success{background:#0c2521;border-color:#245e4d;color:#8becc4}
-.stat-row{margin:13px 0;font-size:12px}
+.stat-row{margin:14px 0;font-size:12px}
 .wallet-info{display:flex;align-items:center;gap:12px}
-.wallet-icon{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:#183d6b;font-size:23px}
-.wallet-address{direction:ltr;text-align:left;overflow-wrap:anywhere;font-size:11px;color:#a9c7ed;line-height:1.8}
+.wallet-icon{width:48px;height:48px;flex-shrink:0;border-radius:16px;display:grid;place-items:center;background:linear-gradient(145deg,#22528a,#17284d);font-size:23px;color:var(--cyan)}
+.wallet-address{direction:ltr;text-align:left;overflow-wrap:anywhere;font-size:11px;color:#a9c7ed;line-height:1.9;margin-top:7px}
 .status-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#77859a;margin-left:5px}
 .status-dot.connected{background:var(--green)}
-.divider{height:1px;background:#ffffff0d;margin:15px 0}
-.profile-hero{text-align:center;padding:22px 0}
-.avatar{width:84px;height:84px;border-radius:28px;margin:auto;display:grid;place-items:center;font-size:39px;background:linear-gradient(145deg,#174b88,#0a1931)}
-.profile-name{font-size:20px;font-weight:900}
+.divider{height:1px;background:#ffffff0d;margin:16px 0}
+.profile-cover{
+  height:112px;border-radius:18px;
+  background:
+    radial-gradient(circle at 20% 20%,#72efff25,transparent 28%),
+    radial-gradient(circle at 85% 80%,#835dff35,transparent 34%),
+    linear-gradient(125deg,#183866,#171b39,#10172a);
+  position:relative;overflow:hidden
+}
+.profile-cover:after{
+  content:"";position:absolute;width:155px;height:155px;border:1px solid #ffffff10;
+  border-radius:50%;left:-22px;top:-80px;
+  box-shadow:0 0 0 20px #ffffff04,0 0 0 42px #ffffff03
+}
+.profile-head{text-align:center;padding:0 16px 18px}
+.avatar-wrap{width:94px;height:94px;margin:-47px auto 12px;position:relative;z-index:1}
+.avatar{
+  width:94px;height:94px;border-radius:30px;padding:4px;
+  background:linear-gradient(145deg,#70efff,#4c87ff,#a275ff);
+  box-shadow:0 7px 24px #0007
+}
+.avatar img{width:100%;height:100%;object-fit:cover;border-radius:26px;background:#17233b;display:block}
+.avatar-fallback{
+  width:100%;height:100%;border-radius:26px;
+  display:grid;place-items:center;background:#17233b;font-size:40px
+}
+.profile-name{font-size:20px;font-weight:900;margin:8px 0}
+.profile-username{font-size:12px;color:var(--cyan);direction:ltr;margin-top:7px}
+.member-pill{
+  display:inline-flex;align-items:center;gap:6px;margin-top:12px;
+  padding:7px 11px;border-radius:20px;background:#152943;
+  border:1px solid #35527a;color:#b8d9ff;font-size:10px
+}
+.profile-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.profile-stat{padding:14px;border-radius:15px;background:#0b1424;border:1px solid var(--border);min-width:0}
+.profile-stat .label{font-size:10px;color:var(--muted)}
+.profile-stat .value{font-size:13px;font-weight:bold;margin-top:8px;overflow-wrap:anywhere}
+.profile-id{direction:ltr;text-align:right}
 .history-item{padding:13px 0;border-bottom:1px solid #ffffff12}
 .history-item:last-child{border-bottom:0}
 .history-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.history-name{font-size:13px;font-weight:bold}
-.history-date{font-size:10px;color:var(--muted);margin-top:6px;line-height:1.7}
-.history-amount{font-size:13px;font-weight:bold;direction:ltr;white-space:nowrap}
+.history-name{font-size:12px;font-weight:bold;line-height:1.8}
+.history-date{font-size:10px;color:var(--muted);margin-top:6px;line-height:1.8}
+.history-amount{font-size:12px;font-weight:bold;direction:ltr;white-space:nowrap}
 .history-amount.plus{color:var(--green)}
 .history-amount.minus{color:#ffbd91}
-.history-status{font-size:10px;color:var(--cyan);margin-top:5px}
-.bottom-nav{position:fixed;z-index:10;bottom:0;left:0;right:0;padding:9px;background:#050a15f2;border-top:1px solid #263b5b70}
-.nav-inner{max-width:480px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
-.nav-btn{display:flex;flex-direction:column;align-items:center;gap:5px;min-height:55px;border:1px solid transparent;border-radius:13px;background:transparent;color:#7e91ae;font-size:10px}
-.nav-btn.active{color:var(--cyan);background:#137bff12;border-color:#328fff25}
-.nav-icon{font-size:20px}
-.footer-note{text-align:center;color:#536681;font-size:10px;padding:22px 0}
+.history-status{font-size:10px;color:var(--cyan);margin-top:5px;line-height:1.9;overflow-wrap:anywhere}
+.empty-state{font-size:12px;color:var(--muted);text-align:center;padding:20px 6px;line-height:2}
+.bottom-nav{
+  position:fixed;z-index:10;bottom:0;left:0;right:0;
+  padding:9px 12px calc(9px + env(safe-area-inset-bottom));
+  background:rgba(7,11,24,.94);backdrop-filter:blur(20px);
+  border-top:1px solid #263b5b70
+}
+.nav-inner{max-width:470px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.nav-btn{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  min-height:56px;border:1px solid transparent;border-radius:15px;
+  background:transparent;color:#7e91ae;font-size:10px
+}
+.nav-btn.active{color:var(--cyan);background:linear-gradient(145deg,#167bff1b,#52e9ff09);border-color:#328fff28}
+.nav-icon{font-size:21px}
+.footer-note{text-align:center;color:#536681;font-size:10px;padding:23px 0}
+#ton-connect{max-width:100%;overflow:hidden}
+@media(max-width:360px){
+  body{padding-right:11px;padding-left:11px}
+  .balance-number{font-size:31px}
+  .mini-value{font-size:17px}
+  .day{font-size:9px;padding:9px 0}
+}
 </style>
 </head>
+
 <body>
 <div class="app">
+
 <header class="topbar">
   <div class="brand">
     <div class="brand-mark">N</div>
@@ -97,15 +243,21 @@ button,input{font:inherit}button{cursor:pointer}
 
 <section id="home" class="page active">
   <div class="balance-card">
-    <div class="balance-top"><span>موجودی شما</span><span>● حساب شما</span></div>
+    <div class="balance-top">
+      <span class="balance-label">موجودی شما</span>
+      <span class="online-label">حساب فعال</span>
+    </div>
     <div class="balance-number"><span id="balance">0.00</span> <span class="unit">NOT</span></div>
-    <div class="balance-bottom"><span>موجودی قابل استفاده</span><strong><span id="tapCount">0</span> / 500 لمس امروز</strong></div>
+    <div class="balance-bottom">
+      <span>موجودی قابل استفاده</span>
+      <strong><span id="tapCount">0</span> / 500 لمس امروز</strong>
+    </div>
   </div>
 
   <div class="tap-section">
-    <div class="eyebrow">پاداش بگیر</div>
+    <div class="eyebrow">✦ EARN REWARDS ✦</div>
     <h2 class="tap-title">ربات را لمس کن</h2>
-    <p class="muted">هر لمس ۰٫۰۲ NOT پاداش دارد.</p>
+    <p class="muted">هر لمس، ۰٫۰۲ NOT پاداش دارد.</p>
   </div>
 
   <div class="robot-stage"><button id="robot" aria-label="Tap to earn">🤖</button></div>
@@ -114,21 +266,34 @@ button,input{font:inherit}button{cursor:pointer}
   <div id="lockMessage" class="muted" style="text-align:center"></div>
 
   <div class="grid-two">
-    <div class="mini-card"><div class="muted">لمس‌های امروز</div><div class="mini-value"><span id="tapMini">0</span> / 500</div></div>
-    <div class="mini-card"><div class="muted">پاداش روزانه بعدی</div><div class="mini-value"><span id="dailyMini">1</span> NOT</div></div>
+    <div class="mini-card">
+      <div class="muted">لمس‌های امروز</div>
+      <div class="mini-value"><span id="tapMini">0</span> <span class="muted">/ 500</span></div>
+    </div>
+    <div class="mini-card">
+      <div class="muted">پاداش روزانه بعدی</div>
+      <div class="mini-value"><span id="dailyMini">1</span> NOT</div>
+    </div>
   </div>
 
   <div class="card">
-    <h3 class="card-title">تبلیغات ویژه</h3>
+    <div class="card-head">
+      <h3 class="card-title">تبلیغات ویژه</h3>
+      <span style="font-size:22px">✦</span>
+    </div>
     <p class="card-description">برای مشاهده تبلیغات روی دکمه زیر بزن.</p>
-    <button class="btn" onclick="openAd()">مشاهده تبلیغات</button>
+    <button class="btn" onclick="openAd()">▶ مشاهده تبلیغات</button>
   </div>
 
   <div class="card">
-    <div class="reward-head"><h3 class="card-title">پاداش روزانه</h3><span><span id="streak">1</span> / 7</span></div>
+    <div class="reward-head">
+      <h3 class="card-title">پاداش روزانه</h3>
+      <span class="muted"><span id="streak">1</span> / 7 روز</span>
+    </div>
     <div class="days" id="rewardDays"></div>
     <button class="btn success" id="dailyBtn" onclick="claimDaily()">دریافت پاداش امروز</button>
   </div>
+
   <div class="footer-note">NOT REWARD · COMMUNITY REWARDS</div>
 </section>
 
@@ -136,29 +301,43 @@ button,input{font:inherit}button{cursor:pointer}
   <div class="card">
     <div class="eyebrow">INVITE & EARN</div>
     <h2 class="section-heading">دوستانت را دعوت کن</h2>
-    <p class="card-description">لینک اختصاصی خودت را برای دوستانت بفرست.</p>
-    <div style="text-align:center;font-size:23px;font-weight:900">+5 NOT</div>
+    <p class="card-description">لینک اختصاصی خودت را برای دوستانت بفرست و پاداش بگیر.</p>
+    <div style="text-align:center;font-size:26px;font-weight:900;color:var(--cyan);padding:10px">+5 NOT</div>
     <label class="input-label" for="refLink">لینک دعوت شما</label>
     <input id="refLink" class="input" readonly>
     <button class="btn" onclick="copyReferral()">کپی لینک دعوت</button>
     <button class="btn ghost" onclick="shareReferral()">اشتراک‌گذاری لینک</button>
   </div>
+
   <div class="grid-two">
-    <div class="mini-card"><div class="muted">دعوت‌های ثبت‌شده</div><div class="mini-value" id="refCount">0</div></div>
-    <div class="mini-card"><div class="muted">پاداش دعوت</div><div class="mini-value"><span id="refReward">0</span> NOT</div></div>
+    <div class="mini-card">
+      <div class="muted">دعوت‌های ثبت‌شده</div>
+      <div class="mini-value" id="refCount">0</div>
+    </div>
+    <div class="mini-card">
+      <div class="muted">پاداش دعوت</div>
+      <div class="mini-value"><span id="refReward">0</span> <span class="muted">NOT</span></div>
+    </div>
   </div>
-  <button class="btn secondary" onclick="refreshReferrals()">به‌روزرسانی دعوت‌ها</button>
+
+  <button class="btn secondary" onclick="refreshReferrals()">↻ به‌روزرسانی دعوت‌ها</button>
 </section>
 
 <section id="wallet" class="page">
   <div class="card">
     <div class="wallet-info">
       <div class="wallet-icon">◈</div>
-      <div><h2 class="section-heading">کیف پول TON</h2><div class="muted">کیف پول خود را متصل کن</div></div>
+      <div>
+        <h2 class="section-heading">کیف پول TON</h2>
+        <div class="muted">کیف پول خود را متصل کن</div>
+      </div>
     </div>
     <div class="divider"></div>
     <div id="ton-connect"></div>
-    <div class="stat-row"><span class="muted">وضعیت اتصال</span><strong><span id="walletDot" class="status-dot"></span><span id="walletStatus">متصل نیست</span></strong></div>
+    <div class="stat-row">
+      <span class="muted">وضعیت اتصال</span>
+      <strong><span id="walletDot" class="status-dot"></span><span id="walletStatus">متصل نیست</span></strong>
+    </div>
     <div class="muted">آدرس کیف پول</div>
     <div id="walletAddress" class="wallet-address">—</div>
   </div>
@@ -175,36 +354,59 @@ button,input{font:inherit}button{cursor:pointer}
     <label class="input-label" for="withdrawAmount">مبلغ برداشت (NOT)</label>
     <input id="withdrawAmount" class="input" type="number" min="300" step="0.01" inputmode="decimal" placeholder="300">
     <button class="btn" id="withdrawBtn" onclick="requestWithdrawal()">ثبت درخواست برداشت</button>
-    <div class="notice warning">مبلغ برداشت طی ۲۴ الی ۴۸ ساعت واریز می‌شود.</div>
+    <div class="notice warning">⏱ مبلغ برداشت طی ۲۴ الی ۴۸ ساعت واریز می‌شود.</div>
   </div>
 
   <div class="card">
     <div class="card-head">
       <h3 class="card-title">تاریخچه برداشت‌ها</h3>
-      <button class="btn secondary" style="width:auto;margin:0;min-height:36px;padding:7px 10px;font-size:11px" onclick="loadHistory()">به‌روزرسانی</button>
+      <button class="btn secondary" style="width:auto;margin:0;min-height:35px;padding:7px 10px;font-size:10px" onclick="loadHistory()">به‌روزرسانی</button>
     </div>
-    <div id="withdrawalHistory"><p class="card-description">برای دیدن تاریخچه، کیف پول را باز کن.</p></div>
+    <div id="withdrawalHistory"><div class="empty-state">تاریخچه برداشت‌ها اینجا نمایش داده می‌شود.</div></div>
   </div>
 
   <div class="card">
     <h3 class="card-title">تاریخچه پاداش‌ها</h3>
-    <div id="rewardHistory"><p class="card-description">هنوز تاریخچه‌ای بارگذاری نشده است.</p></div>
+    <div id="rewardHistory"><div class="empty-state">تاریخچه پاداش‌ها اینجا نمایش داده می‌شود.</div></div>
   </div>
 </section>
 
 <section id="profile" class="page">
-  <div class="card">
-    <div class="profile-hero">
-      <div class="avatar">🤖</div>
+  <div class="card" style="padding:12px">
+    <div class="profile-cover"></div>
+    <div class="profile-head">
+      <div class="avatar-wrap">
+        <div class="avatar">
+          <img id="profilePhoto" alt="عکس پروفایل تلگرام" hidden>
+          <div id="profileFallback" class="avatar-fallback">👤</div>
+        </div>
+      </div>
       <h2 id="tgName" class="profile-name">کاربر تلگرام</h2>
-      <div class="muted">NOT REWARD MEMBER</div>
+      <div id="tgUsername" class="profile-username">@username</div>
+      <div class="member-pill">✦ عضو NOT REWARD</div>
     </div>
     <div class="divider"></div>
-    <div class="stat-row"><span class="muted">شناسه تلگرام</span><strong id="tgId">در دسترس نیست</strong></div>
-    <div class="stat-row"><span class="muted">موجودی</span><strong><span id="profileBalance">0.00</span> NOT</strong></div>
-    <div class="stat-row"><span class="muted">تعداد لمس‌های امروز</span><strong id="profileTaps">0</strong></div>
+    <div class="profile-stats">
+      <div class="profile-stat">
+        <div class="label">شناسه عددی تلگرام</div>
+        <div id="tgId" class="value profile-id">—</div>
+      </div>
+      <div class="profile-stat">
+        <div class="label">موجودی حساب</div>
+        <div class="value"><span id="profileBalance">0.00</span> NOT</div>
+      </div>
+      <div class="profile-stat">
+        <div class="label">لمس‌های امروز</div>
+        <div id="profileTaps" class="value">0 از 500</div>
+      </div>
+      <div class="profile-stat">
+        <div class="label">وضعیت حساب</div>
+        <div class="value" style="color:var(--green)">فعال ●</div>
+      </div>
+    </div>
   </div>
 </section>
+
 </div>
 
 <nav class="bottom-nav">
@@ -237,11 +439,11 @@ let dailyClaimed=false;
 const tg=window.Telegram?.WebApp;
 
 function initData(){
-  return tg?.initData || "";
+  return tg?.initData||"";
 }
 
 function getUserId(){
-  return telegramUser?.id ? String(telegramUser.id) : "";
+  return telegramUser?.id?String(telegramUser.id):"";
 }
 
 async function apiRequest(path,body={}){
@@ -276,12 +478,10 @@ function showBalance(balance){
 function renderTaps(){
   $("tapCount").textContent=serverTaps;
   $("tapMini").textContent=serverTaps;
-  $("profileTaps").textContent=serverTaps;
+  $("profileTaps").textContent=`${serverTaps} از 500`;
   $("tapProgress").style.width=`${Math.min(100,serverTaps/5)}%`;
   $("robot").disabled=tapping||serverTaps>=500;
-  $("lockMessage").textContent=serverTaps>=500
-    ?"سهمیه لمس روزانه تمام شده است."
-    :"";
+  $("lockMessage").textContent=serverTaps>=500?"سهمیه لمس امروز تمام شده است.":"";
 }
 
 function renderDays(){
@@ -330,10 +530,7 @@ async function tapRobot(){
     const r=await apiRequest("/api/tap");
     showBalance(r.balance);
     serverTaps=Math.min(500,serverTaps+1);
-
-    $("tapMessage").textContent=
-      `پاداش ${Number(r.reward||0).toFixed(2)} NOT دریافت شد ✓`;
-
+    $("tapMessage").textContent=`${Number(r.reward||0).toFixed(2)} NOT پاداش گرفتی ✓`;
     renderTaps();
   }catch(e){
     $("tapMessage").textContent="دریافت پاداش انجام نشد.";
@@ -345,27 +542,24 @@ async function tapRobot(){
 }
 
 async function claimDaily(){
-  const btn=$("dailyBtn");
-
   if(dailyClaimed){
     alert("پاداش امروز را قبلاً دریافت کرده‌ای.");
     return;
   }
 
-  btn.disabled=true;
+  $("dailyBtn").disabled=true;
 
   try{
     const r=await apiRequest("/api/daily");
-
     showBalance(r.balance);
     serverStreak=Number(r.streak)||1;
     dailyClaimed=true;
-
     renderDays();
     alert(`پاداش ${Number(r.reward||0).toFixed(2)} NOT دریافت شد.`);
+    await loadHistory();
   }catch(e){
     alert(e.message);
-    btn.disabled=false;
+    $("dailyBtn").disabled=false;
   }
 }
 
@@ -382,16 +576,11 @@ function statusFa(status){
 function formatDate(value){
   if(!value)return "تاریخ نامشخص";
 
-  let date;
+  const str=String(value);
+  const normalized=str.includes("T")?str:str.replace(" ","T")+"Z";
+  const date=new Date(normalized);
 
-  // تاریخ‌های SQLite معمولاً به شکل YYYY-MM-DD HH:mm:ss هستند.
-  const normalized=String(value).includes("T")
-    ?String(value)
-    :String(value).replace(" ","T")+"Z";
-
-  date=new Date(normalized);
-
-  if(Number.isNaN(date.getTime()))return String(value);
+  if(Number.isNaN(date.getTime()))return str;
 
   return date.toLocaleString("fa-IR",{
     year:"numeric",
@@ -402,7 +591,7 @@ function formatDate(value){
   });
 }
 
-function makeHistoryItem(title,amount,date,detail="",isNegative=false){
+function makeHistoryItem(title,amount,date,detail="",negative=false){
   const item=document.createElement("div");
   item.className="history-item";
 
@@ -414,9 +603,9 @@ function makeHistoryItem(title,amount,date,detail="",isNegative=false){
   name.textContent=title;
 
   const amountEl=document.createElement("div");
-  amountEl.className="history-amount "+(isNegative?"minus":"plus");
-  amountEl.textContent=
-    `${Number(amount)>0?"+":""}${Number(amount).toFixed(2)} NOT`;
+  amountEl.className="history-amount "+(negative?"minus":"plus");
+  const n=Number(amount)||0;
+  amountEl.textContent=`${n>0?"+":""}${n.toFixed(2)} NOT`;
 
   top.append(name,amountEl);
 
@@ -437,15 +626,16 @@ function makeHistoryItem(title,amount,date,detail="",isNegative=false){
 }
 
 async function loadHistory(){
+  if(!initData())return;
+
   const withdrawalBox=$("withdrawalHistory");
   const rewardBox=$("rewardHistory");
 
-  withdrawalBox.textContent="در حال دریافت تاریخچه…";
-  rewardBox.textContent="در حال دریافت تاریخچه…";
+  withdrawalBox.textContent="در حال دریافت…";
+  rewardBox.textContent="در حال دریافت…";
 
   try{
     const r=await apiRequest("/api/history",{limit:50});
-
     withdrawalBox.innerHTML="";
     rewardBox.innerHTML="";
 
@@ -453,7 +643,7 @@ async function loadHistory(){
     const rewards=Array.isArray(r.history)?r.history:[];
 
     if(!withdrawals.length){
-      withdrawalBox.textContent="هنوز درخواست برداشتی ثبت نکرده‌ای.";
+      withdrawalBox.innerHTML='<div class="empty-state">هنوز درخواست برداشتی ثبت نکرده‌ای.</div>';
     }else{
       withdrawals.forEach(w=>{
         const amount=Number(w.amount)||0;
@@ -465,19 +655,13 @@ async function loadHistory(){
         ].filter(Boolean).join(" · ");
 
         withdrawalBox.appendChild(
-          makeHistoryItem(
-            "درخواست برداشت",
-            -amount,
-            w.created_at,
-            detail,
-            true
-          )
+          makeHistoryItem("درخواست برداشت",-amount,w.created_at,detail,true)
         );
       });
     }
 
     if(!rewards.length){
-      rewardBox.textContent="هنوز پاداشی در تاریخچه ثبت نشده است.";
+      rewardBox.innerHTML='<div class="empty-state">هنوز پاداشی در تاریخچه نیست.</div>';
     }else{
       const labels={
         tap:"پاداش لمس",
@@ -489,22 +673,19 @@ async function loadHistory(){
 
       rewards.forEach(item=>{
         const units=Number(item.amount_units)||0;
-        const amount=units/100;
-        const isNegative=units<0;
 
         rewardBox.appendChild(
           makeHistoryItem(
             labels[item.kind]||item.kind||"پاداش",
-            amount,
+            units/100,
             item.created_at,
             item.details||"",
-            isNegative
+            units<0
           )
         );
       });
     }
 
-    // وضعیت پاداش روز جاری را از تاریخچه بررسی می‌کنیم.
     const today=new Date().toISOString().slice(0,10);
     const todayClaim=rewards.find(item=>
       item.kind==="daily"&&String(item.created_at||"").startsWith(today)
@@ -515,8 +696,8 @@ async function loadHistory(){
       renderDays();
     }
   }catch(e){
-    withdrawalBox.textContent="دریافت تاریخچه انجام نشد.";
-    rewardBox.textContent="دریافت تاریخچه انجام نشد.";
+    withdrawalBox.innerHTML='<div class="empty-state">تاریخچه دریافت نشد. دوباره تلاش کن.</div>';
+    rewardBox.innerHTML='<div class="empty-state">تاریخچه دریافت نشد. دوباره تلاش کن.</div>';
     console.error("History error:",e);
   }
 }
@@ -555,14 +736,12 @@ async function requestWithdrawal(){
   btn.textContent="در حال ثبت درخواست…";
 
   try{
-    const r=await apiRequest("/api/withdraw",{
+    await apiRequest("/api/withdraw",{
       amount,
       walletAddress:address
     });
 
-    // شماره درخواست برای کاربر نمایش داده نمی‌شود.
     alert("درخواست برداشت شما ثبت شد. مبلغ طی ۲۴ الی ۴۸ ساعت واریز می‌شود.");
-
     $("withdrawAmount").value="";
 
     await refreshMe();
@@ -578,7 +757,6 @@ async function requestWithdrawal(){
 
 function setupReferral(){
   const id=getUserId();
-
   $("refLink").value=id
     ?`https://t.me/${BOT_USERNAME}?start=ref_${id}`
     :`https://t.me/${BOT_USERNAME}`;
@@ -588,7 +766,6 @@ async function refreshReferrals(){
   try{
     const r=await apiRequest("/api/referrals");
     const count=Number(r.count??r.referralCount??0);
-
     $("refCount").textContent=count;
     $("refReward").textContent=(count*5).toFixed(2);
   }catch(e){
@@ -626,19 +803,43 @@ function showPage(page,button){
   document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
   if(button)button.classList.add("active");
 
-  if(page==="wallet"&&initData()){
-    loadHistory();
-  }
-
-  if(page==="earn"&&initData()){
-    refreshReferrals();
-  }
+  if(page==="wallet")loadHistory();
+  if(page==="earn")refreshReferrals();
 
   window.scrollTo({top:0,behavior:"smooth"});
 }
 
 function toggleLanguage(){
   alert("نسخه فارسی فعال است.");
+}
+
+function setupProfile(){
+  if(!telegramUser)return;
+
+  const first=telegramUser.first_name||"";
+  const last=telegramUser.last_name||"";
+  const fullName=`${first} ${last}`.trim();
+
+  $("tgName").textContent=fullName||"کاربر تلگرام";
+  $("tgId").textContent=String(telegramUser.id||"—");
+  $("tgUsername").textContent=telegramUser.username
+    ?`@${telegramUser.username}`
+    :"نام کاربری تنظیم نشده";
+
+  const photo=telegramUser.photo_url;
+
+  if(photo){
+    const img=$("profilePhoto");
+    img.onload=()=>{
+      img.hidden=false;
+      $("profileFallback").hidden=true;
+    };
+    img.onerror=()=>{
+      img.hidden=true;
+      $("profileFallback").hidden=false;
+    };
+    img.src=photo;
+  }
 }
 
 window.showPage=showPage;
@@ -657,12 +858,11 @@ async function start(){
   if(tg){
     tg.ready();
     tg.expand();
-
     telegramUser=tg.initDataUnsafe?.user||null;
-    $("tgName").textContent=telegramUser?.first_name||"کاربر تلگرام";
-    $("tgId").textContent=telegramUser?.id||"در دسترس نیست";
+    setupProfile();
   }else{
     $("tgName").textContent="برنامه را از تلگرام باز کن";
+    $("tgUsername").textContent="ورود از طریق تلگرام";
     $("tapMessage").textContent="برای دریافت پاداش، از داخل تلگرام وارد شو.";
   }
 
@@ -692,7 +892,6 @@ async function start(){
 
       walletUI.onStatusChange(wallet=>{
         connectedWallet=wallet;
-
         const ok=Boolean(wallet?.account?.address);
 
         $("walletStatus").textContent=ok?"متصل":"متصل نیست";
