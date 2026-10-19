@@ -65,6 +65,15 @@ button,input{font:inherit}button{cursor:pointer}
 .profile-hero{text-align:center;padding:22px 0}
 .avatar{width:84px;height:84px;border-radius:28px;margin:auto;display:grid;place-items:center;font-size:39px;background:linear-gradient(145deg,#174b88,#0a1931)}
 .profile-name{font-size:20px;font-weight:900}
+.history-item{padding:13px 0;border-bottom:1px solid #ffffff12}
+.history-item:last-child{border-bottom:0}
+.history-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.history-name{font-size:13px;font-weight:bold}
+.history-date{font-size:10px;color:var(--muted);margin-top:6px;line-height:1.7}
+.history-amount{font-size:13px;font-weight:bold;direction:ltr;white-space:nowrap}
+.history-amount.plus{color:var(--green)}
+.history-amount.minus{color:#ffbd91}
+.history-status{font-size:10px;color:var(--cyan);margin-top:5px}
 .bottom-nav{position:fixed;z-index:10;bottom:0;left:0;right:0;padding:9px;background:#050a15f2;border-top:1px solid #263b5b70}
 .nav-inner{max-width:480px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
 .nav-btn{display:flex;flex-direction:column;align-items:center;gap:5px;min-height:55px;border:1px solid transparent;border-radius:13px;background:transparent;color:#7e91ae;font-size:10px}
@@ -76,77 +85,155 @@ button,input{font:inherit}button{cursor:pointer}
 <body>
 <div class="app">
 <header class="topbar">
-  <div class="brand"><div class="brand-mark">N</div><div><div class="brand-name">NOT REWARD</div><div class="brand-sub">EARN • INVITE • REWARD</div></div></div>
+  <div class="brand">
+    <div class="brand-mark">N</div>
+    <div>
+      <div class="brand-name">NOT REWARD</div>
+      <div class="brand-sub">EARN • INVITE • REWARD</div>
+    </div>
+  </div>
   <button class="language" onclick="toggleLanguage()">FA / EN</button>
 </header>
 
 <section id="home" class="page active">
   <div class="balance-card">
-    <div class="balance-top"><span>موجودی سرور شما</span><span>● حساب شما</span></div>
+    <div class="balance-top"><span>موجودی شما</span><span>● حساب شما</span></div>
     <div class="balance-number"><span id="balance">0.00</span> <span class="unit">NOT</span></div>
-    <div class="balance-bottom"><span>موجودی تأییدشده سرور</span><strong><span id="tapCount">0</span> / 500 لمس امروز</strong></div>
+    <div class="balance-bottom"><span>موجودی قابل استفاده</span><strong><span id="tapCount">0</span> / 500 لمس امروز</strong></div>
   </div>
-  <div class="tap-section"><div class="eyebrow">پاداش بگیر</div><h2 class="tap-title">ربات را لمس کن</h2><p class="muted">هر لمس ۰٫۰۲ NOT؛ پاداش در سرور ثبت می‌شود.</p></div>
+
+  <div class="tap-section">
+    <div class="eyebrow">پاداش بگیر</div>
+    <h2 class="tap-title">ربات را لمس کن</h2>
+    <p class="muted">هر لمس ۰٫۰۲ NOT پاداش دارد.</p>
+  </div>
+
   <div class="robot-stage"><button id="robot" aria-label="Tap to earn">🤖</button></div>
   <p id="tapMessage" style="text-align:center;font-size:12px">برای شروع، ربات را لمس کن</p>
   <div class="tap-progress"><div id="tapProgress" class="tap-progress-fill"></div></div>
   <div id="lockMessage" class="muted" style="text-align:center"></div>
+
   <div class="grid-two">
     <div class="mini-card"><div class="muted">لمس‌های امروز</div><div class="mini-value"><span id="tapMini">0</span> / 500</div></div>
     <div class="mini-card"><div class="muted">پاداش روزانه بعدی</div><div class="mini-value"><span id="dailyMini">1</span> NOT</div></div>
   </div>
-  <div class="card"><h3 class="card-title">تبلیغات ویژه</h3><p class="card-description">لینک تبلیغ را می‌توان بعداً تنظیم کرد.</p><button class="btn" onclick="openAd()">مشاهده تبلیغات</button></div>
-  <div class="card"><div class="reward-head"><h3 class="card-title">پاداش روزانه</h3><span><span id="streak">1</span> / 7</span></div><div class="days" id="rewardDays"></div><button class="btn success" id="dailyBtn" onclick="claimDaily()">دریافت پاداش امروز</button></div>
+
+  <div class="card">
+    <h3 class="card-title">تبلیغات ویژه</h3>
+    <p class="card-description">برای مشاهده تبلیغات روی دکمه زیر بزن.</p>
+    <button class="btn" onclick="openAd()">مشاهده تبلیغات</button>
+  </div>
+
+  <div class="card">
+    <div class="reward-head"><h3 class="card-title">پاداش روزانه</h3><span><span id="streak">1</span> / 7</span></div>
+    <div class="days" id="rewardDays"></div>
+    <button class="btn success" id="dailyBtn" onclick="claimDaily()">دریافت پاداش امروز</button>
+  </div>
   <div class="footer-note">NOT REWARD · COMMUNITY REWARDS</div>
 </section>
 
 <section id="earn" class="page">
-  <div class="card"><div class="eyebrow">INVITE & EARN</div><h2 class="section-heading">دوستانت را دعوت کن</h2><p class="card-description">لینک اختصاصی خودت را بفرست.</p><div style="text-align:center;font-size:23px;font-weight:900">+5 NOT</div><label class="input-label" for="refLink">لینک دعوت شما</label><input id="refLink" class="input" readonly><button class="btn" onclick="copyReferral()">کپی لینک دعوت</button><button class="btn ghost" onclick="shareReferral()">اشتراک‌گذاری لینک</button></div>
-  <div class="grid-two"><div class="mini-card"><div class="muted">دعوت‌های ثبت‌شده</div><div class="mini-value" id="refCount">0</div></div><div class="mini-card"><div class="muted">پاداش دعوت</div><div class="mini-value"><span id="refReward">0</span> NOT</div></div></div>
+  <div class="card">
+    <div class="eyebrow">INVITE & EARN</div>
+    <h2 class="section-heading">دوستانت را دعوت کن</h2>
+    <p class="card-description">لینک اختصاصی خودت را برای دوستانت بفرست.</p>
+    <div style="text-align:center;font-size:23px;font-weight:900">+5 NOT</div>
+    <label class="input-label" for="refLink">لینک دعوت شما</label>
+    <input id="refLink" class="input" readonly>
+    <button class="btn" onclick="copyReferral()">کپی لینک دعوت</button>
+    <button class="btn ghost" onclick="shareReferral()">اشتراک‌گذاری لینک</button>
+  </div>
+  <div class="grid-two">
+    <div class="mini-card"><div class="muted">دعوت‌های ثبت‌شده</div><div class="mini-value" id="refCount">0</div></div>
+    <div class="mini-card"><div class="muted">پاداش دعوت</div><div class="mini-value"><span id="refReward">0</span> NOT</div></div>
+  </div>
   <button class="btn secondary" onclick="refreshReferrals()">به‌روزرسانی دعوت‌ها</button>
-  <div class="notice">پاداش دعوت و موجودی قابل برداشت از سمت سرور بررسی می‌شود.</div>
 </section>
 
 <section id="wallet" class="page">
   <div class="card">
-    <div class="wallet-info"><div class="wallet-icon">◈</div><div><h2 class="section-heading">کیف پول TON</h2><div class="muted">کیف پول خود را متصل کن</div></div></div>
-    <div class="divider"></div><div id="ton-connect"></div>
+    <div class="wallet-info">
+      <div class="wallet-icon">◈</div>
+      <div><h2 class="section-heading">کیف پول TON</h2><div class="muted">کیف پول خود را متصل کن</div></div>
+    </div>
+    <div class="divider"></div>
+    <div id="ton-connect"></div>
     <div class="stat-row"><span class="muted">وضعیت اتصال</span><strong><span id="walletDot" class="status-dot"></span><span id="walletStatus">متصل نیست</span></strong></div>
-    <div class="muted">آدرس کیف پول</div><div id="walletAddress" class="wallet-address">—</div>
+    <div class="muted">آدرس کیف پول</div>
+    <div id="walletAddress" class="wallet-address">—</div>
   </div>
-  <div class="balance-card"><div class="balance-label">موجودی تأییدشده سرور</div><div class="balance-number"><span id="withdrawBalance">0.00</span> <span class="unit">NOT</span></div><div class="balance-bottom"><span>حداقل برداشت آزمایشی</span><strong>10 NOT</strong></div></div>
+
+  <div class="balance-card">
+    <div class="balance-label">موجودی شما</div>
+    <div class="balance-number"><span id="withdrawBalance">0.00</span> <span class="unit">NOT</span></div>
+    <div class="balance-bottom"><span>حداقل برداشت</span><strong>300 NOT</strong></div>
+  </div>
+
   <div class="card">
-    <h3 class="card-title">ثبت درخواست برداشت آزمایشی</h3>
-    <p class="card-description">ابتدا کیف پول TON را متصل کن. حداقل مبلغ آزمایشی ۱۰ NOT است.</p>
+    <h3 class="card-title">برداشت NOT</h3>
+    <p class="card-description">ابتدا کیف پول TON خود را متصل کن. حداقل مبلغ برداشت ۳۰۰ NOT است.</p>
     <label class="input-label" for="withdrawAmount">مبلغ برداشت (NOT)</label>
-    <input id="withdrawAmount" class="input" type="number" min="10" step="0.01" inputmode="decimal" placeholder="10">
-    <button class="btn" id="withdrawBtn" onclick="requestWithdrawal()">ثبت درخواست آزمایشی</button>
-    <div class="notice warning">ثبت درخواست به معنی انتقال خودکار توکن نیست.</div>
+    <input id="withdrawAmount" class="input" type="number" min="300" step="0.01" inputmode="decimal" placeholder="300">
+    <button class="btn" id="withdrawBtn" onclick="requestWithdrawal()">ثبت درخواست برداشت</button>
+    <div class="notice warning">مبلغ برداشت طی ۲۴ الی ۴۸ ساعت واریز می‌شود.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <h3 class="card-title">تاریخچه برداشت‌ها</h3>
+      <button class="btn secondary" style="width:auto;margin:0;min-height:36px;padding:7px 10px;font-size:11px" onclick="loadHistory()">به‌روزرسانی</button>
+    </div>
+    <div id="withdrawalHistory"><p class="card-description">برای دیدن تاریخچه، کیف پول را باز کن.</p></div>
+  </div>
+
+  <div class="card">
+    <h3 class="card-title">تاریخچه پاداش‌ها</h3>
+    <div id="rewardHistory"><p class="card-description">هنوز تاریخچه‌ای بارگذاری نشده است.</p></div>
   </div>
 </section>
 
 <section id="profile" class="page">
-  <div class="card"><div class="profile-hero"><div class="avatar">🤖</div><h2 id="tgName" class="profile-name">کاربر تلگرام</h2><div class="muted">NOT REWARD MEMBER</div></div><div class="divider"></div><div class="stat-row"><span class="muted">شناسه تلگرام</span><strong id="tgId">در دسترس نیست</strong></div><div class="stat-row"><span class="muted">موجودی سرور</span><strong><span id="profileBalance">0.00</span> NOT</strong></div><div class="stat-row"><span class="muted">تعداد لمس‌های امروز</span><strong id="profileTaps">0</strong></div></div>
-  <div class="card"><h3 class="card-title">درباره برنامه</h3><p class="card-description">با لمس ربات، پاداش روزانه و دعوت دوستان شرکت کن.</p><div class="notice">موجودی از سرور خوانده می‌شود؛ برداشت با موجودی سرور بررسی خواهد شد.</div></div>
+  <div class="card">
+    <div class="profile-hero">
+      <div class="avatar">🤖</div>
+      <h2 id="tgName" class="profile-name">کاربر تلگرام</h2>
+      <div class="muted">NOT REWARD MEMBER</div>
+    </div>
+    <div class="divider"></div>
+    <div class="stat-row"><span class="muted">شناسه تلگرام</span><strong id="tgId">در دسترس نیست</strong></div>
+    <div class="stat-row"><span class="muted">موجودی</span><strong><span id="profileBalance">0.00</span> NOT</strong></div>
+    <div class="stat-row"><span class="muted">تعداد لمس‌های امروز</span><strong id="profileTaps">0</strong></div>
+  </div>
 </section>
 </div>
 
-<nav class="bottom-nav"><div class="nav-inner">
-<button class="nav-btn active" onclick="showPage('home',this)"><span class="nav-icon">⌂</span>خانه</button>
-<button class="nav-btn" onclick="showPage('earn',this)"><span class="nav-icon">♧</span>دعوت</button>
-<button class="nav-btn" onclick="showPage('wallet',this)"><span class="nav-icon">◈</span>کیف پول</button>
-<button class="nav-btn" onclick="showPage('profile',this)"><span class="nav-icon">◎</span>پروفایل</button>
-</div></nav>
+<nav class="bottom-nav">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="showPage('home',this)"><span class="nav-icon">⌂</span>خانه</button>
+    <button class="nav-btn" onclick="showPage('earn',this)"><span class="nav-icon">♧</span>دعوت</button>
+    <button class="nav-btn" onclick="showPage('wallet',this)"><span class="nav-icon">◈</span>کیف پول</button>
+    <button class="nav-btn" onclick="showPage('profile',this)"><span class="nav-icon">◎</span>پروفایل</button>
+  </div>
+</nav>
 
 <script>
 (()=>{
 "use strict";
+
 const API_BASE="https://not-reward-api.mukefaceget15.workers.dev";
 const BOT_USERNAME="notrewarddbot";
+const MIN_WITHDRAWAL=300;
 const $=id=>document.getElementById(id);
-let language="fa",walletUI=null,connectedWallet=null,telegramUser=null,tapping=false;
-let serverBalance=0,serverTaps=0,serverStreak=1,dailyClaimed=false;
-let localTapDate=new Date().toISOString().slice(0,10);
+
+let walletUI=null;
+let connectedWallet=null;
+let telegramUser=null;
+let tapping=false;
+let serverBalance=0;
+let serverTaps=0;
+let serverStreak=1;
+let dailyClaimed=false;
+
 const tg=window.Telegram?.WebApp;
 
 function initData(){
@@ -159,14 +246,23 @@ function getUserId(){
 
 async function apiRequest(path,body={}){
   const data=initData();
-  if(!data) throw new Error("این عملیات باید از داخل مینی‌اپ تلگرام انجام شود.");
+
+  if(!data){
+    throw new Error("برای استفاده، برنامه را از داخل تلگرام باز کن.");
+  }
+
   const response=await fetch(`${API_BASE}${path}`,{
     method:"POST",
     headers:{"Content-Type":"application/json"},
     body:JSON.stringify({initData:data,...body})
   });
+
   const result=await response.json().catch(()=>({}));
-  if(!response.ok||!result.ok) throw new Error(result.error||result.message||"درخواست ناموفق بود.");
+
+  if(!response.ok||!result.ok){
+    throw new Error(result.error||result.message||"انجام عملیات ناموفق بود.");
+  }
+
   return result;
 }
 
@@ -183,51 +279,65 @@ function renderTaps(){
   $("profileTaps").textContent=serverTaps;
   $("tapProgress").style.width=`${Math.min(100,serverTaps/5)}%`;
   $("robot").disabled=tapping||serverTaps>=500;
-  $("lockMessage").textContent=serverTaps>=500?"سهمیه لمس روزانه تمام شده است.":"";
+  $("lockMessage").textContent=serverTaps>=500
+    ?"سهمیه لمس روزانه تمام شده است."
+    :"";
 }
 
 function renderDays(){
   $("streak").textContent=serverStreak;
   $("dailyMini").textContent=serverStreak;
+
   const box=$("rewardDays");
   box.innerHTML="";
+
   for(let i=1;i<=7;i++){
     const item=document.createElement("div");
-    item.className="day"+(i===serverStreak?" current":"")+(dailyClaimed&&i<=serverStreak?" claimed":"");
+    item.className="day"+(i===serverStreak?" current":"")+
+      (dailyClaimed&&i<=serverStreak?" claimed":"");
+
     const label=document.createElement("div");
     label.textContent=`روز ${i}`;
+
     const reward=document.createElement("div");
     reward.className="day-reward";
     reward.textContent=`${i} NOT`;
+
     item.append(label,reward);
     box.appendChild(item);
   }
+
   $("dailyBtn").disabled=dailyClaimed;
-  $("dailyBtn").textContent=dailyClaimed?"پاداش امروز دریافت شده ✓":`دریافت ${serverStreak} NOT`;
+  $("dailyBtn").textContent=dailyClaimed
+    ?"پاداش امروز دریافت شده ✓"
+    :`دریافت ${serverStreak} NOT`;
 }
 
 async function refreshMe(){
   const r=await apiRequest("/api/me");
   showBalance(r.balance);
-  // API فعلی تعداد لمس و وضعیت پاداش روزانه را در /api/me برنمی‌گرداند.
-  // مقدار لمس‌ها در این صفحه با پاسخ واقعی /api/tap به‌روزرسانی می‌شود.
   return r;
 }
 
 async function tapRobot(){
   if(tapping||serverTaps>=500)return;
+
   tapping=true;
   $("robot").disabled=true;
-  $("tapMessage").textContent="در حال ثبت پاداش در سرور…";
+  $("tapMessage").textContent="در حال دریافت پاداش…";
+
   try{
     const r=await apiRequest("/api/tap");
     showBalance(r.balance);
     serverTaps=Math.min(500,serverTaps+1);
-    $("tapMessage").textContent=`پاداش ${Number(r.reward||0).toFixed(2)} NOT در سرور ثبت شد ✓`;
+
+    $("tapMessage").textContent=
+      `پاداش ${Number(r.reward||0).toFixed(2)} NOT دریافت شد ✓`;
+
     renderTaps();
   }catch(e){
-    $("tapMessage").textContent="ثبت پاداش ناموفق بود.";
-    alert("خطا در ثبت لمس: "+e.message);
+    $("tapMessage").textContent="دریافت پاداش انجام نشد.";
+    alert(e.message);
   }finally{
     tapping=false;
     renderTaps();
@@ -236,58 +346,254 @@ async function tapRobot(){
 
 async function claimDaily(){
   const btn=$("dailyBtn");
-  if(dailyClaimed){alert("پاداش امروز را قبلاً دریافت کرده‌ای.");return}
+
+  if(dailyClaimed){
+    alert("پاداش امروز را قبلاً دریافت کرده‌ای.");
+    return;
+  }
+
   btn.disabled=true;
+
   try{
     const r=await apiRequest("/api/daily");
+
     showBalance(r.balance);
     serverStreak=Number(r.streak)||1;
     dailyClaimed=true;
+
     renderDays();
-    alert(`پاداش ${Number(r.reward||0).toFixed(2)} NOT در سرور ثبت شد.`);
+    alert(`پاداش ${Number(r.reward||0).toFixed(2)} NOT دریافت شد.`);
   }catch(e){
-    alert("دریافت پاداش ناموفق بود: "+e.message);
+    alert(e.message);
     btn.disabled=false;
+  }
+}
+
+function statusFa(status){
+  const labels={
+    pending:"در حال بررسی",
+    approved:"تأیید شده",
+    rejected:"رد شده",
+    paid:"واریز شده"
+  };
+  return labels[status]||status||"نامشخص";
+}
+
+function formatDate(value){
+  if(!value)return "تاریخ نامشخص";
+
+  let date;
+
+  // تاریخ‌های SQLite معمولاً به شکل YYYY-MM-DD HH:mm:ss هستند.
+  const normalized=String(value).includes("T")
+    ?String(value)
+    :String(value).replace(" ","T")+"Z";
+
+  date=new Date(normalized);
+
+  if(Number.isNaN(date.getTime()))return String(value);
+
+  return date.toLocaleString("fa-IR",{
+    year:"numeric",
+    month:"short",
+    day:"numeric",
+    hour:"2-digit",
+    minute:"2-digit"
+  });
+}
+
+function makeHistoryItem(title,amount,date,detail="",isNegative=false){
+  const item=document.createElement("div");
+  item.className="history-item";
+
+  const top=document.createElement("div");
+  top.className="history-top";
+
+  const name=document.createElement("div");
+  name.className="history-name";
+  name.textContent=title;
+
+  const amountEl=document.createElement("div");
+  amountEl.className="history-amount "+(isNegative?"minus":"plus");
+  amountEl.textContent=
+    `${Number(amount)>0?"+":""}${Number(amount).toFixed(2)} NOT`;
+
+  top.append(name,amountEl);
+
+  const dateEl=document.createElement("div");
+  dateEl.className="history-date";
+  dateEl.textContent=formatDate(date);
+
+  item.append(top,dateEl);
+
+  if(detail){
+    const detailEl=document.createElement("div");
+    detailEl.className="history-status";
+    detailEl.textContent=detail;
+    item.append(detailEl);
+  }
+
+  return item;
+}
+
+async function loadHistory(){
+  const withdrawalBox=$("withdrawalHistory");
+  const rewardBox=$("rewardHistory");
+
+  withdrawalBox.textContent="در حال دریافت تاریخچه…";
+  rewardBox.textContent="در حال دریافت تاریخچه…";
+
+  try{
+    const r=await apiRequest("/api/history",{limit:50});
+
+    withdrawalBox.innerHTML="";
+    rewardBox.innerHTML="";
+
+    const withdrawals=Array.isArray(r.withdrawals)?r.withdrawals:[];
+    const rewards=Array.isArray(r.history)?r.history:[];
+
+    if(!withdrawals.length){
+      withdrawalBox.textContent="هنوز درخواست برداشتی ثبت نکرده‌ای.";
+    }else{
+      withdrawals.forEach(w=>{
+        const amount=Number(w.amount)||0;
+        const detail=[
+          `وضعیت: ${statusFa(w.status)}`,
+          w.wallet_address?`کیف پول: ${w.wallet_address}`:"",
+          w.transaction_hash?`تراکنش: ${w.transaction_hash}`:"",
+          w.admin_note?`توضیحات: ${w.admin_note}`:""
+        ].filter(Boolean).join(" · ");
+
+        withdrawalBox.appendChild(
+          makeHistoryItem(
+            "درخواست برداشت",
+            -amount,
+            w.created_at,
+            detail,
+            true
+          )
+        );
+      });
+    }
+
+    if(!rewards.length){
+      rewardBox.textContent="هنوز پاداشی در تاریخچه ثبت نشده است.";
+    }else{
+      const labels={
+        tap:"پاداش لمس",
+        daily:"پاداش روزانه",
+        referral:"پاداش دعوت",
+        refund:"بازگشت مبلغ برداشت",
+        withdrawal:"درخواست برداشت"
+      };
+
+      rewards.forEach(item=>{
+        const units=Number(item.amount_units)||0;
+        const amount=units/100;
+        const isNegative=units<0;
+
+        rewardBox.appendChild(
+          makeHistoryItem(
+            labels[item.kind]||item.kind||"پاداش",
+            amount,
+            item.created_at,
+            item.details||"",
+            isNegative
+          )
+        );
+      });
+    }
+
+    // وضعیت پاداش روز جاری را از تاریخچه بررسی می‌کنیم.
+    const today=new Date().toISOString().slice(0,10);
+    const todayClaim=rewards.find(item=>
+      item.kind==="daily"&&String(item.created_at||"").startsWith(today)
+    );
+
+    if(todayClaim){
+      dailyClaimed=true;
+      renderDays();
+    }
+  }catch(e){
+    withdrawalBox.textContent="دریافت تاریخچه انجام نشد.";
+    rewardBox.textContent="دریافت تاریخچه انجام نشد.";
+    console.error("History error:",e);
   }
 }
 
 async function requestWithdrawal(){
   const amount=Number($("withdrawAmount").value);
   const address=connectedWallet?.account?.address;
-  if(!getUserId()){alert("مینی‌اپ را از داخل تلگرام باز کن.");return}
-  if(!address){alert("ابتدا کیف پول TON را متصل کن.");return}
-  if(!Number.isFinite(amount)||amount<10){alert("حداقل مبلغ آزمایشی 10 NOT است.");return}
-  if(amount>serverBalance){alert("موجودی تأییدشده سرور کافی نیست.");return}
+
+  if(!getUserId()){
+    alert("برنامه را از داخل تلگرام باز کن.");
+    return;
+  }
+
+  if(!address){
+    alert("ابتدا کیف پول TON را متصل کن.");
+    return;
+  }
+
+  if(!Number.isFinite(amount)||amount<MIN_WITHDRAWAL){
+    alert("حداقل مبلغ برداشت ۳۰۰ NOT است.");
+    return;
+  }
+
+  if(Math.round(amount*100)/100!==amount){
+    alert("مبلغ باید حداکثر دو رقم اعشار داشته باشد.");
+    return;
+  }
+
+  if(amount>serverBalance){
+    alert("موجودی برای این برداشت کافی نیست.");
+    return;
+  }
+
   const btn=$("withdrawBtn");
   btn.disabled=true;
   btn.textContent="در حال ثبت درخواست…";
+
   try{
-    const r=await apiRequest("/api/withdraw",{amount,walletAddress:address});
-    alert((r.message||"درخواست برداشت ثبت شد.")+(r.withdrawalId?`\nشماره درخواست: ${r.withdrawalId}`:""));
+    const r=await apiRequest("/api/withdraw",{
+      amount,
+      walletAddress:address
+    });
+
+    // شماره درخواست برای کاربر نمایش داده نمی‌شود.
+    alert("درخواست برداشت شما ثبت شد. مبلغ طی ۲۴ الی ۴۸ ساعت واریز می‌شود.");
+
     $("withdrawAmount").value="";
+
     await refreshMe();
+    await loadHistory();
   }catch(e){
-    alert("خطا در برداشت: "+e.message);
+    alert(e.message);
     try{await refreshMe()}catch{}
   }finally{
     btn.disabled=false;
-    btn.textContent="ثبت درخواست آزمایشی";
+    btn.textContent="ثبت درخواست برداشت";
   }
+}
+
+function setupReferral(){
+  const id=getUserId();
+
+  $("refLink").value=id
+    ?`https://t.me/${BOT_USERNAME}?start=ref_${id}`
+    :`https://t.me/${BOT_USERNAME}`;
 }
 
 async function refreshReferrals(){
   try{
     const r=await apiRequest("/api/referrals");
-    $("refCount").textContent=Number(r.count??r.referralCount??0);
-    $("refReward").textContent=(Number(r.count??r.referralCount??0)*5).toFixed(2);
-  }catch(e){alert(e.message)}
-}
+    const count=Number(r.count??r.referralCount??0);
 
-function setupReferral(){
-  const id=getUserId();
-  $("refLink").value=id
-    ?`https://t.me/${BOT_USERNAME}?startapp=ref_${id}`
-    :`https://t.me/${BOT_USERNAME}`;
+    $("refCount").textContent=count;
+    $("refReward").textContent=(count*5).toFixed(2);
+  }catch(e){
+    alert(e.message);
+  }
 }
 
 async function copyReferral(){
@@ -297,28 +603,42 @@ async function copyReferral(){
   }catch{
     $("refLink").focus();
     $("refLink").select();
-    alert("لینک را کپی کن.");
+    alert("لینک را به‌صورت دستی کپی کن.");
   }
 }
 
 function shareReferral(){
-  window.open(`https://t.me/share/url?url=${encodeURIComponent($("refLink").value)}`,"_blank","noopener,noreferrer");
+  window.open(
+    `https://t.me/share/url?url=${encodeURIComponent($("refLink").value)}`,
+    "_blank",
+    "noopener,noreferrer"
+  );
 }
 
 function openAd(){
-  alert("لینک تبلیغات هنوز تنظیم نشده است.");
+  alert("تبلیغات هنوز فعال نشده است.");
 }
 
 function showPage(page,button){
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
   $(page).classList.add("active");
+
   document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
   if(button)button.classList.add("active");
+
+  if(page==="wallet"&&initData()){
+    loadHistory();
+  }
+
+  if(page==="earn"&&initData()){
+    refreshReferrals();
+  }
+
   window.scrollTo({top:0,behavior:"smooth"});
 }
 
 function toggleLanguage(){
-  alert("ترجمه کامل انگلیسی هنوز فعال نشده است.");
+  alert("نسخه فارسی فعال است.");
 }
 
 window.showPage=showPage;
@@ -329,6 +649,7 @@ window.copyReferral=copyReferral;
 window.shareReferral=shareReferral;
 window.openAd=openAd;
 window.toggleLanguage=toggleLanguage;
+window.loadHistory=loadHistory;
 
 $("robot").addEventListener("click",tapRobot);
 
@@ -336,12 +657,13 @@ async function start(){
   if(tg){
     tg.ready();
     tg.expand();
+
     telegramUser=tg.initDataUnsafe?.user||null;
     $("tgName").textContent=telegramUser?.first_name||"کاربر تلگرام";
     $("tgId").textContent=telegramUser?.id||"در دسترس نیست";
   }else{
-    $("tgName").textContent="مینی‌اپ را از تلگرام باز کن";
-    $("tapMessage").textContent="برای ثبت پاداش باید از داخل تلگرام وارد شوی.";
+    $("tgName").textContent="برنامه را از تلگرام باز کن";
+    $("tapMessage").textContent="برای دریافت پاداش، از داخل تلگرام وارد شو.";
   }
 
   setupReferral();
@@ -349,13 +671,14 @@ async function start(){
   renderDays();
 
   if(!initData()){
-    $("tapMessage").textContent="برای استفاده از پاداش‌ها، مینی‌اپ را از داخل تلگرام باز کن.";
+    $("tapMessage").textContent="برای استفاده از امکانات، برنامه را از تلگرام باز کن.";
   }else{
     try{
       await refreshMe();
-      $("tapMessage").textContent="موجودی سرور بارگذاری شد. ربات را لمس کن.";
+      $("tapMessage").textContent="برای دریافت پاداش، ربات را لمس کن.";
+      await loadHistory();
     }catch(e){
-      $("tapMessage").textContent="دریافت موجودی سرور ناموفق بود.";
+      $("tapMessage").textContent="بارگذاری اطلاعات ناموفق بود.";
       console.error(e);
     }
   }
@@ -366,9 +689,12 @@ async function start(){
         manifestUrl:"https://mukefaceget15-web.github.io/adcoin-miniap/tonconnect-manifest.json",
         buttonRootId:"ton-connect"
       });
+
       walletUI.onStatusChange(wallet=>{
         connectedWallet=wallet;
+
         const ok=Boolean(wallet?.account?.address);
+
         $("walletStatus").textContent=ok?"متصل":"متصل نیست";
         $("walletDot").classList.toggle("connected",ok);
         $("walletAddress").textContent=ok?wallet.account.address:"—";
