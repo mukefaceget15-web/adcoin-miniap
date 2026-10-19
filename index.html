@@ -22,542 +22,116 @@
       --green: #56e6a5;
       --red: #ff7187;
     }
-
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-    }
-
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
     html { background: var(--bg); scroll-behavior: smooth; }
-
     body {
-      margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(ellipse at 50% -10%, rgba(75,104,255,.20), transparent 50%),
-        radial-gradient(ellipse at 100% 45%, rgba(74,50,155,.09), transparent 38%),
-        var(--bg);
-      color: var(--text);
-      font-family: Tahoma, Arial, sans-serif;
-      font-size: 14px;
-      padding-bottom: calc(94px + env(safe-area-inset-bottom));
-      overflow-x: hidden;
-      overscroll-behavior: none;
+      margin: 0; min-height: 100vh;
+      background: radial-gradient(ellipse at 50% -10%, rgba(75,104,255,.20), transparent 50%), radial-gradient(ellipse at 100% 45%, rgba(74,50,155,.09), transparent 38%), var(--bg);
+      color: var(--text); font-family: Tahoma, Arial, sans-serif; font-size: 14px;
+      padding-bottom: calc(94px + env(safe-area-inset-bottom)); overflow-x: hidden; overscroll-behavior: none;
     }
-
     button, input { font: inherit; }
     button { cursor: pointer; }
     button:focus { outline: none; }
     button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
-
-    .app {
-      max-width: 520px;
-      margin: 0 auto;
-      padding: 20px 17px 24px;
-    }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 25px;
-    }
-
+    .app { max-width: 520px; margin: 0 auto; padding: 20px 17px 24px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; }
     .brand { display: flex; align-items: center; gap: 11px; }
-
-    .brand-mark {
-      width: 43px;
-      height: 43px;
-      display: grid;
-      place-items: center;
-      border-radius: 15px;
-      background: linear-gradient(145deg, #7189ff, #7650df);
-      box-shadow: 0 7px 24px rgba(98,112,255,.28);
-      font-size: 23px;
-      font-weight: 900;
-      color: white;
-    }
-
+    .brand-mark { width: 43px; height: 43px; display: grid; place-items: center; border-radius: 15px; background: linear-gradient(145deg, #7189ff, #7650df); box-shadow: 0 7px 24px rgba(98,112,255,.28); font-size: 23px; font-weight: 900; color: white; }
     .brand-name { font-size: 15px; font-weight: 900; letter-spacing: 1.3px; }
     .brand-sub { color: var(--muted); font-size: 10px; margin-top: 5px; }
-
-    .online {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      background: rgba(86,230,165,.08);
-      border: 1px solid rgba(86,230,165,.15);
-      border-radius: 30px;
-      padding: 8px 11px;
-      font-size: 10px;
-      color: var(--green);
-    }
-
-    .online-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 10px var(--green);
-    }
-
+    .online { display: flex; align-items: center; gap: 7px; background: rgba(86,230,165,.08); border: 1px solid rgba(86,230,165,.15); border-radius: 30px; padding: 8px 11px; font-size: 10px; color: var(--green); }
+    .online-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
     .page { display: none; animation: pageIn .25s ease; }
     .page.active { display: block; }
-
-    @keyframes pageIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
+    @keyframes pageIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
     .welcome { margin-bottom: 20px; }
     .welcome h1 { margin: 0 0 8px; font-size: 23px; font-weight: 900; }
     .welcome p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.9; }
-
-    .balance-card {
-      position: relative;
-      overflow: hidden;
-      padding: 21px;
-      border: 1px solid rgba(135,150,255,.19);
-      border-radius: 25px;
-      background:
-        radial-gradient(circle at 90% 10%, rgba(122,139,255,.25), transparent 36%),
-        linear-gradient(135deg, #18284a, #12192e 72%);
-      box-shadow: 0 15px 40px rgba(0,0,0,.14);
-      margin-bottom: 20px;
-    }
-
-    .balance-card::after {
-      content: "";
-      position: absolute;
-      width: 150px; height: 150px;
-      border: 1px solid rgba(255,255,255,.06);
-      border-radius: 50%;
-      left: -55px; bottom: -95px;
-      box-shadow: 0 0 0 18px rgba(255,255,255,.018), 0 0 0 38px rgba(255,255,255,.014);
-      pointer-events: none;
-    }
-
+    .balance-card { position: relative; overflow: hidden; padding: 21px; border: 1px solid rgba(135,150,255,.19); border-radius: 25px; background: radial-gradient(circle at 90% 10%, rgba(122,139,255,.25), transparent 36%), linear-gradient(135deg, #18284a, #12192e 72%); box-shadow: 0 15px 40px rgba(0,0,0,.14); margin-bottom: 20px; }
+    .balance-card::after { content: ""; position: absolute; width: 150px; height: 150px; border: 1px solid rgba(255,255,255,.06); border-radius: 50%; left: -55px; bottom: -95px; box-shadow: 0 0 0 18px rgba(255,255,255,.018), 0 0 0 38px rgba(255,255,255,.014); pointer-events: none; }
     .balance-label { color: #bdc8e6; font-size: 12px; }
     .balance-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
     .balance-number { font-size: clamp(30px, 8vw, 39px); font-weight: 900; letter-spacing: -.8px; }
     .balance-unit { color: var(--cyan); font-size: 13px; font-weight: bold; }
     .balance-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; gap: 10px; }
     .balance-hint { color: #aab7d5; font-size: 10px; line-height: 1.8; }
-
-    .small-action {
-      border: 0;
-      border-radius: 12px;
-      padding: 11px 14px;
-      color: white;
-      background: linear-gradient(135deg, #6485ff, #7959eb);
-      font-size: 11px;
-      font-weight: bold;
-      box-shadow: 0 6px 18px rgba(100,133,255,.18);
-    }
-
-    .section-heading {
-      display: flex; justify-content: space-between; align-items: center;
-      margin: 24px 1px 13px;
-    }
-
+    .small-action { border: 0; border-radius: 12px; padding: 11px 14px; color: white; background: linear-gradient(135deg, #6485ff, #7959eb); font-size: 11px; font-weight: bold; box-shadow: 0 6px 18px rgba(100,133,255,.18); }
+    .section-heading { display: flex; justify-content: space-between; align-items: center; margin: 24px 1px 13px; }
     .section-heading h2 { margin: 0; font-size: 15px; font-weight: 800; }
     .section-heading span { color: var(--muted); font-size: 10px; }
-
-    .robot-card {
-      position: relative;
-      overflow: hidden;
-      padding: 23px 15px 20px;
-      text-align: center;
-      border: 1px solid rgba(130,150,255,.12);
-      border-radius: 25px;
-      background:
-        radial-gradient(ellipse at 50% 44%, rgba(70,96,222,.13), transparent 48%),
-        linear-gradient(155deg, rgba(20,30,54,.96), rgba(12,18,34,.96));
-    }
-
-    .robot-card::before, .robot-card::after {
-      content: "";
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-    }
-
-    .robot-card::before {
-      width: 180px; height: 180px;
-      border: 1px solid rgba(95,123,255,.09);
-      left: calc(50% - 90px); top: 40px;
-      box-shadow: 0 0 0 20px rgba(95,123,255,.025), 0 0 0 40px rgba(95,123,255,.018);
-    }
-
-    .robot-stage {
-      position: relative;
-      z-index: 1;
-      width: 190px;
-      height: 190px;
-      margin: 0 auto 10px;
-      display: grid;
-      place-items: center;
-    }
-
-    .robot-aura {
-      position: absolute;
-      width: 138px; height: 138px;
-      border-radius: 50%;
-      background: rgba(82,112,255,.14);
-      filter: blur(25px);
-      animation: aura 3s ease-in-out infinite;
-    }
-
-    .robot-orbit {
-      position: absolute;
-      width: 178px; height: 178px;
-      border: 1px solid rgba(109,139,255,.2);
-      border-radius: 50%;
-      animation: spin 16s linear infinite;
-    }
-
-    .robot-orbit::before {
-      content: "";
-      position: absolute;
-      top: 20px; right: 22px;
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--cyan);
-      box-shadow: 0 0 15px var(--cyan);
-    }
-
-    .robot-orbit.orbit-two {
-      width: 150px; height: 150px;
-      border-style: dashed;
-      border-color: rgba(161,123,255,.18);
-      animation-direction: reverse;
-      animation-duration: 24s;
-    }
-
-    .robot-button {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      place-items: center;
-      width: 132px; height: 132px;
-      padding: 0;
-      margin: 0;
-      border: 0 !important;
-      outline: none !important;
-      border-radius: 50%;
-      background: transparent !important;
-      box-shadow: none !important;
-      appearance: none;
-      -webkit-appearance: none;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-      transition: transform .13s ease;
-    }
-
-    .robot-button:focus, .robot-button:focus-visible,
-    .robot-button:active {
-      outline: none !important;
-      border: 0 !important;
-      box-shadow: none !important;
-    }
-
+    .robot-card { position: relative; overflow: hidden; padding: 23px 15px 20px; text-align: center; border: 1px solid rgba(130,150,255,.12); border-radius: 25px; background: radial-gradient(ellipse at 50% 44%, rgba(70,96,222,.13), transparent 48%), linear-gradient(155deg, rgba(20,30,54,.96), rgba(12,18,34,.96)); }
+    .robot-card::before, .robot-card::after { content: ""; position: absolute; border-radius: 50%; pointer-events: none; }
+    .robot-card::before { width: 180px; height: 180px; border: 1px solid rgba(95,123,255,.09); left: calc(50% - 90px); top: 40px; box-shadow: 0 0 0 20px rgba(95,123,255,.025), 0 0 0 40px rgba(95,123,255,.018); }
+    .robot-stage { position: relative; z-index: 1; width: 190px; height: 190px; margin: 0 auto 10px; display: grid; place-items: center; }
+    .robot-aura { position: absolute; width: 138px; height: 138px; border-radius: 50%; background: rgba(82,112,255,.14); filter: blur(25px); animation: aura 3s ease-in-out infinite; }
+    .robot-orbit { position: absolute; width: 178px; height: 178px; border: 1px solid rgba(109,139,255,.2); border-radius: 50%; animation: spin 16s linear infinite; }
+    .robot-orbit::before { content: ""; position: absolute; top: 20px; right: 22px; width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 15px var(--cyan); }
+    .robot-orbit.orbit-two { width: 150px; height: 150px; border-style: dashed; border-color: rgba(161,123,255,.18); animation-direction: reverse; animation-duration: 24s; }
+    .robot-button { position: relative; z-index: 2; display: grid; place-items: center; width: 132px; height: 132px; padding: 0; margin: 0; border: 0 !important; outline: none !important; border-radius: 50%; background: transparent !important; box-shadow: none !important; appearance: none; -webkit-appearance: none; user-select: none; transition: transform .13s ease; }
+    .robot-button:focus, .robot-button:focus-visible, .robot-button:active { outline: none !important; border: 0 !important; box-shadow: none !important; }
     .robot-button:active { transform: scale(.92); }
-    .robot-button svg {
-      display: block;
-      width: 125px; height: 125px;
-      overflow: visible;
-      filter: drop-shadow(0 10px 17px rgba(57,95,255,.25));
-      pointer-events: none;
-    }
-
+    .robot-button svg { display: block; width: 125px; height: 125px; overflow: visible; filter: drop-shadow(0 10px 17px rgba(57,95,255,.25)); pointer-events: none; }
     .robot-button.popping svg { animation: pop .28s ease; }
-
-    @keyframes pop {
-      0% { transform: scale(1); }
-      45% { transform: scale(.86) rotate(-4deg); }
-      100% { transform: scale(1); }
-    }
-
-    @keyframes aura {
-      0%,100% { transform: scale(.88); opacity: .55; }
-      50% { transform: scale(1.12); opacity: 1; }
-    }
-
+    @keyframes pop { 0% { transform: scale(1); } 45% { transform: scale(.86) rotate(-4deg); } 100% { transform: scale(1); } }
+    @keyframes aura { 0%,100% { transform: scale(.88); opacity: .55; } 50% { transform: scale(1.12); opacity: 1; } }
     @keyframes spin { to { transform: rotate(360deg); } }
-
     .robot-title { position: relative; z-index: 1; font-size: 17px; font-weight: 900; }
     .robot-description { position: relative; z-index: 1; color: var(--muted); font-size: 11px; margin-top: 9px; line-height: 1.8; }
-
-    .tap-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 19px;
-    }
-
-    .tap-stat {
-      padding: 13px;
-      border-radius: 15px;
-      background: rgba(255,255,255,.035);
-      border: 1px solid var(--line);
-      text-align: right;
-    }
-
+    .tap-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 19px; }
+    .tap-stat { padding: 13px; border-radius: 15px; background: rgba(255,255,255,.035); border: 1px solid var(--line); text-align: right; }
     .tap-stat .value { font-size: 17px; font-weight: 900; margin-top: 7px; }
     .tap-stat .label { font-size: 10px; color: var(--muted); }
-
     .feature-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 11px; }
-    .feature {
-      min-width: 0;
-      padding: 16px 14px;
-      text-align: right;
-      border: 1px solid var(--line);
-      border-radius: 19px;
-      color: var(--text);
-      background: linear-gradient(145deg, rgba(24,35,61,.95), rgba(15,23,42,.95));
-      transition: transform .15s ease, background .15s ease;
-    }
-
+    .feature { min-width: 0; padding: 16px 14px; text-align: right; border: 1px solid var(--line); border-radius: 19px; color: var(--text); background: linear-gradient(145deg, rgba(24,35,61,.95), rgba(15,23,42,.95)); transition: transform .15s ease, background .15s ease; }
     .feature:active { transform: scale(.98); }
-    .feature-icon {
-      width: 39px; height: 39px;
-      display: grid; place-items: center;
-      border-radius: 13px;
-      background: rgba(104,132,255,.12);
-      font-size: 20px;
-      margin-bottom: 13px;
-    }
-
+    .feature-icon { width: 39px; height: 39px; display: grid; place-items: center; border-radius: 13px; background: rgba(104,132,255,.12); font-size: 20px; margin-bottom: 13px; }
     .feature strong { display: block; font-size: 12px; margin-bottom: 7px; }
     .feature small { color: var(--muted); font-size: 10px; line-height: 1.7; }
-
-    .panel {
-      background: linear-gradient(145deg, rgba(20,30,53,.96), rgba(14,21,39,.96));
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 19px;
-      margin-bottom: 14px;
-    }
-
+    .panel { background: linear-gradient(145deg, rgba(20,30,53,.96), rgba(14,21,39,.96)); border: 1px solid var(--line); border-radius: 22px; padding: 19px; margin-bottom: 14px; }
     .panel h3 { margin: 0 0 8px; font-size: 15px; }
     .muted { color: var(--muted); line-height: 1.9; font-size: 11px; }
     .field-label { display: block; margin: 16px 0 8px; color: #c3cce2; font-size: 11px; }
-    .field {
-      display: block;
-      width: 100%;
-      min-height: 48px;
-      color: var(--text);
-      background: #0b1223;
-      border: 1px solid rgba(151,169,218,.16);
-      border-radius: 13px;
-      padding: 13px;
-      outline: none;
-      direction: ltr;
-      text-align: left;
-    }
-
+    .field { display: block; width: 100%; min-height: 48px; color: var(--text); background: #0b1223; border: 1px solid rgba(151,169,218,.16); border-radius: 13px; padding: 13px; outline: none; direction: ltr; text-align: left; }
     .field:focus { border-color: rgba(100,133,255,.65); }
     .field::placeholder { color: #68748f; }
-    .primary {
-      display: block;
-      width: 100%;
-      min-height: 48px;
-      border: 0;
-      border-radius: 14px;
-      color: white;
-      font-weight: 800;
-      font-size: 12px;
-      background: linear-gradient(115deg, #5e83ff, #845bea);
-      box-shadow: 0 8px 20px rgba(94,115,255,.15);
-      margin-top: 15px;
-    }
-
+    .primary { display: block; width: 100%; min-height: 48px; border: 0; border-radius: 14px; color: white; font-weight: 800; font-size: 12px; background: linear-gradient(115deg, #5e83ff, #845bea); box-shadow: 0 8px 20px rgba(94,115,255,.15); margin-top: 15px; }
     .primary:disabled { opacity: .55; }
-    .secondary {
-      width: 100%;
-      min-height: 44px;
-      border: 1px solid var(--line);
-      border-radius: 13px;
-      background: rgba(255,255,255,.035);
-      color: var(--text);
-      margin-top: 10px;
-    }
-
-    .profile-hero {
-      text-align: center;
-      padding: 23px 18px;
-      border: 1px solid var(--line);
-      border-radius: 23px;
-      background: radial-gradient(ellipse at top, rgba(103,121,255,.14), transparent 70%), var(--panel);
-      margin-bottom: 15px;
-    }
-
-    .avatar {
-      width: 86px; height: 86px;
-      display: block;
-      margin: 0 auto 14px;
-      object-fit: cover;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #6686ff, #a178ff);
-      border: 3px solid rgba(139,157,255,.55);
-      box-shadow: 0 0 0 6px rgba(100,133,255,.08);
-    }
-
-    .avatar-fallback {
-      display: grid;
-      place-items: center;
-      color: white;
-      font-size: 29px;
-      font-weight: 900;
-    }
-
+    .secondary { width: 100%; min-height: 44px; border: 1px solid var(--line); border-radius: 13px; background: rgba(255,255,255,.035); color: var(--text); margin-top: 10px; }
+    .profile-hero { text-align: center; padding: 23px 18px; border: 1px solid var(--line); border-radius: 23px; background: radial-gradient(ellipse at top, rgba(103,121,255,.14), transparent 70%), var(--panel); margin-bottom: 15px; }
+    .avatar { width: 86px; height: 86px; display: block; margin: 0 auto 14px; object-fit: cover; border-radius: 50%; background: linear-gradient(135deg, #6686ff, #a178ff); border: 3px solid rgba(139,157,255,.55); box-shadow: 0 0 0 6px rgba(100,133,255,.08); }
+    .avatar-fallback { display: grid; place-items: center; color: white; font-size: 29px; font-weight: 900; }
     .profile-name { font-size: 18px; font-weight: 900; }
     .profile-username { color: var(--cyan); font-size: 12px; margin-top: 7px; direction: ltr; }
     .profile-id { color: var(--muted); font-size: 11px; margin-top: 11px; direction: ltr; }
-
-    .info-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 14px 0;
-      border-bottom: 1px solid var(--line);
-    }
-
+    .info-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
     .info-row:last-child { border-bottom: 0; }
     .info-row span { color: var(--muted); font-size: 11px; }
     .info-row strong { font-size: 12px; overflow-wrap: anywhere; text-align: left; }
-
-    .referral-box {
-      border: 1px dashed rgba(103,132,255,.4);
-      background: rgba(103,132,255,.06);
-      padding: 13px;
-      border-radius: 13px;
-      direction: ltr;
-      overflow-wrap: anywhere;
-      color: #c8d3ff;
-      font-size: 11px;
-      line-height: 1.8;
-      margin-top: 13px;
-      text-align: left;
-    }
-
+    .referral-box { border: 1px dashed rgba(103,132,255,.4); background: rgba(103,132,255,.06); padding: 13px; border-radius: 13px; direction: ltr; overflow-wrap: anywhere; color: #c8d3ff; font-size: 11px; line-height: 1.8; margin-top: 13px; text-align: left; }
     .history-list { display: flex; flex-direction: column; gap: 9px; margin-top: 13px; }
-    .history-item {
-      display: flex; align-items: flex-start; justify-content: space-between;
-      gap: 12px; padding: 13px;
-      background: rgba(255,255,255,.025);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-    }
-
+    .history-item { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 13px; background: rgba(255,255,255,.025); border: 1px solid var(--line); border-radius: 14px; }
     .history-title { font-size: 11px; font-weight: bold; }
     .history-sub { color: var(--muted); font-size: 10px; margin-top: 7px; line-height: 1.8; overflow-wrap: anywhere; }
     .history-amount { white-space: nowrap; font-weight: 900; font-size: 12px; }
     .positive { color: var(--green); }
     .negative { color: var(--red); }
     .empty { padding: 22px 10px; text-align: center; color: var(--muted); font-size: 11px; line-height: 2; }
-
-    .status-pill {
-      display: inline-block; margin-top: 7px; padding: 5px 8px;
-      border-radius: 20px; font-size: 9px;
-      background: rgba(255,255,255,.06); color: #c6cee3;
-    }
-
+    .status-pill { display: inline-block; margin-top: 7px; padding: 5px 8px; border-radius: 20px; font-size: 9px; background: rgba(255,255,255,.06); color: #c6cee3; }
     .status-pending { background: rgba(255,191,95,.10); color: #ffca76; }
     .status-approved, .status-paid { background: rgba(86,230,165,.10); color: var(--green); }
     .status-rejected { background: rgba(255,113,135,.10); color: var(--red); }
-
-    .bottom-nav {
-      position: fixed;
-      z-index: 20;
-      bottom: 0; left: 0; right: 0;
-      padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-      background: rgba(8,13,28,.92);
-      border-top: 1px solid rgba(255,255,255,.07);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-
-    .nav-inner {
-      max-width: 490px; margin: 0 auto;
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px;
-    }
-
-    .nav-item {
-      min-height: 54px;
-      border: 0 !important;
-      border-radius: 14px;
-      background: transparent !important;
-      color: #77839e;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      font-size: 10px;
-      box-shadow: none !important;
-      outline: none !important;
-    }
-
+    .bottom-nav { position: fixed; z-index: 20; bottom: 0; left: 0; right: 0; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: rgba(8,13,28,.92); border-top: 1px solid rgba(255,255,255,.07); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+    .nav-inner { max-width: 490px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+    .nav-item { min-height: 54px; border: 0 !important; border-radius: 14px; background: transparent !important; color: #77839e; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; font-size: 10px; box-shadow: none !important; outline: none !important; }
     .nav-item .nav-icon { font-size: 20px; line-height: 1; }
-    .nav-item.active {
-      color: #9eb1ff;
-      background: rgba(104,132,255,.11) !important;
-    }
-
-    .nav-item:focus, .nav-item:active {
-      outline: none !important;
-      box-shadow: none !important;
-    }
-
-    .toast {
-      position: fixed;
-      z-index: 50;
-      bottom: calc(87px + env(safe-area-inset-bottom));
-      left: 18px; right: 18px;
-      max-width: 480px;
-      margin: 0 auto;
-      padding: 13px 16px;
-      border-radius: 14px;
-      background: #202c47;
-      border: 1px solid rgba(151,169,218,.15);
-      color: white;
-      font-size: 12px;
-      line-height: 1.8;
-      box-shadow: 0 12px 35px rgba(0,0,0,.3);
-      opacity: 0;
-      transform: translateY(10px);
-      pointer-events: none;
-      transition: .22s ease;
-    }
-
+    .nav-item.active { color: #9eb1ff; background: rgba(104,132,255,.11) !important; }
+    .nav-item:focus, .nav-item:active { outline: none !important; box-shadow: none !important; }
+    .toast { position: fixed; z-index: 50; bottom: calc(87px + env(safe-area-inset-bottom)); left: 18px; right: 18px; max-width: 480px; margin: 0 auto; padding: 13px 16px; border-radius: 14px; background: #202c47; border: 1px solid rgba(151,169,218,.15); color: white; font-size: 12px; line-height: 1.8; box-shadow: 0 12px 35px rgba(0,0,0,.3); opacity: 0; transform: translateY(10px); pointer-events: none; transition: .22s ease; }
     .toast.show { opacity: 1; transform: translateY(0); }
-
-    .loader {
-      width: 17px; height: 17px;
-      display: inline-block;
-      border: 2px solid rgba(255,255,255,.35);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin .7s linear infinite;
-      vertical-align: middle;
-    }
-
-    .spark {
-      position: fixed;
-      pointer-events: none;
-      z-index: 30;
-      color: var(--cyan);
-      font-size: 17px;
-      animation: floatUp .7s ease-out forwards;
-    }
-
-    @keyframes floatUp {
-      from { opacity: 1; transform: translateY(0) scale(.7); }
-      to { opacity: 0; transform: translateY(-65px) scale(1.25); }
-    }
-
+    .loader { width: 17px; height: 17px; display: inline-block; border: 2px solid rgba(255,255,255,.35); border-top-color: white; border-radius: 50%; animation: spin .7s linear infinite; vertical-align: middle; }
+    .spark { position: fixed; pointer-events: none; z-index: 30; color: var(--cyan); font-size: 17px; animation: floatUp .7s ease-out forwards; }
+    @keyframes floatUp { from { opacity: 1; transform: translateY(0) scale(.7); } to { opacity: 0; transform: translateY(-65px) scale(1.25); } }
     @media (max-width: 360px) {
       .app { padding-left: 12px; padding-right: 12px; }
       .balance-card { padding: 17px; }
@@ -566,7 +140,6 @@
       .robot-button { width: 120px; height: 120px; }
       .robot-button svg { width: 115px; height: 115px; }
     }
-
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
     }
@@ -613,17 +186,13 @@
               <svg viewBox="0 0 140 140" role="img" aria-label="ربات">
                 <defs>
                   <linearGradient id="headGrad" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0" stop-color="#9ab2ff"/>
-                    <stop offset=".48" stop-color="#657dff"/>
-                    <stop offset="1" stop-color="#7750d9"/>
+                    <stop offset="0" stop-color="#9ab2ff"/><stop offset=".48" stop-color="#657dff"/><stop offset="1" stop-color="#7750d9"/>
                   </linearGradient>
                   <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0" stop-color="#728aff"/>
-                    <stop offset="1" stop-color="#493bc2"/>
+                    <stop offset="0" stop-color="#728aff"/><stop offset="1" stop-color="#493bc2"/>
                   </linearGradient>
                   <linearGradient id="glassGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stop-color="#1c2d53"/>
-                    <stop offset="1" stop-color="#111b36"/>
+                    <stop offset="0" stop-color="#1c2d53"/><stop offset="1" stop-color="#111b36"/>
                   </linearGradient>
                 </defs>
                 <ellipse cx="70" cy="125" rx="35" ry="6" fill="#526bff" opacity=".22"/>
@@ -638,8 +207,7 @@
                 <rect x="108" y="52" width="10" height="22" rx="5" fill="#6d86ff"/>
                 <path d="M49 96 L43 108 Q43 115 51 115 H89 Q97 115 97 108 L91 96" fill="url(#bodyGrad)" stroke="#849cff" stroke-width="1"/>
                 <rect x="56" y="96" width="28" height="13" rx="6.5" fill="#19264a" stroke="#819bff" stroke-opacity=".6"/>
-                <circle cx="63" cy="102.5" r="2" fill="#48e7dc"/>
-                <circle cx="77" cy="102.5" r="2" fill="#a17bff"/>
+                <circle cx="63" cy="102.5" r="2" fill="#48e7dc"/><circle cx="77" cy="102.5" r="2" fill="#a17bff"/>
                 <path d="M32 42 L38 35 M102 35 L108 42" stroke="#a9bcff" stroke-width="3" stroke-linecap="round"/>
                 <circle cx="48" cy="40" r="2" fill="#fff" opacity=".65"/>
               </svg>
@@ -648,59 +216,27 @@
           <div class="robot-title">ربات رو لمس کن!</div>
           <div class="robot-description">هر لمس موفق = ۰٫۰۲ NOT<br>روزانه تا ۵۰۰ لمس</div>
           <div class="tap-stats">
-            <div class="tap-stat">
-              <div class="label">لمس باقی‌مانده امروز</div>
-              <div class="value" id="tapsRemaining">500</div>
-            </div>
-            <div class="tap-stat">
-              <div class="label">پاداش هر لمس</div>
-              <div class="value" style="color:var(--cyan)">+0.02 NOT</div>
-            </div>
+            <div class="tap-stat"><div class="label">لمس باقی‌مانده امروز</div><div class="value" id="tapsRemaining">500</div></div>
+            <div class="tap-stat"><div class="label">پاداش هر لمس</div><div class="value" style="color:var(--cyan)">+0.02 NOT</div></div>
           </div>
         </div>
 
         <div class="section-heading"><h2>راه‌های دریافت پاداش</h2><span>بیشتر جمع کن ✨</span></div>
         <div class="feature-grid">
-          <button class="feature" onclick="claimDaily()">
-            <div class="feature-icon">🎁</div>
-            <strong>پاداش روزانه</strong>
-            <small>هر روز وارد شو و پاداش بگیر</small>
-          </button>
-          <button class="feature" onclick="showPage('referral')">
-            <div class="feature-icon">👥</div>
-            <strong>دعوت دوستان</strong>
-            <small>دوستات رو دعوت کن و پاداش بگیر</small>
-          </button>
-          <button class="feature" onclick="openAd()">
-            <div class="feature-icon">▶️</div>
-            <strong>تماشای تبلیغ</strong>
-            <small>برای دریافت پاداش تبلیغاتی</small>
-          </button>
-          <button class="feature" onclick="showPage('wallet')">
-            <div class="feature-icon">💎</div>
-            <strong>برداشت NOT</strong>
-            <small>برداشت از ۳۰۰ NOT به بالا</small>
-          </button>
+          <button class="feature" onclick="claimDaily()"><div class="feature-icon">🎁</div><strong>پاداش روزانه</strong><small>هر روز وارد شو و پاداش بگیر</small></button>
+          <button class="feature" onclick="showPage('referral')"><div class="feature-icon">👥</div><strong>دعوت دوستان</strong><small>دوستات رو دعوت کن و پاداش بگیر</small></button>
+          <button class="feature" onclick="openAd()"><div class="feature-icon">▶️</div><strong>تماشای تبلیغ</strong><small>برای دریافت پاداش تبلیغاتی</small></button>
+          <button class="feature" onclick="showPage('wallet')"><div class="feature-icon">💎</div><strong>برداشت NOT</strong><small>برداشت از ۳۰۰ NOT به بالا</small></button>
         </div>
       </section>
 
       <section id="page-wallet" class="page">
-        <div class="welcome">
-          <h1>کیف پول 💎</h1>
-          <p>موجودی و سوابق پاداش و برداشتت رو ببین.</p>
-        </div>
-
+        <div class="welcome"><h1>کیف پول 💎</h1><p>موجودی و سوابق پاداش و برداشتت رو ببین.</p></div>
         <div class="balance-card">
           <div class="balance-label">موجودی قابل برداشت</div>
-          <div class="balance-row">
-            <div class="balance-number" id="walletBalance">0.00</div>
-            <div class="balance-unit">NOT</div>
-          </div>
-          <div class="balance-bottom">
-            <div class="balance-hint">حداقل برداشت<br>۳۰۰ NOT</div>
-          </div>
+          <div class="balance-row"><div class="balance-number" id="walletBalance">0.00</div><div class="balance-unit">NOT</div></div>
+          <div class="balance-bottom"><div class="balance-hint">حداقل برداشت<br>۳۰۰ NOT</div></div>
         </div>
-
         <div class="panel">
           <h3>درخواست برداشت</h3>
           <div class="muted">آدرس کیف پول را با دقت وارد کن. زمان واریز ۲۴ الی ۴۸ ساعت است.</div>
@@ -711,12 +247,8 @@
           <button class="primary" id="withdrawButton" onclick="requestWithdrawal()">ثبت درخواست برداشت</button>
           <div class="muted" style="margin-top:10px">حداقل برداشت ۳۰۰ NOT است. آدرس را قبل از ثبت بررسی کن.</div>
         </div>
-
         <div class="panel">
-          <div class="section-heading" style="margin-top:0">
-            <h2>تاریخچه کیف پول</h2>
-            <button class="small-action" onclick="loadHistory()">بروزرسانی</button>
-          </div>
+          <div class="section-heading" style="margin-top:0"><h2>تاریخچه کیف پول</h2><button class="small-action" onclick="loadHistory()">بروزرسانی</button></div>
           <div class="muted">پاداش لمس، پاداش روزانه، دعوت دوستان و وضعیت برداشت‌ها.</div>
           <div id="historyList" class="history-list"><div class="empty">برای نمایش تاریخچه، دکمه بروزرسانی رو بزن.</div></div>
           <div class="section-heading"><h2>سوابق برداشت</h2></div>
@@ -725,13 +257,9 @@
       </section>
 
       <section id="page-referral" class="page">
-        <div class="welcome">
-          <h1>دعوت دوستان 👥</h1>
-          <p>لینک اختصاصی خودت رو برای دوستات بفرست.</p>
-        </div>
+        <div class="welcome"><h1>دعوت دوستان 👥</h1><p>لینک اختصاصی خودت رو برای دوستات بفرست.</p></div>
         <div class="panel">
-          <div class="feature-icon">🎁</div>
-          <h3>دعوت کن و پاداش بگیر</h3>
+          <div class="feature-icon">🎁</div><h3>دعوت کن و پاداش بگیر</h3>
           <div class="muted">با دعوت دوستان می‌تونی پاداش دریافت کنی. دوستت باید از طریق لینک دعوت وارد ربات بشه.</div>
           <div class="referral-box" id="referralLink">در حال آماده‌سازی لینک دعوت…</div>
           <button class="primary" onclick="copyReferral()">کپی لینک دعوت</button>
@@ -746,10 +274,7 @@
       </section>
 
       <section id="page-profile" class="page">
-        <div class="welcome">
-          <h1>پروفایل من</h1>
-          <p>اطلاعات حساب تلگرامت.</p>
-        </div>
+        <div class="welcome"><h1>پروفایل من</h1><p>اطلاعات حساب تلگرامت.</p></div>
         <div class="profile-hero">
           <div id="avatarFallback" class="avatar avatar-fallback">👤</div>
           <img id="avatarImage" class="avatar" src="" alt="عکس پروفایل" style="display:none">
@@ -769,18 +294,10 @@
 
   <nav class="bottom-nav">
     <div class="nav-inner">
-      <button class="nav-item active" data-page="home" onclick="showPage('home')">
-        <span class="nav-icon">⌂</span><span>خانه</span>
-      </button>
-      <button class="nav-item" data-page="wallet" onclick="showPage('wallet')">
-        <span class="nav-icon">◈</span><span>کیف پول</span>
-      </button>
-      <button class="nav-item" data-page="referral" onclick="showPage('referral')">
-        <span class="nav-icon">♧</span><span>دعوت دوستان</span>
-      </button>
-      <button class="nav-item" data-page="profile" onclick="showPage('profile')">
-        <span class="nav-icon">◎</span><span>پروفایل</span>
-      </button>
+      <button class="nav-item active" data-page="home" onclick="showPage('home')"><span class="nav-icon">⌂</span><span>خانه</span></button>
+      <button class="nav-item" data-page="wallet" onclick="showPage('wallet')"><span class="nav-icon">◈</span><span>کیف پول</span></button>
+      <button class="nav-item" data-page="referral" onclick="showPage('referral')"><span class="nav-icon">♧</span><span>دعوت دوستان</span></button>
+      <button class="nav-item" data-page="profile" onclick="showPage('profile')"><span class="nav-icon">◎</span><span>پروفایل</span></button>
     </div>
   </nav>
 
@@ -791,6 +308,7 @@
     const tg = window.Telegram?.WebApp;
     const MIN_WITHDRAWAL = 300;
     const TAP_REWARD = 0.02;
+    const MONETAG_ZONE_ID = "12066198";
 
     let user = tg?.initDataUnsafe?.user || null;
     let balance = 0;
@@ -800,6 +318,7 @@
     let tapBusy = false;
     let dailyBusy = false;
     let withdrawBusy = false;
+    let monetagAdBusy = false;
 
     if (tg) {
       tg.ready();
@@ -815,7 +334,7 @@
       el.textContent = message;
       el.classList.add("show");
       clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => el.classList.remove("show"), 3000);
+      toastTimer = setTimeout(() => el.classList.remove("show"), 4000);
     }
 
     function haptic(kind = "light") {
@@ -824,45 +343,30 @@
 
     function formatNumber(value) {
       const n = Number(value);
-      return Number.isFinite(n) ? n.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      }) : "0.00";
+      return Number.isFinite(n) ? n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "0.00";
     }
 
     function showPage(name) {
       document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
       document.getElementById("page-" + name)?.classList.add("active");
-      document.querySelectorAll(".nav-item").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.page === name);
-      });
+      document.querySelectorAll(".nav-item").forEach(btn => btn.classList.toggle("active", btn.dataset.page === name));
       haptic("light");
-      if (name === "wallet") {
-        updateBalanceUI();
-        loadHistory();
-      }
+      if (name === "wallet") { updateBalanceUI(); loadHistory(); }
       if (name === "referral") loadReferrals();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     async function api(path, body = {}) {
-      if (!initData) {
-        throw new Error("برای استفاده از امکانات، برنامه رو از داخل ربات تلگرام باز کن.");
-      }
-
+      if (!initData) throw new Error("برای استفاده از امکانات، برنامه رو از داخل ربات تلگرام باز کن.");
       const response = await fetch(API + path, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...body, initData })
       });
-
       let result;
       try { result = await response.json(); }
       catch (_) { throw new Error("پاسخ نامعتبر دریافت شد."); }
-
-      if (!response.ok || result.ok === false) {
-        throw new Error(result.error || result.message || "درخواست انجام نشد.");
-      }
+      if (!response.ok || result.ok === false) throw new Error(result.error || result.message || "درخواست انجام نشد.");
       return result;
     }
 
@@ -879,11 +383,9 @@
         document.getElementById("profileUsername").textContent = "برای شناسایی، از داخل تلگرام وارد شو";
         return;
       }
-
       const name = [user.first_name, user.last_name].filter(Boolean).join(" ") || "کاربر تلگرام";
       const username = user.username ? "@" + user.username : "نام کاربری ثبت نشده";
       const id = String(user.id);
-
       document.getElementById("welcomeTitle").textContent = "سلام، " + (user.first_name || "دوست من") + " 👋";
       document.getElementById("profileName").textContent = name;
       document.getElementById("profileUsername").textContent = username;
@@ -894,16 +396,9 @@
 
       const fallback = document.getElementById("avatarFallback");
       const image = document.getElementById("avatarImage");
-
       if (user.photo_url) {
-        image.onload = () => {
-          image.style.display = "block";
-          fallback.style.display = "none";
-        };
-        image.onerror = () => {
-          image.style.display = "none";
-          fallback.style.display = "grid";
-        };
+        image.onload = () => { image.style.display = "block"; fallback.style.display = "none"; };
+        image.onerror = () => { image.style.display = "none"; fallback.style.display = "grid"; };
         image.src = user.photo_url;
       } else {
         fallback.textContent = (user.first_name || "U").slice(0, 1).toUpperCase();
@@ -919,10 +414,7 @@
         const result = await api("/api/me");
         if (result.balance !== undefined) balance = Number(result.balance) || 0;
         else if (result.balanceUnits !== undefined) balance = Number(result.balanceUnits) / 100;
-        if (result.user) {
-          user = { ...user, ...result.user };
-          setUserProfile();
-        }
+        if (result.user) { user = { ...user, ...result.user }; setUserProfile(); }
         updateBalanceUI();
       } catch (error) {
         showToast(error.message || "دریافت اطلاعات حساب انجام نشد.");
@@ -945,15 +437,8 @@
 
     async function tapRobot() {
       if (tapBusy) return;
-      if (!initData) {
-        showToast("برای دریافت پاداش، برنامه رو از داخل ربات تلگرام باز کن.");
-        return;
-      }
-      if (tapsRemaining <= 0) {
-        showToast("سهمیه لمس امروزت تموم شده. فردا دوباره بیا!");
-        return;
-      }
-
+      if (!initData) { showToast("برای دریافت پاداش، برنامه رو از داخل ربات تلگرام باز کن."); return; }
+      if (tapsRemaining <= 0) { showToast("سهمیه لمس امروزت تموم شده. فردا دوباره بیا!"); return; }
       tapBusy = true;
       const btn = document.getElementById("robotButton");
       btn.classList.remove("popping");
@@ -961,23 +446,18 @@
       btn.classList.add("popping");
       makeSparkles();
       haptic("medium");
-
       try {
         const result = await api("/api/tap");
         if (result.balance !== undefined) balance = Number(result.balance) || 0;
         else if (result.balanceUnits !== undefined) balance = Number(result.balanceUnits) / 100;
-
         if (result.tapsRemaining !== undefined) tapsRemaining = Number(result.tapsRemaining);
         else tapsRemaining = Math.max(0, tapsRemaining - 1);
-
         document.getElementById("tapsRemaining").textContent = tapsRemaining;
         updateBalanceUI();
         showToast("🎉 " + (result.reward !== undefined ? formatNumber(result.reward) : formatNumber(TAP_REWARD)) + " NOT پاداش گرفتی!");
       } catch (error) {
         showToast(error.message || "این لمس ثبت نشد. دوباره امتحان کن.");
-      } finally {
-        tapBusy = false;
-      }
+      } finally { tapBusy = false; }
     }
 
     async function claimDaily() {
@@ -993,48 +473,27 @@
         haptic("success");
       } catch (error) {
         showToast(error.message || "دریافت پاداش روزانه انجام نشد.");
-      } finally {
-        dailyBusy = false;
-      }
+      } finally { dailyBusy = false; }
     }
 
     async function requestWithdrawal() {
       if (withdrawBusy) return;
-      const amount = Number(document.getElementById("withdrawAmount").value);
+      const amountInput = document.getElementById("withdrawAmount").value.trim();
+      const amount = Number(amountInput);
       const wallet = document.getElementById("walletAddress").value.trim();
-
-      if (!Number.isFinite(amount) || amount < MIN_WITHDRAWAL) {
-        showToast("حداقل برداشت ۳۰۰ NOT است.");
-        return;
-      }
-      if (amount > balance) {
-        showToast("موجودی کیف پولت کافی نیست.");
-        return;
-      }
-      if (amount > 1e12 || !/^[0-9]+(\.[0-9]{1,2})?$/.test(String(document.getElementById("withdrawAmount").value).trim())) {
-        showToast("مقدار برداشت رو با حداکثر دو رقم اعشار وارد کن.");
-        return;
-      }
-      if (wallet.length < 20 || wallet.length > 150) {
-        showToast("آدرس کیف پول معتبر وارد کن.");
-        return;
-      }
+      if (!Number.isFinite(amount) || amount < MIN_WITHDRAWAL) { showToast("حداقل برداشت ۳۰۰ NOT است."); return; }
+      if (amount > balance) { showToast("موجودی کیف پولت کافی نیست."); return; }
+      if (amount > 1e12 || !/^[0-9]+(\.[0-9]{1,2})?$/.test(amountInput)) { showToast("مقدار برداشت رو با حداکثر دو رقم اعشار وارد کن."); return; }
+      if (wallet.length < 20 || wallet.length > 150) { showToast("آدرس کیف پول معتبر وارد کن."); return; }
 
       const button = document.getElementById("withdrawButton");
       withdrawBusy = true;
       button.disabled = true;
       button.textContent = "در حال ثبت…";
-
       try {
-        const result = await api("/api/withdraw", {
-          amount,
-          walletAddress: wallet,
-          wallet_address: wallet
-        });
-
+        const result = await api("/api/withdraw", { amount, walletAddress: wallet, wallet_address: wallet });
         if (result.balance !== undefined) balance = Number(result.balance) || 0;
         else if (result.balanceUnits !== undefined) balance = Number(result.balanceUnits) / 100;
-
         updateBalanceUI();
         document.getElementById("withdrawAmount").value = "";
         showToast("درخواست برداشت ثبت شد. مبلغ طی ۲۴ الی ۴۸ ساعت واریز میشه.");
@@ -1054,10 +513,7 @@
       const date = new Date(value);
       if (Number.isNaN(date.getTime())) return String(value);
       try {
-        return date.toLocaleString("fa-IR", {
-          year: "numeric", month: "short", day: "numeric",
-          hour: "2-digit", minute: "2-digit"
-        });
+        return date.toLocaleString("fa-IR", { year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
       } catch (_) { return date.toLocaleString(); }
     }
 
@@ -1075,14 +531,12 @@
     function renderHistoryItem(item, withdrawal = false) {
       const wrapper = document.createElement("div");
       wrapper.className = "history-item";
-
       const left = document.createElement("div");
       left.style.minWidth = "0";
       const title = document.createElement("div");
       title.className = "history-title";
       title.textContent = item.title || item.description || item.kind || (withdrawal ? "برداشت NOT" : "پاداش");
       left.appendChild(title);
-
       const sub = document.createElement("div");
       sub.className = "history-sub";
       sub.textContent = prettyDate(item.created_at || item.createdAt || item.date);
@@ -1094,7 +548,6 @@
         pill.className = "status-pill " + state[1];
         pill.textContent = state[0];
         left.appendChild(pill);
-
         if (item.wallet_address || item.walletAddress) {
           const wallet = document.createElement("div");
           wallet.className = "history-sub";
@@ -1113,7 +566,6 @@
       amount.className = "history-amount " + (withdrawal ? "negative" : "positive");
       const units = item.amount_units !== undefined ? Number(item.amount_units) / 100 : Number(item.amount || 0);
       amount.textContent = (withdrawal ? "−" : "+") + formatNumber(Math.abs(units)) + " NOT";
-
       wrapper.appendChild(left);
       wrapper.appendChild(amount);
       return wrapper;
@@ -1122,44 +574,30 @@
     async function loadHistory() {
       const rewardsEl = document.getElementById("historyList");
       const withdrawalsEl = document.getElementById("withdrawHistory");
-
       if (!initData) {
         rewardsEl.innerHTML = '<div class="empty">برای دیدن تاریخچه از داخل تلگرام وارد شو.</div>';
         withdrawalsEl.innerHTML = '<div class="empty">ورود از تلگرام لازمه.</div>';
         return;
       }
-
       rewardsEl.innerHTML = '<div class="empty"><span class="loader"></span> در حال دریافت تاریخچه…</div>';
       withdrawalsEl.innerHTML = '<div class="empty"><span class="loader"></span></div>';
-
       try {
         const result = await api("/api/history");
         const rewards = Array.isArray(result.history) ? result.history : [];
         const withdrawals = Array.isArray(result.withdrawals) ? result.withdrawals : [];
-
         rewardsEl.replaceChildren();
         withdrawalsEl.replaceChildren();
-
-        if (!rewards.length) {
-          rewardsEl.innerHTML = '<div class="empty">هنوز پاداشی در تاریخچه ثبت نشده.</div>';
-        } else {
-          rewards.slice(0, 100).forEach(item => rewardsEl.appendChild(renderHistoryItem(item)));
-        }
-
-        if (!withdrawals.length) {
-          withdrawalsEl.innerHTML = '<div class="empty">هنوز درخواست برداشتی نداری.</div>';
-        } else {
-          withdrawals.slice(0, 100).forEach(item => withdrawalsEl.appendChild(renderHistoryItem(item, true)));
-        }
-      } catch (error) {
+        if (!rewards.length) rewardsEl.innerHTML = '<div class="empty">هنوز پاداشی در تاریخچه ثبت نشده.</div>';
+        else rewards.slice(0, 100).forEach(item => rewardsEl.appendChild(renderHistoryItem(item)));
+        if (!withdrawals.length) withdrawalsEl.innerHTML = '<div class="empty">هنوز درخواست برداشتی نداری.</div>';
+        else withdrawals.slice(0, 100).forEach(item => withdrawalsEl.appendChild(renderHistoryItem(item, true)));
+      } catch (_) {
         rewardsEl.innerHTML = '<div class="empty">تاریخچه در حال حاضر در دسترس نیست. مسیر تاریخچه باید در سرویس فعال باشد.</div>';
         withdrawalsEl.innerHTML = '<div class="empty">برای مشاهده سوابق برداشت، مسیر تاریخچه باید فعال باشد.</div>';
       }
     }
 
-    function getBotUsername() {
-      return "notrewarddbot";
-    }
+    function getBotUsername() { return "notrewarddbot"; }
 
     function getReferralUrl() {
       const id = user?.id;
@@ -1173,10 +611,7 @@
 
     async function copyReferral() {
       const link = getReferralUrl();
-      if (!link) {
-        showToast("ابتدا برنامه رو از داخل تلگرام باز کن.");
-        return;
-      }
+      if (!link) { showToast("ابتدا برنامه رو از داخل تلگرام باز کن."); return; }
       try {
         if (navigator.clipboard && window.isSecureContext) {
           await navigator.clipboard.writeText(link);
@@ -1193,19 +628,13 @@
         }
         showToast("لینک دعوت کپی شد!");
         haptic("success");
-      } catch (_) {
-        showToast("کپی خودکار انجام نشد. لینک رو انتخاب و کپی کن.");
-      }
+      } catch (_) { showToast("کپی خودکار انجام نشد. لینک رو انتخاب و کپی کن."); }
     }
 
     function shareReferral() {
       const link = getReferralUrl();
-      if (!link) {
-        showToast("ابتدا برنامه رو از داخل تلگرام باز کن.");
-        return;
-      }
-      const shareUrl = "https://t.me/share/url?url=" + encodeURIComponent(link) +
-        "&text=" + encodeURIComponent("بیا تو NOT REWARD پاداش جمع کنیم!");
+      if (!link) { showToast("ابتدا برنامه رو از داخل تلگرام باز کن."); return; }
+      const shareUrl = "https://t.me/share/url?url=" + encodeURIComponent(link) + "&text=" + encodeURIComponent("بیا تو NOT REWARD پاداش جمع کنیم!");
       if (tg?.openTelegramLink) tg.openTelegramLink(shareUrl);
       else window.open(shareUrl, "_blank", "noopener");
     }
@@ -1216,21 +645,55 @@
         const result = await api("/api/referrals");
         const count = result.count ?? result.referralCount ?? result.total ?? (Array.isArray(result.referrals) ? result.referrals.length : 0);
         document.getElementById("referralCount").textContent = String(count);
-      } catch (_) {
-        // لینک دعوت همچنان در دسترس می‌مونه؛ آمار به پاسخ API وابسته است.
-      }
+      } catch (_) {}
+    }
+
+    // Monetag: شناسه یکتا برای هر بار تلاش جهت نمایش تبلیغ
+    function createMonetagYmid() {
+      const randomPart = (window.crypto?.randomUUID?.() || (Math.random().toString(36).slice(2) + Date.now().toString(36)));
+      return ("tg" + String(user.id) + "_" + randomPart).replace(/[^a-zA-Z0-9_.-]/g, "_").slice(0, 120);
     }
 
     async function openAd() {
-      if (typeof window.show_12066198 !== "function") {
-        showToast("تبلیغ در حال حاضر در دسترس نیست.");
+      if (monetagAdBusy) return;
+
+      if (!initData || !user?.id) {
+        showToast("برای تماشای تبلیغ، برنامه رو از داخل ربات تلگرام باز کن.");
         return;
       }
+
+      if (typeof window.show_12066198 !== "function") {
+        showToast("تبلیغ هنوز بارگذاری نشده؛ چند ثانیه صبر کن و دوباره بزن.");
+        return;
+      }
+
+      monetagAdBusy = true;
+      const ymid = createMonetagYmid();
+
       try {
-        await window.show_12066198();
-        showToast("تبلیغ نمایش داده شد.");
-      } catch (_) {
-        showToast("نمایش تبلیغ انجام نشد. دوباره تلاش کن.");
+        showToast("در حال آماده‌سازی تبلیغ…");
+        haptic("light");
+
+        // شناسه کاربر از طریق requestVar برای Postback قابل دسترسی است.
+        const result = await window.show_12066198({
+          ymid: ymid,
+          requestVar: "tg_" + String(user.id)
+        });
+
+        if (result && result.reward_event_type === "valued") {
+          showToast("نمایش تبلیغ واجد پاداش اعلام شد؛ در انتظار تأیید و ثبت سرور هستیم.");
+          await loadMe();
+          await loadHistory();
+        } else if (result && result.reward_event_type === "non_valued") {
+          showToast("این نمایش تبلیغ واجد پاداش نیست.");
+        } else {
+          showToast("تبلیغ تمام شد؛ ثبت پاداش پس از تأیید سرور انجام می‌شود.");
+        }
+      } catch (error) {
+        console.error("Monetag ad error:", error);
+        showToast("نمایش تبلیغ انجام نشد یا تأیید دریافت نشد. کمی بعد دوباره تلاش کن.");
+      } finally {
+        monetagAdBusy = false;
       }
     }
 
@@ -1247,6 +710,7 @@
       if (!document.hidden && initData) loadMe();
     });
   </script>
-  <script src="//libtl.com/sdk.js" data-zone="12066198" data-sdk="show_12066198"></script>
+
+  <script src="https://libtl.com/sdk.js" data-zone="12066198" data-sdk="show_12066198"></script>
 </body>
 </html>
