@@ -712,5 +712,39 @@
   </script>
 
   <script src="https://libtl.com/sdk.js" data-zone="12066198" data-sdk="show_12066198"></script>
+  
+  <script src="https://libtl.com/sdk.js" data-zone="12066198" data-sdk="show_12066198"></script>
+
+  <script>
+    (function startMonetagAds() {
+      function configureAds() {
+        if (typeof window.show_12066198 !== "function") {
+          setTimeout(configureAds, 1000);
+          return;
+        }
+
+        try {
+          window.show_12066198({
+            type: "inApp",
+            inAppSettings: {
+              frequency: 2,
+              capping: 0.1,
+              interval: 30,
+              timeout: 5,
+              everyPage: false
+            }
+          });
+        } catch (error) {
+          console.error("Monetag initialization error:", error);
+        }
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", configureAds);
+      } else {
+        configureAds();
+      }
+    })();
+  </script>
 </body>
 </html>
