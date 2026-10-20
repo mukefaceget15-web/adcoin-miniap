@@ -1,4 +1,4 @@
-```html
+
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -9,800 +9,194 @@
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://libtl.com/sdk.js" data-zone="12066198" data-sdk="show_12066198"></script>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --bg: #f6f5f0;
-  --card: #ffffff;
-  --ink: #172c27;
-  --muted: #84918b;
-  --green: #176b50;
-  --green-light: #e4f2e9;
-  --lime: #d6f379;
-  --line: #e9ebe5;
-  --gold: #d8a94f;
-  --red: #c95757;
-}
-
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--ink);
-  font-family: "Vazirmatn", Tahoma, sans-serif;
-  font-size: 14px;
-  -webkit-font-smoothing: antialiased;
-  padding-bottom: calc(94px + env(safe-area-inset-bottom));
-}
-
-button, input { font: inherit; }
-button { cursor: pointer; }
-button:disabled { opacity: .55; cursor: wait; }
-
-.app {
-  max-width: 500px;
-  padding: 19px 17px 30px;
-  margin: auto;
-}
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 28px;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo {
-  width: 45px;
-  height: 45px;
-  border-radius: 15px;
-  display: grid;
-  place-items: center;
-  background: var(--green);
-  color: white;
-  font-size: 23px;
-  box-shadow: 0 5px 12px #176b5020;
-}
-
-.brand-name {
-  font-size: 18px;
-  font-weight: 900;
-  letter-spacing: .3px;
-}
-
-.brand-caption {
-  color: var(--muted);
-  font-size: 10px;
-  margin-top: 2px;
-}
-
-.status {
-  background: #e7f4e8;
-  color: #29734a;
-  border-radius: 20px;
-  padding: 7px 10px;
-  font-size: 10px;
-  font-weight: 700;
-}
-
-.greeting {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 17px;
-}
-
-.greeting h1 {
-  font-size: 23px;
-  line-height: 1.6;
-  margin: 0;
-  font-weight: 800;
-  letter-spacing: -.5px;
-}
-
-.greeting p {
-  color: var(--muted);
-  font-size: 12px;
-  margin: 4px 0 0;
-}
-
-.greeting-icon {
-  width: 51px;
-  height: 51px;
-  border-radius: 18px;
-  display: grid;
-  place-items: center;
-  background: #e9eee4;
-  font-size: 25px;
-}
-
-.balance-card {
-  padding: 22px;
-  border-radius: 25px;
-  color: white;
-  background: var(--green);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 12px 25px #176b501b;
-}
-
-.balance-card::after {
-  content: "";
-  position: absolute;
-  width: 185px;
-  height: 185px;
-  border-radius: 50%;
-  left: -60px;
-  top: -90px;
-  border: 1px solid #ffffff17;
-  box-shadow: 0 0 0 22px #ffffff08, 0 0 0 45px #ffffff06;
-  pointer-events: none;
-}
-
-.balance-label {
-  font-size: 12px;
-  color: #d5e9de;
-}
-
-.balance-number {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  margin-top: 8px;
-  direction: rtl;
-}
-
-.balance-value {
-  font-size: clamp(32px, 9vw, 43px);
-  font-weight: 900;
-  letter-spacing: -1px;
-  line-height: 1.5;
-  overflow-wrap: anywhere;
-}
-
-.balance-unit {
-  font-size: 13px;
-  color: var(--lime);
-  font-weight: 800;
-  direction: ltr;
-}
-
-.balance-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-top: 17px;
-  padding-top: 14px;
-  border-top: 1px solid #ffffff24;
-  color: #d7e9df;
-  font-size: 11px;
-}
-
-.wallet-label {
-  background: #ffffff17;
-  border-radius: 9px;
-  padding: 6px 9px;
-  white-space: nowrap;
-}
-
-.section-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 27px 1px 13px;
-}
-
-.section-head h2 {
-  font-size: 15px;
-  font-weight: 800;
-  margin: 0;
-}
-
-.section-head span {
-  font-size: 10px;
-  color: var(--muted);
-}
-
-.earn-card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 24px;
-  padding: 24px 18px 19px;
-  text-align: center;
-}
-
-.coin-stage {
-  width: 170px;
-  height: 170px;
-  margin: 0 auto 11px;
-  display: grid;
-  place-items: center;
-  position: relative;
-}
-
-.coin-halo {
-  position: absolute;
-  inset: 8px;
-  border: 1px dashed #cbd9c8;
-  border-radius: 50%;
-}
-
-.coin-halo::before,
-.coin-halo::after {
-  content: "";
-  position: absolute;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--gold);
-}
-
-.coin-halo::before { top: 19px; right: 19px; }
-.coin-halo::after { bottom: 24px; left: 12px; }
-
-.coin-button {
-  width: 119px;
-  height: 119px;
-  border: 7px solid #e5f0e6;
-  border-radius: 50%;
-  background: linear-gradient(145deg, #e7f59c, #c3e96a);
-  display: grid;
-  place-items: center;
-  box-shadow: 0 8px 0 #b4d85b, 0 15px 27px #73974a23;
-  transition: transform .18s;
-  position: relative;
-}
-
-.coin-button:active { transform: scale(.94); }
-
-.coin-inner {
-  width: 83px;
-  height: 83px;
-  border: 2px solid #769b3e;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  color: #315320;
-  font-size: 36px;
-  font-weight: 900;
-  background: linear-gradient(145deg, #f8ffd9, #d9f18b);
-  box-shadow: inset 0 2px 5px #ffffffa0;
-}
-
-.earn-title {
-  font-size: 18px;
-  font-weight: 900;
-  margin-top: 3px;
-}
-
-.earn-description {
-  color: var(--muted);
-  font-size: 11px;
-  line-height: 2;
-  margin-top: 7px;
-}
-
-.main-btn {
-  width: 100%;
-  min-height: 49px;
-  border: 0;
-  border-radius: 15px;
-  background: var(--green);
-  color: white;
-  font-weight: 800;
-  margin-top: 18px;
-  box-shadow: 0 5px 12px #176b501b;
-  transition: transform .15s, background .15s;
-}
-
-.main-btn:active { transform: scale(.985); }
-.main-btn:disabled { background: #80958a; }
-
-.small-note {
-  font-size: 10px;
-  line-height: 1.9;
-  color: var(--muted);
-  margin-top: 10px;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 11px;
-}
-
-.stat-card {
-  border: 1px solid var(--line);
-  background: var(--card);
-  border-radius: 19px;
-  padding: 16px;
-}
-
-.stat-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 5px;
-}
-
-.stat-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 12px;
-  background: var(--green-light);
-  display: grid;
-  place-items: center;
-  font-size: 18px;
-}
-
-.stat-label {
-  color: var(--muted);
-  font-size: 11px;
-  margin-top: 12px;
-}
-
-.stat-value {
-  font-size: 22px;
-  font-weight: 900;
-  margin-top: 3px;
-  overflow-wrap: anywhere;
-}
-
-.stat-value small {
-  font-size: 10px;
-  color: var(--green);
-}
-
-.quick-list {
-  display: grid;
-  gap: 10px;
-}
-
-.quick-item {
-  width: 100%;
-  border: 1px solid var(--line);
-  background: white;
-  border-radius: 17px;
-  padding: 13px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-align: right;
-  color: var(--ink);
-}
-
-.quick-icon {
-  width: 43px;
-  height: 43px;
-  flex-shrink: 0;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-  background: #f0f3e9;
-  font-size: 20px;
-}
-
-.quick-copy { flex: 1; min-width: 0; }
-.quick-copy b { display: block; font-size: 12px; font-weight: 800; }
-.quick-copy small { display: block; color: var(--muted); font-size: 10px; margin-top: 4px; line-height: 1.8; }
-.arrow { color: #a0aaa1; font-size: 22px; }
-
-.page { display: none; }
-.page.active { display: block; animation: appear .2s ease; }
-
-@keyframes appear {
-  from { opacity: .5; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.page-title {
-  font-size: 24px;
-  font-weight: 900;
-  margin: 6px 1px 5px;
-}
-
-.page-subtitle {
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 2;
-  margin: 0 1px 20px;
-}
-
-.panel {
-  background: white;
-  border: 1px solid var(--line);
-  border-radius: 21px;
-  padding: 18px;
-  margin-bottom: 13px;
-}
-
-.panel-title {
-  font-size: 14px;
-  font-weight: 800;
-  margin: 0 0 14px;
-}
-
-.field-label {
-  display: block;
-  color: #52645a;
-  font-size: 11px;
-  font-weight: 700;
-  margin: 14px 0 7px;
-}
-
-.field {
-  display: block;
-  width: 100%;
-  padding: 13px;
-  border: 1px solid #e2e7df;
-  border-radius: 12px;
-  outline: none;
-  background: #fafbf8;
-  color: var(--ink);
-  font-size: 13px;
-}
-
-.field:focus { border-color: #72a48b; }
-.field::placeholder { color: #a8b0a8; }
-
-.notice {
-  margin-top: 14px;
-  padding: 12px;
-  border-radius: 12px;
-  background: #f7f5e9;
-  color: #776b3e;
-  font-size: 11px;
-  line-height: 2;
-}
-
-.full { width: 100%; }
-
-.secondary-btn {
-  width: 100%;
-  border: 1px solid #dfe6dd;
-  border-radius: 13px;
-  background: #fff;
-  color: var(--green);
-  padding: 12px;
-  font-size: 12px;
-  font-weight: 800;
-  margin-top: 10px;
-}
-
-.history-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  padding: 13px 0;
-  border-bottom: 1px solid #f0f1ec;
-}
-
-.history-row:last-child { border-bottom: 0; }
-.history-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
-
-.history-icon {
-  width: 37px;
-  height: 37px;
-  border-radius: 12px;
-  background: #edf5ed;
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-}
-
-.history-title { font-size: 12px; font-weight: 700; overflow-wrap: anywhere; }
-.history-date { color: var(--muted); font-size: 10px; margin-top: 4px; }
-.history-amount { font-size: 11px; font-weight: 800; white-space: nowrap; }
-.positive { color: #218456; }
-.negative { color: var(--red); }
-.empty { text-align: center; color: var(--muted); padding: 20px 5px; font-size: 12px; line-height: 2; }
-
-.ref-link {
-  direction: ltr;
-  text-align: left;
-  overflow-wrap: anywhere;
-  border: 1px dashed #a9c6b0;
-  background: #f6faf3;
-  padding: 13px;
-  border-radius: 12px;
-  font-size: 11px;
-  color: var(--green);
-  margin-top: 10px;
-  user-select: text;
-}
-
-.profile-top { text-align: center; padding: 23px 15px; }
-
-.avatar {
-  width: 73px;
-  height: 73px;
-  margin: 0 auto 13px;
-  display: grid;
-  place-items: center;
-  background: var(--green-light);
-  border: 3px solid #d1e7d6;
-  border-radius: 24px;
-  font-size: 33px;
-}
-
-.profile-name { font-weight: 900; font-size: 17px; }
-.profile-id { color: var(--muted); font-size: 11px; margin-top: 5px; direction: ltr; }
-
-.profile-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 13px 0;
-  border-bottom: 1px solid #eff0eb;
-  font-size: 12px;
-}
-
-.profile-row:last-child { border-bottom: 0; }
-.profile-row span { color: var(--muted); }
-
-.bottom-nav {
-  position: fixed;
-  z-index: 20;
-  bottom: max(9px, env(safe-area-inset-bottom));
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 24px);
-  max-width: 480px;
-  padding: 8px 5px;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 3px;
-  border: 1px solid #e6e8e0;
-  border-radius: 21px;
-  background: rgba(255,255,255,.96);
-  box-shadow: 0 8px 30px #1e39200f;
-  backdrop-filter: blur(15px);
-}
-
-.nav-btn {
-  border: 0;
-  background: transparent;
-  color: #909991;
-  border-radius: 14px;
-  padding: 7px 1px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  font-size: 10px;
-  font-weight: 600;
-  min-width: 0;
-}
-
-.nav-icon { font-size: 20px; line-height: 1.3; }
-.nav-btn.active { background: var(--green-light); color: var(--green); font-weight: 800; }
-
-.toast {
-  position: fixed;
-  z-index: 50;
-  bottom: 95px;
-  left: 50%;
-  transform: translate(-50%, 10px);
-  opacity: 0;
-  pointer-events: none;
-  width: calc(100% - 32px);
-  max-width: 440px;
-  padding: 13px 15px;
-  border-radius: 13px;
-  background: #18372c;
-  color: white;
-  text-align: center;
-  font-size: 12px;
-  line-height: 1.9;
-  box-shadow: 0 8px 25px #0002;
-  transition: .2s;
-}
-
-.toast.show { opacity: 1; transform: translate(-50%, 0); }
-
-.footer { text-align: center; font-size: 10px; color: #a0aaa0; margin-top: 22px; }
-
-@media (max-width: 360px) {
-  .app { padding-right: 12px; padding-left: 12px; }
-  .greeting h1 { font-size: 20px; }
-  .balance-card { padding: 18px; }
-  .stat-card { padding: 12px; }
-  .coin-stage { width: 155px; height: 155px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; }
-}
+:root{--bg:#f6f5f0;--card:#fff;--ink:#172c27;--muted:#84918b;--green:#176b50;--green-light:#e4f2e9;--lime:#d6f379;--line:#e9ebe5;--gold:#d8a94f;--red:#c95757}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Vazirmatn",Tahoma,sans-serif;font-size:14px;-webkit-font-smoothing:antialiased;padding-bottom:calc(94px + env(safe-area-inset-bottom))}
+button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;cursor:wait}
+.app{max-width:500px;padding:19px 17px 30px;margin:auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:45px;height:45px;border-radius:15px;display:grid;place-items:center;background:var(--green);color:#fff;font-size:23px;box-shadow:0 5px 12px #176b5020}
+.brand-name{font-size:18px;font-weight:900;letter-spacing:.3px}
+.brand-caption{color:var(--muted);font-size:10px;margin-top:2px}
+.status{background:#e7f4e8;color:#29734a;border-radius:20px;padding:7px 10px;font-size:10px;font-weight:700}
+.greeting{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}
+.greeting h1{font-size:23px;line-height:1.6;margin:0;font-weight:800;letter-spacing:-.5px}
+.greeting p{color:var(--muted);font-size:12px;margin:4px 0 0}
+.greeting-icon{width:51px;height:51px;border-radius:18px;display:grid;place-items:center;background:#e9eee4;font-size:25px}
+.balance-card{padding:22px;border-radius:25px;color:#fff;background:var(--green);position:relative;overflow:hidden;box-shadow:0 12px 25px #176b501b}
+.balance-card::after{content:"";position:absolute;width:185px;height:185px;border-radius:50%;left:-60px;top:-90px;border:1px solid #ffffff17;box-shadow:0 0 0 22px #ffffff08,0 0 0 45px #ffffff06;pointer-events:none}
+.balance-label{font-size:12px;color:#d5e9de}
+.balance-number{display:flex;align-items:baseline;gap:8px;margin-top:8px;direction:rtl}
+.balance-value{font-size:clamp(32px,9vw,43px);font-weight:900;letter-spacing:-1px;line-height:1.5;overflow-wrap:anywhere}
+.balance-unit{font-size:13px;color:var(--lime);font-weight:800;direction:ltr}
+.balance-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:17px;padding-top:14px;border-top:1px solid #ffffff24;color:#d7e9df;font-size:11px}
+.wallet-label{background:#ffffff17;border-radius:9px;padding:6px 9px;white-space:nowrap}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:27px 1px 13px}
+.section-head h2{font-size:15px;font-weight:800;margin:0}
+.section-head span{font-size:10px;color:var(--muted)}
+.earn-card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:24px 18px 19px;text-align:center}
+.coin-stage{width:170px;height:170px;margin:0 auto 11px;display:grid;place-items:center;position:relative}
+.coin-halo{position:absolute;inset:8px;border:1px dashed #cbd9c8;border-radius:50%}
+.coin-halo::before,.coin-halo::after{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.coin-halo::before{top:19px;right:19px}.coin-halo::after{bottom:24px;left:12px}
+.coin-button{width:119px;height:119px;border:7px solid #e5f0e6;border-radius:50%;background:linear-gradient(145deg,#e7f59c,#c3e96a);display:grid;place-items:center;box-shadow:0 8px 0 #b4d85b,0 15px 27px #73974a23;transition:transform .18s;position:relative}
+.coin-button:active{transform:scale(.94)}
+.coin-inner{width:83px;height:83px;border:2px solid #769b3e;border-radius:50%;display:grid;place-items:center;color:#315320;font-size:36px;font-weight:900;background:linear-gradient(145deg,#f8ffd9,#d9f18b);box-shadow:inset 0 2px 5px #ffffffa0}
+.earn-title{font-size:18px;font-weight:900;margin-top:3px}
+.earn-description{color:var(--muted);font-size:11px;line-height:2;margin-top:7px}
+.main-btn{width:100%;min-height:49px;border:0;border-radius:15px;background:var(--green);color:#fff;font-weight:800;margin-top:18px;box-shadow:0 5px 12px #176b501b;transition:transform .15s,background .15s}
+.main-btn:active{transform:scale(.985)}.main-btn:disabled{background:#80958a}
+.small-note{font-size:10px;line-height:1.9;color:var(--muted);margin-top:10px}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.stat-card{border:1px solid var(--line);background:var(--card);border-radius:19px;padding:16px}
+.stat-top{display:flex;align-items:center;justify-content:space-between;gap:5px}
+.stat-icon{width:36px;height:36px;border-radius:12px;background:var(--green-light);display:grid;place-items:center;font-size:18px}
+.stat-label{color:var(--muted);font-size:11px;margin-top:12px}
+.stat-value{font-size:22px;font-weight:900;margin-top:3px;overflow-wrap:anywhere}
+.stat-value small{font-size:10px;color:var(--green)}
+.quick-list{display:grid;gap:10px}
+.quick-item{width:100%;border:1px solid var(--line);background:#fff;border-radius:17px;padding:13px;display:flex;align-items:center;gap:12px;text-align:right;color:var(--ink)}
+.quick-icon{width:43px;height:43px;flex-shrink:0;border-radius:14px;display:grid;place-items:center;background:#f0f3e9;font-size:20px}
+.quick-copy{flex:1;min-width:0}.quick-copy b{display:block;font-size:12px;font-weight:800}.quick-copy small{display:block;color:var(--muted);font-size:10px;margin-top:4px;line-height:1.8}
+.arrow{color:#a0aaa1;font-size:22px}
+.page{display:none}.page.active{display:block;animation:appear .2s ease}
+@keyframes appear{from{opacity:.5;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.page-title{font-size:24px;font-weight:900;margin:6px 1px 5px}
+.page-subtitle{color:var(--muted);font-size:12px;line-height:2;margin:0 1px 20px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:21px;padding:18px;margin-bottom:13px}
+.panel-title{font-size:14px;font-weight:800;margin:0 0 14px}
+.field-label{display:block;color:#52645a;font-size:11px;font-weight:700;margin:14px 0 7px}
+.field{display:block;width:100%;padding:13px;border:1px solid #e2e7df;border-radius:12px;outline:none;background:#fafbf8;color:var(--ink);font-size:13px}
+.field:focus{border-color:#72a48b}.field::placeholder{color:#a8b0a8}
+.notice{margin-top:14px;padding:12px;border-radius:12px;background:#f7f5e9;color:#776b3e;font-size:11px;line-height:2}
+.full{width:100%}
+.secondary-btn{width:100%;border:1px solid #dfe6dd;border-radius:13px;background:#fff;color:var(--green);padding:12px;font-size:12px;font-weight:800;margin-top:10px}
+.history-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid #f0f1ec}
+.history-row:last-child{border-bottom:0}
+.history-left{display:flex;align-items:center;gap:10px;min-width:0}
+.history-icon{width:37px;height:37px;border-radius:12px;background:#edf5ed;display:grid;place-items:center;flex-shrink:0}
+.history-title{font-size:12px;font-weight:700;overflow-wrap:anywhere}.history-date{color:var(--muted);font-size:10px;margin-top:4px}
+.history-amount{font-size:11px;font-weight:800;white-space:nowrap}
+.positive{color:#218456}.negative{color:var(--red)}
+.empty{text-align:center;color:var(--muted);padding:20px 5px;font-size:12px;line-height:2}
+.ref-link{direction:ltr;text-align:left;overflow-wrap:anywhere;border:1px dashed #a9c6b0;background:#f6faf3;padding:13px;border-radius:12px;font-size:11px;color:var(--green);margin-top:10px;user-select:text}
+.profile-top{text-align:center;padding:23px 15px}
+.avatar{width:73px;height:73px;margin:0 auto 13px;display:grid;place-items:center;background:var(--green-light);border:3px solid #d1e7d6;border-radius:24px;font-size:33px}
+.profile-name{font-weight:900;font-size:17px}.profile-id{color:var(--muted);font-size:11px;margin-top:5px;direction:ltr}
+.profile-row{display:flex;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid #eff0eb;font-size:12px}
+.profile-row:last-child{border-bottom:0}.profile-row span{color:var(--muted)}
+.bottom-nav{position:fixed;z-index:20;bottom:max(9px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:calc(100% - 24px);max-width:480px;padding:8px 5px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;border:1px solid #e6e8e0;border-radius:21px;background:rgba(255,255,255,.96);box-shadow:0 8px 30px #1e39200f;backdrop-filter:blur(15px)}
+.nav-btn{border:0;background:transparent;color:#909991;border-radius:14px;padding:7px 1px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;font-weight:600;min-width:0}
+.nav-icon{font-size:20px;line-height:1.3}.nav-btn.active{background:var(--green-light);color:var(--green);font-weight:800}
+.toast{position:fixed;z-index:50;bottom:95px;left:50%;transform:translate(-50%,10px);opacity:0;pointer-events:none;width:calc(100% - 32px);max-width:440px;padding:13px 15px;border-radius:13px;background:#18372c;color:#fff;text-align:center;font-size:12px;line-height:1.9;box-shadow:0 8px 25px #0002;transition:.2s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.footer{text-align:center;font-size:10px;color:#a0aaa0;margin-top:22px}
+@media(max-width:360px){.app{padding-right:12px;padding-left:12px}.greeting h1{font-size:20px}.balance-card{padding:18px}.stat-card{padding:12px}.coin-stage{width:155px;height:155px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
-
 <body>
 <main class="app">
 
 <header class="topbar">
   <div class="brand">
     <div class="logo">✦</div>
-    <div>
-      <div class="brand-name">ADCOIN</div>
-      <div class="brand-caption">پنل اختصاصی کسب درآمد</div>
-    </div>
+    <div><div class="brand-name">ADCOIN</div><div class="brand-caption">پنل اختصاصی کسب درآمد</div></div>
   </div>
-  <div class="status">● فعال</div>
+  <div class="status" id="app-status">● در حال اتصال</div>
 </header>
 
-<!-- HOME -->
 <section class="page active" id="page-home">
   <div class="greeting">
-    <div>
-      <h1 id="welcome-title">سلام، خوش اومدی!</h1>
-      <p>امروز هم برای پیشرفت آماده‌ای؟</p>
-    </div>
+    <div><h1 id="welcome-title">سلام، خوش اومدی!</h1><p>امروز هم برای پیشرفت آماده‌ای؟</p></div>
     <div class="greeting-icon">🌿</div>
   </div>
 
   <div class="balance-card">
     <div class="balance-label">موجودی کل کیف پول</div>
-    <div class="balance-number">
-      <span class="balance-value" id="balance">۰</span>
-      <span class="balance-unit">NOT</span>
-    </div>
-    <div class="balance-bottom">
-      <span>موجودی حساب شما</span>
-      <span class="wallet-label">✦ کیف پول من</span>
-    </div>
+    <div class="balance-number"><span class="balance-value" id="balance">۰</span><span class="balance-unit">NOT</span></div>
+    <div class="balance-bottom"><span>موجودی حساب شما</span><span class="wallet-label">✦ کیف پول من</span></div>
   </div>
 
-  <div class="section-head">
-    <h2>کسب درآمد</h2>
-    <span>ساده و سریع</span>
-  </div>
-
+  <div class="section-head"><h2>کسب درآمد</h2><span>ساده و سریع</span></div>
   <div class="earn-card">
-    <div class="coin-stage">
-      <div class="coin-halo"></div>
-      <button class="coin-button" id="ad-button" onclick="openAd()" aria-label="تماشای تبلیغ">
-        <span class="coin-inner">₦</span>
-      </button>
-    </div>
-    <div class="earn-title">پاداش روزانه‌ات منتظرته</div>
-    <div class="earn-description">تبلیغ را مشاهده کن؛ پاداش معتبر پس از تأیید سرور ثبت می‌شود.</div>
+    <div class="coin-stage"><div class="coin-halo"></div><button class="coin-button" id="ad-button" onclick="openAd()" aria-label="تماشای تبلیغ"><span class="coin-inner">₦</span></button></div>
+    <div class="earn-title">پاداش تبلیغ منتظرته</div>
+    <div class="earn-description">تبلیغ را مشاهده کن؛ پاداش معتبر فقط پس از تأیید سرور ثبت می‌شود.</div>
     <button class="main-btn" id="watch-button" onclick="openAd()">▶ &nbsp; تماشای تبلیغ</button>
-    <div class="small-note">توجه: هر نمایش تبلیغ لزوماً واجد پاداش نیست.</div>
+    <div class="small-note">هر نمایش تبلیغ لزوماً واجد پاداش نیست.</div>
   </div>
 
-  <div class="section-head">
-    <h2>خلاصه حساب</h2>
-    <span>وضعیت فعلی</span>
-  </div>
-
+  <div class="section-head"><h2>خلاصه حساب</h2><span>وضعیت فعلی</span></div>
   <div class="stats">
-    <div class="stat-card">
-      <div class="stat-top">
-        <span class="stat-icon">◈</span>
-      </div>
-      <div class="stat-label">موجودی فعلی</div>
-      <div class="stat-value"><span id="stat-balance">۰</span> <small>NOT</small></div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-top">
-        <span class="stat-icon">♧</span>
-      </div>
-      <div class="stat-label">دوستان دعوت‌شده</div>
-      <div class="stat-value" id="stat-referrals">۰</div>
-    </div>
+    <div class="stat-card"><div class="stat-top"><span class="stat-icon">◈</span></div><div class="stat-label">موجودی فعلی</div><div class="stat-value"><span id="stat-balance">۰</span> <small>NOT</small></div></div>
+    <div class="stat-card"><div class="stat-top"><span class="stat-icon">♧</span></div><div class="stat-label">دوستان دعوت‌شده</div><div class="stat-value" id="stat-referrals">۰</div></div>
   </div>
 
   <div class="section-head"><h2>دسترسی سریع</h2></div>
   <div class="quick-list">
-    <button class="quick-item" onclick="showPage('wallet')">
-      <span class="quick-icon">↗</span>
-      <span class="quick-copy">
-        <b>درخواست برداشت</b>
-        <small>برداشت از ۵۰ نات به بالا</small>
-      </span>
-      <span class="arrow">‹</span>
-    </button>
-    <button class="quick-item" onclick="showPage('referral')">
-      <span class="quick-icon">♧</span>
-      <span class="quick-copy">
-        <b>دعوت از دوستان</b>
-        <small>لینک دعوت خودت رو به اشتراک بذار</small>
-      </span>
-      <span class="arrow">‹</span>
-    </button>
+    <button class="quick-item" onclick="showPage('wallet')"><span class="quick-icon">↗</span><span class="quick-copy"><b>درخواست برداشت</b><small>برداشت از ۳۰۰ نات به بالا</small></span><span class="arrow">‹</span></button>
+    <button class="quick-item" onclick="showPage('referral')"><span class="quick-icon">♧</span><span class="quick-copy"><b>دعوت از دوستان</b><small>لینک دعوت خودت رو به اشتراک بذار</small></span><span class="arrow">‹</span></button>
   </div>
 
   <div class="section-head"><h2>تراکنش‌های اخیر</h2></div>
   <div class="panel" id="home-history"><div class="empty">در حال دریافت اطلاعات...</div></div>
 </section>
 
-<!-- WALLET -->
 <section class="page" id="page-wallet">
   <h1 class="page-title">کیف پول</h1>
   <p class="page-subtitle">موجودی و درخواست‌های برداشت خود را مدیریت کن.</p>
-
   <div class="balance-card">
     <div class="balance-label">موجودی حساب</div>
-    <div class="balance-number">
-      <span class="balance-value" id="wallet-balance">۰</span>
-      <span class="balance-unit">NOT</span>
-    </div>
-    <div class="balance-bottom">
-      <span>حداقل برداشت</span><span class="wallet-label">۵۰ NOT</span>
-    </div>
+    <div class="balance-number"><span class="balance-value" id="wallet-balance">۰</span><span class="balance-unit">NOT</span></div>
+    <div class="balance-bottom"><span>حداقل برداشت</span><span class="wallet-label">۳۰۰ NOT</span></div>
   </div>
-
   <div class="panel" style="margin-top:15px">
     <h2 class="panel-title">ثبت درخواست برداشت</h2>
     <form id="withdraw-form">
       <label class="field-label" for="withdraw-amount">مبلغ به NOT</label>
-      <input class="field" id="withdraw-amount" type="number" min="50" step="1" placeholder="مثلاً ۵۰" required>
-
-      <label class="field-label" for="withdraw-address">آدرس کیف پول یا شناسه دریافت</label>
-      <input class="field" id="withdraw-address" type="text" maxlength="200" placeholder="آدرس دریافت را وارد کن" required>
-
-      <div class="notice">حداقل برداشت فعلی ۵۰ نات است. آدرس دریافت را قبل از ارسال درخواست بررسی کن.</div>
+      <input class="field" id="withdraw-amount" type="number" min="300" step="0.01" placeholder="مثلاً ۳۰۰" required>
+      <label class="field-label" for="withdraw-address">آدرس کیف پول</label>
+      <input class="field" id="withdraw-address" type="text" minlength="20" maxlength="150" autocomplete="off" placeholder="آدرس کیف پول را وارد کن" required>
+      <div class="notice">حداقل برداشت ۳۰۰ نات است. آدرس کیف پول باید بین ۲۰ تا ۱۵۰ نویسه باشد. قبل از ارسال، شبکه و آدرس را بررسی کن.</div>
       <button class="main-btn full" id="withdraw-submit" type="submit">ثبت درخواست برداشت</button>
     </form>
   </div>
-
-  <div class="panel">
-    <h2 class="panel-title">تاریخچه تراکنش‌ها</h2>
-    <div id="wallet-history"><div class="empty">در حال دریافت...</div></div>
-  </div>
+  <div class="panel"><h2 class="panel-title">تاریخچه تراکنش‌ها</h2><div id="wallet-history"><div class="empty">در حال دریافت...</div></div></div>
 </section>
 
-<!-- REFERRALS -->
 <section class="page" id="page-referral">
   <h1 class="page-title">دعوت از دوستان</h1>
   <p class="page-subtitle">لینک اختصاصی خودت را بفرست و دوستانت را به ADCOIN دعوت کن.</p>
-
   <div class="panel">
     <div style="font-size:43px;text-align:center;margin:8px 0 14px">🤝</div>
     <h2 class="panel-title" style="text-align:center">با هم رشد کنیم</h2>
     <div class="stats">
-      <div class="stat-card">
-        <div class="stat-label">تعداد دعوت‌ها</div>
-        <div class="stat-value" id="ref-count">۰</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">شناسه تلگرام</div>
-        <div class="stat-value" id="ref-user-id" style="font-size:15px">—</div>
-      </div>
+      <div class="stat-card"><div class="stat-label">تعداد دعوت‌ها</div><div class="stat-value" id="ref-count">۰</div></div>
+      <div class="stat-card"><div class="stat-label">شناسه تلگرام</div><div class="stat-value" id="ref-user-id" style="font-size:15px">—</div></div>
     </div>
-
     <label class="field-label">لینک دعوت اختصاصی</label>
-    <div class="ref-link" id="ref-link">در حال ساخت لینک...</div>
+    <div class="ref-link" id="ref-link">در حال دریافت لینک...</div>
     <button class="main-btn full" onclick="copyReferral()">کپی لینک دعوت</button>
     <button class="secondary-btn" onclick="shareReferral()">ارسال برای دوستان</button>
-    <div class="notice">آمار دعوت‌ها از سرور دریافت می‌شود. پاداش دعوت در صورت فعال بودن باید توسط سرور محاسبه شود.</div>
+    <div class="notice">تعداد دعوت‌ها و لینک اختصاصی از سرور دریافت می‌شود.</div>
   </div>
 </section>
 
-<!-- PROFILE -->
 <section class="page" id="page-profile">
   <h1 class="page-title">پروفایل من</h1>
   <p class="page-subtitle">اطلاعات حساب کاربری تو</p>
-
   <div class="panel profile-top">
     <div class="avatar">👤</div>
     <div class="profile-name" id="profile-name">کاربر ADCOIN</div>
     <div class="profile-id" id="profile-id">ID: —</div>
   </div>
-
   <div class="panel">
     <h2 class="panel-title">اطلاعات حساب</h2>
     <div class="profile-row"><span>موجودی</span><b id="profile-balance">۰ NOT</b></div>
@@ -812,31 +206,21 @@ button:disabled { opacity: .55; cursor: wait; }
   </div>
   <div class="footer">ADCOIN · حساب تو، مدیریت ساده‌تر</div>
 </section>
-
 </main>
 
 <nav class="bottom-nav">
-  <button class="nav-btn active" data-page="home" onclick="showPage('home')">
-    <span class="nav-icon">⌂</span><span>خانه</span>
-  </button>
-  <button class="nav-btn" data-page="wallet" onclick="showPage('wallet')">
-    <span class="nav-icon">▣</span><span>کیف پول</span>
-  </button>
-  <button class="nav-btn" data-page="referral" onclick="showPage('referral')">
-    <span class="nav-icon">♧</span><span>دعوت دوستان</span>
-  </button>
-  <button class="nav-btn" data-page="profile" onclick="showPage('profile')">
-    <span class="nav-icon">◎</span><span>پروفایل</span>
-  </button>
+  <button class="nav-btn active" data-page="home" onclick="showPage('home')"><span class="nav-icon">⌂</span><span>خانه</span></button>
+  <button class="nav-btn" data-page="wallet" onclick="showPage('wallet')"><span class="nav-icon">▣</span><span>کیف پول</span></button>
+  <button class="nav-btn" data-page="referral" onclick="showPage('referral')"><span class="nav-icon">♧</span><span>دعوت دوستان</span></button>
+  <button class="nav-btn" data-page="profile" onclick="showPage('profile')"><span class="nav-icon">◎</span><span>پروفایل</span></button>
 </nav>
-
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 "use strict";
 
 const API_BASE = "https://not-reward-api.mukefaceget15.workers.dev";
-const FIRST_WITHDRAWAL_MINIMUM = 50;
+const MIN_WITHDRAWAL = 300;
 const MONETAG_ZONE_ID = "12066198";
 
 const tg = window.Telegram?.WebApp || null;
@@ -844,6 +228,7 @@ const initData = tg?.initData || "";
 let user = tg?.initDataUnsafe?.user || null;
 let balance = 0;
 let referralCount = 0;
+let referralLink = "";
 let historyItems = [];
 let adBusy = false;
 let toastTimer;
@@ -857,9 +242,7 @@ if (tg) {
 
 function fa(value) {
   const n = Number(value);
-  return (Number.isFinite(n) ? n : 0).toLocaleString("fa-IR", {
-    maximumFractionDigits: 4
-  });
+  return (Number.isFinite(n) ? n : 0).toLocaleString("fa-IR", {maximumFractionDigits: 2});
 }
 
 function showToast(message) {
@@ -867,7 +250,7 @@ function showToast(message) {
   el.textContent = message;
   el.classList.add("show");
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove("show"), 3300);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 3500);
 }
 
 function haptic(style = "light") {
@@ -876,96 +259,54 @@ function haptic(style = "light") {
 
 function esc(value) {
   return String(value ?? "").replace(/[&<>"']/g, c => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
   }[c]));
-}
-
-function showPage(name) {
-  document.querySelectorAll(".page").forEach(el => {
-    el.classList.toggle("active", el.id === "page-" + name);
-  });
-  document.querySelectorAll(".nav-btn").forEach(el => {
-    el.classList.toggle("active", el.dataset.page === name);
-  });
-  haptic();
-  window.scrollTo({ top: 0, behavior: "smooth" });
-  if (name === "wallet") loadHistory();
-  if (name === "referral") loadReferrals();
 }
 
 function userId() {
   return user?.id || null;
 }
 
-async function api(path, options = {}) {
-  const headers = { Accept: "application/json" };
-  if (initData) headers["X-Telegram-Init-Data"] = initData;
-
-  const config = {
-    method: options.method || "GET",
-    headers,
-    cache: "no-store"
-  };
-
-  if (options.body !== undefined) {
-    headers["Content-Type"] = "application/json";
-    config.body = JSON.stringify({ ...options.body, initData });
+async function api(path, body = {}) {
+  if (!initData) {
+    throw new Error("مینی‌اپ را از داخل ربات تلگرام باز کن.");
   }
 
-  const response = await fetch(API_BASE + path, config);
-  const raw = await response.text();
-  let data = {};
+  const response = await fetch(API_BASE + path, {
+    method: "POST",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      "X-Telegram-Init-Data": initData
+    },
+    cache: "no-store",
+    body: JSON.stringify({...body, initData})
+  });
 
-  try { data = raw ? JSON.parse(raw) : {}; }
-  catch (_) { data = { message: raw }; }
+  const raw = await response.text();
+  let data;
+
+  try {
+    data = raw ? JSON.parse(raw) : {};
+  } catch (_) {
+    throw new Error("پاسخ سرور قابل خواندن نیست. لطفاً دوباره تلاش کن.");
+  }
 
   if (!response.ok || data.ok === false || data.success === false) {
-    throw new Error(data.message || data.error || ("خطای سرور: " + response.status));
+    throw new Error(data.error || data.message || ("خطای سرور: " + response.status));
   }
+
   return data;
 }
 
-function findBalance(data) {
-  const values = [
-    data?.balance,
-    data?.user?.balance,
-    data?.user_balance?.balance,
-    data?.account?.balance,
-    data?.data?.balance,
-    data?.data?.user?.balance
-  ];
-
-  for (const v of values) {
-    if (v !== undefined && v !== null && Number.isFinite(Number(v))) return Number(v);
-  }
-  return null;
-}
-
-function findReferralCount(data) {
-  const values = [
-    data?.referralCount,
-    data?.referrals_count,
-    data?.total_referrals,
-    data?.referrals,
-    data?.data?.referralCount,
-    data?.data?.total_referrals
-  ];
-
-  for (const v of values) {
-    if (Array.isArray(v)) return v.length;
-    if (v !== undefined && v !== null && Number.isFinite(Number(v))) return Number(v);
-  }
-  return null;
-}
-
 function updateUI() {
-  const b = fa(balance);
+  const formattedBalance = fa(balance);
 
   ["balance", "stat-balance", "wallet-balance"].forEach(id => {
-    document.getElementById(id).textContent = b;
+    document.getElementById(id).textContent = formattedBalance;
   });
 
-  document.getElementById("profile-balance").textContent = b + " NOT";
+  document.getElementById("profile-balance").textContent = formattedBalance + " NOT";
 
   ["stat-referrals", "ref-count", "profile-referrals"].forEach(id => {
     document.getElementById(id).textContent = fa(referralCount);
@@ -973,6 +314,7 @@ function updateUI() {
 
   const firstName = user?.first_name || user?.username || "دوست من";
   document.getElementById("welcome-title").textContent = "سلام " + firstName + " 👋";
+
   document.getElementById("profile-name").textContent =
     [user?.first_name, user?.last_name].filter(Boolean).join(" ") ||
     (user?.username ? "@" + user.username : "کاربر ADCOIN");
@@ -980,57 +322,131 @@ function updateUI() {
   document.getElementById("profile-id").textContent = "ID: " + (userId() || "—");
   document.getElementById("ref-user-id").textContent = userId() || "—";
 
-  const link = userId()
-    ? "https://t.me/notrewarddbot?start=" + encodeURIComponent(String(userId()))
-    : "برای دریافت لینک، مینی‌اپ را از تلگرام باز کن.";
+  if (!referralLink && userId()) {
+    referralLink = "https://t.me/notrewarddbot?start=ref_" + encodeURIComponent(String(userId()));
+  }
 
-  document.getElementById("ref-link").textContent = link;
+  document.getElementById("ref-link").textContent =
+    referralLink || "برای دریافت لینک، مینی‌اپ را از داخل تلگرام باز کن.";
+}
+
+function showPage(name) {
+  document.querySelectorAll(".page").forEach(el => {
+    el.classList.toggle("active", el.id === "page-" + name);
+  });
+
+  document.querySelectorAll(".nav-btn").forEach(el => {
+    el.classList.toggle("active", el.dataset.page === name);
+  });
+
+  haptic();
+  window.scrollTo({top: 0, behavior: "smooth"});
+
+  if (name === "wallet") loadHistory();
+  if (name === "referral") loadReferrals();
+  if (name === "profile") refreshAll();
 }
 
 async function loadMe() {
   if (!initData) {
-    updateUI();
     document.getElementById("connection-status").textContent = "از داخل تلگرام باز کن";
+    document.getElementById("app-status").textContent = "● ورود تلگرام لازم است";
+    updateUI();
     return;
   }
 
   try {
     const data = await api("/api/me");
-    user = user || data.user || data.data?.user || null;
-    const b = findBalance(data);
-    const r = findReferralCount(data);
-    if (b !== null) balance = b;
-    if (r !== null) referralCount = r;
+    if (data.user) user = data.user;
+    if (data.balance !== undefined && Number.isFinite(Number(data.balance))) {
+      balance = Number(data.balance);
+    }
     updateUI();
     document.getElementById("connection-status").textContent = "متصل";
+    document.getElementById("app-status").textContent = "● متصل";
   } catch (error) {
-    console.error("loadMe", error);
+    console.error("loadMe:", error);
     document.getElementById("connection-status").textContent = "خطای اتصال";
+    document.getElementById("app-status").textContent = "● خطا در اتصال";
+    throw error;
   }
 }
 
 async function loadReferrals() {
   if (!initData) return;
 
-  try {
-    const data = await api("/api/referrals");
-    const count = findReferralCount(data);
-    if (count !== null) referralCount = count;
-    updateUI();
-  } catch (error) {
-    console.error("loadReferrals", error);
+  const data = await api("/api/referrals");
+
+  const count = Number(data.referralCount ?? data.count ?? 0);
+  if (Number.isFinite(count)) referralCount = count;
+
+  if (typeof data.referralLink === "string" && data.referralLink.startsWith("https://t.me/")) {
+    referralLink = data.referralLink;
   }
+
+  if (data.balance !== undefined && Number.isFinite(Number(data.balance))) {
+    balance = Number(data.balance);
+  }
+
+  updateUI();
 }
 
 function normalizeHistory(data) {
-  if (Array.isArray(data)) return data;
-  for (const list of [
-    data?.history, data?.transactions, data?.items,
-    data?.data, data?.data?.history, data?.data?.transactions
-  ]) {
-    if (Array.isArray(list)) return list;
-  }
-  return [];
+  const history = Array.isArray(data.history) ? data.history : [];
+  const withdrawals = Array.isArray(data.withdrawals) ? data.withdrawals : [];
+
+  const entries = history.map(item => ({
+    ...item,
+    amount: item.amount !== undefined
+      ? Number(item.amount)
+      : Number(item.amount_units || 0) / 100,
+    title: item.details || historyTitle(item.kind),
+    created_at: item.created_at || "",
+    _key: "history-" + item.id
+  }));
+
+  // نمایش وضعیت برداشت‌ها بدون تکرار ردیف برداشت در تاریخچه پاداش‌ها
+  const withdrawalEntries = withdrawals.map(item => ({
+    id: item.id,
+    kind: "withdrawal_request",
+    amount: -Math.abs(Number(item.amount || 0)),
+    title: "درخواست برداشت",
+    details: "درخواست برداشت",
+    status: withdrawalStatus(item.status),
+    created_at: item.created_at || "",
+    _key: "withdrawal-" + item.id
+  }));
+
+  const combined = entries.filter(item => item.kind !== "withdrawal");
+  combined.push(...withdrawalEntries);
+
+  return combined.sort((a, b) => {
+    const dateA = Date.parse(a.created_at) || 0;
+    const dateB = Date.parse(b.created_at) || 0;
+    return dateB - dateA;
+  });
+}
+
+function historyTitle(kind) {
+  const labels = {
+    tap: "پاداش لمس",
+    daily: "پاداش روزانه",
+    referral: "پاداش دعوت دوست",
+    monetag: "پاداش تبلیغ",
+    withdrawal: "درخواست برداشت",
+    refund: "بازگشت مبلغ برداشت"
+  };
+  return labels[kind] || "تراکنش";
+}
+
+function withdrawalStatus(status) {
+  const labels = {
+    pending: "در انتظار بررسی",
+    approved: "تأیید شده",
+    rejected: "رد شده",
+    paid: "پرداخت شده"
+  };
+  return labels[status] || status || "";
 }
 
 function renderHistory(targetId) {
@@ -1041,11 +457,11 @@ function renderHistory(targetId) {
     return;
   }
 
-  container.innerHTML = historyItems.slice(0, 20).map(item => {
-    const amount = Number(item.amount ?? item.reward ?? item.value ?? 0);
+  container.innerHTML = historyItems.slice(0, 30).map(item => {
+    const amount = Number(item.amount || 0);
     const positive = amount >= 0;
-    const title = item.description || item.title || item.type || "تراکنش";
-    const date = item.created_at || item.createdAt || item.date || "";
+    const title = item.title || item.details || historyTitle(item.kind);
+    const date = item.created_at || "";
     const status = item.status ? " · " + item.status : "";
 
     return `
@@ -1073,16 +489,35 @@ async function loadHistory() {
   }
 
   try {
-    const data = await api("/api/history");
+    const data = await api("/api/history", {limit: 50});
     historyItems = normalizeHistory(data);
     renderHistory("home-history");
     renderHistory("wallet-history");
   } catch (error) {
-    console.error("loadHistory", error);
+    console.error("loadHistory:", error);
     document.getElementById("home-history").innerHTML =
-      '<div class="empty">تاریخچه فعلاً در دسترس نیست.</div>';
+      '<div class="empty">دریافت تاریخچه ناموفق بود. دوباره تلاش کن.</div>';
     document.getElementById("wallet-history").innerHTML =
-      '<div class="empty">دریافت تاریخچه ناموفق بود.</div>';
+      '<div class="empty">تاریخچه فعلاً در دسترس نیست.</div>';
+    throw error;
+  }
+}
+
+async function refreshAll() {
+  const results = await Promise.allSettled([
+    loadMe(),
+    loadHistory(),
+    loadReferrals()
+  ]);
+
+  const failed = results.some(result => result.status === "rejected");
+
+  if (failed) {
+    const firstError = results.find(result => result.status === "rejected");
+    console.error("Refresh failed:", firstError?.reason);
+    showToast(firstError?.reason?.message || "بخشی از اطلاعات دریافت نشد.");
+  } else {
+    showToast("اطلاعات با موفقیت به‌روزرسانی شد.");
   }
 }
 
@@ -1095,6 +530,7 @@ async function openAd() {
   }
 
   const showAd = window["show_" + MONETAG_ZONE_ID];
+
   if (typeof showAd !== "function") {
     showToast("تبلیغ هنوز بارگذاری نشده؛ کمی صبر کن.");
     return;
@@ -1126,11 +562,16 @@ async function openAd() {
       showToast("نمایش پایان یافت؛ ثبت پاداش به تأیید سرور بستگی دارد.");
     }
 
-    // پاداش در مرورگر اضافه نمی‌شود؛ موجودی از سرور دوباره خوانده می‌شود.
-    setTimeout(refreshAll, 2500);
-    setTimeout(refreshAll, 7000);
+    // پاداش در مرورگر اضافه نمی‌شود؛ فقط موجودی سرور خوانده می‌شود.
+    window.setTimeout(() => {
+      refreshAll().catch(console.error);
+    }, 3000);
+
+    window.setTimeout(() => {
+      refreshAll().catch(console.error);
+    }, 8000);
   } catch (error) {
-    console.error("Monetag error", error);
+    console.error("Monetag error:", error);
     showToast("نمایش تبلیغ ناموفق بود؛ بعداً دوباره تلاش کن.");
   } finally {
     adBusy = false;
@@ -1150,16 +591,21 @@ document.getElementById("withdraw-form").addEventListener("submit", async event 
   const amountInput = document.getElementById("withdraw-amount");
   const addressInput = document.getElementById("withdraw-address");
   const amount = Number(amountInput.value);
-  const address = addressInput.value.trim();
+  const walletAddress = addressInput.value.trim();
   const submit = document.getElementById("withdraw-submit");
 
-  if (!Number.isFinite(amount) || amount < FIRST_WITHDRAWAL_MINIMUM) {
-    showToast("حداقل برداشت فعلاً ۵۰ نات است.");
+  if (!Number.isFinite(amount) || amount < MIN_WITHDRAWAL) {
+    showToast("حداقل برداشت ۳۰۰ نات است.");
     return;
   }
 
-  if (!address || address.length < 3) {
-    showToast("آدرس دریافت را وارد کن.");
+  if (Math.abs(amount * 100 - Math.round(amount * 100)) > 0.000001) {
+    showToast("مبلغ باید حداکثر دو رقم اعشار داشته باشد.");
+    return;
+  }
+
+  if (walletAddress.length < 20 || walletAddress.length > 150) {
+    showToast("آدرس کیف پول باید بین ۲۰ تا ۱۵۰ نویسه باشد.");
     return;
   }
 
@@ -1168,7 +614,7 @@ document.getElementById("withdraw-form").addEventListener("submit", async event 
     return;
   }
 
-  if (!confirm("درخواست برداشت " + amount + " NOT برای این آدرس ثبت شود؟\n\n" + address)) {
+  if (!window.confirm("درخواست برداشت " + amount + " NOT برای این آدرس ثبت شود؟\n\n" + walletAddress)) {
     return;
   }
 
@@ -1176,17 +622,18 @@ document.getElementById("withdraw-form").addEventListener("submit", async event 
   submit.textContent = "در حال ثبت...";
 
   try {
-    await api("/api/withdraw", {
-      method: "POST",
-      body: { amount, address, wallet_address: address }
+    const data = await api("/api/withdraw", {
+      amount,
+      walletAddress,
+      wallet_address: walletAddress
     });
 
-    showToast("درخواست برداشت ارسال شد.");
+    showToast(data.message || "درخواست برداشت ثبت شد.");
     amountInput.value = "";
     addressInput.value = "";
     await refreshAll();
   } catch (error) {
-    console.error("withdraw", error);
+    console.error("withdraw:", error);
     showToast(error.message || "ثبت درخواست ناموفق بود.");
   } finally {
     submit.disabled = false;
@@ -1197,8 +644,8 @@ document.getElementById("withdraw-form").addEventListener("submit", async event 
 async function copyReferral() {
   const link = document.getElementById("ref-link").textContent.trim();
 
-  if (!link.startsWith("https://")) {
-    showToast("مینی‌اپ را از تلگرام باز کن تا لینک ساخته شود.");
+  if (!link.startsWith("https://t.me/")) {
+    showToast("مینی‌اپ را از تلگرام باز کن تا لینک دعوت دریافت شود.");
     return;
   }
 
@@ -1214,31 +661,32 @@ async function copyReferral() {
       input.select();
       const ok = document.execCommand("copy");
       input.remove();
-      if (!ok) throw new Error("copy failed");
+      if (!ok) throw new Error("کپی انجام نشد");
     }
+
     haptic("success");
     showToast("لینک دعوت کپی شد.");
   } catch (_) {
-    showToast("کپی خودکار نشد؛ لینک را دستی کپی کن.");
+    showToast("کپی خودکار انجام نشد؛ لینک را دستی کپی کن.");
   }
 }
 
 function shareReferral() {
   const link = document.getElementById("ref-link").textContent.trim();
-  if (!link.startsWith("https://")) {
-    showToast("ابتدا ربات را از تلگرام باز کن.");
+
+  if (!link.startsWith("https://t.me/")) {
+    showToast("ابتدا مینی‌اپ را از تلگرام باز کن.");
     return;
   }
 
   const url = "https://t.me/share/url?url=" + encodeURIComponent(link) +
     "&text=" + encodeURIComponent("بیا با هم ADCOIN رو امتحان کنیم!");
 
-  if (tg?.openTelegramLink) tg.openTelegramLink(url);
-  else window.open(url, "_blank", "noopener,noreferrer");
-}
-
-async function refreshAll() {
-  await Promise.allSettled([loadMe(), loadHistory(), loadReferrals()]);
+  if (tg?.openTelegramLink) {
+    tg.openTelegramLink(url);
+  } else {
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
 }
 
 (async function init() {
@@ -1246,14 +694,19 @@ async function refreshAll() {
 
   if (!initData) {
     document.getElementById("connection-status").textContent = "از داخل تلگرام باز کن";
+    document.getElementById("app-status").textContent = "● ورود تلگرام لازم است";
     renderHistory("home-history");
     renderHistory("wallet-history");
+    showToast("برای بارگذاری حساب، این صفحه را از داخل ربات تلگرام باز کن.");
     return;
   }
 
-  await refreshAll();
+  try {
+    await refreshAll();
+  } catch (error) {
+    console.error("Initial load error:", error);
+  }
 })();
 </script>
 </body>
 </html>
-```
