@@ -1,570 +1,1204 @@
-
+```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#080d1c">
-<title>NOT REWARD</title>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<style>
-:root{color-scheme:dark;--bg:#080d1c;--panel:#111a30;--panel2:#15213a;--text:#f5f7ff;--muted:#8f9bb8;--blue:#6485ff;--cyan:#42e5dc;--green:#56e6a5;--red:#ff7187;--line:rgba(255,255,255,.08)}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -10%,rgba(75,104,255,.2),transparent 50%),var(--bg);color:var(--text);font-family:Tahoma,Arial,sans-serif;font-size:14px;padding-bottom:100px}
-button,input{font:inherit}button{cursor:pointer;color:inherit}
-.app{max-width:520px;margin:auto;padding:18px 15px 25px}
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
-.brand{display:flex;align-items:center;gap:10px}.brand-mark{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,#7189ff,#7650df);font-size:22px;font-weight:900}
-.brand-name{font-weight:900;letter-spacing:1px}.brand-sub{font-size:10px;color:var(--muted);margin-top:5px}
-.online{color:var(--green);font-size:10px;padding:8px 10px;border:1px solid #25463e;border-radius:30px}
-.page{display:none}.page.active{display:block}
-.welcome{margin-bottom:18px}.welcome h1{font-size:22px;margin:0 0 8px}.welcome p{font-size:12px;color:var(--muted);line-height:1.8;margin:0}
-.card,.panel,.profile{background:linear-gradient(145deg,#172544,#11192d);border:1px solid var(--line);border-radius:22px;padding:18px;margin-bottom:15px}
-.balance-label{color:#bdc8e6;font-size:12px}.balance-row{display:flex;align-items:center;gap:10px;margin:10px 0}.balance-number{font-size:36px;font-weight:900}.balance-unit{color:var(--cyan);font-weight:bold}
-.balance-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#aab7d5;font-size:10px;line-height:1.8}
-.small-action,.primary{border:0;border-radius:13px;background:linear-gradient(115deg,#5e83ff,#845bea);font-weight:bold;padding:12px 15px}
-.primary{width:100%;min-height:46px;margin-top:14px}.primary:disabled{opacity:.55}
-.secondary{width:100%;min-height:44px;margin-top:10px;border:1px solid var(--line);border-radius:13px;background:#ffffff08}
-.robot-card{text-align:center;padding:22px 14px;background:radial-gradient(ellipse at center,#1c2b4b,#0d1426);border:1px solid var(--line);border-radius:24px}
-.robot-button{width:135px;height:135px;border:0;border-radius:50%;background:linear-gradient(145deg,#7189ff,#493bc2);font-size:66px;box-shadow:0 0 45px #6485ff33;margin:8px auto 15px;display:grid;place-items:center}
-.robot-button:active{transform:scale(.95)}.robot-title{font-size:17px;font-weight:900}.muted{color:var(--muted);font-size:11px;line-height:1.9}
-.stats,.features{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:15px}
-.stat,.feature{border:1px solid var(--line);border-radius:15px;background:#ffffff06;padding:13px;text-align:right}
-.stat-label{color:var(--muted);font-size:10px}.stat-value{font-size:17px;font-weight:bold;margin-top:7px}
-.section-heading{display:flex;align-items:center;justify-content:space-between;margin:23px 1px 12px}.section-heading h2{font-size:15px;margin:0}
-.feature{min-width:0;color:var(--text);background:linear-gradient(145deg,#18233d,#0f172a);padding:15px}
-.feature-icon{font-size:22px;margin-bottom:10px}.feature strong{display:block;font-size:12px;margin-bottom:7px}.feature small{color:var(--muted);font-size:10px;line-height:1.8}
-.panel h3{margin:0 0 9px;font-size:15px}.field-label{display:block;margin:15px 0 7px;font-size:11px;color:#c3cce2}
-.field{width:100%;min-height:46px;color:var(--text);background:#0b1223;border:1px solid #ffffff18;border-radius:12px;padding:12px;direction:ltr;text-align:left;outline:none}
-.field:focus{border-color:var(--blue)}
-.info-row{display:flex;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
-.info-row:last-child{border-bottom:0}.info-row span{color:var(--muted);font-size:11px}.info-row strong{font-size:12px;overflow-wrap:anywhere;text-align:left}
-.profile{text-align:center;padding:22px}.avatar{width:78px;height:78px;border-radius:50%;object-fit:cover;margin:0 auto 12px;background:#6485ff}
-.profile-name{font-size:18px;font-weight:bold}.profile-username,.profile-id{font-size:11px;color:var(--muted);margin-top:8px;direction:ltr}
-.referral-box{direction:ltr;text-align:left;overflow-wrap:anywhere;background:#6485ff12;border:1px dashed #6485ff66;border-radius:12px;padding:13px;margin-top:12px;font-size:11px;line-height:1.8}
-.history-list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
-.history-item{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:12px;background:#ffffff06;border:1px solid var(--line);border-radius:13px}
-.history-title{font-size:11px;font-weight:bold}.history-sub{font-size:10px;color:var(--muted);line-height:1.8;margin-top:6px;overflow-wrap:anywhere}
-.history-amount{font-size:11px;font-weight:bold;white-space:nowrap}.positive{color:var(--green)}.negative{color:var(--red)}
-.status-pill{display:inline-block;margin-top:6px;padding:5px 8px;border-radius:20px;font-size:9px;background:#ffffff10}
-.empty{text-align:center;padding:20px 8px;color:var(--muted);font-size:11px;line-height:2}
-.bottom-nav{position:fixed;z-index:20;bottom:0;left:0;right:0;padding:9px 12px calc(9px + env(safe-area-inset-bottom));background:#080d1cf2;border-top:1px solid var(--line);backdrop-filter:blur(18px)}
-.nav-inner{max-width:490px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
-.nav-item{min-height:52px;border:0;border-radius:13px;background:transparent;color:#77839e;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:10px}
-.nav-icon{font-size:19px}.nav-item.active{color:#9eb1ff;background:#6485ff1c}
-.toast{position:fixed;z-index:50;bottom:calc(85px + env(safe-area-inset-bottom));left:15px;right:15px;max-width:480px;margin:auto;padding:13px 15px;border-radius:13px;background:#202c47;border:1px solid var(--line);font-size:12px;line-height:1.8;opacity:0;pointer-events:none;transform:translateY(8px);transition:.2s}
-.toast.show{opacity:1;transform:translateY(0)}
-@media(max-width:360px){.app{padding-left:11px;padding-right:11px}.balance-number{font-size:30px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#070b19">
+  <title>ADCOIN | کسب درآمد</title>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://libtl.com/sdk.js" data-zone="12066198" data-sdk="show_12066198"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
+
+    :root {
+      --bg: #070b19;
+      --panel: #10182d;
+      --panel2: #131e38;
+      --blue: #38bdf8;
+      --cyan: #22d3ee;
+      --purple: #8b5cf6;
+      --text: #f4f7ff;
+      --muted: #96a6c7;
+      --border: rgba(125, 170, 255, .14);
+      --green: #34d399;
+      --red: #fb7185;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at 50% -10%, rgba(43, 102, 220, .24), transparent 50%),
+        radial-gradient(circle at 100% 40%, rgba(111, 62, 205, .10), transparent 30%),
+        var(--bg);
+      color: var(--text);
+      font-family: "Vazirmatn", Tahoma, sans-serif;
+      padding-bottom: 105px;
+    }
+
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled { opacity: .55; cursor: not-allowed; }
+
+    .app {
+      width: 100%;
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 17px 15px 30px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .brand-logo {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 17px;
+      font-size: 25px;
+      background: linear-gradient(145deg, #38bdf8, #5542e8);
+      box-shadow: 0 0 28px rgba(56, 189, 248, .24);
+    }
+
+    .brand-name { font-size: 19px; font-weight: 900; letter-spacing: .4px; }
+    .brand-sub { color: var(--muted); font-size: 11px; margin-top: 1px; }
+
+    .online {
+      border: 1px solid rgba(52, 211, 153, .24);
+      background: rgba(52, 211, 153, .08);
+      color: #6ee7b7;
+      border-radius: 30px;
+      padding: 7px 10px;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .online::before {
+      content: "";
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      margin-left: 6px;
+      box-shadow: 0 0 9px var(--green);
+    }
+
+    .welcome {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 17px 17px 4px;
+    }
+
+    .welcome h1 { font-size: 21px; margin: 0 0 5px; font-weight: 800; }
+    .welcome p { color: var(--muted); font-size: 12px; margin: 0; }
+    .welcome-emoji { font-size: 45px; filter: drop-shadow(0 0 15px rgba(56,189,248,.3)); }
+
+    .balance-card {
+      position: relative;
+      overflow: hidden;
+      margin-top: 17px;
+      padding: 23px 21px;
+      border: 1px solid rgba(87, 160, 255, .32);
+      border-radius: 26px;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(42, 132, 255, .25), transparent 45%),
+        linear-gradient(135deg, #15264a, #11162c 68%, #191a3b);
+      box-shadow: 0 14px 38px rgba(0,0,0,.18);
+    }
+
+    .balance-card::after {
+      content: "₦";
+      position: absolute;
+      left: 18px;
+      top: 7px;
+      font-size: 105px;
+      font-weight: 900;
+      color: rgba(255,255,255,.035);
+      pointer-events: none;
+    }
+
+    .balance-label { color: #bdcbed; font-size: 13px; }
+    .balance-value {
+      font-size: 39px;
+      font-weight: 900;
+      margin-top: 6px;
+      line-height: 1.5;
+      letter-spacing: -.5px;
+    }
+
+    .balance-unit { font-size: 14px; color: #9bdfff; margin-right: 5px; }
+    .balance-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 15px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,.1);
+      color: #b6c4e4;
+      font-size: 11px;
+    }
+
+    .mini-pill {
+      border: 1px solid rgba(52,211,153,.22);
+      color: #6ee7b7;
+      background: rgba(52,211,153,.08);
+      border-radius: 10px;
+      padding: 6px 9px;
+      white-space: nowrap;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 15px;
+      margin: 25px 2px 13px;
+    }
+
+    .section-title small { color: var(--muted); font-size: 11px; font-weight: 400; }
+
+    .earn-card {
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      padding: 22px 16px 18px;
+      text-align: center;
+      background: linear-gradient(160deg, rgba(21,31,59,.94), rgba(12,17,35,.97));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .earn-card::before {
+      content: "";
+      position: absolute;
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      background: rgba(42, 139, 255, .09);
+      filter: blur(25px);
+      top: -95px;
+      left: calc(50% - 105px);
+      pointer-events: none;
+    }
+
+    .orb-wrap {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 12px;
+      display: grid;
+      place-items: center;
+    }
+
+    .orb-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(56,189,248,.25);
+      inset: 2px;
+      animation: rotate 16s linear infinite;
+    }
+
+    .orb-ring.r2 {
+      inset: 13px;
+      border-color: rgba(139,92,246,.38);
+      border-style: dashed;
+      animation-direction: reverse;
+      animation-duration: 24s;
+    }
+
+    .orb-ring.r3 {
+      inset: 25px;
+      border-color: rgba(34,211,238,.28);
+    }
+
+    @keyframes rotate { to { transform: rotate(360deg); } }
+
+    .main-earn {
+      position: relative;
+      z-index: 1;
+      width: 126px;
+      height: 126px;
+      border: 3px solid rgba(255,255,255,.22);
+      border-radius: 42px;
+      transform: rotate(-4deg);
+      background: linear-gradient(145deg, #44ddff 0%, #2879ff 46%, #7c3aed 100%);
+      box-shadow:
+        0 0 0 7px rgba(57,151,255,.08),
+        0 0 35px rgba(38,141,255,.44),
+        inset 0 2px 9px rgba(255,255,255,.42);
+      display: grid;
+      place-items: center;
+      transition: transform .2s, filter .2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .main-earn:active { transform: rotate(0) scale(.93); }
+    .main-earn .coin { font-size: 49px; filter: drop-shadow(0 4px 4px rgba(0,0,0,.2)); }
+    .earn-title { font-size: 17px; font-weight: 800; margin-top: 6px; }
+    .earn-sub { font-size: 12px; color: var(--muted); margin-top: 5px; line-height: 1.9; }
+
+    .primary-btn {
+      border: 0;
+      border-radius: 15px;
+      padding: 13px 17px;
+      color: #061326;
+      font-weight: 900;
+      background: linear-gradient(100deg, #5ee7ff, #65a7ff);
+      box-shadow: 0 7px 20px rgba(56,189,248,.17);
+      transition: transform .15s;
+    }
+
+    .primary-btn:active { transform: scale(.98); }
+    .earn-button { width: 100%; margin-top: 17px; }
+    .secondary-btn {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.035);
+      color: var(--text);
+      border-radius: 13px;
+      padding: 11px 14px;
+      font-weight: 700;
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 11px;
+    }
+
+    .stat-card {
+      background: linear-gradient(145deg, rgba(21,31,56,.9), rgba(14,19,38,.9));
+      border: 1px solid var(--border);
+      border-radius: 19px;
+      padding: 15px 13px;
+      min-width: 0;
+    }
+
+    .stat-icon {
+      width: 37px;
+      height: 37px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      background: rgba(56,189,248,.12);
+      margin-bottom: 11px;
+    }
+
+    .stat-label { font-size: 11px; color: var(--muted); }
+    .stat-value { font-size: 20px; font-weight: 900; margin-top: 4px; overflow-wrap: anywhere; }
+    .stat-unit { font-size: 11px; color: #9bdfff; font-weight: 500; }
+
+    .feature-list { display: grid; gap: 10px; }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid var(--border);
+      background: rgba(18,26,48,.72);
+      border-radius: 17px;
+      padding: 13px;
+    }
+
+    .feature-icon {
+      flex: 0 0 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      background: rgba(139,92,246,.14);
+    }
+
+    .feature-text { flex: 1; min-width: 0; }
+    .feature-text b { font-size: 13px; display: block; }
+    .feature-text small { display: block; font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.8; }
+    .feature-arrow { color: #7890bc; font-size: 20px; }
+
+    .page { display: none; }
+    .page.active { display: block; animation: fadeIn .2s ease; }
+    @keyframes fadeIn { from { opacity: .5; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+    .page-heading { font-size: 22px; font-weight: 900; margin: 10px 2px 5px; }
+    .page-description { color: var(--muted); font-size: 12px; margin: 0 2px 19px; line-height: 1.9; }
+
+    .panel {
+      border: 1px solid var(--border);
+      background: linear-gradient(145deg, rgba(20,30,55,.92), rgba(13,18,36,.96));
+      border-radius: 22px;
+      padding: 18px;
+      margin-bottom: 13px;
+    }
+
+    .panel h3 { font-size: 14px; margin: 0 0 15px; }
+    .field-label { display: block; font-size: 12px; color: #b7c6e5; margin: 13px 0 8px; }
+    .field {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      border: 1px solid rgba(134,162,220,.2);
+      border-radius: 13px;
+      background: rgba(3,8,21,.55);
+      color: var(--text);
+      outline: none;
+      padding: 13px;
+    }
+
+    .field:focus { border-color: rgba(56,189,248,.7); }
+    .field::placeholder { color: #647493; }
+    .full { width: 100%; margin-top: 15px; }
+
+    .notice {
+      border-radius: 14px;
+      padding: 12px;
+      font-size: 11px;
+      line-height: 2;
+      color: #c5d8ff;
+      background: rgba(56,189,248,.07);
+      border: 1px solid rgba(56,189,248,.15);
+      margin-top: 13px;
+    }
+
+    .history-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(255,255,255,.065);
+    }
+
+    .history-item:last-child { border-bottom: 0; }
+    .history-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .history-icon {
+      width: 37px; height: 37px; flex: 0 0 37px;
+      display: grid; place-items: center;
+      border-radius: 12px; background: rgba(56,189,248,.1);
+    }
+
+    .history-title { font-size: 12px; font-weight: 700; }
+    .history-date { font-size: 10px; color: var(--muted); margin-top: 4px; }
+    .history-amount { font-size: 12px; font-weight: 800; white-space: nowrap; }
+    .positive { color: var(--green); }
+    .negative { color: var(--red); }
+    .empty { color: var(--muted); font-size: 12px; text-align: center; padding: 22px 8px; }
+
+    .ref-code {
+      direction: ltr;
+      text-align: center;
+      overflow-wrap: anywhere;
+      border: 1px dashed rgba(56,189,248,.4);
+      background: rgba(56,189,248,.06);
+      color: #a7e8ff;
+      padding: 14px 10px;
+      border-radius: 13px;
+      font-size: 12px;
+      margin: 12px 0;
+      user-select: text;
+    }
+
+    .profile-avatar {
+      width: 76px; height: 76px;
+      display: grid; place-items: center;
+      margin: 3px auto 13px;
+      border-radius: 26px;
+      font-size: 35px;
+      background: linear-gradient(145deg, #38bdf8, #6d42e8);
+      box-shadow: 0 0 30px rgba(56,189,248,.18);
+    }
+
+    .profile-name { text-align: center; font-weight: 900; font-size: 18px; }
+    .profile-id { text-align: center; font-size: 11px; color: var(--muted); margin-top: 4px; direction: ltr; }
+
+    .bottom-nav {
+      position: fixed;
+      z-index: 20;
+      bottom: max(10px, env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 22px);
+      max-width: 510px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 4px;
+      padding: 8px;
+      border-radius: 22px;
+      border: 1px solid rgba(111,153,235,.22);
+      background: rgba(9,14,30,.93);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 10px 40px rgba(0,0,0,.45);
+    }
+
+    .nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      min-width: 0;
+      padding: 7px 2px;
+      border: 0;
+      border-radius: 14px;
+      background: transparent;
+      color: #8090b3;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .nav-btn .nav-icon { font-size: 21px; line-height: 1.2; }
+    .nav-btn.active {
+      color: #80e5ff;
+      background: linear-gradient(145deg, rgba(56,189,248,.15), rgba(99,102,241,.12));
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 50;
+      bottom: 100px;
+      left: 50%;
+      transform: translate(-50%, 12px);
+      opacity: 0;
+      pointer-events: none;
+      width: calc(100% - 36px);
+      max-width: 440px;
+      border: 1px solid rgba(125,170,255,.25);
+      background: #17233d;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      border-radius: 14px;
+      padding: 13px 15px;
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.9;
+      transition: .25s;
+    }
+
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .loading { opacity: .65; pointer-events: none; }
+    .muted { color: var(--muted); }
+    .tiny { font-size: 10px; line-height: 1.9; }
+    .footer { text-align: center; color: #637392; font-size: 10px; margin-top: 24px; }
+
+    @media (max-width: 360px) {
+      .app { padding-left: 11px; padding-right: 11px; }
+      .balance-value { font-size: 33px; }
+      .orb-wrap { width: 158px; height: 158px; }
+      .main-earn { width: 112px; height: 112px; border-radius: 37px; }
+      .grid2 { gap: 8px; }
+      .stat-card { padding: 12px 10px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
 </head>
+
 <body>
-<div class="app">
-<header class="topbar">
-  <div class="brand"><div class="brand-mark">N</div><div><div class="brand-name">NOT REWARD</div><div class="brand-sub">TAP · EARN · REPEAT</div></div></div>
-  <div class="online">● آماده فعالیت</div>
-</header>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-logo">🚀</div>
+        <div>
+          <div class="brand-name">ADCOIN</div>
+          <div class="brand-sub">هر روز، یک قدم به درآمد نزدیک‌تر</div>
+        </div>
+      </div>
+      <div class="online">سیستم فعال</div>
+    </header>
 
-<main>
-<section id="page-home" class="page active">
-  <div class="welcome"><h1 id="welcomeTitle">سلام، خوش اومدی 👋</h1><p>ربات رو لمس کن و پاداش جمع کن.</p></div>
-  <div class="card">
-    <div class="balance-label">موجودی کیف پول شما</div>
-    <div class="balance-row"><div class="balance-number" id="balance">0.00</div><div class="balance-unit">NOT</div></div>
-    <div class="balance-bottom"><span>هر لمس موفق<br>پاداش ۰٫۰۲ NOT</span><button class="small-action" onclick="showPage('wallet')">کیف پول ←</button></div>
-  </div>
-  <div class="robot-card">
-    <button class="robot-button" id="robotButton" aria-label="لمس ربات" onclick="tapRobot()">🤖</button>
-    <div class="robot-title">ربات رو لمس کن!</div>
-    <p class="muted">هر لمس موفق = ۰٫۰۲ NOT<br>روزانه تا ۵۰۰ لمس</p>
-    <div class="stats">
-      <div class="stat"><div class="stat-label">لمس باقی‌مانده امروز</div><div class="stat-value" id="tapsRemaining">500</div></div>
-      <div class="stat"><div class="stat-label">پاداش هر لمس</div><div class="stat-value positive">+0.02 NOT</div></div>
-    </div>
-  </div>
-  <div class="section-heading"><h2>راه‌های دریافت پاداش</h2><span class="muted">بیشتر جمع کن ✨</span></div>
-  <div class="features">
-    <button class="feature" onclick="claimDaily()"><div class="feature-icon">🎁</div><strong>پاداش روزانه</strong><small>هر روز وارد شو و پاداش بگیر</small></button>
-    <button class="feature" onclick="showPage('referral')"><div class="feature-icon">👥</div><strong>دعوت دوستان</strong><small>دوستات رو دعوت کن و پاداش بگیر</small></button>
-    <button class="feature" onclick="openAd()"><div class="feature-icon">▶️</div><strong>تماشای تبلیغ</strong><small>پاداش تبلیغ تأییدشده: ۰٫۵ NOT</small></button>
-    <button class="feature" onclick="showPage('wallet')"><div class="feature-icon">💎</div><strong>برداشت NOT</strong><small>حداقل برداشت براساس سابقه حساب</small></button>
-  </div>
-</section>
+    <!-- خانه -->
+    <section class="page active" id="page-home">
+      <div class="welcome">
+        <div>
+          <h1 id="welcome-title">سلام، خوش اومدی! 👋</h1>
+          <p>آماده‌ای امروز نات بیشتری جمع کنی؟</p>
+        </div>
+        <div class="welcome-emoji">🤖</div>
+      </div>
 
-<section id="page-wallet" class="page">
-  <div class="welcome"><h1>کیف پول 💎</h1><p>موجودی، تاریخچه پاداش‌ها و برداشت‌ها.</p></div>
-  <div class="card">
-    <div class="balance-label">موجودی قابل برداشت</div><div class="balance-row"><div class="balance-number" id="walletBalance">0.00</div><div class="balance-unit">NOT</div></div>
-    <div class="balance-bottom">حداقل برداشت<br><strong id="withdrawMinimumLabel">در حال بررسی…</strong></div>
-  </div>
-  <div class="panel">
-    <h3>درخواست برداشت</h3><div class="muted">آدرس کیف پول را با دقت وارد کن.</div>
-    <label class="field-label" for="withdrawAmount">مقدار برداشت (NOT)</label><input class="field" id="withdrawAmount" type="number" min="50" step="0.01" placeholder="مبلغ برداشت" inputmode="decimal">
-    <label class="field-label" for="walletAddress">آدرس کیف پول NOT</label><input class="field" id="walletAddress" type="text" placeholder="آدرس کیف پول" autocomplete="off" spellcheck="false">
-    <button class="primary" id="withdrawButton" onclick="requestWithdrawal()">ثبت درخواست برداشت</button>
-    <p class="muted">حداقل برداشت بار اول ۵۰ NOT و برداشت‌های بعدی ۳۰۰ NOT است؛ محدودیت نهایی را سرور تعیین می‌کند.</p>
-  </div>
-  <div class="panel">
-    <div class="section-heading" style="margin-top:0"><h2>تاریخچه کیف پول</h2><button class="small-action" onclick="loadHistory()">بروزرسانی</button></div>
-    <div id="historyList" class="history-list"><div class="empty">برای نمایش تاریخچه، بروزرسانی را بزن.</div></div>
-    <div class="section-heading"><h2>سوابق برداشت</h2></div><div id="withdrawHistory" class="history-list"><div class="empty">هنوز اطلاعاتی نمایش داده نشده.</div></div>
-  </div>
-</section>
+      <div class="balance-card">
+        <div class="balance-label">موجودی کیف پول شما</div>
+        <div class="balance-value"><span id="balance">۰</span><span class="balance-unit">NOT</span></div>
+        <div class="balance-foot">
+          <span>💎 درآمدت رو همین‌جا مدیریت کن</span>
+          <span class="mini-pill">● کیف پول</span>
+        </div>
+      </div>
 
-<section id="page-referral" class="page">
-  <div class="welcome"><h1>دعوت دوستان 👥</h1><p>لینک اختصاصی خودت رو برای دوستات بفرست.</p></div>
-  <div class="panel"><div class="feature-icon">🎁</div><h3>دعوت کن و پاداش بگیر</h3><p class="muted">دوستت باید از طریق لینک دعوت وارد ربات بشه.</p>
-    <div class="referral-box" id="referralLink">در حال آماده‌سازی لینک دعوت…</div>
-    <button class="primary" onclick="copyReferral()">کپی لینک دعوت</button><button class="secondary" onclick="shareReferral()">اشتراک‌گذاری لینک</button>
-  </div>
-  <div class="panel"><h3>آمار دعوت‌ها</h3><div class="info-row"><span>تعداد دعوت‌های موفق</span><strong id="referralCount">0</strong></div><div class="info-row"><span>پاداش هر دعوت</span><strong class="positive">5 NOT</strong></div><button class="secondary" onclick="loadReferrals()">بروزرسانی آمار</button></div>
-</section>
+      <div class="section-title">
+        <span>🎯 کسب درآمد</span>
+        <small>انتخاب کن و شروع کن</small>
+      </div>
 
-<section id="page-profile" class="page">
-  <div class="welcome"><h1>پروفایل من</h1><p>اطلاعات حساب تلگرامت.</p></div>
-  <div class="profile"><div id="avatarFallback" class="avatar" style="display:grid;place-items:center;font-size:28px">👤</div><img id="avatarImage" class="avatar" src="" alt="عکس پروفایل" style="display:none"><div id="profileName" class="profile-name">کاربر تلگرام</div><div id="profileUsername" class="profile-username">—</div><div id="profileId" class="profile-id">ID: —</div></div>
-  <div class="panel"><div class="info-row"><span>شناسه تلگرام</span><strong id="infoId">—</strong></div><div class="info-row"><span>نام</span><strong id="infoName">—</strong></div><div class="info-row"><span>نام کاربری</span><strong id="infoUsername">—</strong></div><div class="info-row"><span>موجودی</span><strong id="profileBalance">0.00 NOT</strong></div></div>
-</section>
-</main>
-</div>
+      <div class="earn-card">
+        <div class="orb-wrap">
+          <div class="orb-ring"></div>
+          <div class="orb-ring r2"></div>
+          <div class="orb-ring r3"></div>
+          <button class="main-earn" id="ad-button" onclick="openAd()" aria-label="تماشای تبلیغ">
+            <span class="coin">▶️</span>
+          </button>
+        </div>
+        <div class="earn-title">تبلیغ ببین، پاداش بگیر</div>
+        <div class="earn-sub">تبلیغ را باز کن و تا تأیید سرور برای ثبت پاداش صبر کن.</div>
+        <button class="primary-btn earn-button" onclick="openAd()">✨ تماشای تبلیغ</button>
+        <div class="tiny muted" style="margin-top:10px">ثبت پاداش فقط بعد از تأیید معتبر سرور انجام می‌شود.</div>
+      </div>
 
-<nav class="bottom-nav"><div class="nav-inner">
-<button class="nav-item active" data-page="home" onclick="showPage('home')"><span class="nav-icon">⌂</span><span>خانه</span></button>
-<button class="nav-item" data-page="wallet" onclick="showPage('wallet')"><span class="nav-icon">◈</span><span>کیف پول</span></button>
-<button class="nav-item" data-page="referral" onclick="showPage('referral')"><span class="nav-icon">♧</span><span>دعوت دوستان</span></button>
-<button class="nav-item" data-page="profile" onclick="showPage('profile')"><span class="nav-icon">◎</span><span>پروفایل</span></button>
-</div></nav>
-<div id="toast" class="toast" role="status" aria-live="polite"></div>
+      <div class="section-title"><span>📊 آمار حساب</span></div>
+      <div class="grid2">
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div class="stat-label">موجودی فعلی</div>
+          <div class="stat-value"><span id="stat-balance">۰</span> <span class="stat-unit">NOT</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div class="stat-label">دوستان دعوت‌شده</div>
+          <div class="stat-value" id="stat-referrals">۰</div>
+        </div>
+      </div>
 
-<script>
-"use strict";
+      <div class="section-title"><span>⚡ دسترسی سریع</span></div>
+      <div class="feature-list">
+        <button class="feature" onclick="showPage('wallet')" style="text-align:right;color:inherit;width:100%">
+          <div class="feature-icon">💳</div>
+          <div class="feature-text">
+            <b>درخواست برداشت</b>
+            <small>درخواست برداشت از ۵۰ نات به بالا</small>
+          </div>
+          <span class="feature-arrow">‹</span>
+        </button>
+        <button class="feature" onclick="showPage('referral')" style="text-align:right;color:inherit;width:100%">
+          <div class="feature-icon">🎁</div>
+          <div class="feature-text">
+            <b>دعوت از دوستان</b>
+            <small>لینک اختصاصی خودت رو با دوستانت به اشتراک بذار</small>
+          </div>
+          <span class="feature-arrow">‹</span>
+        </button>
+      </div>
 
-const API = "https://not-reward-api.mukefaceget15.workers.dev";
-const BOT_USERNAME = "notrewarddbot";
-const MONETAG_ZONE_ID = "12066198";
-const FIRST_WITHDRAWAL_MINIMUM = 50;
-const NEXT_WITHDRAWAL_MINIMUM = 300;
-const TAP_REWARD = 0.02;
+      <div class="section-title"><span>🧾 آخرین تراکنش‌ها</span><small>تاریخچه حساب</small></div>
+      <div class="panel" id="home-history">
+        <div class="empty">در حال دریافت تراکنش‌ها...</div>
+      </div>
+    </section>
 
-const tg = window.Telegram?.WebApp;
-let user = tg?.initDataUnsafe?.user || null;
-let initData = tg?.initData || "";
-let balance = 0;
-let tapsRemaining = 500;
-let currentWithdrawalMinimum = FIRST_WITHDRAWAL_MINIMUM;
-let toastTimer = null;
-let tapBusy = false;
-let dailyBusy = false;
-let withdrawBusy = false;
-let monetagAdBusy = false;
+    <!-- کیف پول -->
+    <section class="page" id="page-wallet">
+      <h1 class="page-heading">💳 کیف پول</h1>
+      <p class="page-description">موجودی خودت رو بررسی کن و درخواست برداشت ثبت کن.</p>
 
-if (tg) {
-  tg.ready();
-  tg.expand();
-  try {
-    tg.setHeaderColor("#080d1c");
-    tg.setBackgroundColor("#080d1c");
-  } catch (_) {}
-}
+      <div class="balance-card" style="margin-top:0">
+        <div class="balance-label">موجودی قابل مشاهده</div>
+        <div class="balance-value"><span id="wallet-balance">۰</span><span class="balance-unit">NOT</span></div>
+        <div class="balance-foot">
+          <span>حداقل برداشت فعلی</span>
+          <span class="mini-pill">۵۰ NOT</span>
+        </div>
+      </div>
 
-function showToast(message) {
-  const el = document.getElementById("toast");
-  el.textContent = message;
-  el.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove("show"), 4500);
-}
+      <div class="panel" style="margin-top:16px">
+        <h3>📤 ثبت درخواست برداشت</h3>
+        <form id="withdraw-form">
+          <label class="field-label" for="withdraw-amount">مبلغ برداشت (NOT)</label>
+          <input class="field" id="withdraw-amount" type="number" min="50" step="1" placeholder="حداقل ۵۰ نات" required>
 
-function haptic(kind = "light") {
-  try { tg?.HapticFeedback?.impactOccurred(kind); } catch (_) {}
-}
+          <label class="field-label" for="withdraw-address">آدرس کیف پول یا شناسه پرداخت</label>
+          <input class="field" id="withdraw-address" type="text" maxlength="200" placeholder="آدرس دریافت را وارد کن" required>
 
-function formatNumber(value) {
-  const n = Number(value);
-  return Number.isFinite(n)
-    ? n.toLocaleString("en-US", {minimumFractionDigits:2, maximumFractionDigits:2})
-    : "0.00";
-}
+          <div class="notice">
+            ⚠️ حداقل برداشت فعلاً ۵۰ نات است. قبل از ارسال درخواست، آدرس دریافت را با دقت بررسی کن.
+          </div>
+          <button class="primary-btn full" type="submit" id="withdraw-submit">ثبت درخواست برداشت</button>
+        </form>
+      </div>
 
-function showPage(name) {
-  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-  document.getElementById("page-" + name)?.classList.add("active");
-  document.querySelectorAll(".nav-item").forEach(b => b.classList.toggle("active", b.dataset.page === name));
-  haptic();
-  if (name === "wallet") {
-    updateBalanceUI();
-    loadHistory();
-    refreshWithdrawalMinimum();
-  }
-  if (name === "referral") loadReferrals();
-  window.scrollTo({top:0, behavior:"smooth"});
-}
+      <div class="panel">
+        <h3>📋 تاریخچه تراکنش‌ها</h3>
+        <div id="wallet-history"><div class="empty">در حال دریافت...</div></div>
+      </div>
+    </section>
 
-async function api(path, body = {}) {
-  if (!initData) throw new Error("برای استفاده از امکانات، برنامه را از داخل ربات تلگرام باز کن.");
-  const response = await fetch(API + path, {
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({...body, initData})
-  });
-  let result;
-  try { result = await response.json(); }
-  catch (_) { throw new Error("پاسخ نامعتبر از سرور دریافت شد."); }
-  if (!response.ok || result.ok === false) throw new Error(result.error || result.message || "درخواست انجام نشد.");
-  return result;
-}
+    <!-- دعوت دوستان -->
+    <section class="page" id="page-referral">
+      <h1 class="page-heading">🎁 دعوت از دوستان</h1>
+      <p class="page-description">لینک اختصاصی خودت رو برای دوستانت بفرست و آمار دعوت‌هات رو ببین.</p>
 
-function updateBalanceUI() {
-  document.getElementById("balance").textContent = formatNumber(balance);
-  document.getElementById("walletBalance").textContent = formatNumber(balance);
-  document.getElementById("profileBalance").textContent = formatNumber(balance) + " NOT";
-}
+      <div class="panel">
+        <div style="font-size:42px;text-align:center;margin:6px 0 12px">🫂</div>
+        <h3 style="text-align:center">با هم بیشتر پیشرفت کنیم!</h3>
+        <div class="grid2">
+          <div class="stat-card">
+            <div class="stat-label">تعداد دعوت‌ها</div>
+            <div class="stat-value" id="ref-count">۰</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">شناسه تلگرام</div>
+            <div class="stat-value" id="ref-user-id" style="font-size:15px">—</div>
+          </div>
+        </div>
+        <label class="field-label">لینک دعوت اختصاصی</label>
+        <div class="ref-code" id="ref-link">در حال ساخت لینک...</div>
+        <button class="primary-btn full" onclick="copyReferral()">📋 کپی لینک دعوت</button>
+        <button class="secondary-btn full" onclick="shareReferral()">📨 ارسال برای دوستان</button>
+        <div class="notice">تعداد دعوت‌ها از اطلاعات سرور خوانده می‌شود. پاداش دعوت، در صورت فعال بودن، باید توسط سرور محاسبه شود.</div>
+      </div>
+    </section>
 
-function setUserProfile() {
-  if (!user) {
-    document.getElementById("welcomeTitle").textContent = "سلام، خوش اومدی 👋";
-    return;
-  }
-  const name = [user.first_name, user.last_name].filter(Boolean).join(" ") || "کاربر تلگرام";
-  const username = user.username ? "@" + user.username : "نام کاربری ثبت نشده";
-  const id = String(user.id);
-  document.getElementById("welcomeTitle").textContent = "سلام، " + (user.first_name || "دوست من") + " 👋";
-  document.getElementById("profileName").textContent = name;
-  document.getElementById("profileUsername").textContent = username;
-  document.getElementById("profileId").textContent = "ID: " + id;
-  document.getElementById("infoId").textContent = id;
-  document.getElementById("infoName").textContent = name;
-  document.getElementById("infoUsername").textContent = username;
+    <!-- پروفایل -->
+    <section class="page" id="page-profile">
+      <h1 class="page-heading">👤 پروفایل من</h1>
+      <p class="page-description">اطلاعات حساب تلگرامت.</p>
 
-  const fallback = document.getElementById("avatarFallback");
-  const image = document.getElementById("avatarImage");
-  if (user.photo_url) {
-    image.onload = () => { image.style.display = "block"; fallback.style.display = "none"; };
-    image.onerror = () => { image.style.display = "none"; fallback.style.display = "grid"; };
-    image.src = user.photo_url;
-  } else {
-    fallback.textContent = (user.first_name || "U").slice(0,1).toUpperCase();
-  }
-}
+      <div class="panel">
+        <div class="profile-avatar">🤖</div>
+        <div class="profile-name" id="profile-name">کاربر ADCOIN</div>
+        <div class="profile-id" id="profile-id">ID: —</div>
+      </div>
 
-async function loadMe(showError = true) {
-  if (!initData) {
-    if (showError) showToast("برنامه را از داخل ربات تلگرام باز کن.");
-    return;
-  }
-  try {
-    const result = await api("/api/me");
-    if (result.balance !== undefined) balance = Number(result.balance) || 0;
-    else if (result.balanceUnits !== undefined) balance = Number(result.balanceUnits) / 100;
-    if (result.user) { user = {...user, ...result.user}; setUserProfile(); }
-    updateBalanceUI();
-  } catch (error) {
-    if (showError) showToast(error.message || "دریافت اطلاعات حساب انجام نشد.");
-  }
-}
+      <div class="panel">
+        <h3>📌 وضعیت حساب</h3>
+        <div class="history-item">
+          <span class="muted" style="font-size:12px">موجودی</span>
+          <b id="profile-balance">۰ NOT</b>
+        </div>
+        <div class="history-item">
+          <span class="muted" style="font-size:12px">دوستان دعوت‌شده</span>
+          <b id="profile-referrals">۰</b>
+        </div>
+        <div class="history-item">
+          <span class="muted" style="font-size:12px">وضعیت اتصال</span>
+          <b class="positive" id="connection-status">در حال بررسی</b>
+        </div>
+        <button class="secondary-btn full" onclick="refreshAll()">🔄 به‌روزرسانی اطلاعات</button>
+      </div>
+      <div class="footer">ADCOIN • کسب درآمد ساده و شفاف</div>
+    </section>
+  </main>
 
-async function tapRobot() {
-  if (tapBusy) return;
-  if (!initData) return showToast("برای دریافت پاداش، برنامه را از داخل ربات تلگرام باز کن.");
-  if (tapsRemaining <= 0) return showToast("سهمیه لمس امروزت تمام شده است.");
-  tapBusy = true;
-  const btn = document.getElementById("robotButton");
-  btn.style.transform = "scale(.94)";
-  setTimeout(() => btn.style.transform = "", 120);
-  haptic("medium");
-  try {
-    const result = await api("/api/tap");
-    if (result.balance !== undefined) balance = Number(result.balance) || 0;
-    if (result.tapsRemaining !== undefined) tapsRemaining = Number(result.tapsRemaining);
-    else tapsRemaining = Math.max(0, tapsRemaining - 1);
-    document.getElementById("tapsRemaining").textContent = tapsRemaining;
-    updateBalanceUI();
-    showToast("🎉 " + formatNumber(result.reward ?? TAP_REWARD) + " NOT پاداش گرفتی!");
-  } catch (error) {
-    showToast(error.message || "این لمس ثبت نشد.");
-  } finally {
-    tapBusy = false;
-  }
-}
+  <nav class="bottom-nav" aria-label="منوی اصلی">
+    <button class="nav-btn active" data-page="home" onclick="showPage('home')">
+      <span class="nav-icon">⌂</span><span>خانه</span>
+    </button>
+    <button class="nav-btn" data-page="wallet" onclick="showPage('wallet')">
+      <span class="nav-icon">▣</span><span>کیف پول</span>
+    </button>
+    <button class="nav-btn" data-page="referral" onclick="showPage('referral')">
+      <span class="nav-icon">♧</span><span>دعوت دوستان</span>
+    </button>
+    <button class="nav-btn" data-page="profile" onclick="showPage('profile')">
+      <span class="nav-icon">◎</span><span>پروفایل</span>
+    </button>
+  </nav>
 
-async function claimDaily() {
-  if (dailyBusy) return;
-  dailyBusy = true;
-  try {
-    const result = await api("/api/daily");
-    if (result.balance !== undefined) balance = Number(result.balance) || 0;
-    updateBalanceUI();
-    showToast("🎁 پاداش روزانه " + formatNumber(result.reward || 0) + " NOT دریافت شد!");
-    haptic("light");
-  } catch (error) {
-    showToast(error.message || "دریافت پاداش روزانه انجام نشد.");
-  } finally {
-    dailyBusy = false;
-  }
-}
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-async function refreshWithdrawalMinimum() {
-  let minimum = FIRST_WITHDRAWAL_MINIMUM;
-  try {
-    const result = await api("/api/history");
-    const withdrawals = Array.isArray(result.withdrawals) ? result.withdrawals : [];
-    if (withdrawals.length > 0) minimum = NEXT_WITHDRAWAL_MINIMUM;
-  } catch (_) {}
-  currentWithdrawalMinimum = minimum;
-  const input = document.getElementById("withdrawAmount");
-  input.min = String(minimum);
-  input.placeholder = "حداقل " + minimum + " NOT";
-  document.getElementById("withdrawMinimumLabel").textContent = minimum + " NOT";
-  return minimum;
-}
+  <script>
+    "use strict";
 
-async function requestWithdrawal() {
-  if (withdrawBusy) return;
-  if (!initData) return showToast("برنامه را از داخل تلگرام باز کن.");
-  const amountInput = document.getElementById("withdrawAmount").value.trim();
-  const amount = Number(amountInput);
-  const wallet = document.getElementById("walletAddress").value.trim();
-  const minimum = await refreshWithdrawalMinimum();
+    // تنظیمات اصلی
+    const API_BASE = "https://not-reward-api.mukefaceget15.workers.dev";
+    const FIRST_WITHDRAWAL_MINIMUM = 50; // حداقل برداشت فعلی به NOT
+    const MONETAG_ZONE_ID = "12066198";
 
-  if (!Number.isFinite(amount) || amount < minimum) return showToast("حداقل برداشت فعلی " + minimum + " NOT است.");
-  if (amount > balance) return showToast("موجودی کیف پولت کافی نیست.");
-  if (amount > 1e12 || !/^[0-9]+(\.[0-9]{1,2})?$/.test(amountInput)) return showToast("مبلغ را با حداکثر دو رقم اعشار وارد کن.");
-  if (wallet.length < 20 || wallet.length > 150) return showToast("آدرس کیف پول معتبر وارد کن.");
+    const tg = window.Telegram && window.Telegram.WebApp
+      ? window.Telegram.WebApp
+      : null;
 
-  const button = document.getElementById("withdrawButton");
-  withdrawBusy = true;
-  button.disabled = true;
-  button.textContent = "در حال ثبت…";
-  try {
-    const result = await api("/api/withdraw", {amount, walletAddress:wallet, wallet_address:wallet});
-    if (result.balance !== undefined) balance = Number(result.balance) || 0;
-    updateBalanceUI();
-    document.getElementById("withdrawAmount").value = "";
-    showToast("درخواست برداشت ثبت شد.");
-    await loadHistory();
-    await refreshWithdrawalMinimum();
-  } catch (error) {
-    showToast(error.message || "ثبت درخواست برداشت انجام نشد.");
-  } finally {
-    withdrawBusy = false;
-    button.disabled = false;
-    button.textContent = "ثبت درخواست برداشت";
-  }
-}
-
-function prettyDate(value) {
-  if (!value) return "تاریخ ثبت نشده";
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return String(value);
-  try {
-    return date.toLocaleString("fa-IR", {year:"numeric",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"});
-  } catch (_) { return date.toLocaleString(); }
-}
-
-function statusLabel(status) {
-  const labels = {
-    pending:"در انتظار بررسی",
-    approved:"تأیید شده",
-    paid:"واریز شده",
-    rejected:"رد شده"
-  };
-  return labels[String(status || "pending").toLowerCase()] || String(status || "نامشخص");
-}
-
-function renderHistoryItem(item, withdrawal = false) {
-  const wrapper = document.createElement("div");
-  wrapper.className = "history-item";
-  const left = document.createElement("div");
-  left.style.minWidth = "0";
-  const title = document.createElement("div");
-  title.className = "history-title";
-  title.textContent = item.title || item.description || item.details || item.kind || (withdrawal ? "برداشت NOT" : "پاداش");
-  left.appendChild(title);
-
-  const sub = document.createElement("div");
-  sub.className = "history-sub";
-  sub.textContent = prettyDate(item.created_at || item.createdAt || item.date);
-  left.appendChild(sub);
-
-  if (withdrawal) {
-    const pill = document.createElement("div");
-    pill.className = "status-pill";
-    pill.textContent = statusLabel(item.status);
-    left.appendChild(pill);
-    const wallet = item.wallet_address || item.walletAddress;
-    if (wallet) {
-      const w = document.createElement("div");
-      w.className = "history-sub";
-      w.textContent = "کیف پول: " + String(wallet).slice(0,10) + "…" + String(wallet).slice(-6);
-      left.appendChild(w);
+    if (tg) {
+      tg.ready();
+      tg.expand();
+      try { tg.setHeaderColor("#070b19"); } catch (_) {}
+      try { tg.setBackgroundColor("#070b19"); } catch (_) {}
     }
-  } else if (item.details) {
-    const details = document.createElement("div");
-    details.className = "history-sub";
-    details.textContent = item.details;
-    left.appendChild(details);
-  }
 
-  const amount = document.createElement("div");
-  amount.className = "history-amount " + (withdrawal ? "negative" : "positive");
-  let value = item.amount_units !== undefined ? Number(item.amount_units) / 100 : Number(item.amount || 0);
-  if (withdrawal && item.amount !== undefined) value = Number(item.amount);
-  amount.textContent = (value < 0 || withdrawal ? "−" : "+") + formatNumber(Math.abs(value)) + " NOT";
-  wrapper.append(left, amount);
-  return wrapper;
-}
+    const initData = tg?.initData || "";
+    const tgUser = tg?.initDataUnsafe?.user || null;
 
-async function loadHistory() {
-  const rewardsEl = document.getElementById("historyList");
-  const withdrawalsEl = document.getElementById("withdrawHistory");
-  if (!initData) {
-    rewardsEl.textContent = "برای دیدن تاریخچه از داخل تلگرام وارد شو.";
-    withdrawalsEl.textContent = "ورود از تلگرام لازم است.";
-    return;
-  }
-  rewardsEl.innerHTML = '<div class="empty">در حال دریافت تاریخچه…</div>';
-  withdrawalsEl.innerHTML = '<div class="empty">در حال دریافت…</div>';
-  try {
-    const result = await api("/api/history");
-    const rewards = Array.isArray(result.history) ? result.history : [];
-    const withdrawals = Array.isArray(result.withdrawals) ? result.withdrawals : [];
-    rewardsEl.replaceChildren();
-    withdrawalsEl.replaceChildren();
-    if (!rewards.length) rewardsEl.innerHTML = '<div class="empty">هنوز پاداشی ثبت نشده.</div>';
-    else rewards.slice(0,100).forEach(item => rewardsEl.appendChild(renderHistoryItem(item)));
-    if (!withdrawals.length) withdrawalsEl.innerHTML = '<div class="empty">هنوز درخواست برداشتی نداری.</div>';
-    else withdrawals.slice(0,100).forEach(item => withdrawalsEl.appendChild(renderHistoryItem(item,true)));
-  } catch (_) {
-    rewardsEl.innerHTML = '<div class="empty">تاریخچه فعلاً در دسترس نیست.</div>';
-    withdrawalsEl.innerHTML = '<div class="empty">سوابق برداشت در دسترس نیست.</div>';
-  }
-}
+    let user = tgUser;
+    let userData = {};
+    let balance = 0;
+    let referralCount = 0;
+    let historyItems = [];
+    let adBusy = false;
+    let toastTimer = null;
 
-function getReferralUrl() {
-  return user?.id ? "https://t.me/" + BOT_USERNAME + "?start=ref_" + encodeURIComponent(user.id) : "";
-}
-
-function setupReferral() {
-  document.getElementById("referralLink").textContent = getReferralUrl() || "برای ساخت لینک دعوت، برنامه را از داخل تلگرام باز کن.";
-}
-
-async function copyReferral() {
-  const link = getReferralUrl();
-  if (!link) return showToast("ابتدا برنامه را از داخل تلگرام باز کن.");
-  try {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(link);
-    } else {
-      const input = document.createElement("textarea");
-      input.value = link;
-      input.style.position = "fixed";
-      input.style.opacity = "0";
-      document.body.appendChild(input);
-      input.select();
-      const ok = document.execCommand("copy");
-      input.remove();
-      if (!ok) throw new Error("copy failed");
+    function numberFa(value) {
+      const n = Number(value);
+      return (Number.isFinite(n) ? n : 0).toLocaleString("fa-IR", {
+        maximumFractionDigits: 4
+      });
     }
-    showToast("لینک دعوت کپی شد!");
-  } catch (_) {
-    showToast("کپی خودکار نشد؛ لینک را دستی کپی کن.");
-  }
-}
 
-function shareReferral() {
-  const link = getReferralUrl();
-  if (!link) return showToast("ابتدا برنامه را از داخل تلگرام باز کن.");
-  const shareUrl = "https://t.me/share/url?url=" + encodeURIComponent(link) + "&text=" + encodeURIComponent("بیا تو NOT REWARD پاداش جمع کنیم!");
-  if (tg?.openTelegramLink) tg.openTelegramLink(shareUrl);
-  else window.open(shareUrl, "_blank", "noopener");
-}
+    function showToast(message) {
+      const el = document.getElementById("toast");
+      el.textContent = message;
+      el.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.remove("show"), 3300);
+    }
 
-async function loadReferrals() {
-  if (!initData) return;
-  try {
-    const result = await api("/api/referrals");
-    const count = result.count ?? result.referralCount ?? result.total ?? 0;
-    document.getElementById("referralCount").textContent = String(count);
-  } catch (_) {}
-}
+    function haptic(style = "light") {
+      try {
+        tg?.HapticFeedback?.impactOccurred(style);
+      } catch (_) {}
+    }
 
-/*
- * Monetag Rewarded Interstitial.
- * موجودی را اینجا افزایش نده؛ Postback سمت سرور مرجع ثبت پاداش است.
- */
-function createMonetagYmid() {
-  if (!user?.id) throw new Error("شناسه تلگرام در دسترس نیست.");
-  const randomPart = window.crypto?.randomUUID
-    ? window.crypto.randomUUID()
-    : Math.random().toString(36).slice(2) + Date.now().toString(36);
-  return ("tg" + String(user.id) + "_" + randomPart)
-    .replace(/[^a-zA-Z0-9_.-]/g, "_")
-    .slice(0,120);
-}
+    function escapeHTML(value) {
+      return String(value ?? "").replace(/[&<>"']/g, ch => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;",
+        '"': "&quot;", "'": "&#39;"
+      }[ch]));
+    }
 
-async function openAd() {
-  if (monetagAdBusy) return;
-  if (!initData || !user?.id) {
-    showToast("برای تماشای تبلیغ، برنامه را از داخل ربات تلگرام باز کن.");
-    return;
-  }
-  if (typeof window["show_" + MONETAG_ZONE_ID] !== "function") {
-    showToast("تبلیغ هنوز بارگذاری نشده؛ چند ثانیه صبر کن.");
-    return;
-  }
+    function showPage(name) {
+      document.querySelectorAll(".page").forEach(page => {
+        page.classList.toggle("active", page.id === "page-" + name);
+      });
 
-  monetagAdBusy = true;
-  try {
-    const ymid = createMonetagYmid();
-    showToast("در حال آماده‌سازی تبلیغ…");
-    haptic("light");
+      document.querySelectorAll(".nav-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.page === name);
+      });
 
-    const showAd = window["show_" + MONETAG_ZONE_ID];
-    const result = await showAd({
-      type: "end",
-      ymid,
-      requestVar: String(user.id)
+      haptic();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      if (name === "wallet") loadHistory();
+      if (name === "referral") loadReferrals();
+    }
+
+    function getTelegramId() {
+      return user?.id || tgUser?.id || null;
+    }
+
+    async function api(path, options = {}) {
+      const method = options.method || "GET";
+      const headers = {
+        "Accept": "application/json",
+        ...(options.headers || {})
+      };
+
+      if (initData) {
+        headers["X-Telegram-Init-Data"] = initData;
+      }
+
+      const fetchOptions = {
+        method,
+        headers,
+        cache: "no-store"
+      };
+
+      if (options.body !== undefined) {
+        headers["Content-Type"] = "application/json";
+        fetchOptions.body = JSON.stringify({
+          ...options.body,
+          initData
+        });
+      }
+
+      const response = await fetch(API_BASE + path, fetchOptions);
+      const text = await response.text();
+
+      let data = {};
+      try {
+        data = text ? JSON.parse(text) : {};
+      } catch (_) {
+        data = { message: text };
+      }
+
+      if (!response.ok || data.ok === false || data.success === false) {
+        throw new Error(data.message || data.error || ("خطای سرور (" + response.status + ")"));
+      }
+
+      return data;
+    }
+
+    function findBalance(data) {
+      const candidates = [
+        data?.balance,
+        data?.user?.balance,
+        data?.user_balance?.balance,
+        data?.account?.balance,
+        data?.data?.balance,
+        data?.data?.user?.balance
+      ];
+
+      for (const value of candidates) {
+        if (value !== undefined && value !== null && Number.isFinite(Number(value))) {
+          return Number(value);
+        }
+      }
+
+      return null;
+    }
+
+    function findReferralCount(data) {
+      const candidates = [
+        data?.referralCount,
+        data?.referrals_count,
+        data?.total_referrals,
+        data?.referrals,
+        data?.data?.referralCount,
+        data?.data?.total_referrals
+      ];
+
+      for (const value of candidates) {
+        if (Array.isArray(value)) return value.length;
+        if (value !== undefined && value !== null && Number.isFinite(Number(value))) {
+          return Number(value);
+        }
+      }
+
+      return null;
+    }
+
+    function updateUI() {
+      const b = numberFa(balance);
+      ["balance", "stat-balance", "wallet-balance"].forEach(id => {
+        document.getElementById(id).textContent = b;
+      });
+
+      document.getElementById("profile-balance").textContent = b + " NOT";
+
+      [
+        "stat-referrals", "ref-count", "profile-referrals"
+      ].forEach(id => {
+        document.getElementById(id).textContent = numberFa(referralCount);
+      });
+
+      const name = user?.first_name || user?.username || "کاربر عزیز";
+      document.getElementById("welcome-title").textContent = "سلام " + name + " 👋";
+      document.getElementById("profile-name").textContent =
+        [user?.first_name, user?.last_name].filter(Boolean).join(" ") ||
+        (user?.username ? "@" + user.username : "کاربر ADCOIN");
+
+      const id = getTelegramId();
+      document.getElementById("profile-id").textContent = "ID: " + (id || "—");
+      document.getElementById("ref-user-id").textContent = id || "—";
+      document.getElementById("connection-status").textContent =
+        initData ? "متصل به تلگرام" : "تلگرام شناسایی نشد";
+
+      const botUsername = "notrewarddbot";
+      const link = id
+        ? "https://t.me/" + botUsername + "?start=" + encodeURIComponent(String(id))
+        : "برای دریافت لینک، ربات را از تلگرام باز کن.";
+
+      document.getElementById("ref-link").textContent = link;
+    }
+
+    async function loadMe() {
+      if (!initData) {
+        updateUI();
+        showToast("برای اتصال به حساب، مینی‌اپ را از داخل ربات تلگرام باز کن.");
+        return;
+      }
+
+      try {
+        const data = await api("/api/me");
+        userData = data.user || data.data?.user || data;
+        user = user || userData;
+        const foundBalance = findBalance(data);
+
+        if (foundBalance !== null) balance = foundBalance;
+
+        const foundReferrals = findReferralCount(data);
+        if (foundReferrals !== null) referralCount = foundReferrals;
+
+        updateUI();
+        document.getElementById("connection-status").textContent = "متصل";
+      } catch (error) {
+        console.error("loadMe:", error);
+        document.getElementById("connection-status").textContent = "خطا در اتصال";
+      }
+    }
+
+    async function loadReferrals() {
+      if (!initData) return;
+
+      try {
+        const data = await api("/api/referrals");
+        const found = findReferralCount(data);
+        if (found !== null) referralCount = found;
+
+        if (Array.isArray(data.referrals)) referralCount = data.referrals.length;
+        if (Array.isArray(data.data?.referrals)) referralCount = data.data.referrals.length;
+
+        updateUI();
+      } catch (error) {
+        console.error("loadReferrals:", error);
+      }
+    }
+
+    function normalizeHistory(data) {
+      if (Array.isArray(data)) return data;
+      if (Array.isArray(data.history)) return data.history;
+      if (Array.isArray(data.transactions)) return data.transactions;
+      if (Array.isArray(data.items)) return data.items;
+      if (Array.isArray(data.data)) return data.data;
+      if (Array.isArray(data.data?.history)) return data.data.history;
+      if (Array.isArray(data.data?.transactions)) return data.data.transactions;
+      return [];
+    }
+
+    function renderHistory(targetId) {
+      const container = document.getElementById(targetId);
+
+      if (!historyItems.length) {
+        container.innerHTML = '<div class="empty">هنوز تراکنشی ثبت نشده است.</div>';
+        return;
+      }
+
+      container.innerHTML = historyItems.slice(0, 20).map(item => {
+        const amount = Number(item.amount ?? item.reward ?? item.value ?? 0);
+        const positive = amount >= 0;
+        const title = item.description || item.title || item.type || "تراکنش";
+        const date = item.created_at || item.createdAt || item.date || "";
+        const status = item.status ? " • " + item.status : "";
+
+        return `
+          <div class="history-item">
+            <div class="history-left">
+              <div class="history-icon">${positive ? "↗️" : "↙️"}</div>
+              <div style="min-width:0">
+                <div class="history-title">${escapeHTML(title)}</div>
+                <div class="history-date">${escapeHTML(date)}${escapeHTML(status)}</div>
+              </div>
+            </div>
+            <div class="history-amount ${positive ? "positive" : "negative"}">
+              ${positive ? "+" : ""}${numberFa(amount)} NOT
+            </div>
+          </div>`;
+      }).join("");
+    }
+
+    async function loadHistory() {
+      if (!initData) {
+        historyItems = [];
+        renderHistory("home-history");
+        renderHistory("wallet-history");
+        return;
+      }
+
+      try {
+        const data = await api("/api/history");
+        historyItems = normalizeHistory(data);
+        renderHistory("home-history");
+        renderHistory("wallet-history");
+      } catch (error) {
+        console.error("loadHistory:", error);
+        document.getElementById("home-history").innerHTML =
+          '<div class="empty">تاریخچه فعلاً در دسترس نیست.</div>';
+        document.getElementById("wallet-history").innerHTML =
+          '<div class="empty">دریافت تاریخچه ناموفق بود.</div>';
+      }
+    }
+
+    // این دکمه صرفاً درخواست را به سرور می‌فرستد؛ اعتبار پاداش باید در Worker بررسی شود.
+    async function openAd() {
+      if (adBusy) return;
+
+      if (!initData || !getTelegramId()) {
+        showToast("برای تماشای تبلیغ، مینی‌اپ را از داخل ربات تلگرام باز کن.");
+        return;
+      }
+
+      if (typeof window["show_" + MONETAG_ZONE_ID] !== "function") {
+        showToast("تبلیغ هنوز آماده نیست؛ چند ثانیه صبر کن و دوباره بزن.");
+        return;
+      }
+
+      adBusy = true;
+      const button = document.getElementById("ad-button");
+      button.disabled = true;
+
+      // شناسه یکتا برای اتصال postback تبلیغ به این تلاش
+      const ymid = "tg" + String(getTelegramId()) + "_" +
+        Date.now().toString(36) + "_" +
+        Math.random().toString(36).slice(2, 9);
+
+      try {
+        showToast("در حال آماده‌سازی تبلیغ...");
+        haptic("light");
+
+        const showAd = window["show_" + MONETAG_ZONE_ID];
+        const result = await showAd({
+          type: "end",
+          ymid: ymid,
+          requestVar: String(getTelegramId())
+        });
+
+        if (result && result.reward_event_type === "valued") {
+          showToast("تبلیغ واجد پاداش گزارش شد؛ منتظر تأیید سرور باش.");
+        } else if (result && result.reward_event_type === "non_valued") {
+          showToast("این نمایش تبلیغ واجد پاداش نیست.");
+        } else {
+          showToast("درخواست تبلیغ پایان یافت؛ ثبت پاداش منوط به تأیید سرور است.");
+        }
+
+        // ممکن است postback با کمی تأخیر برسد؛ موجودی را از سرور می‌خوانیم.
+        setTimeout(() => refreshAll(), 2500);
+        setTimeout(() => refreshAll(), 7000);
+      } catch (error) {
+        console.error("Monetag error:", error);
+        showToast("نمایش تبلیغ انجام نشد. کمی بعد دوباره تلاش کن.");
+      } finally {
+        adBusy = false;
+        button.disabled = false;
+      }
+    }
+
+    document.getElementById("withdraw-form").addEventListener("submit", async event => {
+      event.preventDefault();
+
+      if (!initData || !getTelegramId()) {
+        showToast("ابتدا ربات را از داخل تلگرام باز کن.");
+        return;
+      }
+
+      const amountInput = document.getElementById("withdraw-amount");
+      const addressInput = document.getElementById("withdraw-address");
+      const amount = Number(amountInput.value);
+      const address = addressInput.value.trim();
+      const submit = document.getElementById("withdraw-submit");
+
+      if (!Number.isFinite(amount) || amount < FIRST_WITHDRAWAL_MINIMUM) {
+        showToast("حداقل مبلغ برداشت فعلاً ۵۰ نات است.");
+        return;
+      }
+
+      if (!address || address.length < 3) {
+        showToast("آدرس کیف پول یا شناسه دریافت را وارد کن.");
+        addressInput.focus();
+        return;
+      }
+
+      if (amount > balance) {
+        showToast("موجودی کافی نیست.");
+        return;
+      }
+
+      const confirmed = window.confirm(
+        "ثبت درخواست برداشت " + amount + " NOT برای این آدرس؟\n\n" + address
+      );
+      if (!confirmed) return;
+
+      submit.disabled = true;
+      submit.textContent = "در حال ثبت درخواست...";
+
+      try {
+        // API فعلی Worker باید این ساختار را بپذیرد.
+        await api("/api/withdraw", {
+          method: "POST",
+          body: {
+            amount,
+            address,
+            wallet_address: address
+          }
+        });
+
+        showToast("درخواست برداشت ارسال شد. وضعیت را در تاریخچه بررسی کن.");
+        amountInput.value = "";
+        addressInput.value = "";
+        await refreshAll();
+      } catch (error) {
+        console.error("withdraw:", error);
+        showToast(error.message || "ثبت برداشت ناموفق بود؛ لطفاً دوباره تلاش کن.");
+      } finally {
+        submit.disabled = false;
+        submit.textContent = "ثبت درخواست برداشت";
+      }
     });
 
-    if (result?.reward_event_type === "non_valued") {
-      showToast("این نمایش تبلیغ واجد پاداش نیست.");
-      return;
+    async function copyReferral() {
+      const link = document.getElementById("ref-link").textContent.trim();
+
+      if (!link.startsWith("https://")) {
+        showToast("برای ساخت لینک دعوت، ربات را از تلگرام باز کن.");
+        return;
+      }
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(link);
+        } else {
+          const input = document.createElement("textarea");
+          input.value = link;
+          input.style.position = "fixed";
+          input.style.opacity = "0";
+          document.body.appendChild(input);
+          input.select();
+          const success = document.execCommand("copy");
+          input.remove();
+          if (!success) throw new Error("copy failed");
+        }
+
+        haptic("success");
+        showToast("لینک دعوت کپی شد! 🎉");
+      } catch (_) {
+        showToast("کپی خودکار انجام نشد؛ لینک را لمس کن و دستی کپی کن.");
+      }
     }
 
-    if (result?.reward_event_type === "valued") {
-      showToast("تبلیغ واجد پاداش اعلام شد؛ تأیید نهایی واریز از سرور انجام می‌شود.");
-    } else {
-      showToast("درخواست تبلیغ پایان یافت؛ اگر Monetag پاداش را تأیید کند، سرور موجودی را ثبت می‌کند.");
+    function shareReferral() {
+      const link = document.getElementById("ref-link").textContent.trim();
+
+      if (!link.startsWith("https://")) {
+        showToast("ابتدا ربات را از داخل تلگرام باز کن.");
+        return;
+      }
+
+      const shareUrl = "https://t.me/share/url?url=" +
+        encodeURIComponent(link) +
+        "&text=" + encodeURIComponent("بیا با هم از ADCOIN استفاده کنیم 🚀");
+
+      if (tg?.openTelegramLink) {
+        tg.openTelegramLink(shareUrl);
+      } else {
+        window.open(shareUrl, "_blank", "noopener,noreferrer");
+      }
     }
 
-    // ممکن است Postback کمی دیرتر از callback برسد؛ چند بار موجودی را تازه کن.
-    for (let i = 0; i < 4; i++) {
-      await new Promise(resolve => setTimeout(resolve, 2500));
-      await loadMe(false);
-      await loadHistory();
+    async function refreshAll() {
+      await Promise.allSettled([loadMe(), loadHistory(), loadReferrals()]);
     }
-  } catch (error) {
-    console.error("Monetag ad error:", error);
-    showToast("نمایش تبلیغ یا دریافت نتیجه ناموفق بود؛ کمی بعد دوباره تلاش کن.");
-  } finally {
-    monetagAdBusy = false;
-  }
-}
 
-setUserProfile();
-setupReferral();
-updateBalanceUI();
+    // آغاز برنامه
+    (async function init() {
+      updateUI();
+      if (!initData) {
+        showToast("برای استفاده از امکانات حساب، برنامه را داخل تلگرام باز کن.");
+        renderHistory("home-history");
+        renderHistory("wallet-history");
+        return;
+      }
 
-if (initData) {
-  loadMe();
-  loadReferrals();
-  refreshWithdrawalMinimum();
-}
-
-document.addEventListener("visibilitychange", () => {
-  if (!document.hidden && initData) loadMe(false);
-});
-</script>
-
-<script src="https://libtl.com/sdk.js" data-zone="12066198" data-sdk="show_12066198"></script>
+      await refreshAll();
+    })();
+  </script>
 </body>
 </html>
+```
