@@ -225,8 +225,8 @@
         <div class="feature-grid">
           <button class="feature" onclick="claimDaily()"><div class="feature-icon">🎁</div><strong>پاداش روزانه</strong><small>هر روز وارد شو و پاداش بگیر</small></button>
           <button class="feature" onclick="showPage('referral')"><div class="feature-icon">👥</div><strong>دعوت دوستان</strong><small>دوستات رو دعوت کن و پاداش بگیر</small></button>
-          <button class="feature" onclick="openAd()"><div class="feature-icon">▶️</div><strong>تماشای تبلیغ</strong><small>برای دریافت پاداش تبلیغاتی</small></button>
-          <button class="feature" onclick="showPage('wallet')"><div class="feature-icon">💎</div><strong>برداشت NOT</strong><small>برداشت از ۳۰۰ NOT به بالا</small></button>
+          <button class="feature" onclick="openAd()"><div class="feature-icon">▶️</div><strong>تماشای تبلیغ</strong><small>پاداش هر تبلیغ تأییدشده: ۰٫۵ NOT</small></button>
+          <button class="feature" onclick="showPage('wallet')"><div class="feature-icon">💎</div><strong>برداشت NOT</strong><small>برداشت از ۵۰ NOT برای بار اول</small></button>
         </div>
       </section>
 
@@ -235,17 +235,17 @@
         <div class="balance-card">
           <div class="balance-label">موجودی قابل برداشت</div>
           <div class="balance-row"><div class="balance-number" id="walletBalance">0.00</div><div class="balance-unit">NOT</div></div>
-          <div class="balance-bottom"><div class="balance-hint">حداقل برداشت<br>۳۰۰ NOT</div></div>
+          <div class="balance-bottom"><div class="balance-hint">حداقل برداشت<br><span id="withdrawMinimumLabel">۵۰ NOT</span></div></div>
         </div>
         <div class="panel">
           <h3>درخواست برداشت</h3>
           <div class="muted">آدرس کیف پول را با دقت وارد کن. زمان واریز ۲۴ الی ۴۸ ساعت است.</div>
           <label class="field-label" for="withdrawAmount">مقدار برداشت (NOT)</label>
-          <input class="field" id="withdrawAmount" type="number" min="300" step="0.01" placeholder="حداقل 300 NOT" inputmode="decimal">
+          <input class="field" id="withdrawAmount" type="number" min="50" step="0.01" placeholder="حداقل 50 NOT" inputmode="decimal">
           <label class="field-label" for="walletAddress">آدرس کیف پول NOT</label>
           <input class="field" id="walletAddress" type="text" placeholder="آدرس کیف پول را وارد کن" autocomplete="off" spellcheck="false">
           <button class="primary" id="withdrawButton" onclick="requestWithdrawal()">ثبت درخواست برداشت</button>
-          <div class="muted" style="margin-top:10px">حداقل برداشت ۳۰۰ NOT است. آدرس را قبل از ثبت بررسی کن.</div>
+          <div class="muted" style="margin-top:10px">حداقل برداشت بار اول ۵۰ NOT و برداشت‌های بعدی ۳۰۰ NOT است. آدرس را قبل از ثبت بررسی کن.</div>
         </div>
         <div class="panel">
           <div class="section-heading" style="margin-top:0"><h2>تاریخچه کیف پول</h2><button class="small-action" onclick="loadHistory()">بروزرسانی</button></div>
@@ -306,7 +306,9 @@
   <script>
     const API = "https://not-reward-api.mukefaceget15.workers.dev";
     const tg = window.Telegram?.WebApp;
-    const MIN_WITHDRAWAL = 300;
+    const FIRST_WITHDRAWAL_MINIMUM = 50;
+    const NEXT_WITHDRAWAL_MINIMUM = 300;
+    let currentWithdrawalMinimum = FIRST_WITHDRAWAL_MINIMUM;
     const TAP_REWARD = 0.02;
     const MONETAG_ZONE_ID = "12066198";
 
@@ -476,12 +478,35 @@
       } finally { dailyBusy = false; }
     }
 
+    async function refreshWithdrawalMinimum() {
+      // این مقدار فقط برای نمایش و اعتبارسنجی اولیه در رابط کاربری است؛
+      // محدودیت نهایی باید در Cloudflare Worker نیز بررسی شود.
+      let minimum = FIRST_WITHDRAWAL_MINIMUM;
+      try {
+        const historyResult = await api("/api/history");
+        const withdrawals = Array.isArray(historyResult.withdrawals) ? historyResult.withdrawals : [];
+        if (withdrawals.length > 0) minimum = NEXT_WITHDRAWAL_MINIMUM;
+      } catch (_) {
+        // در صورت خطای تاریخچه، مقدار محافظه‌کارانه‌ی سرور تعیین‌کننده است.
+      }
+      currentWithdrawalMinimum = minimum;
+      const input = document.getElementById("withdrawAmount");
+      if (input) {
+        input.min = String(minimum);
+        input.placeholder = "حداقل " + minimum + " NOT";
+      }
+      const label = document.getElementById("withdrawMinimumLabel");
+      if (label) label.textContent = minimum + " NOT";
+      return minimum;
+    }
+
     async function requestWithdrawal() {
       if (withdrawBusy) return;
       const amountInput = document.getElementById("withdrawAmount").value.trim();
       const amount = Number(amountInput);
       const wallet = document.getElementById("walletAddress").value.trim();
-      if (!Number.isFinite(amount) || amount < MIN_WITHDRAWAL) { showToast("حداقل برداشت ۳۰۰ NOT است."); return; }
+      const minimum = await refreshWithdrawalMinimum();
+      if (!Number.isFinite(amount) || amount < minimum) { showToast("حداقل برداشت فعلی " + minimum + " NOT است."); return; }
       if (amount > balance) { showToast("موجودی کیف پولت کافی نیست."); return; }
       if (amount > 1e12 || !/^[0-9]+(\.[0-9]{1,2})?$/.test(amountInput)) { showToast("مقدار برداشت رو با حداکثر دو رقم اعشار وارد کن."); return; }
       if (wallet.length < 20 || wallet.length > 150) { showToast("آدرس کیف پول معتبر وارد کن."); return; }
@@ -681,13 +706,13 @@
         });
 
         if (result && result.reward_event_type === "valued") {
-          showToast("نمایش تبلیغ واجد پاداش اعلام شد؛ در انتظار تأیید و ثبت سرور هستیم.");
+          showToast("نمایش تبلیغ واجد پاداش اعلام شد؛ ۰٫۵ NOT پس از تأیید سرور ثبت می‌شود.");
           await loadMe();
           await loadHistory();
         } else if (result && result.reward_event_type === "non_valued") {
           showToast("این نمایش تبلیغ واجد پاداش نیست.");
         } else {
-          showToast("تبلیغ تمام شد؛ ثبت پاداش پس از تأیید سرور انجام می‌شود.");
+          showToast("تبلیغ تمام شد؛ ثبت پاداش ۰٫۵ NOT پس از تأیید سرور انجام می‌شود.");
         }
       } catch (error) {
         console.error("Monetag ad error:", error);
@@ -704,6 +729,7 @@
     if (initData) {
       loadMe();
       loadReferrals();
+      refreshWithdrawalMinimum();
     }
 
     document.addEventListener("visibilitychange", () => {
@@ -711,8 +737,6 @@
     });
   </script>
 
-  <script src="https://libtl.com/sdk.js" data-zone="12066198" data-sdk="show_12066198"></script>
-  
   <script src="https://libtl.com/sdk.js" data-zone="12066198" data-sdk="show_12066198"></script>
 
   <script>
@@ -746,8 +770,5 @@
       }
     })();
   </script>
-  <script
-    <script src='//libtl.com/sdk.js' data-zone='12066198' data-sdk='show_12066198'></script>
-</script>
 </body>
 </html>
