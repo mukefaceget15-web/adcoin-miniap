@@ -269,6 +269,7 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
     <div class="profile-row"><span>دعوت‌شده‌ها</span><b id="profile-referrals">۰</b></div>
     <div class="profile-row"><span>وضعیت اتصال</span><b id="connection-status">در حال بررسی</b></div>
     <button class="secondary-btn" onclick="refreshAll(true)">به‌روزرسانی اطلاعات</button>
+    <a class="secondary-btn" id="admin-link" href="admin.html" style="display:none;text-align:center;text-decoration:none">🛠 ورود به پنل مدیریت</a>
   </div>
 
   <div class="footer">NOT REWARD · حساب تو، مدیریت ساده‌تر</div>
@@ -305,6 +306,7 @@ let referralCount = 0;
 let referralLink = "";
 let historyItems = [];
 let adBusy = false;
+let isAdmin = false;
 let toastTimer;
 
 if (tg) {
@@ -430,6 +432,12 @@ function updateUI() {
 
   document.getElementById("ref-user-id").textContent = userId() || "—";
 
+  const adminLink = document.getElementById("admin-link");
+  adminLink.style.display = isAdmin ? "block" : "none";
+  if (isAdmin) {
+    adminLink.href = new URL("admin.html", location.href).href + location.hash;
+  }
+
   if (!referralLink && userId()) {
     referralLink = buildReferralLink(userId());
   }
@@ -472,6 +480,7 @@ async function loadMe() {
     const data = await api("/api/me");
 
     user = data.user || user;
+    isAdmin = data.isAdmin === true;
 
     if (data.balance !== undefined && Number.isFinite(Number(data.balance))) {
       balance = Number(data.balance);
@@ -522,7 +531,8 @@ function historyTitle(kind) {
     ad: "پاداش تبلیغ",
     withdrawal: "درخواست برداشت",
     withdraw: "درخواست برداشت",
-    refund: "بازگشت مبلغ برداشت"
+    refund: "بازگشت مبلغ برداشت",
+    admin: "تنظیم توسط مدیر"
   };
 
   return labels[kind] || "تراکنش";
