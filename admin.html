@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NOT REWARD | پنل مدیریت</title>
+<style>
+:root{--bg:#0a1020;--panel:#111a2e;--panel2:#17223a;--line:#263550;--text:#edf3ff;--muted:#91a3c2;--cyan:#60e1d0;--blue:#7297ff;--red:#ff718b;--yellow:#ffd477;--green:#62df9a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(900px 500px at 85% -10%,#1b3260 0%,transparent 65%),var(--bg);font-family:Tahoma,Arial,sans-serif;color:var(--text)}button,input,select{font:inherit}button{cursor:pointer;border:0;border-radius:12px;padding:11px 14px;font-weight:700;background:linear-gradient(135deg,var(--cyan),#82b8ff);color:#081323}button.secondary{background:#253450;color:var(--text);border:1px solid #344766}button.danger{background:#4a2032;color:#ffc1cd;border:1px solid #79344d}button.success{background:#143d38;color:#a7ffe0;border:1px solid #23695d}button:disabled{opacity:.45;cursor:not-allowed}.wrap{max-width:1300px;margin:auto;padding:24px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}.brand{display:flex;align-items:center;gap:13px}.logo{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,var(--cyan),var(--blue));color:#081323;font-weight:1000;font-size:19px;box-shadow:0 10px 30px #4ad9d322}.brand h1{font-size:21px;margin:0}.brand p{margin:5px 0 0;color:var(--muted);font-size:12px}.pill{font-size:12px;color:var(--cyan);border:1px solid #2d6b70;background:#12303a;padding:8px 12px;border-radius:999px}.layout{display:grid;grid-template-columns:220px 1fr;gap:20px}.side,.panel,.stat{background:linear-gradient(180deg,#131e33,#10182a);border:1px solid var(--line);border-radius:20px}.side{padding:12px;height:max-content;position:sticky;top:16px}.nav{display:flex;align-items:center;gap:11px;width:100%;text-align:right;background:transparent;color:#aebbd2;padding:13px;margin:3px 0;border:1px solid transparent}.nav.active{background:#1d2d49;color:white;border-color:#304668}.nav span{font-size:18px;width:24px;text-align:center}.side .small{font-size:11px;color:var(--muted);padding:18px 10px 6px}.content{min-width:0}.view{display:none}.view.active{display:block}.heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:4px 0 18px}.heading h2{margin:0;font-size:22px}.heading p{margin:7px 0 0;color:var(--muted);font-size:13px}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:18px}.stat{padding:18px;position:relative;overflow:hidden}.stat:after{content:"";position:absolute;width:80px;height:80px;left:-25px;top:-25px;border-radius:50%;background:#7297ff0b}.stat .label{color:var(--muted);font-size:12px}.stat .num{font-size:25px;font-weight:800;margin-top:12px;letter-spacing:.2px}.stat .icon{float:left;font-size:21px}.panel{padding:18px;margin-bottom:17px}.panelhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}.panelhead h3{font-size:15px;margin:0}.muted{color:var(--muted);font-size:12px}.tools{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}input,select{background:#0b1425;color:var(--text);border:1px solid #2a3a56;border-radius:11px;padding:11px 12px;outline:none;min-width:0}input:focus,select:focus{border-color:var(--cyan)}input.search{flex:1;min-width:180px}table{border-collapse:collapse;width:100%;font-size:12px;min-width:700px}th{text-align:right;color:#94a7c8;font-weight:600;background:#0c1526}td,th{padding:13px 12px;border-bottom:1px solid #23314a}tbody tr:hover{background:#ffffff05}.tablewrap{overflow:auto;border:1px solid #24334c;border-radius:13px}.badge{display:inline-block;border-radius:999px;padding:5px 9px;font-size:11px;background:#27334a;color:#d5e1f8}.badge.pending{background:#47371d;color:#ffe0a1}.badge.paid,.badge.approved{background:#153b34;color:#9bf5d4}.badge.rejected,.badge.blocked{background:#4b2333;color:#ffb8c8}.badge.active{background:#183c32;color:#a7f5d1}.actions{display:flex;gap:6px;flex-wrap:wrap}.actions button{font-size:11px;padding:8px 10px;border-radius:9px}.empty{text-align:center;color:var(--muted);padding:28px}.login{max-width:560px;margin:8vh auto;padding:25px}.login h2{margin-top:0}.login p{color:var(--muted);line-height:1.8;font-size:13px}.field{display:grid;gap:7px;margin:13px 0}.field label{font-size:12px;color:#b9c8df}.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.notice{padding:12px 14px;border-radius:12px;background:#182a45;color:#c7d8f7;border:1px solid #2b4267;font-size:12px;line-height:1.8;margin:12px 0}.toast{position:fixed;bottom:20px;right:20px;max-width:min(420px,calc(100vw - 40px));background:#17263d;border:1px solid #3a5277;padding:13px 16px;border-radius:13px;box-shadow:0 15px 50px #0006;display:none;z-index:10}.toast.show{display:block}.usercards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.usercard{background:#0d1729;border:1px solid #283954;border-radius:12px;padding:13px}.usercard .k{font-size:11px;color:var(--muted)}.usercard .v{font-weight:700;margin-top:8px;overflow-wrap:anywhere}.footer{text-align:center;color:#667b9c;font-size:11px;padding:22px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.side{position:static;display:flex;overflow:auto;gap:4px}.nav{white-space:nowrap;width:auto;min-width:max-content}.side .small{display:none}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.usercards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.wrap{padding:13px}.top{align-items:flex-start}.pill{display:none}.stats{gap:8px}.stat{padding:13px}.stat .num{font-size:21px}.heading{align-items:flex-start;flex-direction:column}.row{grid-template-columns:1fr}.usercards{grid-template-columns:1fr}.panel{padding:13px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="brand"><div class="logo">NR</div><div><h1>NOT REWARD <span style="color:var(--cyan)">/</span> مدیریت</h1><p>داشبورد امن مدیریت کاربران و برداشت‌ها</p></div></div>
+  <div class="pill">● پنل مدیریت</div>
+</header>
+
+<section id="login" class="panel login">
+  <h2>ورود مدیر</h2>
+  <p>برای اتصال پنل، لینک را از داخل تلگرام و با حساب مدیر باز کنید تا Telegram WebApp اطلاعات ورود را فراهم کند. اگر خارج از تلگرام باز شود، احراز هویت تلگرام در دسترس نیست.</p>
+  <div class="field"><label>آدرس API</label><input id="apiUrl" value="https://not-reward-api.mukefaceget15.workers.dev" autocomplete="url"></div>
+  <div class="field"><label>Telegram WebApp initData (در صورت باز کردن خارج از تلگرام)</label><textarea id="manualInit" rows="3" placeholder="این قسمت را فقط در صورت نیاز پر کنید"></textarea></div>
+  <button id="connectBtn">اتصال و ورود</button>
+  <div class="notice">ورود مدیر در سمت سرور اعتبارسنجی می‌شود. این پنل به‌تنهایی دسترسی مدیریتی ایجاد نمی‌کند؛ Worker باید مسیرهای مدیریتی را پشتیبانی کند.</div>
+</section>
+
+<div id="app" style="display:none">
+<div class="layout">
+<aside class="side">
+  <button class="nav active" data-view="dashboard"><span>▦</span> نمای کلی</button>
+  <button class="nav" data-view="withdrawals"><span>⇄</span> برداشت‌ها</button>
+  <button class="nav" data-view="users"><span>♙</span> کاربران</button>
+  <button class="nav" data-view="adjust"><span>＋</span> تغییر موجودی</button>
+  <div class="small">NOT REWARD ADMIN</div>
+  <button class="nav" id="refreshBtn"><span>↻</span> تازه‌سازی اطلاعات</button>
+  <button class="nav" id="logoutBtn"><span>⇥</span> خروج از پنل</button>
+</aside>
+<main class="content">
+<section id="view-dashboard" class="view active">
+  <div class="heading"><div><h2>نمای کلی</h2><p>خلاصه وضعیت سامانه شما</p></div><button id="refreshTop" class="secondary">↻ به‌روزرسانی</button></div>
+  <div class="stats">
+    <div class="stat"><span class="icon">♙</span><div class="label">کل کاربران</div><div class="num" id="sUsers">—</div></div>
+    <div class="stat"><span class="icon">⇄</span><div class="label">درخواست‌های برداشت</div><div class="num" id="sWithdrawals">—</div></div>
+    <div class="stat"><span class="icon">◷</span><div class="label">در انتظار بررسی</div><div class="num" id="sPending">—</div></div>
+    <div class="stat"><span class="icon">◈</span><div class="label">موجودی کل</div><div class="num" id="sBalance">—</div></div>
+  </div>
+  <div class="panel"><div class="panelhead"><h3>آخرین درخواست‌های برداشت</h3><button class="secondary" data-go="withdrawals">مشاهده همه</button></div><div id="recentWithdrawals" class="empty">برای دریافت اطلاعات، اتصال را انجام دهید.</div></div>
+  <div class="panel"><div class="panelhead"><h3>راهنمای سریع</h3></div><div class="notice">از بخش «برداشت‌ها» می‌توانید درخواست‌ها را تأیید، پرداخت یا رد کنید. از بخش «کاربران» اطلاعات کاربران را جست‌وجو کنید. مسدودسازی فقط زمانی فعال است که مسیر مربوطه در Worker پیاده‌سازی شده باشد.</div></div>
+</section>
+<section id="view-withdrawals" class="view">
+  <div class="heading"><div><h2>مدیریت برداشت‌ها</h2><p>بررسی و تغییر وضعیت درخواست‌های برداشت</p></div></div>
+  <div class="panel"><div class="tools"><input id="withdrawSearch" class="search" placeholder="جست‌وجو بر اساس شناسه، کاربر یا کیف پول"><select id="withdrawFilter"><option value="">همه وضعیت‌ها</option><option value="pending">در انتظار</option><option value="approved">تأیید شده</option><option value="paid">پرداخت شده</option><option value="rejected">رد شده</option></select><button id="loadWithdrawals" class="secondary">بارگذاری</button></div><div class="tablewrap"><table><thead><tr><th>شناسه</th><th>کاربر</th><th>مبلغ</th><th>کیف پول</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody id="withdrawBody"><tr><td colspan="7" class="empty">داده‌ای بارگذاری نشده است.</td></tr></tbody></table></div></div>
+</section>
+<section id="view-users" class="view">
+  <div class="heading"><div><h2>مدیریت کاربران</h2><p>جست‌وجو، مشاهده جزئیات و مسدودسازی</p></div></div>
+  <div class="panel"><div class="tools"><input id="userSearch" class="search" placeholder="جست‌وجو با شناسه تلگرام یا نام کاربری"><button id="loadUsers" class="secondary">بارگذاری کاربران</button></div><div class="tablewrap"><table><thead><tr><th>شناسه</th><th>نام کاربری</th><th>موجودی</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody id="userBody"><tr><td colspan="5" class="empty">داده‌ای بارگذاری نشده است.</td></tr></tbody></table></div></div>
+  <div id="userDetails" class="panel" style="display:none"><div class="panelhead"><h3>جزئیات کاربر</h3><button class="secondary" id="closeDetails">بستن</button></div><div id="userDetailContent"></div></div>
+</section>
+<section id="view-adjust" class="view">
+  <div class="heading"><div><h2>تغییر موجودی</h2><p>ثبت افزایش یا کاهش موجودی کاربر</p></div></div>
+  <div class="panel"><form id="adjustForm"><div class="row"><div class="field"><label>شناسه تلگرام کاربر</label><input id="adjustUserId" required inputmode="numeric" placeholder="مثلاً 123456789"></div><div class="field"><label>مقدار (واحد NOT)</label><input id="adjustAmount" type="number" step="0.01" required placeholder="مثلاً 50 یا -10"></div></div><div class="field"><label>دلیل تغییر موجودی</label><input id="adjustReason" required maxlength="200" placeholder="مثلاً اصلاح تراکنش"></div><button type="submit">ثبت تغییر موجودی</button></form><div class="notice">هر تغییری باید با دلیل مشخص انجام شود. نتیجه عملیات را بعد از پاسخ سرور بررسی کنید.</div></div>
+</section>
+</main>
+</div>
+</div>
+<div class="footer">NOT REWARD · Admin Console</div>
+</div>
+<div id="toast" class="toast"></div>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+let api='',initData='',users=[],withdrawals=[];
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),4200)}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function amount(v){const n=Number(v);return Number.isFinite(n)?n.toLocaleString('fa-IR',{maximumFractionDigits:2}):'—'}
+function date(v){if(!v)return '—';const d=new Date(v);return Number.isNaN(d.getTime())?esc(v):d.toLocaleString('fa-IR')}
+function status(s){const map={pending:['در انتظار','pending'],approved:['تأیید شده','approved'],paid:['پرداخت شده','paid'],rejected:['رد شده','rejected'],blocked:['مسدود','blocked'],active:['فعال','active']};const x=map[String(s||'').toLowerCase()]||[s||'نامشخص',''];return `<span class="badge ${x[1]}">${esc(x[0])}</span>`}
+function telegramInit(){return window.Telegram&&window.Telegram.WebApp&&window.Telegram.WebApp.initData?window.Telegram.WebApp.initData:''}
+async function req(path,body){if(!api)throw Error('ابتدا آدرس API را وارد کنید.');const r=await fetch(api.replace(/\/+$/,'')+path,{method:'POST',headers:{'Content-Type':'application/json','X-Telegram-Init-Data':initData},body:JSON.stringify({...body,initData})});let d={};try{d=await r.json()}catch{}if(!r.ok||d.ok===false)throw Error(d.error||d.message||`خطای سرور (${r.status})`);return d}
+function showView(v){document.querySelectorAll('.view').forEach(e=>e.classList.toggle('active',e.id==='view-'+v));document.querySelectorAll('.nav[data-view]').forEach(e=>e.classList.toggle('active',e.dataset.view===v));if(v==='withdrawals')renderWithdrawals();if(v==='users')renderUsers()}
+async function loadStats(){const d=await req('/api/admin/stats',{});const s=d.stats||d.data||d;$('sUsers').textContent=amount(s.totalUsers??s.users??s.userCount??s.total_users);$('sWithdrawals').textContent=amount(s.totalWithdrawals??s.withdrawals??s.withdrawalCount??s.total_withdrawals);$('sPending').textContent=amount(s.pendingWithdrawals??s.pending??s.pending_withdrawals);$('sBalance').textContent=amount(s.totalBalance??s.balance??s.total_balance)}
+async function loadWithdrawals(){const d=await req('/api/admin/withdrawals',{});withdrawals=Array.isArray(d.withdrawals)?d.withdrawals:Array.isArray(d.data)?d.data:Array.isArray(d)?d:[];renderWithdrawals();renderRecent()}
+async function loadUsers(){const d=await req('/api/admin/users',{});users=Array.isArray(d.users)?d.users:Array.isArray(d.data)?d.data:Array.isArray(d)?d:[];renderUsers()}
+function renderRecent(){const arr=withdrawals.slice(0,5);$('recentWithdrawals').innerHTML=arr.length?`<div class="tablewrap"><table><thead><tr><th>شناسه</th><th>کاربر</th><th>مبلغ</th><th>وضعیت</th></tr></thead><tbody>${arr.map(w=>`<tr><td>${esc(w.id??w.withdrawal_id)}</td><td>${esc(w.username||w.user_id||w.telegram_id)}</td><td>${amount(w.amount)}</td><td>${status(w.status)}</td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">درخواستی وجود ندارد.</div>'}
+function renderWithdrawals(){const q=$('withdrawSearch').value.trim().toLowerCase(),f=$('withdrawFilter').value;const arr=withdrawals.filter(w=>{const s=[w.id,w.withdrawal_id,w.username,w.user_id,w.telegram_id,w.wallet_address,w.wallet].join(' ').toLowerCase();return (!q||s.includes(q))&&(!f||String(w.status).toLowerCase()===f)});$('withdrawBody').innerHTML=arr.length?arr.map(w=>{const id=w.id??w.withdrawal_id;const uid=w.user_id??w.telegram_id??w.userId;return `<tr><td>${esc(id)}</td><td>${esc(w.username||uid||'—')}<div class="muted">${esc(uid||'')}</div></td><td>${amount(w.amount)}</td><td style="max-width:200px;overflow-wrap:anywhere">${esc(w.wallet_address||w.wallet||'—')}</td><td>${status(w.status)}</td><td>${date(w.created_at||w.createdAt)}</td><td><div class="actions"><button class="success" data-wact="approve" data-id="${esc(id)}">تأیید</button><button data-wact="paid" data-id="${esc(id)}">پرداخت شد</button><button class="danger" data-wact="reject" data-id="${esc(id)}">رد</button></div></td></tr>`}).join(''):'<tr><td colspan="7" class="empty">موردی پیدا نشد.</td></tr>'}
+function renderUsers(){const q=$('userSearch').value.trim().toLowerCase();const arr=users.filter(u=>[u.id,u.user_id,u.telegram_id,u.username,u.first_name,u.last_name].join(' ').toLowerCase().includes(q));$('userBody').innerHTML=arr.length?arr.map(u=>{const id=u.user_id??u.telegram_id??u.id;const blocked=Number(u.is_blocked||u.blocked)===1||u.is_blocked===true||u.blocked===true;return `<tr><td>${esc(id)}</td><td>${esc(u.username?'@'+u.username:[u.first_name,u.last_name].filter(Boolean).join(' ')||'—')}</td><td>${amount(u.balance)}</td><td>${blocked?status('blocked'):status('active')}</td><td><div class="actions"><button class="secondary" data-uact="detail" data-id="${esc(id)}">جزئیات</button><button class="${blocked?'success':'danger'}" data-uact="block" data-blocked="${blocked?'0':'1'}" data-id="${esc(id)}">${blocked?'رفع مسدودی':'مسدود کردن'}</button></div></td></tr>`}).join(''):'<tr><td colspan="5" class="empty">کاربری پیدا نشد.</td></tr>'}
+async function refresh(){try{await Promise.all([loadStats(),loadWithdrawals(),loadUsers()]);toast('اطلاعات به‌روزرسانی شد.')}catch(e){toast(e.message)}}
+$('connectBtn').addEventListener('click',async()=>{api=$('apiUrl').value.trim();initData=telegramInit()||$('manualInit').value.trim();if(!api){toast('آدرس API را وارد کنید.');return}if(!initData){toast('این صفحه را از داخل تلگرام باز کنید تا ورود امن انجام شود.');return}try{await req('/api/admin/stats',{});$('login').style.display='none';$('app').style.display='block';if(window.Telegram?.WebApp){window.Telegram.WebApp.ready();window.Telegram.WebApp.expand()}await refresh()}catch(e){toast('ورود ناموفق: '+e.message)}});
+document.querySelectorAll('.nav[data-view]').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.go)));
+$('refreshBtn').addEventListener('click',refresh);$('refreshTop').addEventListener('click',refresh);$('loadWithdrawals').addEventListener('click',()=>loadWithdrawals().catch(e=>toast(e.message)));$('loadUsers').addEventListener('click',()=>loadUsers().catch(e=>toast(e.message)));
+$('withdrawSearch').addEventListener('input',renderWithdrawals);$('withdrawFilter').addEventListener('change',renderWithdrawals);$('userSearch').addEventListener('input',renderUsers);
+$('logoutBtn').addEventListener('click',()=>{initData='';users=[];withdrawals=[];$('app').style.display='none';$('login').style.display='block';toast('از پنل خارج شدید.')});
+$('withdrawBody').addEventListener('click',async e=>{const b=e.target.closest('button[data-wact]');if(!b)return;const action=b.dataset.wact,id=b.dataset.id;if(!confirm(`از انجام عملیات «${action}» برای برداشت ${id} مطمئن هستید؟`))return;try{await req('/api/admin/withdrawal/update',{withdrawalId:id,id,action,status:action});toast('عملیات انجام شد.');await refresh()}catch(err){toast('عملیات انجام نشد: '+err.message)}});
+$('userBody').addEventListener('click',async e=>{const b=e.target.closest('button[data-uact]');if(!b)return;const id=b.dataset.id;if(b.dataset.uact==='detail'){try{const d=await req('/api/admin/user/detail',{userId:id,user_id:id});const u=d.user||d.data||d;const hist=d.history||d.transactions||[];$('userDetailContent').innerHTML=`<div class="usercards">${Object.entries({'شناسه تلگرام':u.user_id??u.telegram_id??u.id,'نام کاربری':u.username?'@'+u.username:'—','نام':u.first_name||'—','نام خانوادگی':u.last_name||'—','موجودی':amount(u.balance),'وضعیت':Number(u.is_blocked)===1?'مسدود':'فعال','تاریخ عضویت':date(u.created_at)}).map(([k,v])=>`<div class="usercard"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div></div>`).join('')}</div>${hist.length?`<h3 style="margin-top:20px">سوابق اخیر</h3><div class="tablewrap"><table><thead><tr><th>نوع</th><th>مقدار</th><th>توضیحات</th><th>تاریخ</th></tr></thead><tbody>${hist.map(h=>`<tr><td>${esc(h.type||h.action||'—')}</td><td>${amount(h.amount)}</td><td>${esc(h.description||h.note||'—')}</td><td>${date(h.created_at)}</td></tr>`).join('')}</tbody></table></div>`:'<p class="muted" style="margin-top:15px">سوابق در پاسخ API موجود نبود.</p>'}`;$('userDetails').style.display='block';$('userDetails').scrollIntoView({behavior:'smooth',block:'start'})}catch(err){toast('دریافت جزئیات ناموفق: '+err.message)}return}
+const blocked=b.dataset.blocked==='1';if(!confirm(blocked?'این کاربر مسدود شود؟':'مسدودی این کاربر برداشته شود؟'))return;try{await req('/api/admin/user/block',{userId:id,blocked});toast('وضعیت کاربر تغییر کرد.');await loadUsers()}catch(err){toast('مسدودسازی انجام نشد؛ احتمالاً باید مسیر /api/admin/user/block به Worker اضافه شود. '+err.message)}});
+$('closeDetails').addEventListener('click',()=>$('userDetails').style.display='none');
+$('adjustForm').addEventListener('submit',async e=>{e.preventDefault();const userId=$('adjustUserId').value.trim(),amountVal=Number($('adjustAmount').value),reason=$('adjustReason').value.trim();if(!confirm(`موجودی کاربر ${userId} به میزان ${amountVal} واحد تغییر کند؟`))return;try{await req('/api/admin/user/adjust',{userId,user_id:userId,amount:amountVal,reason,description:reason});toast('تغییر موجودی ثبت شد.');e.target.reset();await refresh()}catch(err){toast('تغییر موجودی ناموفق: '+err.message)}});
+if(window.Telegram?.WebApp){window.Telegram.WebApp.ready();if(telegramInit())$('manualInit').placeholder='اطلاعات ورود تلگرام به‌صورت خودکار دریافت می‌شود.'}
+})();
+</script>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+</body>
+</html>
