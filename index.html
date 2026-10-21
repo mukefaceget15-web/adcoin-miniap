@@ -37,24 +37,46 @@ body::after{width:280px;height:280px;background:#bfe3d3;bottom:60px;left:-100px;
 
 button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;cursor:wait}
 .app{max-width:500px;padding:19px 17px 30px;margin:auto}
+.app.lang-swap{animation:langSwap .45s ease}
+@keyframes langSwap{from{opacity:.25;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 /* بالا */
-.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
-.brand{display:flex;align-items:center;gap:11px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;gap:10px}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
 .logo{
-  width:48px;height:48px;border-radius:16px;display:grid;place-items:center;
+  width:48px;height:48px;border-radius:16px;display:grid;place-items:center;flex-shrink:0;
   background:linear-gradient(145deg,#1f8c68,#0f5340);color:#fff;font-size:24px;
   box-shadow:0 8px 18px #176b5035,inset 0 1px 0 #ffffff40;animation:pulseLogo 3s ease-in-out infinite;
 }
 @keyframes pulseLogo{50%{transform:rotate(-6deg) scale(1.05)}}
 .brand-name{font-size:18px;font-weight:900;letter-spacing:.4px}
 .brand-caption{color:var(--muted);font-size:10px;margin-top:2px}
-.status{background:#e4f4e6;color:#27714a;border-radius:20px;padding:7px 11px;font-size:10px;font-weight:700;box-shadow:0 3px 10px #27714a14}
+.top-end{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex-shrink:0}
+.status{background:#e4f4e6;color:#27714a;border-radius:20px;padding:7px 11px;font-size:10px;font-weight:700;box-shadow:0 3px 10px #27714a14;white-space:nowrap}
+
+/* سوییچ زبان */
+.lang-switch{
+  direction:ltr;position:relative;display:grid;grid-template-columns:1fr 1fr;width:86px;height:30px;padding:0;
+  border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 4px 12px #14291f14;
+  overflow:hidden;isolation:isolate;-webkit-user-select:none;user-select:none;
+}
+.lang-thumb{
+  position:absolute;z-index:0;top:3px;left:3px;width:calc(50% - 3px);height:calc(100% - 6px);border-radius:13px;
+  background:linear-gradient(135deg,#1f8c68,#0f5340);box-shadow:0 3px 10px #176b5044,inset 0 1px 0 #ffffff40;
+  transition:transform .5s cubic-bezier(.34,1.56,.5,1);
+}
+.lang-switch[data-lang="en"] .lang-thumb{transform:translateX(100%)}
+.lang-switch.flip .lang-thumb{animation:thumbPop .5s ease}
+@keyframes thumbPop{40%{filter:brightness(1.25);height:calc(100% - 2px);top:1px}}
+.lang-opt{position:relative;z-index:1;display:grid;place-items:center;font-size:11px;font-weight:800;color:#8a9a92;transition:color .3s,transform .3s}
+.lang-switch[data-lang="fa"] .lang-opt[data-l="fa"],
+.lang-switch[data-lang="en"] .lang-opt[data-l="en"]{color:#fff;transform:scale(1.08)}
+.lang-switch:active{transform:scale(.95)}
 
 .greeting{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}
 .greeting h1{font-size:23px;line-height:1.6;margin:0;font-weight:800;letter-spacing:-.5px}
 .greeting p{color:var(--muted);font-size:12px;margin:4px 0 0}
-.greeting-icon{width:54px;height:54px;border-radius:19px;display:grid;place-items:center;background:linear-gradient(145deg,#eaf1e1,#d9ead4);font-size:27px;animation:wave 4s ease-in-out infinite}
+.greeting-icon{width:54px;height:54px;border-radius:19px;display:grid;place-items:center;background:linear-gradient(145deg,#eaf1e1,#d9ead4);font-size:27px;animation:wave 4s ease-in-out infinite;flex-shrink:0}
 @keyframes wave{0%,100%{transform:rotate(0)}50%{transform:rotate(10deg)}}
 
 /* کارت موجودی */
@@ -71,7 +93,7 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
 @keyframes shine{60%,100%{transform:translateX(100%)}}
 .balance-card::after{content:"";position:absolute;width:185px;height:185px;border-radius:50%;left:-60px;top:-90px;border:1px solid #ffffff17;box-shadow:0 0 0 22px #ffffff08,0 0 0 45px #ffffff06;pointer-events:none}
 .balance-label{font-size:12px;color:#d5e9de;position:relative;z-index:1}
-.balance-number{display:flex;align-items:baseline;gap:8px;margin-top:8px;direction:rtl;position:relative;z-index:1}
+.balance-number{display:flex;align-items:baseline;gap:8px;margin-top:8px;position:relative;z-index:1}
 .balance-value{font-size:clamp(34px,10vw,46px);font-weight:900;letter-spacing:-1px;line-height:1.5;overflow-wrap:anywhere;text-shadow:0 3px 14px #00000025}
 .balance-unit{font-size:13px;color:var(--lime);font-weight:800;direction:ltr}
 .balance-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:17px;padding-top:14px;border-top:1px solid #ffffff24;color:#d7e9df;font-size:11px;position:relative;z-index:1}
@@ -124,11 +146,12 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
 .stat-value small{font-size:10px;color:var(--green)}
 
 .quick-list{display:grid;gap:10px}
-.quick-item{width:100%;border:1px solid var(--line);background:#fff;border-radius:19px;padding:13px;display:flex;align-items:center;gap:12px;text-align:right;color:var(--ink);box-shadow:var(--shadow);transition:transform .15s}
+.quick-item{width:100%;border:1px solid var(--line);background:#fff;border-radius:19px;padding:13px;display:flex;align-items:center;gap:12px;text-align:start;color:var(--ink);box-shadow:var(--shadow);transition:transform .15s}
 .quick-item:active{transform:scale(.985)}
 .quick-icon{width:45px;height:45px;flex-shrink:0;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#f3f6e8,#e6edd2);font-size:20px}
 .quick-copy{flex:1;min-width:0}.quick-copy b{display:block;font-size:12px;font-weight:800}.quick-copy small{display:block;color:var(--muted);font-size:10px;margin-top:4px;line-height:1.8}
 .arrow{color:#a0aaa1;font-size:22px}
+html[dir="ltr"] .arrow{transform:scaleX(-1)}
 
 .page{display:none}.page.active{display:block;animation:appear .35s ease}
 @keyframes appear{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
@@ -268,23 +291,30 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
 .confetti{position:fixed;top:-12px;width:9px;height:14px;border-radius:2px;z-index:99;pointer-events:none;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:.9}}
 
-@media(max-width:360px){.app{padding-right:12px;padding-left:12px}.greeting h1{font-size:20px}.balance-card{padding:18px}.stat-card{padding:12px}.coin-stage{width:155px;height:155px}.days-grid{gap:6px}}
+@media(max-width:360px){.app{padding-right:12px;padding-left:12px}.greeting h1{font-size:20px}.balance-card{padding:18px}.stat-card{padding:12px}.coin-stage{width:155px;height:155px}.days-grid{gap:6px}.brand-name{font-size:16px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 
 <body>
-<main class="app">
+<main class="app" id="app-root">
 
 <header class="topbar">
   <div class="brand">
     <div class="logo">✦</div>
     <div>
       <div class="brand-name">NOT REWARD</div>
-      <div class="brand-caption">پنل اختصاصی کسب درآمد</div>
+      <div class="brand-caption" data-i18n="brand_caption">پنل اختصاصی کسب درآمد</div>
     </div>
   </div>
-  <div class="status" id="app-status">● در حال اتصال</div>
+  <div class="top-end">
+    <button type="button" class="lang-switch" id="lang-switch" data-lang="fa" onclick="toggleLang()" aria-label="Language / زبان">
+      <span class="lang-thumb"></span>
+      <span class="lang-opt" data-l="fa">فا</span>
+      <span class="lang-opt" data-l="en">EN</span>
+    </button>
+    <div class="status" id="app-status">● در حال اتصال</div>
+  </div>
 </header>
 
 <!-- خانه -->
@@ -292,86 +322,86 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
   <div class="greeting">
     <div>
       <h1 id="welcome-title">سلام، خوش اومدی!</h1>
-      <p>امروز هم برای پیشرفت آماده‌ای؟</p>
+      <p data-i18n="greet_sub">امروز هم برای پیشرفت آماده‌ای؟</p>
     </div>
     <div class="greeting-icon">🌿</div>
   </div>
 
   <div class="balance-card">
-    <div class="balance-label">موجودی کل کیف پول</div>
+    <div class="balance-label" data-i18n="bal_total">موجودی کل کیف پول</div>
     <div class="balance-number">
       <span class="balance-value" id="balance">۰</span>
       <span class="balance-unit">NOT</span>
     </div>
     <div class="balance-bottom">
-      <span>موجودی حساب شما</span>
-      <span class="wallet-label">✦ کیف پول من</span>
+      <span data-i18n="bal_yours">موجودی حساب شما</span>
+      <span class="wallet-label" data-i18n="my_wallet">✦ کیف پول من</span>
     </div>
   </div>
 
-  <div class="section-head"><h2>کسب درآمد</h2><span>ساده و سریع</span></div>
+  <div class="section-head"><h2 data-i18n="sec_earn">کسب درآمد</h2><span data-i18n="sec_earn_s">ساده و سریع</span></div>
 
   <div class="earn-card">
     <div class="coin-stage">
       <div class="coin-glow"></div>
       <div class="coin-halo"></div>
-      <button class="coin-button" id="ad-button" onclick="openAd()" aria-label="تماشای تبلیغ">
+      <button class="coin-button" id="ad-button" onclick="openAd()" data-i18n-aria="ad_aria" aria-label="تماشای تبلیغ">
         <span class="coin-inner">₦</span>
       </button>
     </div>
-    <div class="earn-title">پاداش تبلیغ منتظرته</div>
-    <div class="earn-description">
+    <div class="earn-title" data-i18n="earn_title">پاداش تبلیغ منتظرته</div>
+    <div class="earn-description" data-i18n="earn_desc">
       تبلیغ را مشاهده کن؛ پاداش فقط پس از تأیید سرور ثبت می‌شود.
     </div>
-    <button class="main-btn" id="watch-button" onclick="openAd()">▶ &nbsp; تماشای تبلیغ</button>
-    <div class="small-note">پاداش هر رویداد واجد شرایط: ۰٫۵ NOT. هر نمایش لزوماً پاداش ندارد.</div>
+    <button class="main-btn" id="watch-button" onclick="openAd()" data-i18n="watch_btn">▶ &nbsp; تماشای تبلیغ</button>
+    <div class="small-note" data-i18n="earn_note">پاداش هر رویداد واجد شرایط: ۰٫۵ NOT. هر نمایش لزوماً پاداش ندارد.</div>
   </div>
 
-  <div class="section-head"><h2>خلاصه حساب</h2><span>وضعیت فعلی</span></div>
+  <div class="section-head"><h2 data-i18n="sec_summary">خلاصه حساب</h2><span data-i18n="sec_summary_s">وضعیت فعلی</span></div>
   <div class="stats">
     <div class="stat-card">
       <div class="stat-top"><span class="stat-icon">◈</span></div>
-      <div class="stat-label">موجودی فعلی</div>
+      <div class="stat-label" data-i18n="cur_balance">موجودی فعلی</div>
       <div class="stat-value"><span id="stat-balance">۰</span> <small>NOT</small></div>
     </div>
     <div class="stat-card">
       <div class="stat-top"><span class="stat-icon">♧</span></div>
-      <div class="stat-label">دوستان دعوت‌شده</div>
+      <div class="stat-label" data-i18n="invited_friends">دوستان دعوت‌شده</div>
       <div class="stat-value" id="stat-referrals">۰</div>
     </div>
   </div>
 
-  <div class="section-head"><h2>دسترسی سریع</h2></div>
+  <div class="section-head"><h2 data-i18n="sec_quick">دسترسی سریع</h2></div>
   <div class="quick-list">
     <button class="quick-item" onclick="showPage('tasks')">
       <span class="quick-icon">🎁</span>
-      <span class="quick-copy"><b>جایزه روزانه و تسک‌ها</b><small>هر روز سر بزن و تا ۷ NOT جایزه بگیر</small></span>
+      <span class="quick-copy"><b data-i18n="q_tasks_t">جایزه روزانه و تسک‌ها</b><small data-i18n="q_tasks_s">هر روز سر بزن و تا ۷ NOT جایزه بگیر</small></span>
       <span class="arrow">‹</span>
     </button>
     <button class="quick-item" onclick="showPage('wallet')">
       <span class="quick-icon">↗</span>
-      <span class="quick-copy"><b>درخواست برداشت</b><small>برداشت از ۵۰ نات به بالا</small></span>
+      <span class="quick-copy"><b data-i18n="q_wd_t">درخواست برداشت</b><small data-i18n="q_wd_s">برداشت از ۵۰ نات به بالا</small></span>
       <span class="arrow">‹</span>
     </button>
     <button class="quick-item" onclick="showPage('referral')">
       <span class="quick-icon">♧</span>
-      <span class="quick-copy"><b>دعوت از دوستان</b><small>برای هر دعوت معتبر ۵ NOT پاداش</small></span>
+      <span class="quick-copy"><b data-i18n="q_ref_t">دعوت از دوستان</b><small data-i18n="q_ref_s">برای هر دعوت معتبر ۵ NOT پاداش</small></span>
       <span class="arrow">‹</span>
     </button>
   </div>
 
-  <div class="section-head"><h2>تراکنش‌های اخیر</h2></div>
+  <div class="section-head"><h2 data-i18n="sec_recent">تراکنش‌های اخیر</h2></div>
   <div class="panel" id="home-history"><div class="empty">در حال دریافت اطلاعات...</div></div>
 </section>
 
 <!-- تسک‌ها -->
 <section class="page" id="page-tasks">
-  <h1 class="page-title">تسک‌ها</h1>
-  <p class="page-subtitle">جایزه روزانه بگیر و با انجام تسک‌ها NOT بیشتری جمع کن.</p>
+  <h1 class="page-title" data-i18n="tasks_title">تسک‌ها</h1>
+  <p class="page-subtitle" data-i18n="tasks_sub">جایزه روزانه بگیر و با انجام تسک‌ها NOT بیشتری جمع کن.</p>
 
   <div class="daily-hero">
-    <h2>🎁 جایزه روزانه</h2>
-    <p>هر روز وارد شو و جایزه‌ات را بگیر. جایزه‌ها از ۱ تا ۷ NOT زیاد می‌شود و بعد از روز هفتم دوباره از اول شروع می‌شود.</p>
+    <h2 data-i18n="daily_title">🎁 جایزه روزانه</h2>
+    <p data-i18n="daily_desc">هر روز وارد شو و جایزه‌ات را بگیر. جایزه‌ها از ۱ تا ۷ NOT زیاد می‌شود و بعد از روز هفتم دوباره از اول شروع می‌شود.</p>
     <div class="daily-progress"><i id="daily-bar"></i></div>
     <div class="daily-meta"><span id="daily-progress-text">۰ از ۷ روز</span><span id="daily-next-text">—</span></div>
   </div>
@@ -382,78 +412,78 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
     <div class="small-note" id="daily-note" style="text-align:center">ثبت جایزه توسط سرور انجام می‌شود.</div>
   </div>
 
-  <div class="section-head"><h2>تسک‌های کانال</h2><span>هر کانال ۵ NOT</span></div>
+  <div class="section-head"><h2 data-i18n="sec_channels">تسک‌های کانال</h2><span data-i18n="sec_channels_s">هر کانال ۵ NOT</span></div>
   <div id="tasks-list"></div>
-  <div class="notice">
+  <div class="notice" data-i18n="tasks_notice">
     ابتدا در کانال عضو شو، سپس دکمه «بررسی» را بزن. اگر عضویتت تأیید شود، پاداش به حسابت اضافه می‌شود. هر تسک فقط یک بار پاداش دارد و با ترک کانال ممکن است پاداش لغو شود.
   </div>
 </section>
 
 <!-- کیف پول -->
 <section class="page" id="page-wallet">
-  <h1 class="page-title">کیف پول</h1>
-  <p class="page-subtitle">موجودی و درخواست‌های برداشت خود را مدیریت کن.</p>
+  <h1 class="page-title" data-i18n="wallet_title">کیف پول</h1>
+  <p class="page-subtitle" data-i18n="wallet_sub">موجودی و درخواست‌های برداشت خود را مدیریت کن.</p>
 
   <div class="balance-card">
-    <div class="balance-label">موجودی حساب</div>
+    <div class="balance-label" data-i18n="bal_account">موجودی حساب</div>
     <div class="balance-number">
       <span class="balance-value" id="wallet-balance">۰</span>
       <span class="balance-unit">NOT</span>
     </div>
     <div class="balance-bottom">
-      <span>حداقل برداشت</span>
-      <span class="wallet-label">۵۰ NOT</span>
+      <span data-i18n="min_wd">حداقل برداشت</span>
+      <span class="wallet-label" id="wallet-min">۵۰ NOT</span>
     </div>
   </div>
 
   <div class="panel" style="margin-top:15px">
-    <h2 class="panel-title">ثبت درخواست برداشت</h2>
+    <h2 class="panel-title" data-i18n="wd_panel">ثبت درخواست برداشت</h2>
     <form id="withdraw-form">
-      <label class="field-label" for="withdraw-amount">مبلغ به NOT</label>
-      <input class="field" id="withdraw-amount" type="number" min="50" step="0.01" placeholder="مثلاً ۵۰" required>
+      <label class="field-label" for="withdraw-amount" data-i18n="amt_label">مبلغ به NOT</label>
+      <input class="field" id="withdraw-amount" type="number" min="50" step="0.01" data-i18n-ph="amt_ph" placeholder="مثلاً ۵۰" required>
 
-      <label class="field-label" for="withdraw-address">آدرس کیف پول</label>
-      <input class="field" id="withdraw-address" type="text" minlength="20" maxlength="150" autocomplete="off" placeholder="آدرس کیف پول را وارد کن" required>
+      <label class="field-label" for="withdraw-address" data-i18n="addr_label">آدرس کیف پول</label>
+      <input class="field" id="withdraw-address" type="text" minlength="20" maxlength="150" autocomplete="off" data-i18n-ph="addr_ph" placeholder="آدرس کیف پول را وارد کن" required>
 
-      <div class="notice">
+      <div class="notice" data-i18n="wd_notice">
         حداقل برداشت ۵۰ نات است. آدرس کیف پول باید بین ۲۰ تا ۱۵۰ نویسه باشد.
         قبل از ارسال، شبکه و آدرس را بررسی کن.
       </div>
-      <button class="main-btn full" id="withdraw-submit" type="submit">ثبت درخواست برداشت</button>
+      <button class="main-btn full" id="withdraw-submit" type="submit" data-i18n="wd_submit">ثبت درخواست برداشت</button>
     </form>
   </div>
 
   <div class="panel">
-    <h2 class="panel-title">تاریخچه تراکنش‌ها</h2>
+    <h2 class="panel-title" data-i18n="hist_title">تاریخچه تراکنش‌ها</h2>
     <div id="wallet-history"><div class="empty">در حال دریافت...</div></div>
   </div>
 </section>
 
 <!-- دعوت -->
 <section class="page" id="page-referral">
-  <h1 class="page-title">دعوت از دوستان</h1>
-  <p class="page-subtitle">لینک اختصاصی خودت را بفرست و دوستانت را به NOT REWARD دعوت کن.</p>
+  <h1 class="page-title" data-i18n="ref_title">دعوت از دوستان</h1>
+  <p class="page-subtitle" data-i18n="ref_sub">لینک اختصاصی خودت را بفرست و دوستانت را به NOT REWARD دعوت کن.</p>
 
   <div class="panel">
     <div style="font-size:46px;text-align:center;margin:8px 0 14px">🤝</div>
-    <h2 class="panel-title" style="text-align:center">با هم رشد کنیم</h2>
+    <h2 class="panel-title" style="text-align:center" data-i18n="ref_together">با هم رشد کنیم</h2>
 
     <div class="stats">
       <div class="stat-card">
-        <div class="stat-label">تعداد دعوت‌ها</div>
+        <div class="stat-label" data-i18n="ref_count_l">تعداد دعوت‌ها</div>
         <div class="stat-value" id="ref-count">۰</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">شناسه تلگرام</div>
+        <div class="stat-label" data-i18n="tg_id">شناسه تلگرام</div>
         <div class="stat-value" id="ref-user-id" style="font-size:15px">—</div>
       </div>
     </div>
 
-    <label class="field-label">لینک دعوت اختصاصی</label>
+    <label class="field-label" data-i18n="ref_label">لینک دعوت اختصاصی</label>
     <div class="ref-link" id="ref-link">در حال دریافت لینک...</div>
-    <button class="main-btn full" onclick="copyReferral()">کپی لینک دعوت</button>
-    <button class="secondary-btn" onclick="shareReferral()">ارسال برای دوستان</button>
-    <div class="notice">
+    <button class="main-btn full" onclick="copyReferral()" data-i18n="copy_btn">کپی لینک دعوت</button>
+    <button class="secondary-btn" onclick="shareReferral()" data-i18n="share_btn">ارسال برای دوستان</button>
+    <div class="notice" data-i18n="ref_notice">
       پاداش دعوت معتبر ۵ NOT است. دعوت فقط برای کاربر جدید حساب می‌شود و شمارش و پاداش آن از سرور مدیریت می‌شود.
     </div>
   </div>
@@ -461,8 +491,8 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
 
 <!-- پروفایل -->
 <section class="page" id="page-profile">
-  <h1 class="page-title">پروفایل من</h1>
-  <p class="page-subtitle">اطلاعات حساب کاربری تو</p>
+  <h1 class="page-title" data-i18n="profile_title">پروفایل من</h1>
+  <p class="page-subtitle" data-i18n="profile_sub">اطلاعات حساب کاربری تو</p>
 
   <div class="panel profile-top">
     <div class="avatar">👤</div>
@@ -471,26 +501,26 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
   </div>
 
   <div class="panel">
-    <h2 class="panel-title">اطلاعات حساب</h2>
-    <div class="profile-row"><span>موجودی</span><b id="profile-balance">۰ NOT</b></div>
-    <div class="profile-row"><span>دعوت‌شده‌ها</span><b id="profile-referrals">۰</b></div>
-    <div class="profile-row"><span>وضعیت اتصال</span><b id="connection-status">در حال بررسی</b></div>
-    <button class="secondary-btn" onclick="refreshAll(true)">به‌روزرسانی اطلاعات</button>
-    <a class="secondary-btn" id="admin-link" href="admin.html" style="display:none;text-align:center;text-decoration:none">🛠 ورود به پنل مدیریت</a>
+    <h2 class="panel-title" data-i18n="acc_info">اطلاعات حساب</h2>
+    <div class="profile-row"><span data-i18n="p_balance">موجودی</span><b id="profile-balance">۰ NOT</b></div>
+    <div class="profile-row"><span data-i18n="p_refs">دعوت‌شده‌ها</span><b id="profile-referrals">۰</b></div>
+    <div class="profile-row"><span data-i18n="p_conn">وضعیت اتصال</span><b id="connection-status">در حال بررسی</b></div>
+    <button class="secondary-btn" onclick="refreshAll(true)" data-i18n="refresh_btn">به‌روزرسانی اطلاعات</button>
+    <a class="secondary-btn" id="admin-link" href="admin.html" style="display:none;text-align:center;text-decoration:none" data-i18n="admin_btn">🛠 ورود به پنل مدیریت</a>
   </div>
 
-  <div class="footer">NOT REWARD · حساب تو، مدیریت ساده‌تر</div>
+  <div class="footer" data-i18n="footer">NOT REWARD · حساب تو، مدیریت ساده‌تر</div>
 </section>
 
 </main>
 
 <nav class="bottom-nav" id="bottom-nav">
   <span class="nav-indicator" id="nav-indicator"></span>
-  <button class="nav-btn active" data-page="home" onclick="showPage('home')"><span class="nav-icon">🏠</span><span class="nav-text">خانه</span></button>
-  <button class="nav-btn" data-page="tasks" onclick="showPage('tasks')"><span class="nav-icon">🎁</span><span class="nav-text">تسک‌ها</span><i class="nav-dot" id="tasks-dot"></i></button>
-  <button class="nav-btn" data-page="wallet" onclick="showPage('wallet')"><span class="nav-icon">💳</span><span class="nav-text">کیف پول</span></button>
-  <button class="nav-btn" data-page="referral" onclick="showPage('referral')"><span class="nav-icon">🤝</span><span class="nav-text">دعوت</span></button>
-  <button class="nav-btn" data-page="profile" onclick="showPage('profile')"><span class="nav-icon">👤</span><span class="nav-text">پروفایل</span></button>
+  <button class="nav-btn active" data-page="home" onclick="showPage('home')"><span class="nav-icon">🏠</span><span class="nav-text" data-i18n="nav_home">خانه</span></button>
+  <button class="nav-btn" data-page="tasks" onclick="showPage('tasks')"><span class="nav-icon">🎁</span><span class="nav-text" data-i18n="nav_tasks">تسک‌ها</span><i class="nav-dot" id="tasks-dot"></i></button>
+  <button class="nav-btn" data-page="wallet" onclick="showPage('wallet')"><span class="nav-icon">💳</span><span class="nav-text" data-i18n="nav_wallet">کیف پول</span></button>
+  <button class="nav-btn" data-page="referral" onclick="showPage('referral')"><span class="nav-icon">🤝</span><span class="nav-text" data-i18n="nav_ref">دعوت</span></button>
+  <button class="nav-btn" data-page="profile" onclick="showPage('profile')"><span class="nav-icon">👤</span><span class="nav-text" data-i18n="nav_profile">پروفایل</span></button>
 </nav>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -509,12 +539,346 @@ const API_TIMEOUT_MS = 15000;
 const DAILY_REWARDS = [1, 2, 3, 4, 5, 6, 7];
 
 // ====== تسک‌های کانال ======
-// ⚠️ username کانال‌ها را با کانال‌های واقعی خودت عوض کن (بدون @).
-// ربات باید در هر دو کانال «ادمین» باشد تا سرور بتواند عضویت را چک کند.
+// ⚠️ ربات باید در هر دو کانال «ادمین» باشد تا سرور بتواند عضویت را چک کند.
+// ⚠️ همین دو username باید در کد سرور (Worker) هم برای channel_1 و channel_2 تنظیم شده باشد.
 const CHANNEL_TASKS = [
-  { id: "channel_1", title: "عضویت در کانال اول", username: "YOUR_CHANNEL_1", reward: 5, icon: "📢" },
-  { id: "channel_2", title: "عضویت در کانال دوم", username: "YOUR_CHANNEL_2", reward: 5, icon: "📣" }
+  { id: "channel_1", titleKey: "task_ch1", username: "WithdrawNott", reward: 5, icon: "📢" },
+  { id: "channel_2", titleKey: "task_ch2", username: "NOTREWARR",    reward: 5, icon: "📣" }
 ];
+
+/* ================= زبان‌ها / Languages ================= */
+const STR = {
+  fa: {
+    title: "NOT REWARD | پنل درآمد",
+    brand_caption: "پنل اختصاصی کسب درآمد",
+    greet_sub: "امروز هم برای پیشرفت آماده‌ای؟",
+    welcome: "سلام {name} 👋",
+    friend: "دوست من",
+    bal_total: "موجودی کل کیف پول",
+    bal_yours: "موجودی حساب شما",
+    my_wallet: "✦ کیف پول من",
+    sec_earn: "کسب درآمد",
+    sec_earn_s: "ساده و سریع",
+    ad_aria: "تماشای تبلیغ",
+    earn_title: "پاداش تبلیغ منتظرته",
+    earn_desc: "تبلیغ را مشاهده کن؛ پاداش فقط پس از تأیید سرور ثبت می‌شود.",
+    watch_btn: "▶ \u00A0 تماشای تبلیغ",
+    earn_note: "پاداش هر رویداد واجد شرایط: ۰٫۵ NOT. هر نمایش لزوماً پاداش ندارد.",
+    sec_summary: "خلاصه حساب",
+    sec_summary_s: "وضعیت فعلی",
+    cur_balance: "موجودی فعلی",
+    invited_friends: "دوستان دعوت‌شده",
+    sec_quick: "دسترسی سریع",
+    q_tasks_t: "جایزه روزانه و تسک‌ها",
+    q_tasks_s: "هر روز سر بزن و تا ۷ NOT جایزه بگیر",
+    q_wd_t: "درخواست برداشت",
+    q_wd_s: "برداشت از ۵۰ نات به بالا",
+    q_ref_t: "دعوت از دوستان",
+    q_ref_s: "برای هر دعوت معتبر ۵ NOT پاداش",
+    sec_recent: "تراکنش‌های اخیر",
+    loading: "در حال دریافت اطلاعات...",
+
+    tasks_title: "تسک‌ها",
+    tasks_sub: "جایزه روزانه بگیر و با انجام تسک‌ها NOT بیشتری جمع کن.",
+    daily_title: "🎁 جایزه روزانه",
+    daily_desc: "هر روز وارد شو و جایزه‌ات را بگیر. جایزه‌ها از ۱ تا ۷ NOT زیاد می‌شود و بعد از روز هفتم دوباره از اول شروع می‌شود.",
+    sec_channels: "تسک‌های کانال",
+    sec_channels_s: "هر کانال ۵ NOT",
+    tasks_notice: "ابتدا در کانال عضو شو، سپس دکمه «بررسی» را بزن. اگر عضویتت تأیید شود، پاداش به حسابت اضافه می‌شود. هر تسک فقط یک بار پاداش دارد و با ترک کانال ممکن است پاداش لغو شود.",
+    task_ch1: "عضویت در کانال اول",
+    task_ch2: "عضویت در کانال دوم",
+    t_join: "عضویت",
+    t_check: "بررسی",
+    t_done: "✓ انجام شد",
+
+    day_n: "روز {n}",
+    days_prog: "{n} از ۷ روز",
+    daily_claim_default: "دریافت جایزه امروز",
+    daily_note_default: "ثبت جایزه توسط سرور انجام می‌شود.",
+    daily_loading: "در حال دریافت...",
+    daily_claim: "🎁 دریافت {n} NOT",
+    daily_ready: "جایزه امروز آماده است",
+    daily_ready_note: "جایزه روز {d} را همین حالا بگیر.",
+    daily_claimed: "✓ جایزه امروز دریافت شد",
+    daily_tomorrow: "فردا برگرد",
+    daily_cycle_done: "چرخه کامل شد! از فردا دوباره از روز ۱ شروع می‌شود.",
+    daily_tomorrow_note: "فردا جایزه روز {d} ({n} NOT) منتظرته.",
+    saving: "در حال ثبت...",
+
+    wallet_title: "کیف پول",
+    wallet_sub: "موجودی و درخواست‌های برداشت خود را مدیریت کن.",
+    bal_account: "موجودی حساب",
+    min_wd: "حداقل برداشت",
+    wd_panel: "ثبت درخواست برداشت",
+    amt_label: "مبلغ به NOT",
+    amt_ph: "مثلاً ۵۰",
+    addr_label: "آدرس کیف پول",
+    addr_ph: "آدرس کیف پول را وارد کن",
+    wd_notice: "حداقل برداشت ۵۰ نات است. آدرس کیف پول باید بین ۲۰ تا ۱۵۰ نویسه باشد. قبل از ارسال، شبکه و آدرس را بررسی کن.",
+    wd_submit: "ثبت درخواست برداشت",
+    hist_title: "تاریخچه تراکنش‌ها",
+
+    ref_title: "دعوت از دوستان",
+    ref_sub: "لینک اختصاصی خودت را بفرست و دوستانت را به NOT REWARD دعوت کن.",
+    ref_together: "با هم رشد کنیم",
+    ref_count_l: "تعداد دعوت‌ها",
+    tg_id: "شناسه تلگرام",
+    ref_label: "لینک دعوت اختصاصی",
+    copy_btn: "کپی لینک دعوت",
+    share_btn: "ارسال برای دوستان",
+    ref_notice: "پاداش دعوت معتبر ۵ NOT است. دعوت فقط برای کاربر جدید حساب می‌شود و شمارش و پاداش آن از سرور مدیریت می‌شود.",
+    ref_link_ph: "برای دریافت لینک، مینی‌اپ را از داخل تلگرام باز کن.",
+
+    profile_title: "پروفایل من",
+    profile_sub: "اطلاعات حساب کاربری تو",
+    default_user: "کاربر NOT REWARD",
+    acc_info: "اطلاعات حساب",
+    p_balance: "موجودی",
+    p_refs: "دعوت‌شده‌ها",
+    p_conn: "وضعیت اتصال",
+    refresh_btn: "به‌روزرسانی اطلاعات",
+    admin_btn: "🛠 ورود به پنل مدیریت",
+    footer: "NOT REWARD · حساب تو، مدیریت ساده‌تر",
+
+    nav_home: "خانه",
+    nav_tasks: "تسک‌ها",
+    nav_wallet: "کیف پول",
+    nav_ref: "دعوت",
+    nav_profile: "پروفایل",
+
+    app_connecting: "● در حال اتصال",
+    app_connected: "● متصل",
+    app_error: "● خطا در اتصال",
+    app_needTg: "● ورود تلگرام لازم است",
+    conn_connecting: "در حال بررسی",
+    conn_connected: "متصل",
+    conn_error: "خطای اتصال",
+    conn_needTg: "از داخل تلگرام باز کن",
+
+    h_tap: "پاداش لمس",
+    h_daily: "جایزه روزانه",
+    h_task: "پاداش تسک",
+    h_referral: "پاداش دعوت دوست",
+    h_ad: "پاداش تبلیغ",
+    h_withdrawal: "درخواست برداشت",
+    h_refund: "بازگشت مبلغ برداشت",
+    h_admin: "تنظیم توسط مدیر",
+    h_default: "تراکنش",
+    s_pending: "در انتظار بررسی",
+    s_approved: "تأیید شده",
+    s_rejected: "رد شده",
+    s_paid: "پرداخت شده",
+    hist_empty: "هنوز تراکنشی ثبت نشده است.",
+    hist_err_home: "دریافت تاریخچه ناموفق بود. دوباره تلاش کن.",
+    hist_err_wallet: "تاریخچه فعلاً در دسترس نیست.",
+
+    open_in_tg: "مینی‌اپ را از داخل ربات تلگرام باز کن.",
+    open_in_tg_first: "ابتدا مینی‌اپ را از تلگرام باز کن.",
+    open_in_tg_banner: "برای بارگذاری حساب، این صفحه را از داخل ربات تلگرام باز کن.",
+    api_timeout: "پاسخ سرور دیر شد. اتصال اینترنت را بررسی کن و دوباره تلاش کن.",
+    api_conn: "ارتباط با سرور برقرار نشد.",
+    api_parse: "پاسخ سرور قابل خواندن نیست. لطفاً دوباره تلاش کن.",
+    api_server: "خطای سرور: {code}",
+    load_tasks_fail: "دریافت اطلاعات تسک‌ها ناموفق بود.",
+    load_ref_fail: "دریافت اطلاعات دعوت ناموفق بود.",
+    daily_fail: "دریافت جایزه ناموفق بود.",
+    daily_ok: "🎉 جایزه روزانه ثبت شد: +{n} NOT",
+    task_ok: "🎉 عضویت تأیید شد و پاداش ثبت شد.",
+    task_fail: "عضویت تأیید نشد. اول در کانال عضو شو.",
+    ad_not_loaded: "تبلیغ هنوز بارگذاری نشده؛ کمی صبر کن.",
+    ad_prep: "در حال آماده‌سازی تبلیغ...",
+    ad_valued: "تبلیغ واجد شرایط اعلام شد؛ منتظر تأیید سرور باش.",
+    ad_non_valued: "این نمایش تبلیغ واجد پاداش نیست.",
+    ad_ended: "نمایش پایان یافت؛ ثبت پاداش به تأیید سرور بستگی دارد.",
+    ad_fail: "نمایش تبلیغ ناموفق بود؛ بعداً دوباره تلاش کن.",
+    wd_min: "حداقل برداشت ۵۰ نات است.",
+    wd_dec: "مبلغ باید حداکثر دو رقم اعشار داشته باشد.",
+    wd_addr: "آدرس کیف پول باید بین ۲۰ تا ۱۵۰ نویسه باشد.",
+    wd_nobal: "موجودی کافی نیست.",
+    wd_confirm: "درخواست برداشت {amt} NOT برای این آدرس ثبت شود؟",
+    wd_ok: "درخواست برداشت ثبت شد.",
+    wd_fail: "ثبت درخواست ناموفق بود.",
+    ref_open_tg: "مینی‌اپ را از تلگرام باز کن تا لینک دعوت دریافت شود.",
+    ref_copied: "لینک دعوت کپی شد.",
+    ref_copy_fail: "کپی انجام نشد",
+    ref_copy_manual: "کپی خودکار انجام نشد؛ لینک را دستی کپی کن.",
+    share_text: "بیا با هم NOT REWARD رو امتحان کنیم!",
+    refresh_ok: "اطلاعات با موفقیت به‌روزرسانی شد.",
+    refresh_part: "بخشی از اطلاعات دریافت نشد."
+  },
+  en: {
+    title: "NOT REWARD | Earnings Panel",
+    brand_caption: "Your personal earnings panel",
+    greet_sub: "Ready to make progress today?",
+    welcome: "Hello {name} 👋",
+    friend: "friend",
+    bal_total: "Total wallet balance",
+    bal_yours: "Your account balance",
+    my_wallet: "✦ My wallet",
+    sec_earn: "Earn",
+    sec_earn_s: "Simple & fast",
+    ad_aria: "Watch an ad",
+    earn_title: "An ad reward is waiting for you",
+    earn_desc: "Watch an ad; the reward is credited only after the server confirms it.",
+    watch_btn: "▶ \u00A0 Watch an ad",
+    earn_note: "Reward per eligible event: 0.5 NOT. Not every ad view is rewarded.",
+    sec_summary: "Account summary",
+    sec_summary_s: "Current status",
+    cur_balance: "Current balance",
+    invited_friends: "Invited friends",
+    sec_quick: "Quick access",
+    q_tasks_t: "Daily reward & tasks",
+    q_tasks_s: "Visit every day and get up to 7 NOT",
+    q_wd_t: "Withdrawal request",
+    q_wd_s: "Withdraw from 50 NOT and up",
+    q_ref_t: "Invite friends",
+    q_ref_s: "5 NOT reward for every valid invite",
+    sec_recent: "Recent transactions",
+    loading: "Loading...",
+
+    tasks_title: "Tasks",
+    tasks_sub: "Claim your daily reward and collect more NOT by completing tasks.",
+    daily_title: "🎁 Daily reward",
+    daily_desc: "Log in every day and claim your reward. Rewards grow from 1 to 7 NOT, then the cycle restarts after day 7.",
+    sec_channels: "Channel tasks",
+    sec_channels_s: "5 NOT per channel",
+    tasks_notice: "First join the channel, then tap “Check”. If your membership is confirmed, the reward is added to your account. Each task pays only once, and leaving the channel may cancel the reward.",
+    task_ch1: "Join channel 1",
+    task_ch2: "Join channel 2",
+    t_join: "Join",
+    t_check: "Check",
+    t_done: "✓ Done",
+
+    day_n: "Day {n}",
+    days_prog: "{n} of 7 days",
+    daily_claim_default: "Claim today's reward",
+    daily_note_default: "The reward is recorded by the server.",
+    daily_loading: "Loading...",
+    daily_claim: "🎁 Claim {n} NOT",
+    daily_ready: "Today's reward is ready",
+    daily_ready_note: "Claim your day {d} reward right now.",
+    daily_claimed: "✓ Today's reward claimed",
+    daily_tomorrow: "Come back tomorrow",
+    daily_cycle_done: "Cycle complete! It starts again from day 1 tomorrow.",
+    daily_tomorrow_note: "Tomorrow your day {d} reward ({n} NOT) is waiting.",
+    saving: "Saving...",
+
+    wallet_title: "Wallet",
+    wallet_sub: "Manage your balance and withdrawal requests.",
+    bal_account: "Account balance",
+    min_wd: "Minimum withdrawal",
+    wd_panel: "Submit a withdrawal request",
+    amt_label: "Amount in NOT",
+    amt_ph: "e.g. 50",
+    addr_label: "Wallet address",
+    addr_ph: "Enter your wallet address",
+    wd_notice: "The minimum withdrawal is 50 NOT. The wallet address must be between 20 and 150 characters. Check the network and address before submitting.",
+    wd_submit: "Submit withdrawal request",
+    hist_title: "Transaction history",
+
+    ref_title: "Invite friends",
+    ref_sub: "Send your personal link and invite your friends to NOT REWARD.",
+    ref_together: "Let's grow together",
+    ref_count_l: "Invites",
+    tg_id: "Telegram ID",
+    ref_label: "Your personal invite link",
+    copy_btn: "Copy invite link",
+    share_btn: "Share with friends",
+    ref_notice: "A valid invite earns 5 NOT. Only new users count, and counting and rewards are handled by the server.",
+    ref_link_ph: "Open the mini app inside Telegram to get your link.",
+
+    profile_title: "My profile",
+    profile_sub: "Your account information",
+    default_user: "NOT REWARD user",
+    acc_info: "Account info",
+    p_balance: "Balance",
+    p_refs: "Invited",
+    p_conn: "Connection status",
+    refresh_btn: "Refresh data",
+    admin_btn: "🛠 Open admin panel",
+    footer: "NOT REWARD · Your account, simply managed",
+
+    nav_home: "Home",
+    nav_tasks: "Tasks",
+    nav_wallet: "Wallet",
+    nav_ref: "Invite",
+    nav_profile: "Profile",
+
+    app_connecting: "● Connecting",
+    app_connected: "● Connected",
+    app_error: "● Connection error",
+    app_needTg: "● Telegram login required",
+    conn_connecting: "Checking",
+    conn_connected: "Connected",
+    conn_error: "Connection error",
+    conn_needTg: "Open inside Telegram",
+
+    h_tap: "Tap reward",
+    h_daily: "Daily reward",
+    h_task: "Task reward",
+    h_referral: "Friend invite reward",
+    h_ad: "Ad reward",
+    h_withdrawal: "Withdrawal request",
+    h_refund: "Withdrawal refund",
+    h_admin: "Admin adjustment",
+    h_default: "Transaction",
+    s_pending: "Pending review",
+    s_approved: "Approved",
+    s_rejected: "Rejected",
+    s_paid: "Paid",
+    hist_empty: "No transactions yet.",
+    hist_err_home: "Could not load history. Please try again.",
+    hist_err_wallet: "History is currently unavailable.",
+
+    open_in_tg: "Open the mini app from inside the Telegram bot.",
+    open_in_tg_first: "Please open the mini app from Telegram first.",
+    open_in_tg_banner: "To load your account, open this page from inside the Telegram bot.",
+    api_timeout: "The server took too long to respond. Check your internet connection and try again.",
+    api_conn: "Could not connect to the server.",
+    api_parse: "The server response could not be read. Please try again.",
+    api_server: "Server error: {code}",
+    load_tasks_fail: "Could not load tasks.",
+    load_ref_fail: "Could not load invite data.",
+    daily_fail: "Could not claim the reward.",
+    daily_ok: "🎉 Daily reward claimed: +{n} NOT",
+    task_ok: "🎉 Membership confirmed and reward credited.",
+    task_fail: "Membership not confirmed. Join the channel first.",
+    ad_not_loaded: "The ad hasn't loaded yet; please wait a moment.",
+    ad_prep: "Preparing the ad...",
+    ad_valued: "The ad counted as eligible; wait for server confirmation.",
+    ad_non_valued: "This ad view is not eligible for a reward.",
+    ad_ended: "The ad has ended; the reward depends on server confirmation.",
+    ad_fail: "The ad failed to show; please try again later.",
+    wd_min: "The minimum withdrawal is 50 NOT.",
+    wd_dec: "The amount can have at most two decimal places.",
+    wd_addr: "The wallet address must be between 20 and 150 characters.",
+    wd_nobal: "Insufficient balance.",
+    wd_confirm: "Submit a withdrawal request of {amt} NOT to this address?",
+    wd_ok: "Withdrawal request submitted.",
+    wd_fail: "Could not submit the request.",
+    ref_open_tg: "Open the mini app from Telegram to get your invite link.",
+    ref_copied: "Invite link copied.",
+    ref_copy_fail: "Copy failed",
+    ref_copy_manual: "Automatic copy failed; please copy the link manually.",
+    share_text: "Come and try NOT REWARD with me!",
+    refresh_ok: "Data refreshed successfully.",
+    refresh_part: "Some data could not be loaded."
+  }
+};
+
+let lang = "fa";
+try {
+  const saved = localStorage.getItem("nr_lang");
+  if (saved === "fa" || saved === "en") lang = saved;
+} catch (_) {}
+
+function t(key, vars) {
+  let s = (STR[lang] && STR[lang][key]);
+  if (s === undefined) s = STR.fa[key];
+  if (s === undefined) s = key;
+  if (vars) s = s.replace(/\{(\w+)\}/g, (m, k) => (vars[k] !== undefined ? vars[k] : m));
+  return s;
+}
 
 const tg = window.Telegram?.WebApp || null;
 const initData = tg?.initData || "";
@@ -524,9 +888,11 @@ let balance = 0;
 let referralCount = 0;
 let referralLink = "";
 let historyItems = [];
+let historyState = initData ? "loading" : "ready"; // loading | ready | error
 let adBusy = false;
 let isAdmin = false;
 let toastTimer;
+let appState = "connecting"; // connecting | connected | error | needTg
 
 // وضعیت جایزه روزانه و تسک‌ها (از سرور خوانده می‌شود)
 let daily = { claimedDays: 0, canClaim: false, loaded: false };
@@ -541,9 +907,10 @@ if (tg) {
   try { tg.setBackgroundColor("#f4f3ec"); } catch (_) {}
 }
 
+// فرمت عدد بر اساس زبان فعلی (فارسی: ارقام فارسی / انگلیسی: ارقام لاتین)
 function fa(value) {
   const n = Number(value);
-  return (Number.isFinite(n) ? n : 0).toLocaleString("fa-IR", { maximumFractionDigits: 2 });
+  return (Number.isFinite(n) ? n : 0).toLocaleString(lang === "fa" ? "fa-IR" : "en-US", { maximumFractionDigits: 2 });
 }
 
 function showToast(message) {
@@ -565,6 +932,15 @@ function esc(value) {
 }
 
 function userId() { return user?.id || null; }
+
+// پیام سرور فقط در حالت فارسی نمایش داده می‌شود؛ در انگلیسی پیام ترجمه‌شده خودِ اپ
+function srvMsg(data, key, vars) {
+  return (lang === "fa" && data && data.message) ? data.message : t(key, vars);
+}
+function errText(error, fallbackKey) {
+  if (error && error.fromServer && lang !== "fa") return t(fallbackKey);
+  return (error && error.message) || t(fallbackKey);
+}
 
 function buildReferralLink(id) {
   const base = MINI_APP_NAME
@@ -598,7 +974,7 @@ function bumpBalance() {
 }
 
 async function api(path, body = {}) {
-  if (!initData) throw new Error("مینی‌اپ را از داخل ربات تلگرام باز کن.");
+  if (!initData) throw new Error(t("open_in_tg"));
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), API_TIMEOUT_MS);
@@ -617,10 +993,8 @@ async function api(path, body = {}) {
       body: JSON.stringify({ ...body, initData })
     });
   } catch (error) {
-    if (error?.name === "AbortError") {
-      throw new Error("پاسخ سرور دیر شد. اتصال اینترنت را بررسی کن و دوباره تلاش کن.");
-    }
-    throw new Error("ارتباط با سرور برقرار نشد.");
+    if (error?.name === "AbortError") throw new Error(t("api_timeout"));
+    throw new Error(t("api_conn"));
   } finally {
     clearTimeout(timer);
   }
@@ -628,12 +1002,25 @@ async function api(path, body = {}) {
   const raw = await response.text();
   let data;
   try { data = raw ? JSON.parse(raw) : {}; }
-  catch (_) { throw new Error("پاسخ سرور قابل خواندن نیست. لطفاً دوباره تلاش کن."); }
+  catch (_) { throw new Error(t("api_parse")); }
 
   if (!response.ok || data.ok === false || data.success === false) {
-    throw new Error(data.error || data.message || ("خطای سرور: " + response.status));
+    const serverText = data.error || data.message;
+    const err = new Error(serverText || t("api_server", { code: response.status }));
+    err.fromServer = !!serverText;
+    throw err;
   }
   return data;
+}
+
+/* ================= وضعیت اتصال ================= */
+function setAppState(state) {
+  appState = state;
+  renderStatus();
+}
+function renderStatus() {
+  document.getElementById("app-status").textContent = t("app_" + appState);
+  document.getElementById("connection-status").textContent = t("conn_" + appState);
 }
 
 function updateUI() {
@@ -643,17 +1030,18 @@ function updateUI() {
     document.getElementById(id).textContent = formattedBalance;
   });
   document.getElementById("profile-balance").textContent = formattedBalance + " NOT";
+  document.getElementById("wallet-min").textContent = fa(MIN_WITHDRAWAL) + " NOT";
 
   ["stat-referrals", "ref-count", "profile-referrals"].forEach(id => {
     document.getElementById(id).textContent = fa(referralCount);
   });
 
-  const firstName = user?.first_name || user?.username || "دوست من";
-  document.getElementById("welcome-title").textContent = "سلام " + firstName + " 👋";
+  const firstName = user?.first_name || user?.username || t("friend");
+  document.getElementById("welcome-title").textContent = t("welcome", { name: firstName });
 
   document.getElementById("profile-name").textContent =
     [user?.first_name, user?.last_name].filter(Boolean).join(" ") ||
-    (user?.username ? "@" + user.username : "کاربر NOT REWARD");
+    (user?.username ? "@" + user.username : t("default_user"));
 
   document.getElementById("profile-id").textContent = "ID: " + (userId() || "—");
   document.getElementById("ref-user-id").textContent = userId() || "—";
@@ -663,8 +1051,7 @@ function updateUI() {
   if (isAdmin) adminLink.href = new URL("admin.html", location.href).href + location.hash;
 
   if (!referralLink && userId()) referralLink = buildReferralLink(userId());
-  document.getElementById("ref-link").textContent =
-    referralLink || "برای دریافت لینک، مینی‌اپ را از داخل تلگرام باز کن.";
+  document.getElementById("ref-link").textContent = referralLink || t("ref_link_ph");
 }
 
 function moveIndicator(animate = true) {
@@ -681,6 +1068,53 @@ window.addEventListener("resize", () => moveIndicator(false));
 window.addEventListener("load", () => moveIndicator(false));
 setTimeout(() => moveIndicator(false), 50);
 setTimeout(() => moveIndicator(false), 700);
+
+/* ================= تغییر زبان ================= */
+function applyLang(animate) {
+  const html = document.documentElement;
+  html.lang = lang;
+  html.dir = lang === "fa" ? "rtl" : "ltr";
+  document.title = t("title");
+
+  document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
+  document.querySelectorAll("[data-i18n-aria]").forEach(el => { el.setAttribute("aria-label", t(el.dataset.i18nAria)); });
+
+  const sw = document.getElementById("lang-switch");
+  sw.dataset.lang = lang;
+
+  // بخش‌های داینامیک
+  updateUI();
+  renderStatus();
+  renderDaily();
+  renderTasks();
+  renderHistory("home-history");
+  renderHistory("wallet-history");
+
+  // جای نشانگر ناوبری بعد از تغییر جهت صفحه
+  moveIndicator(false);
+  requestAnimationFrame(() => { moveIndicator(false); setTimeout(() => moveIndicator(false), 120); });
+
+  if (animate) {
+    const root = document.getElementById("app-root");
+    root.classList.remove("lang-swap");
+    void root.offsetWidth;
+    root.classList.add("lang-swap");
+    sw.classList.remove("flip");
+    void sw.offsetWidth;
+    sw.classList.add("flip");
+  }
+}
+
+function setLang(next) {
+  if (next !== "fa" && next !== "en") return;
+  if (next === lang) return;
+  lang = next;
+  try { localStorage.setItem("nr_lang", lang); } catch (_) {}
+  applyLang(true);
+  haptic();
+}
+function toggleLang() { setLang(lang === "fa" ? "en" : "fa"); }
 
 function showPage(name) {
   document.querySelectorAll(".page").forEach(el => {
@@ -702,19 +1136,18 @@ function showPage(name) {
   if (name === "wallet") loadHistory().catch(console.error);
   if (name === "tasks") loadTasksPage().catch(error => {
     console.error(error);
-    showToast(error.message || "دریافت اطلاعات تسک‌ها ناموفق بود.");
+    showToast(errText(error, "load_tasks_fail"));
   });
   if (name === "referral") loadReferrals().catch(error => {
     console.error(error);
-    showToast(error.message || "دریافت اطلاعات دعوت ناموفق بود.");
+    showToast(errText(error, "load_ref_fail"));
   });
   if (name === "profile") refreshAll();
 }
 
 async function loadMe() {
   if (!initData) {
-    document.getElementById("connection-status").textContent = "از داخل تلگرام باز کن";
-    document.getElementById("app-status").textContent = "● ورود تلگرام لازم است";
+    setAppState("needTg");
     updateUI();
     return;
   }
@@ -729,12 +1162,10 @@ async function loadMe() {
     }
 
     updateUI();
-    document.getElementById("connection-status").textContent = "متصل";
-    document.getElementById("app-status").textContent = "● متصل";
+    setAppState("connected");
   } catch (error) {
     console.error("loadMe:", error);
-    document.getElementById("connection-status").textContent = "خطای اتصال";
-    document.getElementById("app-status").textContent = "● خطا در اتصال";
+    setAppState("error");
     throw error;
   }
 }
@@ -769,14 +1200,14 @@ function renderDaily() {
     const icon = day === 7 ? "👑" : (day >= 4 ? "💎" : "🪙");
     return `
       <div class="${cls}">
-        <div class="d-label">روز ${fa(day)}</div>
+        <div class="d-label">${esc(t("day_n", { n: fa(day) }))}</div>
         <span class="d-icon">${icon}</span>
         <div class="d-amount">${fa(reward)} <small>NOT</small></div>
       </div>`;
   }).join("");
 
   document.getElementById("daily-bar").style.width = (claimed / 7 * 100) + "%";
-  document.getElementById("daily-progress-text").textContent = fa(claimed) + " از ۷ روز";
+  document.getElementById("daily-progress-text").textContent = t("days_prog", { n: fa(claimed) });
 
   const btn = document.getElementById("daily-btn");
   const note = document.getElementById("daily-note");
@@ -784,20 +1215,21 @@ function renderDaily() {
 
   if (!daily.loaded) {
     btn.disabled = true;
-    btn.textContent = "در حال دریافت...";
+    btn.textContent = t("daily_loading");
+    note.textContent = t("daily_note_default");
     document.getElementById("daily-next-text").textContent = "—";
   } else if (daily.canClaim) {
     btn.disabled = false;
-    btn.textContent = "🎁 دریافت " + fa(DAILY_REWARDS[nextDay - 1]) + " NOT";
-    document.getElementById("daily-next-text").textContent = "جایزه امروز آماده است";
-    note.textContent = "جایزه روز " + fa(nextDay) + " را همین حالا بگیر.";
+    btn.textContent = t("daily_claim", { n: fa(DAILY_REWARDS[nextDay - 1]) });
+    document.getElementById("daily-next-text").textContent = t("daily_ready");
+    note.textContent = t("daily_ready_note", { d: fa(nextDay) });
   } else {
     btn.disabled = true;
-    btn.textContent = "✓ جایزه امروز دریافت شد";
-    document.getElementById("daily-next-text").textContent = "فردا برگرد";
+    btn.textContent = t("daily_claimed");
+    document.getElementById("daily-next-text").textContent = t("daily_tomorrow");
     note.textContent = claimed >= 7
-      ? "چرخه کامل شد! از فردا دوباره از روز ۱ شروع می‌شود."
-      : "فردا جایزه روز " + fa(claimed + 1) + " (" + fa(DAILY_REWARDS[claimed]) + " NOT) منتظرته.";
+      ? t("daily_cycle_done")
+      : t("daily_tomorrow_note", { d: fa(claimed + 1), n: fa(DAILY_REWARDS[claimed]) });
   }
 
   document.getElementById("tasks-dot").classList.toggle("show", daily.loaded && daily.canClaim);
@@ -821,14 +1253,14 @@ async function loadDaily() {
 async function claimDaily() {
   if (dailyBusy || !daily.canClaim) return;
   if (!initData || !userId()) {
-    showToast("مینی‌اپ را از داخل ربات تلگرام باز کن.");
+    showToast(t("open_in_tg"));
     return;
   }
 
   dailyBusy = true;
   const btn = document.getElementById("daily-btn");
   btn.disabled = true;
-  btn.textContent = "در حال ثبت...";
+  btn.textContent = t("saving");
 
   try {
     const data = await api("/api/daily/claim");
@@ -845,11 +1277,12 @@ async function claimDaily() {
     bumpBalance();
     confetti();
     haptic("heavy");
-    showToast(data.message || ("🎉 جایزه روزانه ثبت شد: +" + fa(data.reward ?? "") + " NOT"));
+    const reward = data.reward ?? DAILY_REWARDS[Math.max(0, Math.min(6, daily.claimedDays - 1))];
+    showToast(srvMsg(data, "daily_ok", { n: fa(reward) }));
     loadHistory().catch(console.error);
   } catch (error) {
     console.error("daily:", error);
-    showToast(error.message || "دریافت جایزه ناموفق بود.");
+    showToast(errText(error, "daily_fail"));
     loadDaily().catch(console.error);
   } finally {
     dailyBusy = false;
@@ -868,22 +1301,22 @@ function renderTasks() {
       <div class="task ${done ? "done" : ""}">
         <div class="task-icon">${task.icon}</div>
         <div class="task-copy">
-          <b>${esc(task.title)}</b>
-          <small>@${esc(task.username)}</small>
+          <b>${esc(t(task.titleKey))}</b>
+          <small><bdi dir="ltr">@${esc(task.username)}</bdi></small>
           <span class="task-reward">+${fa(task.reward)} NOT</span>
         </div>
         <div class="task-actions">
           ${done
-            ? '<button class="t-btn t-done" disabled>✓ انجام شد</button>'
-            : `<button class="t-btn t-join" onclick="openChannel('${esc(task.id)}')">عضویت</button>
-               <button class="t-btn t-check" onclick="checkTask('${esc(task.id)}')" ${busy ? "disabled" : ""}>${busy ? "..." : "بررسی"}</button>`}
+            ? `<button class="t-btn t-done" disabled>${esc(t("t_done"))}</button>`
+            : `<button class="t-btn t-join" onclick="openChannel('${esc(task.id)}')">${esc(t("t_join"))}</button>
+               <button class="t-btn t-check" onclick="checkTask('${esc(task.id)}')" ${busy ? "disabled" : ""}>${busy ? "..." : esc(t("t_check"))}</button>`}
         </div>
       </div>`;
   }).join("");
 }
 
 function openChannel(taskId) {
-  const task = CHANNEL_TASKS.find(t => t.id === taskId);
+  const task = CHANNEL_TASKS.find(x => x.id === taskId);
   if (!task) return;
   const url = "https://t.me/" + task.username;
   haptic();
@@ -907,7 +1340,7 @@ async function loadTasksPage() {
 async function checkTask(taskId) {
   if (busyTasks.has(taskId)) return;
   if (!initData || !userId()) {
-    showToast("مینی‌اپ را از داخل ربات تلگرام باز کن.");
+    showToast(t("open_in_tg"));
     return;
   }
 
@@ -924,11 +1357,11 @@ async function checkTask(taskId) {
     bumpBalance();
     confetti();
     haptic("heavy");
-    showToast(data.message || "🎉 عضویت تأیید شد و پاداش ثبت شد.");
+    showToast(srvMsg(data, "task_ok"));
     loadHistory().catch(console.error);
   } catch (error) {
     console.error("task:", error);
-    showToast(error.message || "عضویت تأیید نشد. اول در کانال عضو شو.");
+    showToast(errText(error, "task_fail"));
   } finally {
     busyTasks.delete(taskId);
     renderTasks();
@@ -936,25 +1369,22 @@ async function checkTask(taskId) {
 }
 
 /* ================= تاریخچه ================= */
-function historyTitle(kind) {
-  const labels = {
-    tap: "پاداش لمس",
-    daily: "جایزه روزانه",
-    task: "پاداش تسک",
-    referral: "پاداش دعوت دوست",
-    monetag: "پاداش تبلیغ",
-    ad: "پاداش تبلیغ",
-    withdrawal: "درخواست برداشت",
-    withdraw: "درخواست برداشت",
-    refund: "بازگشت مبلغ برداشت",
-    admin: "تنظیم توسط مدیر"
-  };
-  return labels[kind] || "تراکنش";
+const H_KEYS = {
+  tap: "h_tap", daily: "h_daily", task: "h_task", referral: "h_referral",
+  monetag: "h_ad", ad: "h_ad",
+  withdrawal: "h_withdrawal", withdraw: "h_withdrawal", withdrawal_request: "h_withdrawal",
+  refund: "h_refund", admin: "h_admin"
+};
+
+function itemTitle(item) {
+  const key = H_KEYS[item.kind];
+  if (lang === "fa") return item.details || (key ? t(key) : t("h_default"));
+  return key ? t(key) : (item.details || t("h_default"));
 }
 
 function withdrawalStatus(status) {
-  const labels = { pending: "در انتظار بررسی", approved: "تأیید شده", rejected: "رد شده", paid: "پرداخت شده" };
-  return labels[status] || status || "";
+  const map = { pending: "s_pending", approved: "s_approved", rejected: "s_rejected", paid: "s_paid" };
+  return map[status] ? t(map[status]) : (status || "");
 }
 
 function normalizeHistory(data) {
@@ -964,7 +1394,7 @@ function normalizeHistory(data) {
   const entries = history.map(item => ({
     ...item,
     amount: item.amount !== undefined ? Number(item.amount) : Number(item.amount_units || 0) / 100,
-    title: item.details || historyTitle(item.kind),
+    details: item.details,
     created_at: item.created_at || "",
     _key: "history-" + item.id
   }));
@@ -973,9 +1403,7 @@ function normalizeHistory(data) {
     id: item.id,
     kind: "withdrawal_request",
     amount: -Math.abs(Number(item.amount || 0)),
-    title: "درخواست برداشت",
-    details: "درخواست برداشت",
-    status: withdrawalStatus(item.status),
+    status: item.status,
     created_at: item.created_at || "",
     _key: "withdrawal-" + item.id
   }));
@@ -992,18 +1420,28 @@ function normalizeHistory(data) {
 
 function renderHistory(targetId) {
   const container = document.getElementById(targetId);
+  const isHome = targetId === "home-history";
 
+  if (historyState === "loading") {
+    container.innerHTML = '<div class="empty">' + esc(t("loading")) + '</div>';
+    return;
+  }
+  if (historyState === "error") {
+    container.innerHTML = '<div class="empty">' + esc(t(isHome ? "hist_err_home" : "hist_err_wallet")) + '</div>';
+    return;
+  }
   if (!historyItems.length) {
-    container.innerHTML = '<div class="empty">هنوز تراکنشی ثبت نشده است.</div>';
+    container.innerHTML = '<div class="empty">' + esc(t("hist_empty")) + '</div>';
     return;
   }
 
   container.innerHTML = historyItems.slice(0, 30).map(item => {
     const amount = Number(item.amount || 0);
     const positive = amount >= 0;
-    const title = item.title || item.details || historyTitle(item.kind);
+    const title = itemTitle(item);
     const date = item.created_at || "";
-    const status = item.status ? " · " + item.status : "";
+    const st = withdrawalStatus(item.status);
+    const status = st ? " · " + st : "";
 
     return `
       <div class="history-row">
@@ -1024,6 +1462,7 @@ function renderHistory(targetId) {
 async function loadHistory() {
   if (!initData) {
     historyItems = [];
+    historyState = "ready";
     renderHistory("home-history");
     renderHistory("wallet-history");
     return;
@@ -1032,14 +1471,14 @@ async function loadHistory() {
   try {
     const data = await api("/api/history", { limit: 50 });
     historyItems = normalizeHistory(data);
+    historyState = "ready";
     renderHistory("home-history");
     renderHistory("wallet-history");
   } catch (error) {
     console.error("loadHistory:", error);
-    document.getElementById("home-history").innerHTML =
-      '<div class="empty">دریافت تاریخچه ناموفق بود. دوباره تلاش کن.</div>';
-    document.getElementById("wallet-history").innerHTML =
-      '<div class="empty">تاریخچه فعلاً در دسترس نیست.</div>';
+    historyState = "error";
+    renderHistory("home-history");
+    renderHistory("wallet-history");
     throw error;
   }
 }
@@ -1058,9 +1497,9 @@ async function refreshAll(showMessage = false) {
   if (failed) {
     const firstError = results.find(result => result.status === "rejected");
     console.error("Refresh failed:", firstError?.reason);
-    if (showMessage) showToast(firstError?.reason?.message || "بخشی از اطلاعات دریافت نشد.");
+    if (showMessage) showToast(errText(firstError?.reason, "refresh_part"));
   } else if (showMessage) {
-    showToast("اطلاعات با موفقیت به‌روزرسانی شد.");
+    showToast(t("refresh_ok"));
   }
 }
 
@@ -1069,14 +1508,14 @@ async function openAd() {
   if (adBusy) return;
 
   if (!initData || !userId()) {
-    showToast("مینی‌اپ را از داخل ربات تلگرام باز کن.");
+    showToast(t("open_in_tg"));
     return;
   }
 
   const showAd = window["show_" + MONETAG_ZONE_ID];
 
   if (typeof showAd !== "function") {
-    showToast("تبلیغ هنوز بارگذاری نشده؛ کمی صبر کن.");
+    showToast(t("ad_not_loaded"));
     return;
   }
 
@@ -1089,17 +1528,17 @@ async function openAd() {
     Math.random().toString(36).slice(2, 9);
 
   try {
-    showToast("در حال آماده‌سازی تبلیغ...");
+    showToast(t("ad_prep"));
     haptic();
 
     const result = await showAd({ type: "end", ymid, requestVar: String(userId()) });
 
     if (result?.reward_event_type === "valued") {
-      showToast("تبلیغ واجد شرایط اعلام شد؛ منتظر تأیید سرور باش.");
+      showToast(t("ad_valued"));
     } else if (result?.reward_event_type === "non_valued") {
-      showToast("این نمایش تبلیغ واجد پاداش نیست.");
+      showToast(t("ad_non_valued"));
     } else {
-      showToast("نمایش پایان یافت؛ ثبت پاداش به تأیید سرور بستگی دارد.");
+      showToast(t("ad_ended"));
     }
 
     // موجودی فقط از سرور خوانده می‌شود؛ در مرورگر پاداش اضافه نمی‌کنیم.
@@ -1109,7 +1548,7 @@ async function openAd() {
 
   } catch (error) {
     console.error("Monetag error:", error);
-    showToast("نمایش تبلیغ ناموفق بود؛ بعداً دوباره تلاش کن.");
+    showToast(t("ad_fail"));
   } finally {
     adBusy = false;
     document.getElementById("ad-button").disabled = false;
@@ -1122,7 +1561,7 @@ document.getElementById("withdraw-form").addEventListener("submit", async event 
   event.preventDefault();
 
   if (!initData || !userId()) {
-    showToast("ابتدا مینی‌اپ را از تلگرام باز کن.");
+    showToast(t("open_in_tg_first"));
     return;
   }
 
@@ -1133,44 +1572,44 @@ document.getElementById("withdraw-form").addEventListener("submit", async event 
   const submit = document.getElementById("withdraw-submit");
 
   if (!Number.isFinite(amount) || amount < MIN_WITHDRAWAL) {
-    showToast("حداقل برداشت ۵۰ نات است.");
+    showToast(t("wd_min"));
     return;
   }
 
   if (Math.abs(amount * 100 - Math.round(amount * 100)) > 0.000001) {
-    showToast("مبلغ باید حداکثر دو رقم اعشار داشته باشد.");
+    showToast(t("wd_dec"));
     return;
   }
 
   if (walletAddress.length < 20 || walletAddress.length > 150) {
-    showToast("آدرس کیف پول باید بین ۲۰ تا ۱۵۰ نویسه باشد.");
+    showToast(t("wd_addr"));
     return;
   }
 
   if (amount > balance) {
-    showToast("موجودی کافی نیست.");
+    showToast(t("wd_nobal"));
     return;
   }
 
-  if (!window.confirm("درخواست برداشت " + amount + " NOT برای این آدرس ثبت شود؟\n\n" + walletAddress)) {
+  if (!window.confirm(t("wd_confirm", { amt: amount }) + "\n\n" + walletAddress)) {
     return;
   }
 
   submit.disabled = true;
-  submit.textContent = "در حال ثبت...";
+  submit.textContent = t("saving");
 
   try {
     const data = await api("/api/withdraw", { amount, walletAddress, wallet_address: walletAddress });
-    showToast(data.message || "درخواست برداشت ثبت شد.");
+    showToast(srvMsg(data, "wd_ok"));
     amountInput.value = "";
     addressInput.value = "";
     await refreshAll(false);
   } catch (error) {
     console.error("withdraw:", error);
-    showToast(error.message || "ثبت درخواست ناموفق بود.");
+    showToast(errText(error, "wd_fail"));
   } finally {
     submit.disabled = false;
-    submit.textContent = "ثبت درخواست برداشت";
+    submit.textContent = t("wd_submit");
   }
 });
 
@@ -1178,7 +1617,7 @@ async function copyReferral() {
   const link = document.getElementById("ref-link").textContent.trim();
 
   if (!link.startsWith("https://t.me/")) {
-    showToast("مینی‌اپ را از تلگرام باز کن تا لینک دعوت دریافت شود.");
+    showToast(t("ref_open_tg"));
     return;
   }
 
@@ -1194,13 +1633,13 @@ async function copyReferral() {
       input.select();
       const ok = document.execCommand("copy");
       input.remove();
-      if (!ok) throw new Error("کپی انجام نشد");
+      if (!ok) throw new Error(t("ref_copy_fail"));
     }
 
     haptic("success");
-    showToast("لینک دعوت کپی شد.");
+    showToast(t("ref_copied"));
   } catch (_) {
-    showToast("کپی خودکار انجام نشد؛ لینک را دستی کپی کن.");
+    showToast(t("ref_copy_manual"));
   }
 }
 
@@ -1208,28 +1647,25 @@ function shareReferral() {
   const link = document.getElementById("ref-link").textContent.trim();
 
   if (!link.startsWith("https://t.me/")) {
-    showToast("ابتدا مینی‌اپ را از تلگرام باز کن.");
+    showToast(t("open_in_tg_first"));
     return;
   }
 
   const url = "https://t.me/share/url?url=" + encodeURIComponent(link) +
-    "&text=" + encodeURIComponent("بیا با هم NOT REWARD رو امتحان کنیم!");
+    "&text=" + encodeURIComponent(t("share_text"));
 
   if (tg?.openTelegramLink) tg.openTelegramLink(url);
   else window.open(url, "_blank", "noopener,noreferrer");
 }
 
 (async function init() {
-  updateUI();
-  renderDaily();
-  renderTasks();
+  applyLang(false);
 
   if (!initData) {
-    document.getElementById("connection-status").textContent = "از داخل تلگرام باز کن";
-    document.getElementById("app-status").textContent = "● ورود تلگرام لازم است";
+    setAppState("needTg");
     renderHistory("home-history");
     renderHistory("wallet-history");
-    showToast("برای بارگذاری حساب، این صفحه را از داخل ربات تلگرام باز کن.");
+    showToast(t("open_in_tg_banner"));
     return;
   }
 
