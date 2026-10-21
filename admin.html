@@ -1,740 +1,975 @@
-
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101827">
-  <title>پنل مدیریت برداشت | NOT REWARD</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#f6f5f0">
+<title>پنل مدیریت | NOT REWARD</title>
 
-  <style>
-    :root {
-      color-scheme: dark;
-      --bg: #0b1120;
-      --panel: #131d30;
-      --panel2: #1a2740;
-      --border: #2a3852;
-      --text: #f1f5f9;
-      --muted: #9baac0;
-      --green: #22c55e;
-      --red: #ef4444;
-      --blue: #60a5fa;
-      --yellow: #fbbf24;
-    }
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    * { box-sizing: border-box; }
+<style>
+:root{
+  --bg:#f6f5f0;--card:#fff;--ink:#172c27;--muted:#84918b;--line:#e9ebe5;
+  --green:#176b50;--green-light:#e4f2e9;--lime:#d6f379;
+  --amber:#9a6a12;--amber-bg:#fff4dc;--blue:#245c9b;--blue-bg:#e3effc;
+  --red:#b04545;--red-bg:#fbe7e7;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Vazirmatn",Tahoma,sans-serif;font-size:14px;-webkit-font-smoothing:antialiased;padding-bottom:calc(30px + env(safe-area-inset-bottom))}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}button:disabled{opacity:.55;cursor:wait}
+.shell{max-width:960px;margin:auto;padding:16px 14px}
 
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Tahoma, Arial, sans-serif;
-      line-height: 1.8;
-    }
+/* header */
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.title{display:flex;align-items:center;gap:10px;min-width:0}
+.logo{width:42px;height:42px;border-radius:14px;background:var(--green);color:#fff;display:grid;place-items:center;font-size:21px;flex-shrink:0}
+.title b{display:block;font-size:17px;font-weight:900}
+.title small{display:block;color:var(--muted);font-size:10px;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.top-actions{display:flex;gap:8px;flex-shrink:0}
+.pill-btn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 12px;font-size:12px;font-weight:700;color:var(--green);text-decoration:none;display:inline-flex;align-items:center;gap:5px}
 
-    button, input, select, textarea { font: inherit; }
+/* tabs */
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:5px;margin-bottom:16px;position:sticky;top:6px;z-index:10}
+.tab{border:0;background:transparent;border-radius:12px;padding:10px 4px;font-size:12px;font-weight:700;color:#909991;display:flex;align-items:center;justify-content:center;gap:6px}
+.tab.active{background:var(--green-light);color:var(--green);font-weight:800}
+.count-badge{background:var(--red);color:#fff;border-radius:20px;padding:1px 7px;font-size:10px;font-weight:800;min-width:18px;text-align:center}
+.count-badge:empty,.count-badge[data-zero="1"]{display:none}
 
-    button {
-      cursor: pointer;
-      border: 0;
-      border-radius: 10px;
-      padding: 10px 14px;
-      font-weight: bold;
-      transition: opacity .15s;
-    }
+.view{display:none}.view.active{display:block;animation:appear .2s ease}
+@keyframes appear{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
 
-    button:disabled {
-      opacity: .45;
-      cursor: not-allowed;
-    }
+/* stats */
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;text-align:right;display:block;width:100%}
+button.stat:active{transform:scale(.985)}
+.stat .ico{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font-size:16px;background:var(--green-light)}
+.stat .lbl{color:var(--muted);font-size:11px;margin-top:10px}
+.stat .val{font-size:21px;font-weight:900;margin-top:3px;overflow-wrap:anywhere}
+.stat .val small{font-size:10px;color:var(--green);font-weight:700}
+.stat .sub{font-size:10px;color:var(--muted);margin-top:3px}
+.stat.hot{border-color:#f0d9a1;background:#fffaf0}
+.stat.hot .ico{background:var(--amber-bg)}
+.section-title{font-size:13px;font-weight:800;margin:20px 2px 10px;color:#3b4f47}
 
-    .container {
-      width: min(1180px, 94%);
-      margin: 30px auto;
-    }
+/* controls */
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.field{width:100%;padding:12px 13px;border:1px solid #e2e7df;border-radius:12px;background:#fff;outline:none;font-size:13px}
+.field:focus{border-color:#72a48b}
+.field.ltr{direction:ltr;text-align:left}
+textarea.field{resize:vertical;min-height:70px;line-height:1.9}
+.toolbar .field{flex:1;min-width:150px}
+select.field{flex:0 0 auto;width:auto}
+.chips{display:flex;gap:7px;overflow-x:auto;padding-bottom:6px;margin-bottom:8px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;border:1px solid var(--line);background:#fff;border-radius:20px;padding:8px 13px;font-size:12px;font-weight:700;color:#5d6e66;display:flex;gap:6px;align-items:center}
+.chip.active{background:var(--green);border-color:var(--green);color:#fff}
+.chip .n{background:#0000001a;border-radius:20px;padding:0 7px;font-size:10px;font-weight:800}
+.chip.active .n{background:#ffffff30}
 
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 22px;
-    }
+/* cards */
+.list{display:grid;gap:10px}
+@media(min-width:760px){.list.two{grid-template-columns:1fr 1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:15px}
+.w-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.w-id{font-weight:800;font-size:12px;color:var(--muted)}
+.w-amount{margin-right:auto;font-size:19px;font-weight:900}
+.w-amount small{font-size:10px;color:var(--green);font-weight:700}
+.badge{border-radius:20px;padding:4px 10px;font-size:10px;font-weight:800}
+.badge.pending{background:var(--amber-bg);color:var(--amber)}
+.badge.approved{background:var(--blue-bg);color:var(--blue)}
+.badge.paid{background:var(--green-light);color:var(--green)}
+.badge.rejected{background:var(--red-bg);color:var(--red)}
+.w-user{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:12px;font-size:13px}
+.muted{color:var(--muted);font-size:11px}
+.copy-chip{border:1px solid var(--line);background:#f7f9f5;border-radius:9px;padding:3px 8px;font-size:10px;color:#52645a;direction:ltr}
+.w-wallet{display:flex;align-items:center;gap:8px;margin-top:10px;background:#f6faf3;border:1px dashed #a9c6b0;border-radius:12px;padding:9px 10px}
+.w-wallet code{flex:1;direction:ltr;text-align:left;font-size:11px;overflow-wrap:anywhere;font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--green)}
+.icon-btn{border:0;background:var(--green);color:#fff;border-radius:9px;padding:6px 10px;font-size:11px;font-weight:700;flex-shrink:0}
+.warn{margin-top:8px;background:var(--red-bg);color:var(--red);border-radius:10px;padding:8px 10px;font-size:11px;line-height:1.9;font-weight:600}
+.w-meta{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:11px;color:var(--muted)}
+.w-note{margin-top:8px;font-size:11px;line-height:1.9;color:#5d6e66;background:#f7f7f2;border-radius:10px;padding:8px 10px;overflow-wrap:anywhere}
+.w-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+.btn{border:0;border-radius:12px;padding:11px 14px;font-size:12px;font-weight:800;flex:1;min-width:90px}
+.btn-primary{background:var(--green);color:#fff}
+.btn-blue{background:var(--blue-bg);color:var(--blue)}
+.btn-danger{background:var(--red-bg);color:var(--red)}
+.btn-ghost{background:#fff;border:1px solid var(--line);color:#52645a}
+.more{width:100%;margin-top:12px;border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px;font-weight:700;font-size:12px;color:var(--green)}
+.empty{text-align:center;color:var(--muted);padding:34px 8px;font-size:12px;line-height:2;background:#fff;border:1px solid var(--line);border-radius:18px}
 
-    h1 { margin: 0; font-size: 25px; }
-    h2 { margin-top: 0; font-size: 19px; }
+/* users */
+.u-row{display:flex;align-items:center;gap:11px;width:100%;text-align:right;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px}
+.avatar{width:42px;height:42px;border-radius:14px;background:var(--green-light);color:var(--green);display:grid;place-items:center;font-weight:900;font-size:16px;flex-shrink:0}
+.u-main{flex:1;min-width:0}
+.u-main b{display:block;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.u-main small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.u-bal{font-weight:900;font-size:14px;white-space:nowrap}
+.u-bal small{font-size:9px;color:var(--green)}
 
-    .subtitle, .muted {
-      color: var(--muted);
-      font-size: 13px;
-    }
+/* modal */
+.modal{position:fixed;inset:0;z-index:40;background:#0c1a1688;display:none;align-items:flex-end;justify-content:center}
+.modal.show{display:flex}
+.sheet{background:#fff;width:100%;max-width:560px;max-height:92vh;overflow-y:auto;border-radius:24px 24px 0 0;padding:20px 18px calc(22px + env(safe-area-inset-bottom));animation:up .22s ease}
+@media(min-width:700px){.modal{align-items:center}.sheet{border-radius:24px}}
+@keyframes up{from{transform:translateY(30px);opacity:.5}to{transform:none;opacity:1}}
+.sheet h3{margin:0 0 14px;font-size:16px;font-weight:900}
+.sheet .row{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid #f0f1ec;font-size:12px}
+.sheet .row:last-of-type{border-bottom:0}
+.sheet .row span{color:var(--muted)}
+.sheet .row b{overflow-wrap:anywhere;text-align:left}
+.lbl2{display:block;font-size:11px;font-weight:700;color:#52645a;margin:14px 0 7px}
+.check{display:flex;align-items:center;gap:9px;margin-top:14px;font-size:12px;color:#52645a}
+.check input{width:18px;height:18px;accent-color:var(--green)}
+.sheet .btns{display:flex;gap:8px;margin-top:18px}
+.info-box{margin-top:12px;border-radius:12px;padding:10px 12px;font-size:11px;line-height:2;background:#f7f5e9;color:#776b3e}
+.hist{margin-top:6px}
+.hist .h{display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid #f3f4ef;font-size:11px}
+.hist .h:last-child{border-bottom:0}
+.hist .h small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+.pos{color:#218456;font-weight:800;white-space:nowrap}.neg{color:var(--red);font-weight:800;white-space:nowrap}
 
-    .panel {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 18px;
-    }
-
-    .login {
-      max-width: 460px;
-      margin: 65px auto;
-    }
-
-    label {
-      display: block;
-      margin: 12px 0 6px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 12px;
-      color: var(--text);
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      outline: none;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--blue);
-    }
-
-    .primary { background: var(--blue); color: #07111f; }
-    .success { background: var(--green); color: #05210e; }
-    .danger { background: var(--red); color: white; }
-    .warning { background: var(--yellow); color: #241900; }
-    .secondary { background: var(--panel2); color: var(--text); }
-
-    .full { width: 100%; margin-top: 16px; }
-
-    .toolbar {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto auto;
-      gap: 10px;
-      align-items: end;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    .stat {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      padding: 15px;
-      border-radius: 14px;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 23px;
-      overflow-wrap: anywhere;
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 850px;
-    }
-
-    th, td {
-      padding: 12px;
-      text-align: right;
-      border-bottom: 1px solid var(--border);
-      vertical-align: top;
-    }
-
-    th {
-      color: var(--muted);
-      background: var(--panel2);
-      font-size: 12px;
-    }
-
-    td { font-size: 13px; }
-    tr:last-child td { border-bottom: 0; }
-
-    .wallet {
-      max-width: 210px;
-      overflow-wrap: anywhere;
-      direction: ltr;
-      text-align: left;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-      min-width: 180px;
-    }
-
-    .actions button { font-size: 12px; padding: 8px 10px; }
-
-    .badge {
-      display: inline-block;
-      padding: 3px 9px;
-      border-radius: 20px;
-      background: var(--panel2);
-      font-size: 11px;
-      white-space: nowrap;
-    }
-
-    .badge.pending { color: var(--yellow); }
-    .badge.approved { color: var(--blue); }
-    .badge.rejected { color: #fca5a5; }
-    .badge.paid { color: #86efac; }
-
-    .message {
-      display: none;
-      padding: 12px;
-      margin: 14px 0;
-      border-radius: 10px;
-      overflow-wrap: anywhere;
-    }
-
-    .message.show { display: block; }
-    .message.error { background: #471b27; color: #fecdd3; }
-    .message.ok { background: #123d2a; color: #bbf7d0; }
-
-    .empty {
-      text-align: center;
-      padding: 36px 10px;
-      color: var(--muted);
-    }
-
-    .hidden { display: none !important; }
-
-    @media (max-width: 720px) {
-      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .toolbar { grid-template-columns: 1fr; }
-      .container { margin-top: 18px; }
-      .panel { padding: 14px; }
-      h1 { font-size: 21px; }
-    }
-  </style>
+/* gate + toast */
+.gate{position:fixed;inset:0;z-index:60;background:var(--bg);display:none;align-items:center;justify-content:center;padding:30px;text-align:center}
+.gate.show{display:flex}
+.gate .box{max-width:340px}
+.gate .big{font-size:48px;margin-bottom:12px}
+.gate p{color:var(--muted);line-height:2;font-size:13px}
+.toast{position:fixed;z-index:70;bottom:calc(24px + env(safe-area-inset-bottom));left:50%;transform:translate(-50%,10px);opacity:0;pointer-events:none;width:calc(100% - 32px);max-width:440px;padding:13px 15px;border-radius:13px;background:#18372c;color:#fff;text-align:center;font-size:12px;line-height:1.9;box-shadow:0 8px 25px #0003;transition:.2s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.err{background:#7a2a2a}
+</style>
 </head>
 
 <body>
-  <main class="container">
-    <section id="loginView" class="panel login">
-      <h1>🔐 پنل مدیریت NOT REWARD</h1>
-      <p class="subtitle">
-        برای مشاهده و مدیریت درخواست‌های برداشت، رمز مدیریت را وارد کن.
-      </p>
+<div class="shell">
 
-      <form id="loginForm">
-        <label for="adminSecret">رمز مدیریت (ADMIN_SECRET)</label>
-        <input
-          id="adminSecret"
-          type="password"
-          autocomplete="current-password"
-          required
-          placeholder="رمز مدیریت Worker"
-        >
-        <button class="primary full" id="loginButton" type="submit">
-          ورود به پنل
-        </button>
-      </form>
+  <header class="top">
+    <div class="title">
+      <div class="logo">🛠</div>
+      <div>
+        <b>پنل مدیریت</b>
+        <small id="who">NOT REWARD</small>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="pill-btn" id="btn-refresh" type="button">⟳ به‌روزرسانی</button>
+      <a class="pill-btn" id="back-link" href="index.html">‹ برنامه</a>
+    </div>
+  </header>
 
-      <div id="loginMessage" class="message" role="alert"></div>
-      <p class="muted">
-        رمز مدیریت در این صفحه ذخیره نمی‌شود.
-      </p>
-    </section>
+  <nav class="tabs">
+    <button class="tab active" data-tab="dashboard" type="button">📊 داشبورد</button>
+    <button class="tab" data-tab="withdrawals" type="button">💸 برداشت‌ها <span class="count-badge" id="pending-badge" data-zero="1"></span></button>
+    <button class="tab" data-tab="users" type="button">👥 کاربران</button>
+  </nav>
 
-    <section id="dashboard" class="hidden">
-      <header class="header">
-        <div>
-          <h1>📊 مدیریت برداشت‌ها</h1>
-          <div class="subtitle">NOT REWARD · پنل مدیریت</div>
-        </div>
-        <button id="logoutButton" class="secondary">خروج امن</button>
-      </header>
+  <!-- داشبورد -->
+  <section class="view active" id="view-dashboard">
+    <div class="grid" id="stats-main"><div class="empty" style="grid-column:1/-1">در حال دریافت...</div></div>
+    <div class="section-title">وضعیت برداشت‌ها</div>
+    <div class="grid" id="stats-withdrawals"></div>
+    <div class="section-title">کاربران و درآمد</div>
+    <div class="grid" id="stats-users"></div>
+  </section>
 
-      <div id="mainMessage" class="message" role="status"></div>
+  <!-- برداشت‌ها -->
+  <section class="view" id="view-withdrawals">
+    <div class="chips" id="w-chips"></div>
+    <div class="toolbar">
+      <input class="field" id="w-search" type="search" placeholder="جستجو: شناسه، یوزرنیم، نام، آدرس کیف پول یا شماره درخواست" autocomplete="off">
+      <button class="pill-btn" id="w-copy-all" type="button" style="display:none">⧉ کپی لیست پرداخت</button>
+    </div>
+    <div class="list two" id="w-list"></div>
+    <button class="more" id="w-more" type="button" style="display:none">نمایش بیشتر</button>
+  </section>
 
-      <div class="stats">
-        <div class="stat">
-          <strong id="pendingCount">—</strong>
-          <span>در انتظار بررسی</span>
-        </div>
-        <div class="stat">
-          <strong id="approvedCount">—</strong>
-          <span>تأییدشده، پرداخت‌نشده</span>
-        </div>
-        <div class="stat">
-          <strong id="rejectedCount">—</strong>
-          <span>ردشده</span>
-        </div>
-        <div class="stat">
-          <strong id="paidCount">—</strong>
-          <span>پرداخت‌شده</span>
-        </div>
+  <!-- کاربران -->
+  <section class="view" id="view-users">
+    <div class="toolbar">
+      <input class="field" id="u-search" type="search" placeholder="جستجو: شناسه، یوزرنیم یا نام" autocomplete="off">
+      <select class="field" id="u-sort">
+        <option value="new">جدیدترین</option>
+        <option value="balance">بیشترین موجودی</option>
+      </select>
+    </div>
+    <div class="list two" id="u-list"></div>
+    <button class="more" id="u-more" type="button" style="display:none">نمایش بیشتر</button>
+  </section>
+
+</div>
+
+<div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
+
+<div class="gate" id="gate">
+  <div class="box">
+    <div class="big" id="gate-icon">🔒</div>
+    <p id="gate-text"></p>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+
+const API_BASE = "https://not-reward-api.mukefaceget15.workers.dev";
+const PAGE = 20;
+
+const tg = window.Telegram?.WebApp || null;
+const initData = tg?.initData || "";
+
+if (tg) {
+  tg.ready();
+  tg.expand();
+  try { tg.setHeaderColor("#f6f5f0"); } catch (_) {}
+  try { tg.setBackgroundColor("#f6f5f0"); } catch (_) {}
+}
+
+const STATUS_LABELS = {
+  pending: "در انتظار بررسی",
+  approved: "تأیید شده",
+  paid: "پرداخت شده",
+  rejected: "رد شده"
+};
+
+const KIND_LABELS = {
+  tap: "پاداش لمس",
+  daily: "پاداش روزانه",
+  referral: "پاداش دعوت",
+  monetag: "پاداش تبلیغ",
+  ad: "پاداش تبلیغ",
+  withdrawal: "برداشت",
+  withdraw: "برداشت",
+  refund: "بازگشت وجه",
+  admin: "تنظیم مدیر"
+};
+
+const state = {
+  tab: "dashboard",
+  stats: null,
+  wStatus: "pending",
+  wSearch: "",
+  wOffset: 0,
+  wItems: [],
+  wHasMore: false,
+  wLoaded: false,
+  wToken: 0,
+  uSearch: "",
+  uSort: "new",
+  uOffset: 0,
+  uItems: [],
+  uHasMore: false,
+  uLoaded: false,
+  uToken: 0
+};
+
+const $ = id => document.getElementById(id);
+
+/* ---------- ابزارها ---------- */
+function fa(value, digits = 2) {
+  const n = Number(value);
+  return (Number.isFinite(n) ? n : 0).toLocaleString("fa-IR", { maximumFractionDigits: digits });
+}
+
+function esc(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  }[c]));
+}
+
+function fmtDate(value) {
+  if (!value) return "—";
+  const d = new Date(String(value).replace(" ", "T") + "Z");
+  if (Number.isNaN(d.getTime())) return String(value);
+  return d.toLocaleString("fa-IR", { dateStyle: "short", timeStyle: "short" });
+}
+
+function displayName(item) {
+  return item.first_name || (item.username ? "@" + item.username : "کاربر " + (item.user_id || item.id));
+}
+
+let toastTimer;
+function toast(message, isError = false) {
+  const el = $("toast");
+  el.textContent = message;
+  el.classList.toggle("err", isError);
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 3800);
+}
+
+function debounce(fn, ms) {
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), ms);
+  };
+}
+
+async function copyText(text, okMessage = "کپی شد.") {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+    } else {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.cssText = "position:fixed;opacity:0";
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand("copy");
+      ta.remove();
+      if (!ok) throw new Error("copy failed");
+    }
+    try { tg?.HapticFeedback?.notificationOccurred("success"); } catch (_) {}
+    toast(okMessage);
+  } catch (_) {
+    toast("کپی خودکار انجام نشد؛ دستی کپی کن.", true);
+  }
+}
+
+function showGate(icon, text) {
+  $("gate-icon").textContent = icon;
+  $("gate-text").textContent = text;
+  $("gate").classList.add("show");
+}
+
+async function api(path, body = {}) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 20000);
+  let response;
+
+  try {
+    response = await fetch(API_BASE + path, {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "X-Telegram-Init-Data": initData
+      },
+      cache: "no-store",
+      signal: controller.signal,
+      body: JSON.stringify({ ...body, initData })
+    });
+  } catch (error) {
+    throw new Error(error?.name === "AbortError"
+      ? "پاسخ سرور دیر شد. دوباره تلاش کن."
+      : "ارتباط با سرور برقرار نشد.");
+  } finally {
+    clearTimeout(timer);
+  }
+
+  let data = {};
+  try {
+    const raw = await response.text();
+    data = raw ? JSON.parse(raw) : {};
+  } catch (_) {
+    throw new Error("پاسخ سرور قابل خواندن نیست.");
+  }
+
+  if (!response.ok || data.ok === false) {
+    const err = new Error(data.error || ("خطای سرور: " + response.status));
+    err.status = response.status;
+    throw err;
+  }
+
+  return data;
+}
+
+function handleApiError(error) {
+  console.error(error);
+  if (error.status === 403) {
+    showGate("⛔", "به این بخش دسترسی نداری. فقط مدیر ربات می‌تواند وارد شود.");
+    return;
+  }
+  if (error.status === 401) {
+    showGate("🔄", "نشست تلگرام منقضی شده است. پنل را بسته و دوباره از داخل ربات باز کن.");
+    return;
+  }
+  toast(error.message || "خطایی رخ داد.", true);
+}
+
+/* ---------- مودال ---------- */
+function openModal(html) {
+  $("sheet").innerHTML = html;
+  $("modal").classList.add("show");
+}
+function closeModal() {
+  $("modal").classList.remove("show");
+  $("sheet").innerHTML = "";
+}
+$("modal").addEventListener("click", e => {
+  if (e.target === $("modal")) closeModal();
+});
+
+/* ---------- تب‌ها ---------- */
+function setTab(name) {
+  state.tab = name;
+  document.querySelectorAll(".tab").forEach(el =>
+    el.classList.toggle("active", el.dataset.tab === name));
+  document.querySelectorAll(".view").forEach(el =>
+    el.classList.toggle("active", el.id === "view-" + name));
+  window.scrollTo({ top: 0 });
+
+  if (name === "withdrawals" && !state.wLoaded) loadWithdrawals(true);
+  if (name === "users" && !state.uLoaded) loadUsers(true);
+}
+
+document.querySelectorAll(".tab").forEach(el =>
+  el.addEventListener("click", () => setTab(el.dataset.tab)));
+
+/* ---------- داشبورد ---------- */
+function statCard(icon, label, value, unit, sub, extra = "") {
+  return `
+    <div class="stat ${extra}">
+      <div class="ico">${icon}</div>
+      <div class="lbl">${label}</div>
+      <div class="val">${value}${unit ? ` <small>${unit}</small>` : ""}</div>
+      ${sub ? `<div class="sub">${sub}</div>` : ""}
+    </div>`;
+}
+
+function renderStats() {
+  const s = state.stats;
+  if (!s) return;
+  const w = s.withdrawals;
+
+  $("stats-main").innerHTML = `
+    <button class="stat hot" type="button" data-goto="pending">
+      <div class="ico">⏳</div>
+      <div class="lbl">در انتظار بررسی</div>
+      <div class="val">${fa(w.pending.count, 0)}</div>
+      <div class="sub">${fa(w.pending.amount)} NOT</div>
+    </button>
+    <button class="stat" type="button" data-goto="approved">
+      <div class="ico">✅</div>
+      <div class="lbl">منتظر پرداخت</div>
+      <div class="val">${fa(w.approved.count, 0)}</div>
+      <div class="sub">${fa(w.approved.amount)} NOT</div>
+    </button>
+    ${statCard("💸", "پرداخت‌شده", fa(w.paid.count, 0), "", fa(w.paid.amount) + " NOT")}
+    ${statCard("↩", "ردشده", fa(w.rejected.count, 0), "", fa(w.rejected.amount) + " NOT")}`;
+
+  $("stats-withdrawals").innerHTML = `
+    ${statCard("🧾", "کل درخواست‌ها", fa(w.pending.count + w.approved.count + w.paid.count + w.rejected.count, 0), "", "")}
+    ${statCard("📌", "تعهد پرداخت", fa(w.pending.amount + w.approved.amount), "NOT", "در انتظار + تأییدشده")}`;
+
+  $("stats-users").innerHTML = `
+    ${statCard("👥", "کل کاربران", fa(s.users, 0), "", "امروز: +" + fa(s.newToday, 0))}
+    ${statCard("👛", "مجموع موجودی کاربران", fa(s.totalBalance), "NOT", "")}
+    ${statCard("🤝", "دعوت‌های ثبت‌شده", fa(s.referrals, 0), "", "")}
+    ${statCard("📺", "پاداش تبلیغ", fa(s.ads.total), "NOT", fa(s.ads.count, 0) + " رویداد")}`;
+
+  const pending = w.pending.count;
+  const badge = $("pending-badge");
+  badge.textContent = pending > 99 ? "99+" : String(pending || "");
+  badge.dataset.zero = pending ? "0" : "1";
+
+  renderChips();
+}
+
+$("view-dashboard").addEventListener("click", e => {
+  const btn = e.target.closest("[data-goto]");
+  if (!btn) return;
+  state.wStatus = btn.dataset.goto;
+  state.wLoaded = false;
+  setTab("withdrawals");
+  renderChips();
+});
+
+async function loadStats() {
+  const data = await api("/api/admin/stats");
+  state.stats = data.stats;
+  renderStats();
+}
+
+/* ---------- برداشت‌ها ---------- */
+function renderChips() {
+  const w = state.stats?.withdrawals;
+  const total = w ? w.pending.count + w.approved.count + w.paid.count + w.rejected.count : 0;
+  const items = [
+    ["pending", "در انتظار", w?.pending.count],
+    ["approved", "تأییدشده", w?.approved.count],
+    ["paid", "پرداخت‌شده", w?.paid.count],
+    ["rejected", "ردشده", w?.rejected.count],
+    ["all", "همه", w ? total : undefined]
+  ];
+
+  $("w-chips").innerHTML = items.map(([key, label, count]) => `
+    <button class="chip ${state.wStatus === key ? "active" : ""}" type="button" data-status="${key}">
+      ${label}${count !== undefined ? ` <span class="n">${fa(count, 0)}</span>` : ""}
+    </button>`).join("");
+}
+
+$("w-chips").addEventListener("click", e => {
+  const btn = e.target.closest("[data-status]");
+  if (!btn) return;
+  state.wStatus = btn.dataset.status;
+  renderChips();
+  loadWithdrawals(true);
+});
+
+$("w-search").addEventListener("input", debounce(e => {
+  state.wSearch = e.target.value.trim();
+  loadWithdrawals(true);
+}, 400));
+
+function withdrawalCard(w) {
+  const name = displayName(w);
+  const actions = [];
+
+  if (w.status === "pending") {
+    actions.push(`<button class="btn btn-blue" type="button" data-act="approve" data-id="${w.id}">تأیید</button>`);
+    actions.push(`<button class="btn btn-primary" type="button" data-act="pay" data-id="${w.id}">ثبت پرداخت</button>`);
+    actions.push(`<button class="btn btn-danger" type="button" data-act="reject" data-id="${w.id}">رد</button>`);
+  } else if (w.status === "approved") {
+    actions.push(`<button class="btn btn-primary" type="button" data-act="pay" data-id="${w.id}">ثبت پرداخت</button>`);
+    actions.push(`<button class="btn btn-danger" type="button" data-act="reject" data-id="${w.id}">رد</button>`);
+  }
+
+  return `
+    <article class="card">
+      <div class="w-head">
+        <span class="w-id">#${w.id}</span>
+        <span class="badge ${esc(w.status)}">${esc(STATUS_LABELS[w.status] || w.status)}</span>
+        <span class="w-amount">${fa(w.amount)} <small>NOT</small></span>
       </div>
 
-      <section class="panel">
-        <h2>درخواست‌های برداشت</h2>
+      <div class="w-user">
+        <b>${esc(name)}</b>
+        ${w.username ? `<span class="muted">@${esc(w.username)}</span>` : ""}
+        <button class="copy-chip" type="button" data-copy="${esc(w.user_id)}" data-msg="شناسه کاربر کپی شد.">ID ${esc(w.user_id)} ⧉</button>
+        <button class="copy-chip" type="button" data-user="${esc(w.user_id)}">جزئیات کاربر</button>
+      </div>
 
-        <div class="toolbar">
-          <div>
-            <label for="statusFilter">فیلتر وضعیت</label>
-            <select id="statusFilter">
-              <option value="pending">در انتظار بررسی</option>
-              <option value="approved">تأییدشده / پرداخت‌نشده</option>
-              <option value="rejected">ردشده</option>
-              <option value="paid">پرداخت‌شده</option>
-            </select>
-          </div>
-          <button id="refreshButton" class="primary">🔄 بروزرسانی</button>
-          <button id="showAllButton" class="secondary">نمایش همه وضعیت‌ها</button>
-        </div>
+      <div class="w-wallet">
+        <code>${esc(w.wallet_address)}</code>
+        <button class="icon-btn" type="button" data-copy="${esc(w.wallet_address)}" data-msg="آدرس کیف پول کپی شد.">کپی</button>
+      </div>
 
-        <div id="loadingMessage" class="muted" style="margin-top:14px"></div>
+      ${w.wallet_users > 1 ? `<div class="warn">⚠ این آدرس کیف پول در درخواست‌های ${fa(w.wallet_users, 0)} کاربر مختلف استفاده شده است. قبل از پرداخت بررسی کن.</div>` : ""}
 
-        <div class="table-wrap" style="margin-top:14px">
-          <table>
-            <thead>
-              <tr>
-                <th>شماره</th>
-                <th>کاربر تلگرام</th>
-                <th>مبلغ</th>
-                <th>کیف پول</th>
-                <th>تاریخ</th>
-                <th>وضعیت</th>
-                <th>عملیات</th>
-              </tr>
-            </thead>
-            <tbody id="withdrawalsBody">
-              <tr><td colspan="7" class="empty">هنوز داده‌ای بارگذاری نشده است.</td></tr>
-            </tbody>
-          </table>
-        </div>
+      <div class="w-meta">
+        <span>📅 ${fmtDate(w.created_at)}</span>
+        <span>👛 موجودی فعلی: ${fa(w.balance)}</span>
+        <span>🤝 دعوت‌ها: ${fa(w.referrals, 0)}</span>
+        <span>✔ برداشت‌های پرداخت‌شده: ${fa(w.paid_count, 0)}</span>
+      </div>
 
-        <p class="muted">
-          فهرست هر وضعیت از API سرور دریافت می‌شود. برای بررسی درخواست‌های
-          دیگر، فیلتر را تغییر بده.
-        </p>
-      </section>
-    </section>
-  </main>
+      ${w.admin_note ? `<div class="w-note">📝 ${esc(w.admin_note)}</div>` : ""}
+      ${w.tx_hash ? `<div class="w-note" style="direction:ltr;text-align:left">TX: ${esc(w.tx_hash)}</div>` : ""}
+      ${w.processed_at && w.status !== "pending" ? `<div class="w-meta"><span>🕒 آخرین تغییر: ${fmtDate(w.processed_at)}</span></div>` : ""}
 
-  <script>
-    "use strict";
+      ${actions.length ? `<div class="w-actions">${actions.join("")}</div>` : ""}
+    </article>`;
+}
 
-    const API_BASE =
-      "https://not-reward-api.mukefaceget15.workers.dev";
+function renderWithdrawals() {
+  const list = $("w-list");
 
-    const STATUS_LABELS = {
-      pending: "در انتظار بررسی",
-      approved: "تأییدشده / پرداخت‌نشده",
-      rejected: "ردشده",
-      paid: "پرداخت‌شده"
-    };
+  if (!state.wItems.length) {
+    list.innerHTML = `<div class="empty" style="grid-column:1/-1">موردی پیدا نشد.</div>`;
+  } else {
+    list.innerHTML = state.wItems.map(withdrawalCard).join("");
+  }
 
-    let adminSecret = "";
-    let busy = false;
+  $("w-more").style.display = state.wHasMore ? "block" : "none";
+  $("w-copy-all").style.display =
+    state.wStatus === "approved" && state.wItems.length ? "inline-flex" : "none";
+}
 
-    const $ = (id) => document.getElementById(id);
+async function loadWithdrawals(reset) {
+  const token = ++state.wToken;
+  const more = $("w-more");
 
-    function escapeHTML(value) {
-      return String(value ?? "").replace(/[&<>"']/g, (char) => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-      })[char]);
-    }
+  if (reset) {
+    state.wOffset = 0;
+    state.wItems = [];
+    $("w-list").innerHTML = `<div class="empty" style="grid-column:1/-1">در حال دریافت...</div>`;
+    more.style.display = "none";
+  } else {
+    more.disabled = true;
+  }
 
-    function showMessage(id, text, type = "error") {
-      const element = $(id);
-      element.textContent = text;
-      element.className = `message show ${type}`;
-    }
-
-    function hideMessage(id) {
-      const element = $(id);
-      element.textContent = "";
-      element.className = "message";
-    }
-
-    async function api(path, options = {}) {
-      const headers = {
-        "X-Admin-Secret": adminSecret,
-        ...(options.headers || {})
-      };
-
-      const response = await fetch(API_BASE + path, {
-        ...options,
-        headers,
-        cache: "no-store"
-      });
-
-      const raw = await response.text();
-      let data;
-
-      try {
-        data = JSON.parse(raw);
-      } catch {
-        throw new Error(
-          `پاسخ سرور قابل خواندن نیست (HTTP ${response.status}).`
-        );
-      }
-
-      if (!response.ok || data.ok === false) {
-        if (response.status === 401) {
-          throw new Error("رمز مدیریت اشتباه است یا دسترسی مجاز نیست.");
-        }
-        throw new Error(data.error || `خطای سرور: ${response.status}`);
-      }
-
-      return data;
-    }
-
-    function setBusy(value) {
-      busy = value;
-      $("refreshButton").disabled = value;
-      $("showAllButton").disabled = value;
-      $("statusFilter").disabled = value;
-    }
-
-    function formatAmount(amount) {
-      const number = Number(amount);
-      if (!Number.isFinite(number)) return "—";
-      return number.toLocaleString("en-US", {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 2
-      }) + " NOT";
-    }
-
-    function formatDate(value) {
-      if (!value) return "—";
-      const normalized = String(value).includes("T")
-        ? String(value)
-        : String(value).replace(" ", "T") + "Z";
-
-      const date = new Date(normalized);
-      if (Number.isNaN(date.getTime())) return String(value);
-
-      return date.toLocaleString("fa-IR", {
-        dateStyle: "short",
-        timeStyle: "short"
-      });
-    }
-
-    function statusBadge(status) {
-      return `<span class="badge ${escapeHTML(status)}">${
-        escapeHTML(STATUS_LABELS[status] || status)
-      }</span>`;
-    }
-
-    function actionButtons(item) {
-      const id = Number(item.id);
-
-      if (item.status === "pending") {
-        return `
-          <div class="actions">
-            <button class="success" data-action="approve" data-id="${id}">
-              ✓ تأیید
-            </button>
-            <button class="danger" data-action="reject" data-id="${id}">
-              ✕ رد و برگشت موجودی
-            </button>
-          </div>`;
-      }
-
-      if (item.status === "approved") {
-        return `
-          <div class="actions">
-            <button class="primary" data-action="paid" data-id="${id}">
-              ثبت پرداخت نهایی
-            </button>
-          </div>`;
-      }
-
-      return '<span class="muted">عملیات تکمیل شده</span>';
-    }
-
-    function renderRows(items) {
-      const body = $("withdrawalsBody");
-
-      if (!items.length) {
-        body.innerHTML =
-          '<tr><td colspan="7" class="empty">درخواستی در این وضعیت پیدا نشد.</td></tr>';
-        return;
-      }
-
-      body.innerHTML = items.map((item) => `
-        <tr>
-          <td>#${escapeHTML(item.id)}</td>
-          <td>${escapeHTML(item.telegram_user_id)}</td>
-          <td><strong>${escapeHTML(formatAmount(item.amount))}</strong></td>
-          <td class="wallet">${escapeHTML(item.wallet_address)}</td>
-          <td>${escapeHTML(formatDate(item.created_at))}</td>
-          <td>${statusBadge(item.status)}</td>
-          <td>${actionButtons(item)}</td>
-        </tr>
-      `).join("");
-    }
-
-    async function loadStatusCounts() {
-      const statuses = ["pending", "approved", "rejected", "paid"];
-
-      const results = await Promise.all(
-        statuses.map(async (status) => {
-          const data = await api(
-            "/api/admin/withdrawals?status=" + encodeURIComponent(status)
-          );
-          return [status, Array.isArray(data.withdrawals)
-            ? data.withdrawals.length : 0];
-        })
-      );
-
-      const counts = Object.fromEntries(results);
-      $("pendingCount").textContent = counts.pending;
-      $("approvedCount").textContent = counts.approved;
-      $("rejectedCount").textContent = counts.rejected;
-      $("paidCount").textContent = counts.paid;
-    }
-
-    async function loadWithdrawals() {
-      if (!adminSecret || busy) return;
-
-      setBusy(true);
-      hideMessage("mainMessage");
-      $("loadingMessage").textContent = "در حال دریافت اطلاعات از سرور…";
-
-      try {
-        const status = $("statusFilter").value;
-        const data = await api(
-          "/api/admin/withdrawals?status=" + encodeURIComponent(status)
-        );
-
-        renderRows(Array.isArray(data.withdrawals) ? data.withdrawals : []);
-
-        try {
-          await loadStatusCounts();
-        } catch (error) {
-          console.error("Count refresh failed:", error);
-        }
-
-        $("loadingMessage").textContent =
-          `آخرین بروزرسانی: ${new Date().toLocaleTimeString("fa-IR")}`;
-      } catch (error) {
-        $("loadingMessage").textContent = "";
-        showMessage("mainMessage", error.message);
-
-        if (String(error.message).includes("رمز مدیریت")) {
-          logout();
-        }
-      } finally {
-        setBusy(false);
-      }
-    }
-
-    async function reviewWithdrawal(id, status, transactionHash = "", note = "") {
-      return api("/api/admin/withdrawals/review", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id,
-          status,
-          transactionHash,
-          note
-        })
-      });
-    }
-
-    async function handleAction(action, id) {
-      if (busy) return;
-
-      const messages = {
-        approve: "این درخواست تأیید شود؟ پس از تأیید، برای ثبت پرداخت نهایی باید هش تراکنش وارد شود.",
-        reject: "درخواست رد شود؟ Worker باید مبلغ برداشت را به موجودی کاربر برگرداند.",
-        paid: "آیا انتقال واقعی وجه را انجام داده‌ای؟ فقط پس از پرداخت واقعی ادامه بده."
-      };
-
-      if (!confirm(messages[action])) return;
-
-      let transactionHash = "";
-      let note = "";
-
-      if (action === "paid") {
-        transactionHash = prompt(
-          "هش تراکنش پرداخت را وارد کن:"
-        )?.trim() || "";
-
-        if (!transactionHash) {
-          alert("برای ثبت پرداخت نهایی، هش تراکنش لازم است.");
-          return;
-        }
-
-        if (transactionHash.length > 200) {
-          alert("هش تراکنش بیش از حد طولانی است.");
-          return;
-        }
-      }
-
-      if (action === "reject") {
-        note = prompt(
-          "دلیل رد درخواست (اختیاری):"
-        )?.trim() || "";
-      }
-
-      const newStatus = {
-        approve: "approved",
-        reject: "rejected",
-        paid: "paid"
-      }[action];
-
-      setBusy(true);
-      hideMessage("mainMessage");
-      $("loadingMessage").textContent = "در حال ثبت تغییرات…";
-
-      try {
-        const result = await reviewWithdrawal(
-          id,
-          newStatus,
-          transactionHash,
-          note
-        );
-
-        showMessage(
-          "mainMessage",
-          result.message || "تغییرات با موفقیت ثبت شد.",
-          "ok"
-        );
-
-        await loadAfterAction();
-      } catch (error) {
-        showMessage("mainMessage", error.message);
-      } finally {
-        setBusy(false);
-      }
-    }
-
-    async function loadAfterAction() {
-      const status = $("statusFilter").value;
-      const data = await api(
-        "/api/admin/withdrawals?status=" + encodeURIComponent(status)
-      );
-      renderRows(Array.isArray(data.withdrawals) ? data.withdrawals : []);
-
-      try {
-        await loadStatusCounts();
-      } catch (error) {
-        console.error(error);
-      }
-
-      $("loadingMessage").textContent =
-        `آخرین بروزرسانی: ${new Date().toLocaleTimeString("fa-IR")}`;
-    }
-
-    function logout() {
-      adminSecret = "";
-      $("adminSecret").value = "";
-      $("dashboard").classList.add("hidden");
-      $("loginView").classList.remove("hidden");
-      $("withdrawalsBody").innerHTML = "";
-      hideMessage("mainMessage");
-      hideMessage("loginMessage");
-    }
-
-    $("loginForm").addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      const secret = $("adminSecret").value.trim();
-      if (!secret) {
-        showMessage("loginMessage", "رمز مدیریت را وارد کن.");
-        return;
-      }
-
-      adminSecret = secret;
-      $("loginButton").disabled = true;
-      $("loginButton").textContent = "در حال بررسی…";
-      hideMessage("loginMessage");
-
-      try {
-        await api("/api/admin/withdrawals?status=pending");
-        $("loginView").classList.add("hidden");
-        $("dashboard").classList.remove("hidden");
-        $("statusFilter").value = "pending";
-        await loadWithdrawals();
-      } catch (error) {
-        adminSecret = "";
-        showMessage("loginMessage", error.message);
-      } finally {
-        $("loginButton").disabled = false;
-        $("loginButton").textContent = "ورود به پنل";
-      }
+  try {
+    const data = await api("/api/admin/withdrawals", {
+      status: state.wStatus,
+      search: state.wSearch,
+      limit: PAGE,
+      offset: state.wOffset
     });
 
-    $("refreshButton").addEventListener("click", loadWithdrawals);
-    $("statusFilter").addEventListener("change", loadWithdrawals);
-    $("showAllButton").addEventListener("click", async () => {
-      if (!adminSecret || busy) return;
+    if (token !== state.wToken) return;
 
-      setBusy(true);
-      hideMessage("mainMessage");
-      $("loadingMessage").textContent = "در حال دریافت همه وضعیت‌ها…";
+    state.wItems.push(...data.items);
+    state.wOffset += data.items.length;
+    state.wHasMore = data.hasMore;
+    state.wLoaded = true;
+    renderWithdrawals();
+  } catch (error) {
+    if (token !== state.wToken) return;
+    $("w-list").innerHTML = `<div class="empty" style="grid-column:1/-1">دریافت اطلاعات ناموفق بود.</div>`;
+    handleApiError(error);
+  } finally {
+    more.disabled = false;
+  }
+}
 
-      try {
-        const statuses = ["pending", "approved", "rejected", "paid"];
-        const results = await Promise.all(
-          statuses.map(status =>
-            api("/api/admin/withdrawals?status=" + status)
-          )
-        );
+$("w-more").addEventListener("click", () => loadWithdrawals(false));
 
-        const all = results
-          .flatMap(result => result.withdrawals || [])
-          .sort((a, b) => Number(b.id) - Number(a.id));
+$("w-copy-all").addEventListener("click", () => {
+  const lines = state.wItems
+    .filter(w => w.status === "approved")
+    .map(w => `${w.wallet_address}\t${w.amount}`);
+  if (!lines.length) return;
+  copyText(lines.join("\n"), `${fa(lines.length, 0)} مورد کپی شد (آدرس و مبلغ).`);
+});
 
-        renderRows(all);
-        await loadStatusCounts();
-        $("loadingMessage").textContent =
-          `تعداد درخواست‌های دریافت‌شده: ${all.length}`;
-      } catch (error) {
-        showMessage("mainMessage", error.message);
-      } finally {
-        setBusy(false);
+$("w-list").addEventListener("click", e => {
+  const copyBtn = e.target.closest("[data-copy]");
+  if (copyBtn) {
+    copyText(copyBtn.dataset.copy, copyBtn.dataset.msg || "کپی شد.");
+    return;
+  }
+
+  const userBtn = e.target.closest("[data-user]");
+  if (userBtn) {
+    openUserModal(userBtn.dataset.user);
+    return;
+  }
+
+  const actBtn = e.target.closest("[data-act]");
+  if (actBtn) {
+    const w = state.wItems.find(x => String(x.id) === actBtn.dataset.id);
+    if (w) openActionModal(w, actBtn.dataset.act);
+  }
+});
+
+/* ---------- مودال عملیات برداشت ---------- */
+function openActionModal(w, action) {
+  const cfg = {
+    approve: { title: "تأیید درخواست برداشت", button: "تأیید درخواست", cls: "btn-primary" },
+    pay: { title: "ثبت پرداخت", button: "ثبت به‌عنوان پرداخت‌شده", cls: "btn-primary" },
+    reject: { title: "رد درخواست و بازگشت وجه", button: "رد و بازگرداندن وجه", cls: "btn-danger" }
+  }[action];
+
+  let fields = "";
+
+  if (action === "pay") {
+    fields += `
+      <label class="lbl2" for="m-tx">کد تراکنش / هش (اختیاری)</label>
+      <input class="field ltr" id="m-tx" type="text" maxlength="200" autocomplete="off" placeholder="TX hash">`;
+  }
+
+  if (action === "reject") {
+    fields += `
+      <label class="lbl2" for="m-note">دلیل رد (الزامی؛ برای کاربر ارسال می‌شود)</label>
+      <textarea class="field" id="m-note" maxlength="300" placeholder="مثلاً: آدرس کیف پول نامعتبر است"></textarea>
+      <div class="info-box">مبلغ ${fa(w.amount)} NOT به‌صورت خودکار به موجودی کاربر برگردانده می‌شود.</div>`;
+  } else {
+    fields += `
+      <label class="lbl2" for="m-note">یادداشت (اختیاری)</label>
+      <input class="field" id="m-note" type="text" maxlength="300" autocomplete="off" placeholder="یادداشت داخلی">`;
+  }
+
+  openModal(`
+    <h3>${cfg.title}</h3>
+    <div class="row"><span>شماره درخواست</span><b>#${w.id}</b></div>
+    <div class="row"><span>کاربر</span><b>${esc(displayName(w))}</b></div>
+    <div class="row"><span>مبلغ</span><b>${fa(w.amount)} NOT</b></div>
+    <div class="row"><span>آدرس کیف پول</span><b style="direction:ltr;font-size:11px">${esc(w.wallet_address)}</b></div>
+    ${fields}
+    <label class="check"><input type="checkbox" id="m-notify" checked> ارسال پیام تلگرامی به کاربر</label>
+    <div class="btns">
+      <button class="btn ${cfg.cls}" id="m-confirm" type="button">${cfg.button}</button>
+      <button class="btn btn-ghost" id="m-cancel" type="button">انصراف</button>
+    </div>`);
+
+  $("m-cancel").addEventListener("click", closeModal);
+
+  $("m-confirm").addEventListener("click", async () => {
+    const note = $("m-note")?.value.trim() || "";
+    const txHash = $("m-tx")?.value.trim() || "";
+
+    if (action === "reject" && !note) {
+      toast("دلیل رد را بنویس.", true);
+      return;
+    }
+
+    const btn = $("m-confirm");
+    btn.disabled = true;
+    btn.textContent = "در حال ثبت...";
+
+    try {
+      const result = await api("/api/admin/withdrawal/update", {
+        id: w.id,
+        action,
+        note,
+        txHash,
+        notify: $("m-notify").checked
+      });
+
+      applyWithdrawalUpdate(w.id, result);
+      closeModal();
+
+      let message = "تغییر ثبت شد.";
+      if ($("m-notify")?.checked === false) message += "";
+      toast(result.notified ? message + " پیام برای کاربر ارسال شد." :
+        (result.status ? message : message));
+
+      if (!result.notified) {
+        // اگر ارسال پیام انجام نشد (مثلاً کاربر ربات را استارت نکرده)، تغییر همچنان ثبت شده است
       }
+
+      loadStats().catch(console.error);
+    } catch (error) {
+      btn.disabled = false;
+      btn.textContent = cfg.button;
+      handleApiError(error);
+      if (error.status === 409) {
+        closeModal();
+        loadWithdrawals(true);
+        loadStats().catch(console.error);
+      }
+    }
+  });
+}
+
+function applyWithdrawalUpdate(id, result) {
+  const idx = state.wItems.findIndex(x => x.id === id);
+  if (idx === -1) return;
+
+  if (state.wStatus !== "all" && state.wStatus !== result.status) {
+    state.wItems.splice(idx, 1);
+    state.wOffset = Math.max(0, state.wOffset - 1);
+  } else {
+    Object.assign(state.wItems[idx], {
+      status: result.status,
+      admin_note: result.admin_note,
+      tx_hash: result.tx_hash,
+      processed_at: new Date().toISOString().slice(0, 19).replace("T", " ")
+    });
+  }
+
+  renderWithdrawals();
+}
+
+/* ---------- کاربران ---------- */
+function userRow(u) {
+  const initial = (u.first_name || u.username || "؟").trim().charAt(0).toUpperCase();
+  return `
+    <button class="u-row" type="button" data-user="${esc(u.id)}">
+      <div class="avatar">${esc(initial)}</div>
+      <div class="u-main">
+        <b>${esc(u.first_name || (u.username ? "@" + u.username : "بدون نام"))}</b>
+        <small>${u.username ? "@" + esc(u.username) + " · " : ""}ID ${esc(u.id)} · دعوت‌ها: ${fa(u.referrals, 0)} · برداشت‌ها: ${fa(u.withdrawals_count, 0)}</small>
+      </div>
+      <div class="u-bal">${fa(u.balance)} <small>NOT</small></div>
+    </button>`;
+}
+
+function renderUsers() {
+  const list = $("u-list");
+  list.innerHTML = state.uItems.length
+    ? state.uItems.map(userRow).join("")
+    : `<div class="empty" style="grid-column:1/-1">کاربری پیدا نشد.</div>`;
+  $("u-more").style.display = state.uHasMore ? "block" : "none";
+}
+
+async function loadUsers(reset) {
+  const token = ++state.uToken;
+  const more = $("u-more");
+
+  if (reset) {
+    state.uOffset = 0;
+    state.uItems = [];
+    $("u-list").innerHTML = `<div class="empty" style="grid-column:1/-1">در حال دریافت...</div>`;
+    more.style.display = "none";
+  } else {
+    more.disabled = true;
+  }
+
+  try {
+    const data = await api("/api/admin/users", {
+      search: state.uSearch,
+      sort: state.uSort,
+      limit: PAGE,
+      offset: state.uOffset
     });
 
-    $("withdrawalsBody").addEventListener("click", async (event) => {
-      const button = event.target.closest("button[data-action]");
-      if (!button || busy) return;
+    if (token !== state.uToken) return;
 
-      const id = Number(button.dataset.id);
-      const action = button.dataset.action;
+    state.uItems.push(...data.items);
+    state.uOffset += data.items.length;
+    state.uHasMore = data.hasMore;
+    state.uLoaded = true;
+    renderUsers();
+  } catch (error) {
+    if (token !== state.uToken) return;
+    $("u-list").innerHTML = `<div class="empty" style="grid-column:1/-1">دریافت اطلاعات ناموفق بود.</div>`;
+    handleApiError(error);
+  } finally {
+    more.disabled = false;
+  }
+}
 
-      if (!Number.isSafeInteger(id) || id < 1) {
-        showMessage("mainMessage", "شماره درخواست معتبر نیست.");
-        return;
+$("u-search").addEventListener("input", debounce(e => {
+  state.uSearch = e.target.value.trim();
+  loadUsers(true);
+}, 400));
+
+$("u-sort").addEventListener("change", e => {
+  state.uSort = e.target.value;
+  loadUsers(true);
+});
+
+$("u-more").addEventListener("click", () => loadUsers(false));
+
+$("u-list").addEventListener("click", e => {
+  const btn = e.target.closest("[data-user]");
+  if (btn) openUserModal(btn.dataset.user);
+});
+
+/* ---------- جزئیات کاربر ---------- */
+async function openUserModal(userId) {
+  openModal(`<h3>جزئیات کاربر</h3><div class="empty">در حال دریافت...</div>`);
+
+  let data;
+  try {
+    data = await api("/api/admin/user/detail", { userId });
+  } catch (error) {
+    closeModal();
+    handleApiError(error);
+    return;
+  }
+
+  const u = data.user;
+
+  const history = data.history.length
+    ? data.history.map(h => `
+        <div class="h">
+          <div>${esc(h.details || KIND_LABELS[h.kind] || h.kind)}<small>${esc(KIND_LABELS[h.kind] || h.kind)} · ${fmtDate(h.created_at)}</small></div>
+          <div class="${h.amount >= 0 ? "pos" : "neg"}">${h.amount >= 0 ? "+" : ""}${fa(h.amount)}</div>
+        </div>`).join("")
+    : `<div class="muted" style="padding:10px 0">تراکنشی ثبت نشده است.</div>`;
+
+  const withdrawals = data.withdrawals.length
+    ? data.withdrawals.map(w => `
+        <div class="h">
+          <div>#${w.id} · ${esc(STATUS_LABELS[w.status] || w.status)}<small>${fmtDate(w.created_at)}</small></div>
+          <div class="neg">${fa(w.amount)}</div>
+        </div>`).join("")
+    : `<div class="muted" style="padding:10px 0">درخواست برداشتی ندارد.</div>`;
+
+  openModal(`
+    <h3>${esc(u.first_name || (u.username ? "@" + u.username : "کاربر"))}</h3>
+    <div class="row"><span>شناسه تلگرام</span><b style="direction:ltr">${esc(u.id)}</b></div>
+    ${u.username ? `<div class="row"><span>یوزرنیم</span><b style="direction:ltr">@${esc(u.username)}</b></div>` : ""}
+    <div class="row"><span>موجودی</span><b id="ud-balance">${fa(u.balance)} NOT</b></div>
+    <div class="row"><span>دعوت‌های موفق</span><b>${fa(data.referrals, 0)}</b></div>
+    <div class="row"><span>دعوت‌شده توسط</span><b style="direction:ltr">${u.referred_by ? esc(u.referred_by) : "—"}</b></div>
+    <div class="row"><span>تاریخ عضویت</span><b>${fmtDate(u.created_at)}</b></div>
+
+    <div class="section-title">تغییر دستی موجودی</div>
+    <label class="lbl2" for="adj-amount">مبلغ (مثبت = افزایش، منفی = کاهش)</label>
+    <input class="field ltr" id="adj-amount" type="number" step="0.01" placeholder="مثلاً 5 یا -2.5">
+    <label class="lbl2" for="adj-note">دلیل (الزامی)</label>
+    <input class="field" id="adj-note" type="text" maxlength="200" autocomplete="off" placeholder="دلیل تغییر موجودی">
+    <div class="btns">
+      <button class="btn btn-primary" id="adj-apply" type="button">اعمال تغییر</button>
+      <button class="btn btn-ghost" id="ud-close" type="button">بستن</button>
+    </div>
+
+    <div class="section-title">درخواست‌های برداشت</div>
+    <div class="hist">${withdrawals}</div>
+
+    <div class="section-title">آخرین تراکنش‌ها</div>
+    <div class="hist">${history}</div>`);
+
+  $("ud-close").addEventListener("click", closeModal);
+
+  $("adj-apply").addEventListener("click", async () => {
+    const amount = Number($("adj-amount").value);
+    const note = $("adj-note").value.trim();
+
+    if (!Number.isFinite(amount) || amount === 0) {
+      toast("مبلغ معتبر وارد کن.", true);
+      return;
+    }
+    if (!note) {
+      toast("دلیل تغییر را بنویس.", true);
+      return;
+    }
+    if (!window.confirm(`موجودی این کاربر ${amount > 0 ? "افزایش" : "کاهش"} ${Math.abs(amount)} NOT یابد؟`)) {
+      return;
+    }
+
+    const btn = $("adj-apply");
+    btn.disabled = true;
+
+    try {
+      const result = await api("/api/admin/user/adjust", { userId: u.id, amount, note });
+      $("ud-balance").textContent = fa(result.balance) + " NOT";
+      $("adj-amount").value = "";
+      $("adj-note").value = "";
+      toast("موجودی به‌روزرسانی شد.");
+
+      const row = state.uItems.find(x => x.id === u.id);
+      if (row) {
+        row.balance = result.balance;
+        renderUsers();
       }
+      loadStats().catch(console.error);
+    } catch (error) {
+      handleApiError(error);
+    } finally {
+      btn.disabled = false;
+    }
+  });
+}
 
-      await handleAction(action, id);
-    });
+/* ---------- شروع ---------- */
+$("btn-refresh").addEventListener("click", async () => {
+  try {
+    await loadStats();
+    if (state.tab === "withdrawals") await loadWithdrawals(true);
+    if (state.tab === "users") await loadUsers(true);
+    toast("به‌روزرسانی شد.");
+  } catch (error) {
+    handleApiError(error);
+  }
+});
 
-    $("logoutButton").addEventListener("click", logout);
-  </script>
+$("back-link").href = new URL("index.html", location.href).href + location.hash;
+
+(async function init() {
+  if (!initData) {
+    showGate("📱", "این پنل فقط از داخل تلگرام کار می‌کند. مینی‌اپ ربات را باز کن و از صفحه‌ی «پروفایل» وارد پنل مدیریت شو.");
+    return;
+  }
+
+  const tgUser = tg?.initDataUnsafe?.user;
+  if (tgUser) {
+    $("who").textContent = (tgUser.first_name || "مدیر") + " · ID " + tgUser.id;
+  }
+
+  try {
+    await loadStats();
+  } catch (error) {
+    handleApiError(error);
+    return;
+  }
+
+  setInterval(() => {
+    if (!document.hidden) loadStats().catch(console.error);
+  }, 60000);
+})();
+</script>
 </body>
 </html>
