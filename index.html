@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -77,7 +76,6 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
 .notice{margin-top:14px;padding:12px;border-radius:12px;background:#f7f5e9;color:#776b3e;font-size:11px;line-height:2}
 .full{width:100%}
 .secondary-btn{width:100%;border:1px solid #dfe6dd;border-radius:13px;background:#fff;color:var(--green);padding:12px;font-size:12px;font-weight:800;margin-top:10px}
-.admin-btn{background:var(--green-light);border-color:#c8e0ce;color:var(--green)}
 .history-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid #f0f1ec}
 .history-row:last-child{border-bottom:0}
 .history-left{display:flex;align-items:center;gap:10px;min-width:0}
@@ -91,8 +89,7 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
 .avatar{width:73px;height:73px;margin:0 auto 13px;display:grid;place-items:center;background:var(--green-light);border:3px solid #d1e7d6;border-radius:24px;font-size:33px}
 .profile-name{font-weight:900;font-size:17px}.profile-id{color:var(--muted);font-size:11px;margin-top:5px;direction:ltr}
 .profile-row{display:flex;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid #eff0eb;font-size:12px}
-.profile-row:last-child{border-bottom:0}
-.profile-row span{color:var(--muted)}
+.profile-row:last-child{border-bottom:0}.profile-row span{color:var(--muted)}
 .bottom-nav{position:fixed;z-index:20;bottom:max(9px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:calc(100% - 24px);max-width:480px;padding:8px 5px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;border:1px solid #e6e8e0;border-radius:21px;background:rgba(255,255,255,.96);box-shadow:0 8px 30px #1e39200f;backdrop-filter:blur(15px)}
 .nav-btn{border:0;background:transparent;color:#909991;border-radius:14px;padding:7px 1px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;font-weight:600;min-width:0}
 .nav-icon{font-size:20px;line-height:1.3}.nav-btn.active{background:var(--green-light);color:var(--green);font-weight:800}
@@ -271,15 +268,7 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
     <div class="profile-row"><span>موجودی</span><b id="profile-balance">۰ NOT</b></div>
     <div class="profile-row"><span>دعوت‌شده‌ها</span><b id="profile-referrals">۰</b></div>
     <div class="profile-row"><span>وضعیت اتصال</span><b id="connection-status">در حال بررسی</b></div>
-
-    <button class="secondary-btn" onclick="refreshAll(true)">
-      🔄 به‌روزرسانی اطلاعات
-    </button>
-
-    <!-- دکمه جدید پنل مدیریت -->
-    <button class="secondary-btn admin-btn" onclick="openAdminPanel()">
-      🛠 پنل مدیریت
-    </button>
+    <button class="secondary-btn" onclick="refreshAll(true)">به‌روزرسانی اطلاعات</button>
   </div>
 
   <div class="footer">NOT REWARD · حساب تو، مدیریت ساده‌تر</div>
@@ -301,6 +290,7 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
 
 const API_BASE = "https://not-reward-api.mukefaceget15.workers.dev";
 const BOT_USERNAME = "notrewarddbot";
+// اگر در BotFather با /newapp مینی‌اپ ساختی، اسم کوتاهش را اینجا بنویس (باید با MINI_APP_NAME در Worker یکی باشد)
 const MINI_APP_NAME = "rewardapp";
 const MIN_WITHDRAWAL = 50;
 const MONETAG_ZONE_ID = "12066198";
@@ -362,22 +352,6 @@ function buildReferralLink(id) {
     ? "https://t.me/" + BOT_USERNAME + "/" + MINI_APP_NAME
     : "https://t.me/" + BOT_USERNAME;
   return base + "?startapp=ref_" + encodeURIComponent(String(id));
-}
-
-/*
- * پنل مدیریت را در همان مسیر سایت باز می‌کند.
- * admin.html باید کنار index.html قرار داشته باشد.
- * از tg.openLink استفاده نمی‌کنیم تا صفحه در مرورگر خارجی باز نشود.
- */
-function openAdminPanel() {
-  const adminUrl = new URL("admin.html", window.location.href);
-
-  if (adminUrl.origin !== window.location.origin) {
-    showToast("آدرس پنل مدیریت معتبر نیست.");
-    return;
-  }
-
-  window.location.assign(adminUrl.href);
 }
 
 async function api(path, body = {}) {
@@ -518,6 +492,7 @@ async function loadReferrals() {
   if (!initData) return;
 
   const data = await api("/api/referrals");
+
   const count = Number(data.referralCount ?? data.count ?? 0);
 
   if (Number.isFinite(count)) {
@@ -721,6 +696,7 @@ async function openAd() {
       showToast("نمایش پایان یافت؛ ثبت پاداش به تأیید سرور بستگی دارد.");
     }
 
+    // موجودی فقط از سرور خوانده می‌شود؛ در مرورگر پاداش اضافه نمی‌کنیم.
     setTimeout(() => refreshAll(false).catch(console.error), 3000);
     setTimeout(() => refreshAll(false).catch(console.error), 8000);
     setTimeout(() => refreshAll(false).catch(console.error), 15000);
@@ -874,4 +850,3 @@ function shareReferral() {
 </script>
 </body>
 </html>
-```
