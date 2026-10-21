@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="theme-color" content="#f6f5f0">
+<meta name="theme-color" content="#f4f3ec">
 <title>NOT REWARD | پنل درآمد</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -13,90 +13,262 @@
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-:root{--bg:#f6f5f0;--card:#fff;--ink:#172c27;--muted:#84918b;--green:#176b50;--green-light:#e4f2e9;--lime:#d6f379;--line:#e9ebe5;--gold:#d8a94f;--red:#c95757}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Vazirmatn",Tahoma,sans-serif;font-size:14px;-webkit-font-smoothing:antialiased;padding-bottom:calc(94px + env(safe-area-inset-bottom))}
+:root{
+  --bg:#f4f3ec;--card:#fff;--ink:#14291f;--muted:#80908a;
+  --green:#176b50;--green-2:#0f5340;--green-light:#e2f2e8;
+  --lime:#d6f379;--line:#e7eae2;--gold:#e0ae4c;--gold-2:#f6d98a;--red:#c95757;
+  --shadow:0 10px 30px #14291f12;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--ink);font-family:"Vazirmatn",Tahoma,sans-serif;font-size:14px;
+  -webkit-font-smoothing:antialiased;padding-bottom:calc(104px + env(safe-area-inset-bottom));
+  background:var(--bg);position:relative;overflow-x:hidden;
+}
+/* پس‌زمینه زنده */
+body::before,body::after{
+  content:"";position:fixed;z-index:-1;border-radius:50%;filter:blur(60px);opacity:.55;pointer-events:none;
+  animation:float 14s ease-in-out infinite alternate;
+}
+body::before{width:300px;height:300px;background:#cfeab2;top:-90px;right:-90px}
+body::after{width:280px;height:280px;background:#bfe3d3;bottom:60px;left:-100px;animation-delay:-6s}
+@keyframes float{from{transform:translate(0,0) scale(1)}to{transform:translate(30px,40px) scale(1.15)}}
+
 button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;cursor:wait}
 .app{max-width:500px;padding:19px 17px 30px;margin:auto}
-.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
-.brand{display:flex;align-items:center;gap:10px}
-.logo{width:45px;height:45px;border-radius:15px;display:grid;place-items:center;background:var(--green);color:#fff;font-size:23px;box-shadow:0 5px 12px #176b5020}
-.brand-name{font-size:18px;font-weight:900;letter-spacing:.3px}
+
+/* بالا */
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.brand{display:flex;align-items:center;gap:11px}
+.logo{
+  width:48px;height:48px;border-radius:16px;display:grid;place-items:center;
+  background:linear-gradient(145deg,#1f8c68,#0f5340);color:#fff;font-size:24px;
+  box-shadow:0 8px 18px #176b5035,inset 0 1px 0 #ffffff40;animation:pulseLogo 3s ease-in-out infinite;
+}
+@keyframes pulseLogo{50%{transform:rotate(-6deg) scale(1.05)}}
+.brand-name{font-size:18px;font-weight:900;letter-spacing:.4px}
 .brand-caption{color:var(--muted);font-size:10px;margin-top:2px}
-.status{background:#e7f4e8;color:#29734a;border-radius:20px;padding:7px 10px;font-size:10px;font-weight:700}
+.status{background:#e4f4e6;color:#27714a;border-radius:20px;padding:7px 11px;font-size:10px;font-weight:700;box-shadow:0 3px 10px #27714a14}
+
 .greeting{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}
 .greeting h1{font-size:23px;line-height:1.6;margin:0;font-weight:800;letter-spacing:-.5px}
 .greeting p{color:var(--muted);font-size:12px;margin:4px 0 0}
-.greeting-icon{width:51px;height:51px;border-radius:18px;display:grid;place-items:center;background:#e9eee4;font-size:25px}
-.balance-card{padding:22px;border-radius:25px;color:#fff;background:var(--green);position:relative;overflow:hidden;box-shadow:0 12px 25px #176b501b}
+.greeting-icon{width:54px;height:54px;border-radius:19px;display:grid;place-items:center;background:linear-gradient(145deg,#eaf1e1,#d9ead4);font-size:27px;animation:wave 4s ease-in-out infinite}
+@keyframes wave{0%,100%{transform:rotate(0)}50%{transform:rotate(10deg)}}
+
+/* کارت موجودی */
+.balance-card{
+  padding:24px;border-radius:28px;color:#fff;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#1b7a5a 0%,#176b50 45%,#0c4636 100%);
+  box-shadow:0 18px 35px #176b5033;
+}
+.balance-card::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(115deg,transparent 30%,#ffffff1c 50%,transparent 70%);
+  transform:translateX(-100%);animation:shine 5s ease-in-out infinite;
+}
+@keyframes shine{60%,100%{transform:translateX(100%)}}
 .balance-card::after{content:"";position:absolute;width:185px;height:185px;border-radius:50%;left:-60px;top:-90px;border:1px solid #ffffff17;box-shadow:0 0 0 22px #ffffff08,0 0 0 45px #ffffff06;pointer-events:none}
-.balance-label{font-size:12px;color:#d5e9de}
-.balance-number{display:flex;align-items:baseline;gap:8px;margin-top:8px;direction:rtl}
-.balance-value{font-size:clamp(32px,9vw,43px);font-weight:900;letter-spacing:-1px;line-height:1.5;overflow-wrap:anywhere}
+.balance-label{font-size:12px;color:#d5e9de;position:relative;z-index:1}
+.balance-number{display:flex;align-items:baseline;gap:8px;margin-top:8px;direction:rtl;position:relative;z-index:1}
+.balance-value{font-size:clamp(34px,10vw,46px);font-weight:900;letter-spacing:-1px;line-height:1.5;overflow-wrap:anywhere;text-shadow:0 3px 14px #00000025}
 .balance-unit{font-size:13px;color:var(--lime);font-weight:800;direction:ltr}
-.balance-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:17px;padding-top:14px;border-top:1px solid #ffffff24;color:#d7e9df;font-size:11px}
-.wallet-label{background:#ffffff17;border-radius:9px;padding:6px 9px;white-space:nowrap}
-.section-head{display:flex;align-items:center;justify-content:space-between;margin:27px 1px 13px}
-.section-head h2{font-size:15px;font-weight:800;margin:0}
+.balance-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:17px;padding-top:14px;border-top:1px solid #ffffff24;color:#d7e9df;font-size:11px;position:relative;z-index:1}
+.wallet-label{background:#ffffff1c;border-radius:10px;padding:6px 10px;white-space:nowrap;backdrop-filter:blur(6px)}
+.bump{animation:bump .5s ease}
+@keyframes bump{40%{transform:scale(1.12);color:var(--lime)}}
+
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:28px 1px 13px}
+.section-head h2{font-size:15px;font-weight:800;margin:0;display:flex;align-items:center;gap:7px}
+.section-head h2::before{content:"";width:5px;height:16px;border-radius:4px;background:linear-gradient(var(--green),var(--lime))}
 .section-head span{font-size:10px;color:var(--muted)}
-.earn-card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:24px 18px 19px;text-align:center}
-.coin-stage{width:170px;height:170px;margin:0 auto 11px;display:grid;place-items:center;position:relative}
-.coin-halo{position:absolute;inset:8px;border:1px dashed #cbd9c8;border-radius:50%}
-.coin-halo::before,.coin-halo::after{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+
+/* کارت کسب درآمد */
+.earn-card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:26px 18px 20px;text-align:center;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.coin-stage{width:178px;height:178px;margin:0 auto 11px;display:grid;place-items:center;position:relative}
+.coin-halo{position:absolute;inset:6px;border:1px dashed #bcd2bb;border-radius:50%;animation:spin 24s linear infinite}
+.coin-halo::before,.coin-halo::after{content:"";position:absolute;width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
 .coin-halo::before{top:19px;right:19px}.coin-halo::after{bottom:24px;left:12px}
-.coin-button{width:119px;height:119px;border:7px solid #e5f0e6;border-radius:50%;background:linear-gradient(145deg,#e7f59c,#c3e96a);display:grid;place-items:center;box-shadow:0 8px 0 #b4d85b,0 15px 27px #73974a23;transition:transform .18s;position:relative}
-.coin-button:active{transform:scale(.94)}
-.coin-inner{width:83px;height:83px;border:2px solid #769b3e;border-radius:50%;display:grid;place-items:center;color:#315320;font-size:36px;font-weight:900;background:linear-gradient(145deg,#f8ffd9,#d9f18b);box-shadow:inset 0 2px 5px #ffffffa0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.coin-glow{position:absolute;inset:22px;border-radius:50%;background:radial-gradient(circle,#d6f37966,transparent 70%);animation:glow 2.6s ease-in-out infinite}
+@keyframes glow{50%{transform:scale(1.2);opacity:.6}}
+.coin-button{
+  width:122px;height:122px;border:7px solid #e5f0e6;border-radius:50%;
+  background:linear-gradient(145deg,#eefaa8,#bfe665);display:grid;place-items:center;
+  box-shadow:0 9px 0 #aed353,0 18px 30px #73974a35;transition:transform .18s;position:relative;
+  animation:bob 3s ease-in-out infinite;
+}
+@keyframes bob{50%{transform:translateY(-6px)}}
+.coin-button:active{transform:scale(.93)}
+.coin-inner{width:84px;height:84px;border:2px solid #769b3e;border-radius:50%;display:grid;place-items:center;color:#315320;font-size:38px;font-weight:900;background:linear-gradient(145deg,#fbffe3,#d9f18b);box-shadow:inset 0 2px 6px #ffffffb0}
 .earn-title{font-size:18px;font-weight:900;margin-top:3px}
 .earn-description{color:var(--muted);font-size:11px;line-height:2;margin-top:7px}
-.main-btn{width:100%;min-height:49px;border:0;border-radius:15px;background:var(--green);color:#fff;font-weight:800;margin-top:18px;box-shadow:0 5px 12px #176b501b;transition:transform .15s,background .15s}
-.main-btn:active{transform:scale(.985)}.main-btn:disabled{background:#80958a}
+.main-btn{
+  width:100%;min-height:51px;border:0;border-radius:16px;color:#fff;font-weight:800;margin-top:18px;
+  background:linear-gradient(135deg,#1d8362,#176b50);box-shadow:0 8px 18px #176b5030;
+  transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden;
+}
+.main-btn::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,#ffffff2e 50%,transparent 65%);transform:translateX(-120%);animation:shine 4s ease-in-out infinite}
+.main-btn:active{transform:scale(.985)}.main-btn:disabled{background:#80958a;box-shadow:none}
+.gold-btn{background:linear-gradient(135deg,#f0c661,#d89b2f);color:#4a3406;box-shadow:0 8px 18px #d89b2f35}
 .small-note{font-size:10px;line-height:1.9;color:var(--muted);margin-top:10px}
+
 .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
-.stat-card{border:1px solid var(--line);background:var(--card);border-radius:19px;padding:16px}
+.stat-card{border:1px solid var(--line);background:var(--card);border-radius:20px;padding:16px;box-shadow:var(--shadow);transition:transform .2s}
+.stat-card:active{transform:scale(.98)}
 .stat-top{display:flex;align-items:center;justify-content:space-between;gap:5px}
-.stat-icon{width:36px;height:36px;border-radius:12px;background:var(--green-light);display:grid;place-items:center;font-size:18px}
+.stat-icon{width:38px;height:38px;border-radius:13px;background:linear-gradient(145deg,#e8f6ec,#d3ebdb);display:grid;place-items:center;font-size:18px}
 .stat-label{color:var(--muted);font-size:11px;margin-top:12px}
 .stat-value{font-size:22px;font-weight:900;margin-top:3px;overflow-wrap:anywhere}
 .stat-value small{font-size:10px;color:var(--green)}
+
 .quick-list{display:grid;gap:10px}
-.quick-item{width:100%;border:1px solid var(--line);background:#fff;border-radius:17px;padding:13px;display:flex;align-items:center;gap:12px;text-align:right;color:var(--ink)}
-.quick-icon{width:43px;height:43px;flex-shrink:0;border-radius:14px;display:grid;place-items:center;background:#f0f3e9;font-size:20px}
+.quick-item{width:100%;border:1px solid var(--line);background:#fff;border-radius:19px;padding:13px;display:flex;align-items:center;gap:12px;text-align:right;color:var(--ink);box-shadow:var(--shadow);transition:transform .15s}
+.quick-item:active{transform:scale(.985)}
+.quick-icon{width:45px;height:45px;flex-shrink:0;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#f3f6e8,#e6edd2);font-size:20px}
 .quick-copy{flex:1;min-width:0}.quick-copy b{display:block;font-size:12px;font-weight:800}.quick-copy small{display:block;color:var(--muted);font-size:10px;margin-top:4px;line-height:1.8}
 .arrow{color:#a0aaa1;font-size:22px}
-.page{display:none}.page.active{display:block;animation:appear .2s ease}
-@keyframes appear{from{opacity:.5;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
-.page-title{font-size:24px;font-weight:900;margin:6px 1px 5px}
+
+.page{display:none}.page.active{display:block;animation:appear .35s ease}
+@keyframes appear{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.page-title{font-size:25px;font-weight:900;margin:6px 1px 5px}
 .page-subtitle{color:var(--muted);font-size:12px;line-height:2;margin:0 1px 20px}
-.panel{background:#fff;border:1px solid var(--line);border-radius:21px;padding:18px;margin-bottom:13px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:23px;padding:18px;margin-bottom:13px;box-shadow:var(--shadow)}
 .panel-title{font-size:14px;font-weight:800;margin:0 0 14px}
 .field-label{display:block;color:#52645a;font-size:11px;font-weight:700;margin:14px 0 7px}
-.field{display:block;width:100%;padding:13px;border:1px solid #e2e7df;border-radius:12px;outline:none;background:#fafbf8;color:var(--ink);font-size:13px}
-.field:focus{border-color:#72a48b}.field::placeholder{color:#a8b0a8}
-.notice{margin-top:14px;padding:12px;border-radius:12px;background:#f7f5e9;color:#776b3e;font-size:11px;line-height:2}
+.field{display:block;width:100%;padding:13px;border:1px solid #e2e7df;border-radius:13px;outline:none;background:#fafbf8;color:var(--ink);font-size:13px;transition:border-color .2s,box-shadow .2s}
+.field:focus{border-color:#72a48b;box-shadow:0 0 0 4px #72a48b1f}.field::placeholder{color:#a8b0a8}
+.notice{margin-top:14px;padding:12px;border-radius:13px;background:#f8f5e6;color:#776b3e;font-size:11px;line-height:2}
 .full{width:100%}
-.secondary-btn{width:100%;border:1px solid #dfe6dd;border-radius:13px;background:#fff;color:var(--green);padding:12px;font-size:12px;font-weight:800;margin-top:10px}
+.secondary-btn{width:100%;border:1px solid #dfe6dd;border-radius:14px;background:#fff;color:var(--green);padding:12px;font-size:12px;font-weight:800;margin-top:10px;display:block}
+
 .history-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid #f0f1ec}
 .history-row:last-child{border-bottom:0}
 .history-left{display:flex;align-items:center;gap:10px;min-width:0}
-.history-icon{width:37px;height:37px;border-radius:12px;background:#edf5ed;display:grid;place-items:center;flex-shrink:0}
+.history-icon{width:38px;height:38px;border-radius:13px;background:#edf5ed;display:grid;place-items:center;flex-shrink:0}
 .history-title{font-size:12px;font-weight:700;overflow-wrap:anywhere}.history-date{color:var(--muted);font-size:10px;margin-top:4px}
 .history-amount{font-size:11px;font-weight:800;white-space:nowrap}
 .positive{color:#218456}.negative{color:var(--red)}
 .empty{text-align:center;color:var(--muted);padding:20px 5px;font-size:12px;line-height:2}
-.ref-link{direction:ltr;text-align:left;overflow-wrap:anywhere;border:1px dashed #a9c6b0;background:#f6faf3;padding:13px;border-radius:12px;font-size:11px;color:var(--green);margin-top:10px;user-select:text}
-.profile-top{text-align:center;padding:23px 15px}
-.avatar{width:73px;height:73px;margin:0 auto 13px;display:grid;place-items:center;background:var(--green-light);border:3px solid #d1e7d6;border-radius:24px;font-size:33px}
+.ref-link{direction:ltr;text-align:left;overflow-wrap:anywhere;border:1px dashed #a9c6b0;background:#f6faf3;padding:13px;border-radius:13px;font-size:11px;color:var(--green);margin-top:10px;user-select:text}
+.profile-top{text-align:center;padding:25px 15px}
+.avatar{width:78px;height:78px;margin:0 auto 13px;display:grid;place-items:center;background:linear-gradient(145deg,#e6f4ea,#cfe8d6);border:3px solid #d1e7d6;border-radius:26px;font-size:34px;box-shadow:0 8px 18px #176b5020}
 .profile-name{font-weight:900;font-size:17px}.profile-id{color:var(--muted);font-size:11px;margin-top:5px;direction:ltr}
 .profile-row{display:flex;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid #eff0eb;font-size:12px}
 .profile-row:last-child{border-bottom:0}.profile-row span{color:var(--muted)}
-.bottom-nav{position:fixed;z-index:20;bottom:max(9px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:calc(100% - 24px);max-width:480px;padding:8px 5px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;border:1px solid #e6e8e0;border-radius:21px;background:rgba(255,255,255,.96);box-shadow:0 8px 30px #1e39200f;backdrop-filter:blur(15px)}
-.nav-btn{border:0;background:transparent;color:#909991;border-radius:14px;padding:7px 1px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;font-weight:600;min-width:0}
-.nav-icon{font-size:20px;line-height:1.3}.nav-btn.active{background:var(--green-light);color:var(--green);font-weight:800}
-.toast{position:fixed;z-index:50;bottom:95px;left:50%;transform:translate(-50%,10px);opacity:0;pointer-events:none;width:calc(100% - 32px);max-width:440px;padding:13px 15px;border-radius:13px;background:#18372c;color:#fff;text-align:center;font-size:12px;line-height:1.9;box-shadow:0 8px 25px #0002;transition:.2s}
+
+/* ===== جایزه روزانه ===== */
+.daily-hero{
+  border-radius:26px;padding:20px;color:#fff;position:relative;overflow:hidden;margin-bottom:13px;
+  background:linear-gradient(135deg,#e0ae4c,#c98a1f 55%,#a86d12);box-shadow:0 16px 30px #c98a1f35;
+}
+.daily-hero::after{content:"🎁";position:absolute;left:-8px;bottom:-22px;font-size:100px;opacity:.18;transform:rotate(-14deg)}
+.daily-hero h2{margin:0;font-size:17px;font-weight:900}
+.daily-hero p{margin:6px 0 0;font-size:11px;line-height:1.9;color:#fff3d6;position:relative;z-index:1}
+.daily-progress{margin-top:14px;height:9px;border-radius:9px;background:#ffffff35;overflow:hidden;position:relative;z-index:1}
+.daily-progress i{display:block;height:100%;width:0;border-radius:9px;background:linear-gradient(90deg,#fff,#fff3c4);transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.daily-meta{display:flex;justify-content:space-between;font-size:10px;margin-top:8px;color:#fff3d6;position:relative;z-index:1}
+
+.days-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.day-card{
+  border:1px solid var(--line);background:#fff;border-radius:18px;padding:12px 4px 10px;text-align:center;position:relative;
+  box-shadow:var(--shadow);transition:transform .2s;
+}
+.day-card .d-label{font-size:10px;color:var(--muted);font-weight:700}
+.day-card .d-icon{font-size:24px;margin:7px 0 5px;display:block;filter:grayscale(.6);opacity:.6}
+.day-card .d-amount{font-size:13px;font-weight:900}
+.day-card .d-amount small{font-size:9px;color:var(--muted);font-weight:700}
+.day-card.claimed{background:linear-gradient(145deg,#e6f5ea,#d4ecdc);border-color:#bddfc8}
+.day-card.claimed .d-icon{filter:none;opacity:1}
+.day-card.claimed::after{content:"✓";position:absolute;top:6px;left:6px;width:17px;height:17px;border-radius:50%;background:var(--green);color:#fff;font-size:10px;display:grid;place-items:center;font-weight:900}
+.day-card.today{background:linear-gradient(145deg,#fff8e1,#fdeab0);border-color:#e9c56a;animation:todayPulse 1.8s ease-in-out infinite}
+.day-card.today .d-icon{filter:none;opacity:1;animation:bob 1.6s ease-in-out infinite}
+@keyframes todayPulse{50%{box-shadow:0 0 0 5px #e0ae4c30,var(--shadow);transform:scale(1.04)}}
+.day-card.big{grid-column:span 2;background:linear-gradient(145deg,#fff5d4,#f7d77f);border-color:#e0b24f}
+.day-card.big .d-icon{font-size:30px}
+.day-card.big.claimed{background:linear-gradient(145deg,#e6f5ea,#d4ecdc);border-color:#bddfc8}
+
+/* ===== تسک‌ها ===== */
+.task{display:flex;align-items:center;gap:12px;padding:14px;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:var(--shadow);margin-bottom:11px;transition:transform .15s}
+.task.done{background:linear-gradient(145deg,#f1f9f3,#e4f2e8)}
+.task-icon{width:50px;height:50px;border-radius:17px;flex-shrink:0;display:grid;place-items:center;font-size:23px;background:linear-gradient(145deg,#e1effb,#cde3f6)}
+.task-copy{flex:1;min-width:0}
+.task-copy b{display:block;font-size:13px;font-weight:800}
+.task-copy small{display:block;color:var(--muted);font-size:10px;margin-top:4px;line-height:1.8}
+.task-reward{display:inline-block;margin-top:5px;background:#fff6dc;color:#9a6c10;border-radius:8px;padding:2px 8px;font-size:10px;font-weight:800}
+.task-actions{display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+.t-btn{border:0;border-radius:11px;padding:9px 13px;font-size:11px;font-weight:800;min-width:78px;transition:transform .15s}
+.t-btn:active{transform:scale(.95)}
+.t-join{background:var(--green);color:#fff}
+.t-check{background:#fff;color:var(--green);border:1px solid #cfe0d3}
+.t-done{background:#d4ecdc;color:#1d6f48;cursor:default}
+
+/* ===== ناوبری ===== */
+.bottom-nav{position:fixed;z-index:20;bottom:max(9px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:calc(100% - 20px);max-width:480px;padding:8px 5px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;border:1px solid #e6e8e0;border-radius:24px;background:rgba(255,255,255,.92);box-shadow:0 12px 35px #1e392020;backdrop-filter:blur(18px)}
+.nav-btn{border:0;background:transparent;color:#909991;border-radius:17px;padding:7px 1px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9.5px;font-weight:600;min-width:0;position:relative;transition:all .25s}
+.nav-icon{font-size:20px;line-height:1.3;transition:transform .25s}
+.nav-btn.active{background:linear-gradient(145deg,#e6f4ea,#d6ecdd);color:var(--green);font-weight:800}
+.nav-btn.active .nav-icon{transform:translateY(-2px) scale(1.12)}
+.nav-dot{position:absolute;top:5px;left:calc(50% + 8px);width:9px;height:9px;border-radius:50%;background:#e8564a;border:2px solid #fff;display:none}
+.nav-dot.show{display:block;animation:todayPulse 1.8s infinite}
+
+/* ===== ناوبری انیمیشنی (جایگزین استایل قبلی) ===== */
+.bottom-nav{
+  position:fixed;z-index:20;bottom:max(10px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);
+  width:calc(100% - 20px);max-width:480px;padding:9px 6px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;
+  border:1px solid #ffffff1f;border-radius:28px;
+  background:linear-gradient(145deg,#173f33ee,#0d3328f2);
+  box-shadow:0 18px 40px #0a2a2155,0 0 0 1px #00000010,inset 0 1px 0 #ffffff22;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  animation:navIn .7s cubic-bezier(.2,.9,.3,1.2) both;
+}
+@keyframes navIn{from{transform:translate(-50%,120px);opacity:0}to{transform:translate(-50%,0);opacity:1}}
+.nav-indicator{
+  position:absolute;top:9px;bottom:9px;left:0;width:0;border-radius:20px;pointer-events:none;
+  background:linear-gradient(145deg,#d6f379,#a8dc4e);
+  box-shadow:0 8px 22px #c3ea6a55,0 0 28px #d6f37944,inset 0 1px 0 #ffffff80;
+  transition:left .55s cubic-bezier(.34,1.45,.5,1),width .55s cubic-bezier(.34,1.45,.5,1);
+}
+.nav-indicator::after{
+  content:"";position:absolute;left:50%;bottom:-6px;width:20px;height:4px;border-radius:4px;transform:translateX(-50%);
+  background:#d6f379;box-shadow:0 0 12px #d6f379;
+}
+.nav-btn{
+  position:relative;z-index:1;border:0;background:transparent;color:#9bbdae;border-radius:20px;padding:8px 1px 7px;
+  display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9.5px;font-weight:600;min-width:0;
+  transition:color .3s,transform .2s;overflow:visible;
+}
+.nav-btn:active{transform:scale(.88)}
+.nav-icon{font-size:21px;line-height:1.3;display:block;filter:grayscale(.55) brightness(1.15);opacity:.8;transition:transform .45s cubic-bezier(.34,1.8,.5,1),filter .3s,opacity .3s}
+.nav-text{transition:transform .3s,letter-spacing .3s}
+.nav-btn.active{background:transparent;color:#0f3a2c;font-weight:900}
+.nav-btn.active .nav-icon{filter:none;opacity:1;transform:translateY(-3px) scale(1.22);animation:iconDance .7s ease .1s both}
+.nav-btn.active .nav-text{transform:translateY(-1px)}
+@keyframes iconDance{
+  0%{transform:translateY(0) scale(1) rotate(0)}
+  35%{transform:translateY(-9px) scale(1.35) rotate(-14deg)}
+  60%{transform:translateY(-1px) scale(1.15) rotate(10deg)}
+  100%{transform:translateY(-3px) scale(1.22) rotate(0)}
+}
+.nav-btn:not(.active):hover .nav-icon{transform:translateY(-2px) scale(1.08);opacity:1}
+.nav-btn.pop::before{
+  content:"";position:absolute;left:50%;top:42%;width:12px;height:12px;border-radius:50%;margin:-6px 0 0 -6px;
+  background:#d6f379;opacity:.7;animation:ripple .6s ease-out forwards;pointer-events:none;
+}
+@keyframes ripple{to{transform:scale(6);opacity:0}}
+.nav-dot{position:absolute;top:4px;left:calc(50% + 9px);width:10px;height:10px;border-radius:50%;background:#ff5d4f;border:2px solid #14392e;display:none;z-index:2}
+.nav-dot.show{display:block;animation:dotBeat 1.4s ease-in-out infinite}
+@keyframes dotBeat{0%,100%{transform:scale(1);box-shadow:0 0 0 0 #ff5d4f88}50%{transform:scale(1.18);box-shadow:0 0 0 6px #ff5d4f00}}
+.toast{position:fixed;z-index:50;bottom:100px;left:50%;transform:translate(-50%,10px);opacity:0;pointer-events:none;width:calc(100% - 32px);max-width:440px;padding:13px 15px;border-radius:15px;background:#18372c;color:#fff;text-align:center;font-size:12px;line-height:1.9;box-shadow:0 10px 28px #0003;transition:.25s}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .footer{text-align:center;font-size:10px;color:#a0aaa0;margin-top:22px}
-@media(max-width:360px){.app{padding-right:12px;padding-left:12px}.greeting h1{font-size:20px}.balance-card{padding:18px}.stat-card{padding:12px}.coin-stage{width:155px;height:155px}}
+
+/* کانفتی */
+.confetti{position:fixed;top:-12px;width:9px;height:14px;border-radius:2px;z-index:99;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:.9}}
+
+@media(max-width:360px){.app{padding-right:12px;padding-left:12px}.greeting h1{font-size:20px}.balance-card{padding:18px}.stat-card{padding:12px}.coin-stage{width:155px;height:155px}.days-grid{gap:6px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -115,6 +287,7 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
   <div class="status" id="app-status">● در حال اتصال</div>
 </header>
 
+<!-- خانه -->
 <section class="page active" id="page-home">
   <div class="greeting">
     <div>
@@ -140,6 +313,7 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
 
   <div class="earn-card">
     <div class="coin-stage">
+      <div class="coin-glow"></div>
       <div class="coin-halo"></div>
       <button class="coin-button" id="ad-button" onclick="openAd()" aria-label="تماشای تبلیغ">
         <span class="coin-inner">₦</span>
@@ -169,6 +343,11 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
 
   <div class="section-head"><h2>دسترسی سریع</h2></div>
   <div class="quick-list">
+    <button class="quick-item" onclick="showPage('tasks')">
+      <span class="quick-icon">🎁</span>
+      <span class="quick-copy"><b>جایزه روزانه و تسک‌ها</b><small>هر روز سر بزن و تا ۷ NOT جایزه بگیر</small></span>
+      <span class="arrow">‹</span>
+    </button>
     <button class="quick-item" onclick="showPage('wallet')">
       <span class="quick-icon">↗</span>
       <span class="quick-copy"><b>درخواست برداشت</b><small>برداشت از ۵۰ نات به بالا</small></span>
@@ -185,6 +364,32 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
   <div class="panel" id="home-history"><div class="empty">در حال دریافت اطلاعات...</div></div>
 </section>
 
+<!-- تسک‌ها -->
+<section class="page" id="page-tasks">
+  <h1 class="page-title">تسک‌ها</h1>
+  <p class="page-subtitle">جایزه روزانه بگیر و با انجام تسک‌ها NOT بیشتری جمع کن.</p>
+
+  <div class="daily-hero">
+    <h2>🎁 جایزه روزانه</h2>
+    <p>هر روز وارد شو و جایزه‌ات را بگیر. جایزه‌ها از ۱ تا ۷ NOT زیاد می‌شود و بعد از روز هفتم دوباره از اول شروع می‌شود.</p>
+    <div class="daily-progress"><i id="daily-bar"></i></div>
+    <div class="daily-meta"><span id="daily-progress-text">۰ از ۷ روز</span><span id="daily-next-text">—</span></div>
+  </div>
+
+  <div class="panel">
+    <div class="days-grid" id="days-grid"></div>
+    <button class="main-btn gold-btn" id="daily-btn" onclick="claimDaily()">دریافت جایزه امروز</button>
+    <div class="small-note" id="daily-note" style="text-align:center">ثبت جایزه توسط سرور انجام می‌شود.</div>
+  </div>
+
+  <div class="section-head"><h2>تسک‌های کانال</h2><span>هر کانال ۵ NOT</span></div>
+  <div id="tasks-list"></div>
+  <div class="notice">
+    ابتدا در کانال عضو شو، سپس دکمه «بررسی» را بزن. اگر عضویتت تأیید شود، پاداش به حسابت اضافه می‌شود. هر تسک فقط یک بار پاداش دارد و با ترک کانال ممکن است پاداش لغو شود.
+  </div>
+</section>
+
+<!-- کیف پول -->
 <section class="page" id="page-wallet">
   <h1 class="page-title">کیف پول</h1>
   <p class="page-subtitle">موجودی و درخواست‌های برداشت خود را مدیریت کن.</p>
@@ -224,12 +429,13 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
   </div>
 </section>
 
+<!-- دعوت -->
 <section class="page" id="page-referral">
   <h1 class="page-title">دعوت از دوستان</h1>
   <p class="page-subtitle">لینک اختصاصی خودت را بفرست و دوستانت را به NOT REWARD دعوت کن.</p>
 
   <div class="panel">
-    <div style="font-size:43px;text-align:center;margin:8px 0 14px">🤝</div>
+    <div style="font-size:46px;text-align:center;margin:8px 0 14px">🤝</div>
     <h2 class="panel-title" style="text-align:center">با هم رشد کنیم</h2>
 
     <div class="stats">
@@ -253,6 +459,7 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
   </div>
 </section>
 
+<!-- پروفایل -->
 <section class="page" id="page-profile">
   <h1 class="page-title">پروفایل من</h1>
   <p class="page-subtitle">اطلاعات حساب کاربری تو</p>
@@ -277,11 +484,13 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
 
 </main>
 
-<nav class="bottom-nav">
-  <button class="nav-btn active" data-page="home" onclick="showPage('home')"><span class="nav-icon">⌂</span><span>خانه</span></button>
-  <button class="nav-btn" data-page="wallet" onclick="showPage('wallet')"><span class="nav-icon">▣</span><span>کیف پول</span></button>
-  <button class="nav-btn" data-page="referral" onclick="showPage('referral')"><span class="nav-icon">♧</span><span>دعوت دوستان</span></button>
-  <button class="nav-btn" data-page="profile" onclick="showPage('profile')"><span class="nav-icon">◎</span><span>پروفایل</span></button>
+<nav class="bottom-nav" id="bottom-nav">
+  <span class="nav-indicator" id="nav-indicator"></span>
+  <button class="nav-btn active" data-page="home" onclick="showPage('home')"><span class="nav-icon">🏠</span><span class="nav-text">خانه</span></button>
+  <button class="nav-btn" data-page="tasks" onclick="showPage('tasks')"><span class="nav-icon">🎁</span><span class="nav-text">تسک‌ها</span><i class="nav-dot" id="tasks-dot"></i></button>
+  <button class="nav-btn" data-page="wallet" onclick="showPage('wallet')"><span class="nav-icon">💳</span><span class="nav-text">کیف پول</span></button>
+  <button class="nav-btn" data-page="referral" onclick="showPage('referral')"><span class="nav-icon">🤝</span><span class="nav-text">دعوت</span></button>
+  <button class="nav-btn" data-page="profile" onclick="showPage('profile')"><span class="nav-icon">👤</span><span class="nav-text">پروفایل</span></button>
 </nav>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -291,11 +500,21 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
 
 const API_BASE = "https://not-reward-api.mukefaceget15.workers.dev";
 const BOT_USERNAME = "notrewarddbot";
-// اگر در BotFather با /newapp مینی‌اپ ساختی، اسم کوتاهش را اینجا بنویس (باید با MINI_APP_NAME در Worker یکی باشد)
 const MINI_APP_NAME = "rewardapp";
 const MIN_WITHDRAWAL = 50;
 const MONETAG_ZONE_ID = "12066198";
 const API_TIMEOUT_MS = 15000;
+
+// ====== جایزه روزانه: روز ۱ تا ۷ ======
+const DAILY_REWARDS = [1, 2, 3, 4, 5, 6, 7];
+
+// ====== تسک‌های کانال ======
+// ⚠️ username کانال‌ها را با کانال‌های واقعی خودت عوض کن (بدون @).
+// ربات باید در هر دو کانال «ادمین» باشد تا سرور بتواند عضویت را چک کند.
+const CHANNEL_TASKS = [
+  { id: "channel_1", title: "عضویت در کانال اول", username: "YOUR_CHANNEL_1", reward: 5, icon: "📢" },
+  { id: "channel_2", title: "عضویت در کانال دوم", username: "YOUR_CHANNEL_2", reward: 5, icon: "📣" }
+];
 
 const tg = window.Telegram?.WebApp || null;
 const initData = tg?.initData || "";
@@ -309,18 +528,22 @@ let adBusy = false;
 let isAdmin = false;
 let toastTimer;
 
+// وضعیت جایزه روزانه و تسک‌ها (از سرور خوانده می‌شود)
+let daily = { claimedDays: 0, canClaim: false, loaded: false };
+let completedTasks = [];
+let busyTasks = new Set();
+let dailyBusy = false;
+
 if (tg) {
   tg.ready();
   tg.expand();
-  try { tg.setHeaderColor("#f6f5f0"); } catch (_) {}
-  try { tg.setBackgroundColor("#f6f5f0"); } catch (_) {}
+  try { tg.setHeaderColor("#f4f3ec"); } catch (_) {}
+  try { tg.setBackgroundColor("#f4f3ec"); } catch (_) {}
 }
 
 function fa(value) {
   const n = Number(value);
-  return (Number.isFinite(n) ? n : 0).toLocaleString("fa-IR", {
-    maximumFractionDigits: 2
-  });
+  return (Number.isFinite(n) ? n : 0).toLocaleString("fa-IR", { maximumFractionDigits: 2 });
 }
 
 function showToast(message) {
@@ -337,17 +560,11 @@ function haptic(style = "light") {
 
 function esc(value) {
   return String(value ?? "").replace(/[&<>"']/g, c => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
   }[c]));
 }
 
-function userId() {
-  return user?.id || null;
-}
+function userId() { return user?.id || null; }
 
 function buildReferralLink(id) {
   const base = MINI_APP_NAME
@@ -356,14 +573,35 @@ function buildReferralLink(id) {
   return base + "?startapp=ref_" + encodeURIComponent(String(id));
 }
 
-async function api(path, body = {}) {
-  if (!initData) {
-    throw new Error("مینی‌اپ را از داخل ربات تلگرام باز کن.");
+function confetti() {
+  const colors = ["#d6f379", "#e0ae4c", "#176b50", "#f6d98a", "#8fd0b0", "#ffffff"];
+  for (let i = 0; i < 44; i++) {
+    const p = document.createElement("i");
+    p.className = "confetti";
+    p.style.left = Math.random() * 100 + "vw";
+    p.style.background = colors[i % colors.length];
+    p.style.animationDuration = 1.6 + Math.random() * 1.6 + "s";
+    p.style.animationDelay = Math.random() * 0.4 + "s";
+    p.style.transform = "rotate(" + Math.random() * 360 + "deg)";
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 3800);
   }
+}
+
+function bumpBalance() {
+  ["balance", "wallet-balance"].forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.remove("bump");
+    void el.offsetWidth;
+    el.classList.add("bump");
+  });
+}
+
+async function api(path, body = {}) {
+  if (!initData) throw new Error("مینی‌اپ را از داخل ربات تلگرام باز کن.");
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), API_TIMEOUT_MS);
-
   let response;
 
   try {
@@ -389,19 +627,12 @@ async function api(path, body = {}) {
 
   const raw = await response.text();
   let data;
-
-  try {
-    data = raw ? JSON.parse(raw) : {};
-  } catch (_) {
-    throw new Error("پاسخ سرور قابل خواندن نیست. لطفاً دوباره تلاش کن.");
-  }
+  try { data = raw ? JSON.parse(raw) : {}; }
+  catch (_) { throw new Error("پاسخ سرور قابل خواندن نیست. لطفاً دوباره تلاش کن."); }
 
   if (!response.ok || data.ok === false || data.success === false) {
-    throw new Error(
-      data.error || data.message || ("خطای سرور: " + response.status)
-    );
+    throw new Error(data.error || data.message || ("خطای سرور: " + response.status));
   }
-
   return data;
 }
 
@@ -411,54 +642,68 @@ function updateUI() {
   ["balance", "stat-balance", "wallet-balance"].forEach(id => {
     document.getElementById(id).textContent = formattedBalance;
   });
-
-  document.getElementById("profile-balance").textContent =
-    formattedBalance + " NOT";
+  document.getElementById("profile-balance").textContent = formattedBalance + " NOT";
 
   ["stat-referrals", "ref-count", "profile-referrals"].forEach(id => {
     document.getElementById(id).textContent = fa(referralCount);
   });
 
   const firstName = user?.first_name || user?.username || "دوست من";
-  document.getElementById("welcome-title").textContent =
-    "سلام " + firstName + " 👋";
+  document.getElementById("welcome-title").textContent = "سلام " + firstName + " 👋";
 
   document.getElementById("profile-name").textContent =
     [user?.first_name, user?.last_name].filter(Boolean).join(" ") ||
     (user?.username ? "@" + user.username : "کاربر NOT REWARD");
 
-  document.getElementById("profile-id").textContent =
-    "ID: " + (userId() || "—");
-
+  document.getElementById("profile-id").textContent = "ID: " + (userId() || "—");
   document.getElementById("ref-user-id").textContent = userId() || "—";
 
   const adminLink = document.getElementById("admin-link");
   adminLink.style.display = isAdmin ? "block" : "none";
-  if (isAdmin) {
-    adminLink.href = new URL("admin.html", location.href).href + location.hash;
-  }
+  if (isAdmin) adminLink.href = new URL("admin.html", location.href).href + location.hash;
 
-  if (!referralLink && userId()) {
-    referralLink = buildReferralLink(userId());
-  }
-
+  if (!referralLink && userId()) referralLink = buildReferralLink(userId());
   document.getElementById("ref-link").textContent =
     referralLink || "برای دریافت لینک، مینی‌اپ را از داخل تلگرام باز کن.";
 }
+
+function moveIndicator(animate = true) {
+  const nav = document.getElementById("bottom-nav");
+  const ind = document.getElementById("nav-indicator");
+  const active = nav?.querySelector(".nav-btn.active");
+  if (!nav || !ind || !active) return;
+  if (!animate) ind.style.transition = "none";
+  ind.style.width = active.offsetWidth + "px";
+  ind.style.left = active.offsetLeft + "px";
+  if (!animate) { void ind.offsetWidth; ind.style.transition = ""; }
+}
+window.addEventListener("resize", () => moveIndicator(false));
+window.addEventListener("load", () => moveIndicator(false));
+setTimeout(() => moveIndicator(false), 50);
+setTimeout(() => moveIndicator(false), 700);
 
 function showPage(name) {
   document.querySelectorAll(".page").forEach(el => {
     el.classList.toggle("active", el.id === "page-" + name);
   });
-
   document.querySelectorAll(".nav-btn").forEach(el => {
     el.classList.toggle("active", el.dataset.page === name);
   });
+
+  document.querySelectorAll(".nav-btn").forEach(el => {
+    el.classList.remove("pop");
+    if (el.dataset.page === name) { void el.offsetWidth; el.classList.add("pop"); }
+  });
+  moveIndicator(true);
 
   haptic();
   window.scrollTo({ top: 0, behavior: "smooth" });
 
   if (name === "wallet") loadHistory().catch(console.error);
+  if (name === "tasks") loadTasksPage().catch(error => {
+    console.error(error);
+    showToast(error.message || "دریافت اطلاعات تسک‌ها ناموفق بود.");
+  });
   if (name === "referral") loadReferrals().catch(error => {
     console.error(error);
     showToast(error.message || "دریافت اطلاعات دعوت ناموفق بود.");
@@ -468,17 +713,14 @@ function showPage(name) {
 
 async function loadMe() {
   if (!initData) {
-    document.getElementById("connection-status").textContent =
-      "از داخل تلگرام باز کن";
-    document.getElementById("app-status").textContent =
-      "● ورود تلگرام لازم است";
+    document.getElementById("connection-status").textContent = "از داخل تلگرام باز کن";
+    document.getElementById("app-status").textContent = "● ورود تلگرام لازم است";
     updateUI();
     return;
   }
 
   try {
     const data = await api("/api/me");
-
     user = data.user || user;
     isAdmin = data.isAdmin === true;
 
@@ -499,33 +741,206 @@ async function loadMe() {
 
 async function loadReferrals() {
   if (!initData) return;
-
   const data = await api("/api/referrals");
-
   const count = Number(data.referralCount ?? data.count ?? 0);
+  if (Number.isFinite(count)) referralCount = count;
 
-  if (Number.isFinite(count)) {
-    referralCount = count;
-  }
-
-  if (
-    typeof data.referralLink === "string" &&
-    data.referralLink.startsWith("https://t.me/")
-  ) {
+  if (typeof data.referralLink === "string" && data.referralLink.startsWith("https://t.me/")) {
     referralLink = data.referralLink;
   }
-
   if (data.balance !== undefined && Number.isFinite(Number(data.balance))) {
     balance = Number(data.balance);
   }
-
   updateUI();
 }
 
+/* ================= جایزه روزانه ================= */
+function renderDaily() {
+  const claimed = Math.max(0, Math.min(7, Number(daily.claimedDays) || 0));
+  const grid = document.getElementById("days-grid");
+
+  grid.innerHTML = DAILY_REWARDS.map((reward, i) => {
+    const day = i + 1;
+    let cls = "day-card";
+    if (day <= claimed) cls += " claimed";
+    else if (day === claimed + 1 && daily.canClaim) cls += " today";
+    if (day === 7) cls += " big";
+
+    const icon = day === 7 ? "👑" : (day >= 4 ? "💎" : "🪙");
+    return `
+      <div class="${cls}">
+        <div class="d-label">روز ${fa(day)}</div>
+        <span class="d-icon">${icon}</span>
+        <div class="d-amount">${fa(reward)} <small>NOT</small></div>
+      </div>`;
+  }).join("");
+
+  document.getElementById("daily-bar").style.width = (claimed / 7 * 100) + "%";
+  document.getElementById("daily-progress-text").textContent = fa(claimed) + " از ۷ روز";
+
+  const btn = document.getElementById("daily-btn");
+  const note = document.getElementById("daily-note");
+  const nextDay = claimed >= 7 ? 1 : claimed + 1;
+
+  if (!daily.loaded) {
+    btn.disabled = true;
+    btn.textContent = "در حال دریافت...";
+    document.getElementById("daily-next-text").textContent = "—";
+  } else if (daily.canClaim) {
+    btn.disabled = false;
+    btn.textContent = "🎁 دریافت " + fa(DAILY_REWARDS[nextDay - 1]) + " NOT";
+    document.getElementById("daily-next-text").textContent = "جایزه امروز آماده است";
+    note.textContent = "جایزه روز " + fa(nextDay) + " را همین حالا بگیر.";
+  } else {
+    btn.disabled = true;
+    btn.textContent = "✓ جایزه امروز دریافت شد";
+    document.getElementById("daily-next-text").textContent = "فردا برگرد";
+    note.textContent = claimed >= 7
+      ? "چرخه کامل شد! از فردا دوباره از روز ۱ شروع می‌شود."
+      : "فردا جایزه روز " + fa(claimed + 1) + " (" + fa(DAILY_REWARDS[claimed]) + " NOT) منتظرته.";
+  }
+
+  document.getElementById("tasks-dot").classList.toggle("show", daily.loaded && daily.canClaim);
+}
+
+async function loadDaily() {
+  if (!initData) return;
+  const data = await api("/api/daily/status");
+  daily = {
+    claimedDays: Number(data.claimedDays ?? data.day ?? 0),
+    canClaim: data.canClaim === true,
+    loaded: true
+  };
+  if (data.balance !== undefined && Number.isFinite(Number(data.balance))) {
+    balance = Number(data.balance);
+    updateUI();
+  }
+  renderDaily();
+}
+
+async function claimDaily() {
+  if (dailyBusy || !daily.canClaim) return;
+  if (!initData || !userId()) {
+    showToast("مینی‌اپ را از داخل ربات تلگرام باز کن.");
+    return;
+  }
+
+  dailyBusy = true;
+  const btn = document.getElementById("daily-btn");
+  btn.disabled = true;
+  btn.textContent = "در حال ثبت...";
+
+  try {
+    const data = await api("/api/daily/claim");
+    daily = {
+      claimedDays: Number(data.claimedDays ?? data.day ?? daily.claimedDays + 1),
+      canClaim: false,
+      loaded: true
+    };
+    if (data.balance !== undefined && Number.isFinite(Number(data.balance))) {
+      balance = Number(data.balance);
+    }
+    updateUI();
+    renderDaily();
+    bumpBalance();
+    confetti();
+    haptic("heavy");
+    showToast(data.message || ("🎉 جایزه روزانه ثبت شد: +" + fa(data.reward ?? "") + " NOT"));
+    loadHistory().catch(console.error);
+  } catch (error) {
+    console.error("daily:", error);
+    showToast(error.message || "دریافت جایزه ناموفق بود.");
+    loadDaily().catch(console.error);
+  } finally {
+    dailyBusy = false;
+    renderDaily();
+  }
+}
+
+/* ================= تسک‌های کانال ================= */
+function renderTasks() {
+  const list = document.getElementById("tasks-list");
+
+  list.innerHTML = CHANNEL_TASKS.map(task => {
+    const done = completedTasks.includes(task.id);
+    const busy = busyTasks.has(task.id);
+    return `
+      <div class="task ${done ? "done" : ""}">
+        <div class="task-icon">${task.icon}</div>
+        <div class="task-copy">
+          <b>${esc(task.title)}</b>
+          <small>@${esc(task.username)}</small>
+          <span class="task-reward">+${fa(task.reward)} NOT</span>
+        </div>
+        <div class="task-actions">
+          ${done
+            ? '<button class="t-btn t-done" disabled>✓ انجام شد</button>'
+            : `<button class="t-btn t-join" onclick="openChannel('${esc(task.id)}')">عضویت</button>
+               <button class="t-btn t-check" onclick="checkTask('${esc(task.id)}')" ${busy ? "disabled" : ""}>${busy ? "..." : "بررسی"}</button>`}
+        </div>
+      </div>`;
+  }).join("");
+}
+
+function openChannel(taskId) {
+  const task = CHANNEL_TASKS.find(t => t.id === taskId);
+  if (!task) return;
+  const url = "https://t.me/" + task.username;
+  haptic();
+  if (tg?.openTelegramLink) tg.openTelegramLink(url);
+  else window.open(url, "_blank", "noopener,noreferrer");
+}
+
+async function loadTasks() {
+  if (!initData) return;
+  const data = await api("/api/tasks");
+  completedTasks = Array.isArray(data.completed) ? data.completed.map(String) : [];
+  renderTasks();
+}
+
+async function loadTasksPage() {
+  renderDaily();
+  renderTasks();
+  await Promise.all([loadDaily(), loadTasks()]);
+}
+
+async function checkTask(taskId) {
+  if (busyTasks.has(taskId)) return;
+  if (!initData || !userId()) {
+    showToast("مینی‌اپ را از داخل ربات تلگرام باز کن.");
+    return;
+  }
+
+  busyTasks.add(taskId);
+  renderTasks();
+
+  try {
+    const data = await api("/api/tasks/claim", { taskId });
+    if (!completedTasks.includes(taskId)) completedTasks.push(taskId);
+    if (data.balance !== undefined && Number.isFinite(Number(data.balance))) {
+      balance = Number(data.balance);
+    }
+    updateUI();
+    bumpBalance();
+    confetti();
+    haptic("heavy");
+    showToast(data.message || "🎉 عضویت تأیید شد و پاداش ثبت شد.");
+    loadHistory().catch(console.error);
+  } catch (error) {
+    console.error("task:", error);
+    showToast(error.message || "عضویت تأیید نشد. اول در کانال عضو شو.");
+  } finally {
+    busyTasks.delete(taskId);
+    renderTasks();
+  }
+}
+
+/* ================= تاریخچه ================= */
 function historyTitle(kind) {
   const labels = {
     tap: "پاداش لمس",
-    daily: "پاداش روزانه",
+    daily: "جایزه روزانه",
+    task: "پاداش تسک",
     referral: "پاداش دعوت دوست",
     monetag: "پاداش تبلیغ",
     ad: "پاداش تبلیغ",
@@ -534,18 +949,11 @@ function historyTitle(kind) {
     refund: "بازگشت مبلغ برداشت",
     admin: "تنظیم توسط مدیر"
   };
-
   return labels[kind] || "تراکنش";
 }
 
 function withdrawalStatus(status) {
-  const labels = {
-    pending: "در انتظار بررسی",
-    approved: "تأیید شده",
-    rejected: "رد شده",
-    paid: "پرداخت شده"
-  };
-
+  const labels = { pending: "در انتظار بررسی", approved: "تأیید شده", rejected: "رد شده", paid: "پرداخت شده" };
   return labels[status] || status || "";
 }
 
@@ -555,9 +963,7 @@ function normalizeHistory(data) {
 
   const entries = history.map(item => ({
     ...item,
-    amount: item.amount !== undefined
-      ? Number(item.amount)
-      : Number(item.amount_units || 0) / 100,
+    amount: item.amount !== undefined ? Number(item.amount) : Number(item.amount_units || 0) / 100,
     title: item.details || historyTitle(item.kind),
     created_at: item.created_at || "",
     _key: "history-" + item.id
@@ -574,9 +980,7 @@ function normalizeHistory(data) {
     _key: "withdrawal-" + item.id
   }));
 
-  const combined = entries.filter(
-    item => item.kind !== "withdrawal" && item.kind !== "withdraw"
-  );
+  const combined = entries.filter(item => item.kind !== "withdrawal" && item.kind !== "withdraw");
   combined.push(...withdrawalEntries);
 
   return combined.sort((a, b) => {
@@ -590,8 +994,7 @@ function renderHistory(targetId) {
   const container = document.getElementById(targetId);
 
   if (!historyItems.length) {
-    container.innerHTML =
-      '<div class="empty">هنوز تراکنشی ثبت نشده است.</div>';
+    container.innerHTML = '<div class="empty">هنوز تراکنشی ثبت نشده است.</div>';
     return;
   }
 
@@ -633,13 +1036,10 @@ async function loadHistory() {
     renderHistory("wallet-history");
   } catch (error) {
     console.error("loadHistory:", error);
-
     document.getElementById("home-history").innerHTML =
       '<div class="empty">دریافت تاریخچه ناموفق بود. دوباره تلاش کن.</div>';
-
     document.getElementById("wallet-history").innerHTML =
       '<div class="empty">تاریخچه فعلاً در دسترس نیست.</div>';
-
     throw error;
   }
 }
@@ -648,7 +1048,9 @@ async function refreshAll(showMessage = false) {
   const results = await Promise.allSettled([
     loadMe(),
     loadHistory(),
-    loadReferrals()
+    loadReferrals(),
+    loadDaily(),
+    loadTasks()
   ]);
 
   const failed = results.some(result => result.status === "rejected");
@@ -656,15 +1058,13 @@ async function refreshAll(showMessage = false) {
   if (failed) {
     const firstError = results.find(result => result.status === "rejected");
     console.error("Refresh failed:", firstError?.reason);
-
-    if (showMessage) {
-      showToast(firstError?.reason?.message || "بخشی از اطلاعات دریافت نشد.");
-    }
+    if (showMessage) showToast(firstError?.reason?.message || "بخشی از اطلاعات دریافت نشد.");
   } else if (showMessage) {
     showToast("اطلاعات با موفقیت به‌روزرسانی شد.");
   }
 }
 
+/* ================= تبلیغ ================= */
 async function openAd() {
   if (adBusy) return;
 
@@ -692,11 +1092,7 @@ async function openAd() {
     showToast("در حال آماده‌سازی تبلیغ...");
     haptic();
 
-    const result = await showAd({
-      type: "end",
-      ymid,
-      requestVar: String(userId())
-    });
+    const result = await showAd({ type: "end", ymid, requestVar: String(userId()) });
 
     if (result?.reward_event_type === "valued") {
       showToast("تبلیغ واجد شرایط اعلام شد؛ منتظر تأیید سرور باش.");
@@ -721,6 +1117,7 @@ async function openAd() {
   }
 }
 
+/* ================= برداشت ================= */
 document.getElementById("withdraw-form").addEventListener("submit", async event => {
   event.preventDefault();
 
@@ -755,10 +1152,7 @@ document.getElementById("withdraw-form").addEventListener("submit", async event 
     return;
   }
 
-  if (!window.confirm(
-    "درخواست برداشت " + amount + " NOT برای این آدرس ثبت شود؟\n\n" +
-    walletAddress
-  )) {
+  if (!window.confirm("درخواست برداشت " + amount + " NOT برای این آدرس ثبت شود؟\n\n" + walletAddress)) {
     return;
   }
 
@@ -766,16 +1160,10 @@ document.getElementById("withdraw-form").addEventListener("submit", async event 
   submit.textContent = "در حال ثبت...";
 
   try {
-    const data = await api("/api/withdraw", {
-      amount,
-      walletAddress,
-      wallet_address: walletAddress
-    });
-
+    const data = await api("/api/withdraw", { amount, walletAddress, wallet_address: walletAddress });
     showToast(data.message || "درخواست برداشت ثبت شد.");
     amountInput.value = "";
     addressInput.value = "";
-
     await refreshAll(false);
   } catch (error) {
     console.error("withdraw:", error);
@@ -804,10 +1192,8 @@ async function copyReferral() {
       input.style.opacity = "0";
       document.body.appendChild(input);
       input.select();
-
       const ok = document.execCommand("copy");
       input.remove();
-
       if (!ok) throw new Error("کپی انجام نشد");
     }
 
@@ -826,31 +1212,23 @@ function shareReferral() {
     return;
   }
 
-  const url = "https://t.me/share/url?url=" +
-    encodeURIComponent(link) +
-    "&text=" +
-    encodeURIComponent("بیا با هم NOT REWARD رو امتحان کنیم!");
+  const url = "https://t.me/share/url?url=" + encodeURIComponent(link) +
+    "&text=" + encodeURIComponent("بیا با هم NOT REWARD رو امتحان کنیم!");
 
-  if (tg?.openTelegramLink) {
-    tg.openTelegramLink(url);
-  } else {
-    window.open(url, "_blank", "noopener,noreferrer");
-  }
+  if (tg?.openTelegramLink) tg.openTelegramLink(url);
+  else window.open(url, "_blank", "noopener,noreferrer");
 }
 
 (async function init() {
   updateUI();
+  renderDaily();
+  renderTasks();
 
   if (!initData) {
-    document.getElementById("connection-status").textContent =
-      "از داخل تلگرام باز کن";
-
-    document.getElementById("app-status").textContent =
-      "● ورود تلگرام لازم است";
-
+    document.getElementById("connection-status").textContent = "از داخل تلگرام باز کن";
+    document.getElementById("app-status").textContent = "● ورود تلگرام لازم است";
     renderHistory("home-history");
     renderHistory("wallet-history");
-
     showToast("برای بارگذاری حساب، این صفحه را از داخل ربات تلگرام باز کن.");
     return;
   }
