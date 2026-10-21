@@ -248,7 +248,7 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
     <button class="main-btn full" onclick="copyReferral()">کپی لینک دعوت</button>
     <button class="secondary-btn" onclick="shareReferral()">ارسال برای دوستان</button>
     <div class="notice">
-      پاداش دعوت معتبر ۵ NOT است. شمارش و پاداش دعوت از سرور مدیریت می‌شود.
+      پاداش دعوت معتبر ۵ NOT است. دعوت فقط برای کاربر جدید حساب می‌شود و شمارش و پاداش آن از سرور مدیریت می‌شود.
     </div>
   </div>
 </section>
@@ -268,7 +268,7 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
     <div class="profile-row"><span>موجودی</span><b id="profile-balance">۰ NOT</b></div>
     <div class="profile-row"><span>دعوت‌شده‌ها</span><b id="profile-referrals">۰</b></div>
     <div class="profile-row"><span>وضعیت اتصال</span><b id="connection-status">در حال بررسی</b></div>
-    <button class="secondary-btn" onclick="refreshAll()">به‌روزرسانی اطلاعات</button>
+    <button class="secondary-btn" onclick="refreshAll(true)">به‌روزرسانی اطلاعات</button>
   </div>
 
   <div class="footer">NOT REWARD · حساب تو، مدیریت ساده‌تر</div>
@@ -289,8 +289,12 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;curs
 "use strict";
 
 const API_BASE = "https://not-reward-api.mukefaceget15.workers.dev";
+const BOT_USERNAME = "notrewarddbot";
+// اگر در BotFather با /newapp مینی‌اپ ساختی، اسم کوتاهش را اینجا بنویس (باید با MINI_APP_NAME در Worker یکی باشد)
+const MINI_APP_NAME = "";
 const MIN_WITHDRAWAL = 50;
 const MONETAG_ZONE_ID = "12066198";
+const API_TIMEOUT_MS = 15000;
 
 const tg = window.Telegram?.WebApp || null;
 const initData = tg?.initData || "";
@@ -331,11 +335,11 @@ function haptic(style = "light") {
 
 function esc(value) {
   return String(value ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
   }[c]));
 }
 
@@ -343,21 +347,43 @@ function userId() {
   return user?.id || null;
 }
 
+function buildReferralLink(id) {
+  const base = MINI_APP_NAME
+    ? "https://t.me/" + BOT_USERNAME + "/" + MINI_APP_NAME
+    : "https://t.me/" + BOT_USERNAME;
+  return base + "?startapp=ref_" + encodeURIComponent(String(id));
+}
+
 async function api(path, body = {}) {
   if (!initData) {
     throw new Error("مینی‌اپ را از داخل ربات تلگرام باز کن.");
   }
 
-  const response = await fetch(API_BASE + path, {
-    method: "POST",
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json",
-      "X-Telegram-Init-Data": initData
-    },
-    cache: "no-store",
-    body: JSON.stringify({ ...body, initData })
-  });
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), API_TIMEOUT_MS);
+
+  let response;
+
+  try {
+    response = await fetch(API_BASE + path, {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "X-Telegram-Init-Data": initData
+      },
+      cache: "no-store",
+      signal: controller.signal,
+      body: JSON.stringify({ ...body, initData })
+    });
+  } catch (error) {
+    if (error?.name === "AbortError") {
+      throw new Error("پاسخ سرور دیر شد. اتصال اینترنت را بررسی کن و دوباره تلاش کن.");
+    }
+    throw new Error("ارتباط با سرور برقرار نشد.");
+  } finally {
+    clearTimeout(timer);
+  }
 
   const raw = await response.text();
   let data;
@@ -405,9 +431,7 @@ function updateUI() {
   document.getElementById("ref-user-id").textContent = userId() || "—";
 
   if (!referralLink && userId()) {
-    referralLink =
-      "https://t.me/notrewarddbot?start=ref_" +
-      encodeURIComponent(String(userId()));
+    referralLink = buildReferralLink(userId());
   }
 
   document.getElementById("ref-link").textContent =
@@ -495,7 +519,9 @@ function historyTitle(kind) {
     daily: "پاداش روزانه",
     referral: "پاداش دعوت دوست",
     monetag: "پاداش تبلیغ",
+    ad: "پاداش تبلیغ",
     withdrawal: "درخواست برداشت",
+    withdraw: "درخواست برداشت",
     refund: "بازگشت مبلغ برداشت"
   };
 
@@ -538,12 +564,14 @@ function normalizeHistory(data) {
     _key: "withdrawal-" + item.id
   }));
 
-  const combined = entries.filter(item => item.kind !== "withdrawal");
+  const combined = entries.filter(
+    item => item.kind !== "withdrawal" && item.kind !== "withdraw"
+  );
   combined.push(...withdrawalEntries);
 
   return combined.sort((a, b) => {
-    const dateA = Date.parse(a.created_at) || 0;
-    const dateB = Date.parse(b.created_at) || 0;
+    const dateA = Date.parse(String(a.created_at).replace(" ", "T") + "Z") || 0;
+    const dateB = Date.parse(String(b.created_at).replace(" ", "T") + "Z") || 0;
     return dateB - dateA;
   });
 }
