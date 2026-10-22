@@ -227,6 +227,21 @@ html[dir="ltr"] .arrow{transform:scaleX(-1)}
 .t-check{background:#fff;color:var(--green);border:1px solid #cfe0d3}
 .t-done{background:#d4ecdc;color:#1d6f48;cursor:default}
 
+/* ===== شرط تماشای تبلیغ برای برداشت ===== */
+.ads-gate{margin-top:14px;padding:14px;border-radius:16px;background:linear-gradient(145deg,#fff8e1,#fdeab0);border:1px solid #ecd28a;transition:background .4s,border-color .4s}
+.ads-gate.ok{background:linear-gradient(145deg,#e6f5ea,#d4ecdc);border-color:#bddfc8}
+.ads-title{font-size:12px;font-weight:800;color:#6b4d0a;line-height:1.9}
+.ads-gate.ok .ads-title{color:#1d6f48}
+.ads-bar{margin-top:10px;height:11px;border-radius:11px;background:#00000014;overflow:hidden}
+.ads-bar i{display:block;height:100%;width:0;border-radius:11px;background:linear-gradient(90deg,#e0ae4c,#f0c661);transition:width .6s cubic-bezier(.2,.8,.2,1),background .4s}
+.ads-gate.ok .ads-bar i{background:linear-gradient(90deg,#176b50,#4caf7d)}
+.ads-meta{display:flex;justify-content:space-between;gap:8px;margin-top:8px;font-size:10px;font-weight:700;color:#7a6a3a}
+.ads-gate.ok .ads-meta{color:#2f7d58}
+.ads-watch{margin-top:12px;width:100%;border:0;border-radius:12px;padding:10px;font-size:12px;font-weight:800;background:#fff;color:#8a5f0c;box-shadow:0 4px 10px #c98a1f22}
+.ads-watch:active{transform:scale(.97)}
+.support-link{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;text-align:center}
+.support-id{direction:ltr;unicode-bidi:isolate;font-size:12px;font-weight:800;color:var(--green);margin-top:12px;text-align:center}
+
 /* ===== ناوبری ===== */
 .bottom-nav{position:fixed;z-index:20;bottom:max(9px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:calc(100% - 20px);max-width:480px;padding:8px 5px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;border:1px solid #e6e8e0;border-radius:24px;background:rgba(255,255,255,.92);box-shadow:0 12px 35px #1e392020;backdrop-filter:blur(18px)}
 .nav-btn{border:0;background:transparent;color:#909991;border-radius:17px;padding:7px 1px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9.5px;font-weight:600;min-width:0;position:relative;transition:all .25s}
@@ -450,6 +465,13 @@ html[dir="ltr"] .arrow{transform:scaleX(-1)}
         قبل از ارسال، شبکه و آدرس را بررسی کن.
       </div>
       <button class="main-btn full" id="withdraw-submit" type="submit" data-i18n="wd_submit">ثبت درخواست برداشت</button>
+
+      <div class="ads-gate" id="ads-gate">
+        <div class="ads-title" data-i18n="ads_gate_title">برای برداشت باید حداقل ۵ تبلیغ ببینی</div>
+        <div class="ads-bar"><i id="ads-bar"></i></div>
+        <div class="ads-meta"><span id="ads-progress-text">۰ از ۵ تبلیغ</span><span id="ads-hint">—</span></div>
+        <button type="button" class="ads-watch" id="ads-watch-btn" onclick="openAd()" data-i18n="ads_watch_btn">▶ تماشای تبلیغ</button>
+      </div>
     </form>
   </div>
 
@@ -509,6 +531,13 @@ html[dir="ltr"] .arrow{transform:scaleX(-1)}
     <a class="secondary-btn" id="admin-link" href="admin.html" style="display:none;text-align:center;text-decoration:none" data-i18n="admin_btn">🛠 ورود به پنل مدیریت</a>
   </div>
 
+  <div class="panel">
+    <h2 class="panel-title" data-i18n="support_title">پشتیبانی</h2>
+    <div class="small-note" style="margin-top:0" data-i18n="support_desc">سوال یا مشکلی داری؟ با پشتیبانی در تلگرام در ارتباط باش.</div>
+    <div class="support-id" id="support-id">@NotReward_Support</div>
+    <button type="button" class="main-btn full" onclick="openSupport()" data-i18n="support_btn">💬 ارتباط با پشتیبانی</button>
+  </div>
+
   <div class="footer" data-i18n="footer">NOT REWARD · حساب تو، مدیریت ساده‌تر</div>
 </section>
 
@@ -532,6 +561,8 @@ const API_BASE = "https://not-reward-api.mukefaceget15.workers.dev";
 const BOT_USERNAME = "notrewarddbot";
 const MINI_APP_NAME = "rewardapp";
 const MIN_WITHDRAWAL = 50;
+const MIN_ADS = 5; // حداقل تبلیغ لازم برای برداشت
+const SUPPORT_USERNAME = "NotReward_Support";
 const MONETAG_ZONE_ID = "12066198";
 const API_TIMEOUT_MS = 15000;
 
@@ -704,7 +735,17 @@ const STR = {
     ref_copy_manual: "کپی خودکار انجام نشد؛ لینک را دستی کپی کن.",
     share_text: "بیا با هم NOT REWARD رو امتحان کنیم!",
     refresh_ok: "اطلاعات با موفقیت به‌روزرسانی شد.",
-    refresh_part: "بخشی از اطلاعات دریافت نشد."
+    refresh_part: "بخشی از اطلاعات دریافت نشد.",
+
+    ads_gate_title: "برای برداشت باید حداقل ۵ تبلیغ ببینی",
+    ads_progress: "{n} از {m} تبلیغ",
+    ads_remaining: "{n} تبلیغ دیگر مانده",
+    ads_unlocked: "✓ برداشت برایت فعال است",
+    ads_watch_btn: "▶ تماشای تبلیغ",
+    wd_need_ads: "برای برداشت ابتدا حداقل {n} تبلیغ ببین.",
+    support_title: "پشتیبانی",
+    support_desc: "سوال یا مشکلی داری؟ با پشتیبانی در تلگرام در ارتباط باش.",
+    support_btn: "💬 ارتباط با پشتیبانی"
   },
   en: {
     title: "NOT REWARD | Earnings Panel",
@@ -862,7 +903,17 @@ const STR = {
     ref_copy_manual: "Automatic copy failed; please copy the link manually.",
     share_text: "Come and try NOT REWARD with me!",
     refresh_ok: "Data refreshed successfully.",
-    refresh_part: "Some data could not be loaded."
+    refresh_part: "Some data could not be loaded.",
+
+    ads_gate_title: "Watch at least 5 ads to unlock withdrawals",
+    ads_progress: "{n} of {m} ads",
+    ads_remaining: "{n} more to go",
+    ads_unlocked: "✓ Withdrawals unlocked",
+    ads_watch_btn: "▶ Watch an ad",
+    wd_need_ads: "Watch at least {n} ads before withdrawing.",
+    support_title: "Support",
+    support_desc: "Have a question or a problem? Contact support on Telegram.",
+    support_btn: "💬 Contact support"
   }
 };
 
@@ -893,6 +944,51 @@ let adBusy = false;
 let isAdmin = false;
 let toastTimer;
 let appState = "connecting"; // connecting | connected | error | needTg
+let withdrawBusy = false;
+let adsFromServer = false;
+
+// تعداد تبلیغ دیده‌شده: اگر سرور عدد بدهد همان ملاک است، وگرنه شمارنده محلی
+function adsKey() { return "nr_ads_" + String(user?.id || "anon"); }
+function readLocalAds() {
+  try { return Math.max(0, parseInt(localStorage.getItem(adsKey()) || "0", 10) || 0); } catch (_) { return 0; }
+}
+function saveLocalAds(n) { try { localStorage.setItem(adsKey(), String(n)); } catch (_) {} }
+let adsWatched = readLocalAds();
+
+function applyServerAds(data) {
+  const v = data?.adsWatched ?? data?.ads_watched ?? data?.adCount ?? data?.ad_count;
+  if (v !== undefined && v !== null && Number.isFinite(Number(v))) {
+    adsWatched = Math.max(0, Number(v));
+    adsFromServer = true;
+    saveLocalAds(adsWatched);
+    renderAdsGate();
+  }
+}
+
+function registerAdView() {
+  if (adsFromServer) return; // سرور خودش می‌شمارد؛ با رفرش بعدی به‌روز می‌شود
+  adsWatched += 1;
+  saveLocalAds(adsWatched);
+  renderAdsGate();
+}
+
+function renderAdsGate() {
+  const met = adsWatched >= MIN_ADS;
+  const shown = Math.min(adsWatched, MIN_ADS);
+  document.getElementById("ads-gate").classList.toggle("ok", met);
+  document.getElementById("ads-bar").style.width = (shown / MIN_ADS * 100) + "%";
+  document.getElementById("ads-progress-text").textContent = t("ads_progress", { n: fa(shown), m: fa(MIN_ADS) });
+  document.getElementById("ads-hint").textContent = met ? t("ads_unlocked") : t("ads_remaining", { n: fa(MIN_ADS - shown) });
+  document.getElementById("ads-watch-btn").style.display = met ? "none" : "block";
+  document.getElementById("withdraw-submit").disabled = !met || withdrawBusy;
+}
+
+function openSupport() {
+  const url = "https://t.me/" + SUPPORT_USERNAME;
+  haptic();
+  if (tg?.openTelegramLink) tg.openTelegramLink(url);
+  else window.open(url, "_blank", "noopener,noreferrer");
+}
 
 // وضعیت جایزه روزانه و تسک‌ها (از سرور خوانده می‌شود)
 let daily = { claimedDays: 0, canClaim: false, loaded: false };
@@ -1088,6 +1184,7 @@ function applyLang(animate) {
   renderStatus();
   renderDaily();
   renderTasks();
+  renderAdsGate();
   renderHistory("home-history");
   renderHistory("wallet-history");
 
@@ -1156,6 +1253,7 @@ async function loadMe() {
     const data = await api("/api/me");
     user = data.user || user;
     isAdmin = data.isAdmin === true;
+    applyServerAds(data);
 
     if (data.balance !== undefined && Number.isFinite(Number(data.balance))) {
       balance = Number(data.balance);
@@ -1541,6 +1639,8 @@ async function openAd() {
       showToast(t("ad_ended"));
     }
 
+    if (result?.reward_event_type !== "non_valued") registerAdView();
+
     // موجودی فقط از سرور خوانده می‌شود؛ در مرورگر پاداش اضافه نمی‌کنیم.
     setTimeout(() => refreshAll(false).catch(console.error), 3000);
     setTimeout(() => refreshAll(false).catch(console.error), 8000);
@@ -1571,6 +1671,11 @@ document.getElementById("withdraw-form").addEventListener("submit", async event 
   const walletAddress = addressInput.value.trim();
   const submit = document.getElementById("withdraw-submit");
 
+  if (adsWatched < MIN_ADS) {
+    showToast(t("wd_need_ads", { n: fa(MIN_ADS) }));
+    return;
+  }
+
   if (!Number.isFinite(amount) || amount < MIN_WITHDRAWAL) {
     showToast(t("wd_min"));
     return;
@@ -1595,6 +1700,7 @@ document.getElementById("withdraw-form").addEventListener("submit", async event 
     return;
   }
 
+  withdrawBusy = true;
   submit.disabled = true;
   submit.textContent = t("saving");
 
@@ -1608,8 +1714,9 @@ document.getElementById("withdraw-form").addEventListener("submit", async event 
     console.error("withdraw:", error);
     showToast(errText(error, "wd_fail"));
   } finally {
-    submit.disabled = false;
+    withdrawBusy = false;
     submit.textContent = t("wd_submit");
+    renderAdsGate();
   }
 });
 
