@@ -228,6 +228,7 @@ html[dir="ltr"] .arrow{transform:scaleX(-1)}
 .t-done{background:#d4ecdc;color:#1d6f48;cursor:default}
 
 /* ===== شرط تماشای تبلیغ برای برداشت ===== */
+.fee-row{display:flex;align-items:center;gap:8px;margin-top:14px;padding:11px 12px;border-radius:13px;background:#fdecec;border:1px solid #f3cccc;color:#a24444;font-size:12px;font-weight:800;line-height:1.9}
 .ads-gate{margin-top:14px;padding:14px;border-radius:16px;background:linear-gradient(145deg,#fff8e1,#fdeab0);border:1px solid #ecd28a;transition:background .4s,border-color .4s}
 .ads-gate.ok{background:linear-gradient(145deg,#e6f5ea,#d4ecdc);border-color:#bddfc8}
 .ads-title{font-size:12px;font-weight:800;color:#6b4d0a;line-height:1.9}
@@ -459,6 +460,8 @@ html[dir="ltr"] .arrow{transform:scaleX(-1)}
 
       <label class="field-label" for="withdraw-address" data-i18n="addr_label">آدرس کیف پول</label>
       <input class="field" id="withdraw-address" type="text" minlength="20" maxlength="150" autocomplete="off" data-i18n-ph="addr_ph" placeholder="آدرس کیف پول را وارد کن" required>
+
+      <div class="fee-row"><span>⚠️</span><span data-i18n="wd_fee">کارمزد شبکه: ۳۰ نات کوین (NOT)</span></div>
 
       <div class="notice" data-i18n="wd_notice">
         حداقل برداشت ۵۰ نات است. آدرس کیف پول باید بین ۲۰ تا ۱۵۰ نویسه باشد.
@@ -745,7 +748,8 @@ const STR = {
     wd_need_ads: "برای برداشت ابتدا حداقل {n} تبلیغ ببین.",
     support_title: "پشتیبانی",
     support_desc: "سوال یا مشکلی داری؟ با پشتیبانی در تلگرام در ارتباط باش.",
-    support_btn: "💬 ارتباط با پشتیبانی"
+    support_btn: "💬 ارتباط با پشتیبانی",
+    wd_fee: "کارمزد شبکه: ۳۰ نات کوین (NOT)"
   },
   en: {
     title: "NOT REWARD | Earnings Panel",
@@ -913,7 +917,8 @@ const STR = {
     wd_need_ads: "Watch at least {n} ads before withdrawing.",
     support_title: "Support",
     support_desc: "Have a question or a problem? Contact support on Telegram.",
-    support_btn: "💬 Contact support"
+    support_btn: "💬 Contact support",
+    wd_fee: "Network fee: 30 NOT coins"
   }
 };
 
