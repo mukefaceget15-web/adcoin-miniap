@@ -396,7 +396,7 @@ html[dir="ltr"] .arrow{transform:scaleX(-1)}
     </button>
     <button class="quick-item" onclick="showPage('wallet')">
       <span class="quick-icon">↗</span>
-      <span class="quick-copy"><b data-i18n="q_wd_t">درخواست برداشت</b><small data-i18n="q_wd_s">برداشت از ۵۰ نات به بالا</small></span>
+      <span class="quick-copy"><b data-i18n="q_wd_t">درخواست برداشت</b><small data-i18n="q_wd_s">برداشت از ۲۵۰ نات به بالا</small></span>
       <span class="arrow">‹</span>
     </button>
     <button class="quick-item" onclick="showPage('referral')">
@@ -448,7 +448,7 @@ html[dir="ltr"] .arrow{transform:scaleX(-1)}
     </div>
     <div class="balance-bottom">
       <span data-i18n="min_wd">حداقل برداشت</span>
-      <span class="wallet-label" id="wallet-min">۵۰ NOT</span>
+      <span class="wallet-label" id="wallet-min">۲۵۰ NOT</span>
     </div>
   </div>
 
@@ -456,15 +456,15 @@ html[dir="ltr"] .arrow{transform:scaleX(-1)}
     <h2 class="panel-title" data-i18n="wd_panel">ثبت درخواست برداشت</h2>
     <form id="withdraw-form">
       <label class="field-label" for="withdraw-amount" data-i18n="amt_label">مبلغ به NOT</label>
-      <input class="field" id="withdraw-amount" type="number" min="50" step="0.01" data-i18n-ph="amt_ph" placeholder="مثلاً ۵۰" required>
+      <input class="field" id="withdraw-amount" type="number" min="250" step="0.01" data-i18n-ph="amt_ph" placeholder="مثلاً ۲۵۰" required>
 
       <label class="field-label" for="withdraw-address" data-i18n="addr_label">آدرس کیف پول</label>
       <input class="field" id="withdraw-address" type="text" minlength="20" maxlength="150" autocomplete="off" data-i18n-ph="addr_ph" placeholder="آدرس کیف پول را وارد کن" required>
 
-      <div class="fee-row"><span>⚠️</span><span data-i18n="wd_fee">کارمزد شبکه: ۳۰ نات کوین (NOT)</span></div>
+      <div class="fee-row"><span>⚠️</span><span data-i18n="wd_fee">کارمزد شبکه: ۵۰ نات کوین (NOT)</span></div>
 
       <div class="notice" data-i18n="wd_notice">
-        حداقل برداشت ۵۰ نات است. آدرس کیف پول باید بین ۲۰ تا ۱۵۰ نویسه باشد.
+        حداقل برداشت ۲۵۰ نات است. آدرس کیف پول باید بین ۲۰ تا ۱۵۰ نویسه باشد.
         قبل از ارسال، شبکه و آدرس را بررسی کن.
       </div>
       <button class="main-btn full" id="withdraw-submit" type="submit" data-i18n="wd_submit">ثبت درخواست برداشت</button>
@@ -563,7 +563,7 @@ html[dir="ltr"] .arrow{transform:scaleX(-1)}
 const API_BASE = "https://not-reward-api.mukefaceget15.workers.dev";
 const BOT_USERNAME = "notrewarddbot";
 const MINI_APP_NAME = "rewardapp";
-const MIN_WITHDRAWAL = 50;
+const MIN_WITHDRAWAL = 250;
 const MIN_ADS = 5; // حداقل تبلیغ لازم برای برداشت
 const SUPPORT_USERNAME = "NotReward_Support";
 const MONETAG_ZONE_ID = "12066198";
@@ -606,7 +606,7 @@ const STR = {
     q_tasks_t: "جایزه روزانه و تسک‌ها",
     q_tasks_s: "هر روز سر بزن و تا ۷ NOT جایزه بگیر",
     q_wd_t: "درخواست برداشت",
-    q_wd_s: "برداشت از ۵۰ نات به بالا",
+    q_wd_s: "برداشت از ۲۵۰ نات به بالا",
     q_ref_t: "دعوت از دوستان",
     q_ref_s: "برای هر دعوت معتبر ۵ NOT پاداش",
     sec_recent: "تراکنش‌های اخیر",
@@ -645,10 +645,10 @@ const STR = {
     min_wd: "حداقل برداشت",
     wd_panel: "ثبت درخواست برداشت",
     amt_label: "مبلغ به NOT",
-    amt_ph: "مثلاً ۵۰",
+    amt_ph: "مثلاً ۲۵۰",
     addr_label: "آدرس کیف پول",
     addr_ph: "آدرس کیف پول را وارد کن",
-    wd_notice: "حداقل برداشت ۵۰ نات است. آدرس کیف پول باید بین ۲۰ تا ۱۵۰ نویسه باشد. قبل از ارسال، شبکه و آدرس را بررسی کن.",
+    wd_notice: "حداقل برداشت ۲۵۰ نات است. آدرس کیف پول باید بین ۲۰ تا ۱۵۰ نویسه باشد. قبل از ارسال، شبکه و آدرس را بررسی کن.",
     wd_submit: "ثبت درخواست برداشت",
     hist_title: "تاریخچه تراکنش‌ها",
 
@@ -725,7 +725,7 @@ const STR = {
     ad_non_valued: "این نمایش تبلیغ واجد پاداش نیست.",
     ad_ended: "نمایش پایان یافت؛ ثبت پاداش به تأیید سرور بستگی دارد.",
     ad_fail: "نمایش تبلیغ ناموفق بود؛ بعداً دوباره تلاش کن.",
-    wd_min: "حداقل برداشت ۵۰ نات است.",
+    wd_min: "حداقل برداشت ۲۵۰ نات است.",
     wd_dec: "مبلغ باید حداکثر دو رقم اعشار داشته باشد.",
     wd_addr: "آدرس کیف پول باید بین ۲۰ تا ۱۵۰ نویسه باشد.",
     wd_nobal: "موجودی کافی نیست.",
@@ -749,7 +749,7 @@ const STR = {
     support_title: "پشتیبانی",
     support_desc: "سوال یا مشکلی داری؟ با پشتیبانی در تلگرام در ارتباط باش.",
     support_btn: "💬 ارتباط با پشتیبانی",
-    wd_fee: "کارمزد شبکه: ۳۰ نات کوین (NOT)"
+    wd_fee: "کارمزد شبکه: ۵۰ نات کوین (NOT)"
   },
   en: {
     title: "NOT REWARD | Earnings Panel",
@@ -775,7 +775,7 @@ const STR = {
     q_tasks_t: "Daily reward & tasks",
     q_tasks_s: "Visit every day and get up to 7 NOT",
     q_wd_t: "Withdrawal request",
-    q_wd_s: "Withdraw from 50 NOT and up",
+    q_wd_s: "Withdraw from 250 NOT and up",
     q_ref_t: "Invite friends",
     q_ref_s: "5 NOT reward for every valid invite",
     sec_recent: "Recent transactions",
@@ -814,10 +814,10 @@ const STR = {
     min_wd: "Minimum withdrawal",
     wd_panel: "Submit a withdrawal request",
     amt_label: "Amount in NOT",
-    amt_ph: "e.g. 50",
+    amt_ph: "e.g. 250",
     addr_label: "Wallet address",
     addr_ph: "Enter your wallet address",
-    wd_notice: "The minimum withdrawal is 50 NOT. The wallet address must be between 20 and 150 characters. Check the network and address before submitting.",
+    wd_notice: "The minimum withdrawal is 250 NOT. The wallet address must be between 20 and 150 characters. Check the network and address before submitting.",
     wd_submit: "Submit withdrawal request",
     hist_title: "Transaction history",
 
@@ -894,7 +894,7 @@ const STR = {
     ad_non_valued: "This ad view is not eligible for a reward.",
     ad_ended: "The ad has ended; the reward depends on server confirmation.",
     ad_fail: "The ad failed to show; please try again later.",
-    wd_min: "The minimum withdrawal is 50 NOT.",
+    wd_min: "The minimum withdrawal is 250 NOT.",
     wd_dec: "The amount can have at most two decimal places.",
     wd_addr: "The wallet address must be between 20 and 150 characters.",
     wd_nobal: "Insufficient balance.",
@@ -918,7 +918,7 @@ const STR = {
     support_title: "Support",
     support_desc: "Have a question or a problem? Contact support on Telegram.",
     support_btn: "💬 Contact support",
-    wd_fee: "Network fee: 30 NOT coins"
+    wd_fee: "Network fee: 50 NOT coins"
   }
 };
 
