@@ -1770,6 +1770,33 @@ function shareReferral() {
   else window.open(url, "_blank", "noopener,noreferrer");
 }
 
+/* ================= تبلیغ خودکار (In-App Interstitial) ================= */
+// طبق تنظیمات Monetag: ۲ تبلیغ در ۶ دقیقه، فاصله ۳۰ ثانیه، تأخیر ۵ ثانیه قبل از اولی.
+// این تبلیغ‌ها خودکار هستند و در شمارنده ۵ تبلیغ برداشت حساب نمی‌شوند.
+let inAppStarted = false;
+function startInAppAds() {
+  if (inAppStarted) return;
+  let tries = 0;
+  const timer = setInterval(() => {
+    const fn = window["show_" + MONETAG_ZONE_ID];
+    if (typeof fn === "function") {
+      clearInterval(timer);
+      inAppStarted = true;
+      try {
+        const r = fn({
+          type: "inApp",
+          inAppSettings: { frequency: 2, capping: 0.1, interval: 30, timeout: 5, everyPage: false }
+        });
+        if (r && typeof r.catch === "function") r.catch(err => console.warn("In-App ads:", err));
+      } catch (err) {
+        console.warn("In-App ads:", err);
+      }
+    } else if (++tries > 40) {
+      clearInterval(timer); // بعد از ~۲۰ ثانیه SDK لود نشد؛ منصرف می‌شویم
+    }
+  }, 500);
+}
+
 (async function init() {
   applyLang(false);
 
@@ -1781,6 +1808,7 @@ function shareReferral() {
     return;
   }
 
+  startInAppAds();
   await refreshAll(false);
 })();
 </script>
