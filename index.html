@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -324,7 +324,7 @@ html[dir="ltr"] .arrow{transform:scaleX(-1)}
     </div>
   </div>
   <div class="top-end">
-    <button type="button" class="lang-switch" id="lang-switch" data-lang="fa" onclick="toggleLang()" aria-label="Language / زبان">
+    <button type="button" class="lang-switch" id="lang-switch" data-lang="en" onclick="toggleLang()" aria-label="Language / زبان">
       <span class="lang-thumb"></span>
       <span class="lang-opt" data-l="fa">فا</span>
       <span class="lang-opt" data-l="en">EN</span>
@@ -932,7 +932,7 @@ const STR = {
   }
 };
 
-let lang = "fa";
+let lang = "en"; // پیش‌فرض انگلیسی
 try {
   const saved = localStorage.getItem("nr_lang");
   if (saved === "fa" || saved === "en") lang = saved;
