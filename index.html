@@ -365,12 +365,12 @@ html[dir="ltr"] .arrow{transform:scaleX(-1)}
         <span class="coin-inner">₦</span>
       </button>
     </div>
-    <div class="earn-title" data-i18n="earn_title">پاداش تبلیغ منتظرته</div>
+    <div class="earn-title" data-i18n="earn_title">پاداش اختیاری تبلیغ</div>
     <div class="earn-description" data-i18n="earn_desc">
-      تبلیغ را مشاهده کن؛ پاداش فقط پس از تأیید سرور ثبت می‌شود.
+      تماشای تبلیغ کاملاً اختیاری است و برای استفاده از اپ الزامی نیست. در صورت تماشا، پاداش پس از تأیید سرور ثبت می‌شود.
     </div>
-    <button class="main-btn" id="watch-button" onclick="openAd()" data-i18n="watch_btn">▶ &nbsp; تماشای تبلیغ</button>
-    <div class="small-note" data-i18n="earn_note">پاداش هر رویداد واجد شرایط: ۰٫۵ NOT. هر نمایش لزوماً پاداش ندارد.</div>
+    <button class="main-btn" id="watch-button" onclick="openAd()" data-i18n="watch_btn">▶ &nbsp; تماشای تبلیغ (اختیاری)</button>
+    <div class="small-note" data-i18n="earn_note">پاداش هر رویداد واجد شرایط: ۰٫۵ NOT. هر نمایش لزوماً پاداش ندارد. امکانات اصلی اپ (جایزه روزانه، تسک‌ها، دعوت و برداشت) بدون تبلیغ در دسترس است.</div>
   </div>
 
   <div class="section-head"><h2 data-i18n="sec_summary">خلاصه حساب</h2><span data-i18n="sec_summary_s">وضعیت فعلی</span></div>
@@ -469,11 +469,11 @@ html[dir="ltr"] .arrow{transform:scaleX(-1)}
       </div>
       <button class="main-btn full" id="withdraw-submit" type="submit" data-i18n="wd_submit">ثبت درخواست برداشت</button>
 
-      <div class="ads-gate" id="ads-gate">
-        <div class="ads-title" data-i18n="ads_gate_title">برای برداشت باید حداقل ۵ تبلیغ ببینی</div>
-        <div class="ads-bar"><i id="ads-bar"></i></div>
-        <div class="ads-meta"><span id="ads-progress-text">۰ از ۵ تبلیغ</span><span id="ads-hint">—</span></div>
-        <button type="button" class="ads-watch" id="ads-watch-btn" onclick="openAd()" data-i18n="ads_watch_btn">▶ تماشای تبلیغ</button>
+      <div class="ads-gate ok" id="ads-gate">
+        <div class="ads-title" data-i18n="ads_gate_title">تبلیغ اختیاری — برای کسب پاداش اضافه</div>
+        <div class="ads-bar"><i id="ads-bar" style="width:100%"></i></div>
+        <div class="ads-meta"><span id="ads-progress-text" data-i18n="ads_optional_hint">برداشت نیازی به تماشای تبلیغ ندارد</span><span id="ads-hint"></span></div>
+        <button type="button" class="ads-watch" id="ads-watch-btn" onclick="openAd()" data-i18n="ads_watch_btn">▶ تماشای تبلیغ اختیاری</button>
       </div>
     </form>
   </div>
@@ -740,12 +740,17 @@ const STR = {
     refresh_ok: "اطلاعات با موفقیت به‌روزرسانی شد.",
     refresh_part: "بخشی از اطلاعات دریافت نشد.",
 
-    ads_gate_title: "برای برداشت باید حداقل ۵ تبلیغ ببینی",
+    ads_gate_title: "تبلیغ اختیاری — برای کسب پاداش اضافه",
     ads_progress: "{n} از {m} تبلیغ",
-    ads_remaining: "{n} تبلیغ دیگر مانده",
-    ads_unlocked: "✓ برداشت برایت فعال است",
-    ads_watch_btn: "▶ تماشای تبلیغ",
-    wd_need_ads: "برای برداشت ابتدا حداقل {n} تبلیغ ببین.",
+    ads_remaining: "تبلیغ اختیاری است",
+    ads_unlocked: "✓ برداشت بدون نیاز به تبلیغ فعال است",
+    ads_optional_hint: "برداشت نیازی به تماشای تبلیغ ندارد",
+    ads_watch_btn: "▶ تماشای تبلیغ اختیاری",
+    wd_need_ads: "برداشت نیازی به تبلیغ ندارد.",
+    earn_title: "پاداش اختیاری تبلیغ",
+    earn_desc: "تماشای تبلیغ کاملاً اختیاری است و برای استفاده از اپ الزامی نیست. در صورت تماشا، پاداش پس از تأیید سرور ثبت می‌شود.",
+    earn_note: "پاداش هر رویداد واجد شرایط: ۰٫۵ NOT. هر نمایش لزوماً پاداش ندارد. امکانات اصلی اپ بدون تبلیغ در دسترس است.",
+    watch_btn: "▶ \u00A0 تماشای تبلیغ (اختیاری)",
     support_title: "پشتیبانی",
     support_desc: "سوال یا مشکلی داری؟ با پشتیبانی در تلگرام در ارتباط باش.",
     support_btn: "💬 ارتباط با پشتیبانی",
@@ -909,12 +914,17 @@ const STR = {
     refresh_ok: "Data refreshed successfully.",
     refresh_part: "Some data could not be loaded.",
 
-    ads_gate_title: "Watch at least 5 ads to unlock withdrawals",
+    ads_gate_title: "Optional ad — earn a small bonus",
     ads_progress: "{n} of {m} ads",
-    ads_remaining: "{n} more to go",
-    ads_unlocked: "✓ Withdrawals unlocked",
-    ads_watch_btn: "▶ Watch an ad",
-    wd_need_ads: "Watch at least {n} ads before withdrawing.",
+    ads_remaining: "Ads are optional",
+    ads_unlocked: "✓ Withdrawals work without watching ads",
+    ads_optional_hint: "Withdrawals do not require watching ads",
+    ads_watch_btn: "▶ Watch optional ad",
+    wd_need_ads: "Withdrawals do not require ads.",
+    earn_title: "Optional ad reward",
+    earn_desc: "Watching ads is completely optional and not required to use the app. If you watch, the reward is credited only after server confirmation.",
+    earn_note: "Reward per eligible event: 0.5 NOT. Not every view is rewarded. Core features (daily reward, tasks, invites, withdrawals) work without ads.",
+    watch_btn: "▶ \u00A0 Watch ad (optional)",
     support_title: "Support",
     support_desc: "Have a question or a problem? Contact support on Telegram.",
     support_btn: "💬 Contact support",
@@ -978,14 +988,19 @@ function registerAdView() {
 }
 
 function renderAdsGate() {
-  const met = adsWatched >= MIN_ADS;
-  const shown = Math.min(adsWatched, MIN_ADS);
-  document.getElementById("ads-gate").classList.toggle("ok", met);
-  document.getElementById("ads-bar").style.width = (shown / MIN_ADS * 100) + "%";
-  document.getElementById("ads-progress-text").textContent = t("ads_progress", { n: fa(shown), m: fa(MIN_ADS) });
-  document.getElementById("ads-hint").textContent = met ? t("ads_unlocked") : t("ads_remaining", { n: fa(MIN_ADS - shown) });
-  document.getElementById("ads-watch-btn").style.display = met ? "none" : "block";
-  document.getElementById("withdraw-submit").disabled = !met || withdrawBusy;
+  // تبلیغ اختیاری است؛ برداشت را مسدود نمی‌کند (الزامات شبکه تبلیغات)
+  const gate = document.getElementById("ads-gate");
+  if (gate) gate.classList.add("ok");
+  const bar = document.getElementById("ads-bar");
+  if (bar) bar.style.width = "100%";
+  const progress = document.getElementById("ads-progress-text");
+  if (progress) progress.textContent = t("ads_optional_hint");
+  const hint = document.getElementById("ads-hint");
+  if (hint) hint.textContent = t("ads_unlocked");
+  const watchBtn = document.getElementById("ads-watch-btn");
+  if (watchBtn) watchBtn.style.display = "block";
+  const submit = document.getElementById("withdraw-submit");
+  if (submit) submit.disabled = !!withdrawBusy;
 }
 
 function openSupport() {
@@ -1705,10 +1720,7 @@ document.getElementById("withdraw-form").addEventListener("submit", async event 
   const walletAddress = addressInput.value.trim();
   const submit = document.getElementById("withdraw-submit");
 
-  if (adsWatched < MIN_ADS) {
-    showToast(t("wd_need_ads", { n: fa(MIN_ADS) }));
-    return;
-  }
+  // تبلیغ برای برداشت الزامی نیست
 
   if (!Number.isFinite(amount) || amount < MIN_WITHDRAWAL) {
     showToast(t("wd_min"));
