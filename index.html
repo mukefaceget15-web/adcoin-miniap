@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
@@ -468,13 +468,6 @@ html[dir="ltr"] .arrow{transform:scaleX(-1)}
         قبل از ارسال، شبکه و آدرس را بررسی کن.
       </div>
       <button class="main-btn full" id="withdraw-submit" type="submit" data-i18n="wd_submit">ثبت درخواست برداشت</button>
-
-      <div class="ads-gate ok" id="ads-gate">
-        <div class="ads-title" data-i18n="ads_gate_title">تبلیغ اختیاری — برای کسب پاداش اضافه</div>
-        <div class="ads-bar"><i id="ads-bar" style="width:100%"></i></div>
-        <div class="ads-meta"><span id="ads-progress-text" data-i18n="ads_optional_hint">برداشت نیازی به تماشای تبلیغ ندارد</span><span id="ads-hint"></span></div>
-        <button type="button" class="ads-watch" id="ads-watch-btn" onclick="openAd()" data-i18n="ads_watch_btn">▶ تماشای تبلیغ اختیاری</button>
-      </div>
     </form>
   </div>
 
@@ -566,7 +559,7 @@ const MINI_APP_NAME = "rewardapp";
 const MIN_WITHDRAWAL = 250;
 const MIN_ADS = 5; // حداقل تبلیغ لازم برای برداشت
 const SUPPORT_USERNAME = "NotReward_Support";
-const ADSGRAM_BLOCK_ID = "55667";
+const ADSGRAM_BLOCK_ID = "55692";
 const API_TIMEOUT_MS = 15000;
 
 // ====== جایزه روزانه: روز ۱ تا ۷ ======
@@ -748,8 +741,8 @@ const STR = {
     ads_watch_btn: "▶ تماشای تبلیغ اختیاری",
     wd_need_ads: "برداشت نیازی به تبلیغ ندارد.",
     earn_title: "پاداش اختیاری تبلیغ",
-    earn_desc: "تماشای تبلیغ کاملاً اختیاری است و برای استفاده از اپ الزامی نیست. در صورت تماشا، پاداش پس از تأیید سرور ثبت می‌شود.",
-    earn_note: "پاداش هر رویداد واجد شرایط: ۰٫۵ NOT. هر نمایش لزوماً پاداش ندارد. امکانات اصلی اپ بدون تبلیغ در دسترس است.",
+    earn_desc: "تماشای تبلیغ کاملاً اختیاری است. هیچ بخشی از اپ قفل نمی‌شود و فقط با مشاهده (نه اجبار به کلیک) پاداش پس از تأیید سرور ثبت می‌شود.",
+    earn_note: "پاداش هر رویداد واجد شرایط: ۰٫۵ NOT. امکانات اصلی (جایزه روزانه، تسک، دعوت، برداشت) بدون تبلیغ در دسترس است.",
     watch_btn: "▶ \u00A0 تماشای تبلیغ (اختیاری)",
     support_title: "پشتیبانی",
     support_desc: "سوال یا مشکلی داری؟ با پشتیبانی در تلگرام در ارتباط باش.",
@@ -922,8 +915,8 @@ const STR = {
     ads_watch_btn: "▶ Watch optional ad",
     wd_need_ads: "Withdrawals do not require ads.",
     earn_title: "Optional ad reward",
-    earn_desc: "Watching ads is completely optional and not required to use the app. If you watch, the reward is credited only after server confirmation.",
-    earn_note: "Reward per eligible event: 0.5 NOT. Not every view is rewarded. Core features (daily reward, tasks, invites, withdrawals) work without ads.",
+    earn_desc: "Watching ads is fully optional. No part of the app is locked. Reward is for viewing (not forced clicking) and is credited only after server confirmation.",
+    earn_note: "Reward per eligible event: 0.5 NOT. Core features (daily reward, tasks, invites, withdrawals) work without ads.",
     watch_btn: "▶ \u00A0 Watch ad (optional)",
     support_title: "Support",
     support_desc: "Have a question or a problem? Contact support on Telegram.",
@@ -988,17 +981,7 @@ function registerAdView() {
 }
 
 function renderAdsGate() {
-  // تبلیغ اختیاری است؛ برداشت را مسدود نمی‌کند (الزامات شبکه تبلیغات)
-  const gate = document.getElementById("ads-gate");
-  if (gate) gate.classList.add("ok");
-  const bar = document.getElementById("ads-bar");
-  if (bar) bar.style.width = "100%";
-  const progress = document.getElementById("ads-progress-text");
-  if (progress) progress.textContent = t("ads_optional_hint");
-  const hint = document.getElementById("ads-hint");
-  if (hint) hint.textContent = t("ads_unlocked");
-  const watchBtn = document.getElementById("ads-watch-btn");
-  if (watchBtn) watchBtn.style.display = "block";
+  // تبلیغ فقط اختیاری است و هیچ بخشی از اپ را قفل نمی‌کند
   const submit = document.getElementById("withdraw-submit");
   if (submit) submit.disabled = !!withdrawBusy;
 }
