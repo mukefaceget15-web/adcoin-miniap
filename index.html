@@ -7,7 +7,6 @@
 <title>NOT REWARD | پنل درآمد</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -566,7 +565,6 @@ const MINI_APP_NAME = "rewardapp";
 const MIN_WITHDRAWAL = 250;
 const MIN_ADS = 5; // حداقل تبلیغ لازم برای برداشت
 const SUPPORT_USERNAME = "NotReward_Support";
-const ADSGRAM_BLOCK_ID = "55663";
 const API_TIMEOUT_MS = 15000;
 
 // ====== جایزه روزانه: روز ۱ تا ۷ ======
@@ -1606,21 +1604,7 @@ async function refreshAll(showMessage = false) {
   }
 }
 
-/* ================= تبلیغ (AdsGram) ================= */
-let AdController = null;
-
-function getAdController() {
-  if (AdController) return AdController;
-  if (!window.Adsgram || typeof window.Adsgram.init !== "function") return null;
-  try {
-    AdController = window.Adsgram.init({ blockId: ADSGRAM_BLOCK_ID });
-  } catch (err) {
-    console.error("AdsGram init error:", err);
-    return null;
-  }
-  return AdController;
-}
-
+/* ================= تبلیغ (اتصال غیرفعال) ================= */
 async function openAd() {
   if (adBusy) return;
 
@@ -1629,36 +1613,13 @@ async function openAd() {
     return;
   }
 
-  const controller = getAdController();
-  if (!controller) {
-    showToast(t("ad_not_loaded"));
-    return;
-  }
-
   adBusy = true;
   document.getElementById("ad-button").disabled = true;
   document.getElementById("watch-button").disabled = true;
 
   try {
-    showToast(t("ad_prep"));
+    showToast(t("ad_not_loaded"));
     haptic();
-
-    await controller.show();
-
-    // کاربر تبلیغ را تا انتها دید
-    showToast(t("ad_valued"));
-    registerAdView();
-
-    // موجودی فقط از سرور خوانده می‌شود
-    setTimeout(() => refreshAll(false).catch(console.error), 3000);
-    setTimeout(() => refreshAll(false).catch(console.error), 8000);
-  } catch (result) {
-    console.error("AdsGram show error:", result);
-    if (result && result.error) {
-      showToast(t("ad_fail"));
-    } else {
-      showToast(t("ad_non_valued"));
-    }
   } finally {
     adBusy = false;
     document.getElementById("ad-button").disabled = false;
