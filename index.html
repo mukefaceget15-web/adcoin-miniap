@@ -7,7 +7,7 @@
 <title>NOT REWARD | پنل درآمد</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="https://sad.adsgram.ai/js/sad.min.js"></script>
+<script src="https://libtl.com/sdk.js" data-zone="12066198" data-sdk="show_12066198"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -564,7 +564,7 @@ const MINI_APP_NAME = "rewardapp";
 const MIN_WITHDRAWAL = 50;
 const MIN_ADS = 5;
 const SUPPORT_USERNAME = "NotReward_Support";
-const ADSGRAM_BLOCK_ID = "55692";
+const MONETAG_ZONE_ID = "12066198";
 const API_TIMEOUT_MS = 15000;
 const NETWORK_FEE_NOT = 15;
 
@@ -1677,26 +1677,7 @@ async function refreshAll(showMessage = false) {
   }
 }
 
-/* ================= تبلیغ (AdsGram) ================= */
-let AdController = null;
-
-function getAdController() {
-  if (AdController) return AdController;
-  if (!window.Adsgram || typeof window.Adsgram.init !== "function") return null;
-  try {
-    // برای تست: debug: true — بعد از تأیید کار کردن، false کن
-    AdController = window.Adsgram.init({
-      blockId: String(ADSGRAM_BLOCK_ID),
-      debug: false,
-      debugConsole: true
-    });
-  } catch (err) {
-    console.error("AdsGram init error:", err);
-    return null;
-  }
-  return AdController;
-}
-
+/* ================= تبلیغ (Monetag) ================= */
 async function openAd() {
   if (adBusy) return;
 
@@ -1705,13 +1686,8 @@ async function openAd() {
     return;
   }
 
-  if (!window.Adsgram) {
-    showToast("SDK تبلیغ لود نشد. اینترنت را چک کن.");
-    return;
-  }
-
-  const controller = getAdController();
-  if (!controller) {
+  const showFn = window["show_" + MONETAG_ZONE_ID];
+  if (typeof showFn !== "function") {
     showToast(t("ad_not_loaded"));
     return;
   }
@@ -1724,36 +1700,20 @@ async function openAd() {
     showToast(t("ad_prep"));
     haptic();
 
-    const result = await controller.show();
-    console.log("AdsGram show result:", result);
+    // Rewarded Popup — Monetag
+    await showFn("pop");
 
-    // کاربر تبلیغ را تا انتها دید
+    // کاربر تبلیغ را تا انتها دید یا در interstitital بست
     showToast(t("ad_valued"));
     registerAdView();
 
-    // موجودی فقط از سرور خوانده می‌شود (Reward URL)
+    // پاداش واقعی از postback سرور (Monetag) می‌آید
     setTimeout(() => refreshAll(false).catch(console.error), 3000);
     setTimeout(() => refreshAll(false).catch(console.error), 8000);
-  } catch (result) {
-    console.error("AdsGram show error:", result);
-
-    const desc = (result && (result.description || result.message)) || "";
-    const state = result && result.state;
-
-    if (result && result.error) {
-      if (/not found|no banner|banner not found/i.test(desc) || state === "load") {
-        showToast("تبلیغی برای نمایش نیست. کمی بعد دوباره تلاش کن.");
-      } else if (/session|too long/i.test(desc)) {
-        showToast("نشست طولانی شده؛ مینی‌اپ را ببند و دوباره باز کن.");
-      } else if (desc) {
-        showToast("خطا: " + String(desc).slice(0, 80));
-      } else {
-        showToast(t("ad_fail"));
-      }
-    } else {
-      // کاربر اسکیپ کرده یا کامل ندیده
-      showToast(t("ad_non_valued"));
-    }
+    setTimeout(() => refreshAll(false).catch(console.error), 15000);
+  } catch (e) {
+    console.error("Monetag error:", e);
+    showToast(t("ad_fail"));
   } finally {
     adBusy = false;
     document.getElementById("ad-button").disabled = false;
