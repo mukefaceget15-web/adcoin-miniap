@@ -1686,8 +1686,8 @@ async function openAd() {
     return;
   }
 
-  const showFn = window["show_" + MONETAG_ZONE_ID];
-  if (typeof showFn !== "function") {
+  const showAd = window["show_" + MONETAG_ZONE_ID];
+  if (typeof showAd !== "function") {
     showToast(t("ad_not_loaded"));
     return;
   }
@@ -1696,18 +1696,35 @@ async function openAd() {
   document.getElementById("ad-button").disabled = true;
   document.getElementById("watch-button").disabled = true;
 
+  // شناسه یکتا برای postback سرور
+  const ymid = "tg" + String(userId()) + "_" +
+    Date.now().toString(36) + "_" +
+    Math.random().toString(36).slice(2, 9);
+
   try {
     showToast(t("ad_prep"));
     haptic();
 
-    // Rewarded Popup — Monetag
-    await showFn("pop");
+    // rewarded داخل مینی‌اپ — نه ریدایرکت به سایت
+    const result = await showAd({
+      type: "end",
+      ymid,
+      requestVar: String(userId())
+    });
 
-    // کاربر تبلیغ را تا انتها دید یا در interstitital بست
-    showToast(t("ad_valued"));
-    registerAdView();
+    console.log("Monetag result:", result);
 
-    // پاداش واقعی از postback سرور (Monetag) می‌آید
+    if (result?.reward_event_type === "valued") {
+      showToast(t("ad_valued"));
+      registerAdView();
+    } else if (result?.reward_event_type === "non_valued") {
+      showToast(t("ad_non_valued"));
+    } else {
+      showToast(t("ad_ended"));
+      if (result?.reward_event_type !== "non_valued") registerAdView();
+    }
+
+    // پاداش واقعی فقط بعد از postback سرور
     setTimeout(() => refreshAll(false).catch(console.error), 3000);
     setTimeout(() => refreshAll(false).catch(console.error), 8000);
     setTimeout(() => refreshAll(false).catch(console.error), 15000);
